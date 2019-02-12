@@ -42,16 +42,18 @@
     
     [CmdletBinding()]
     Param (
-        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false        )]
+        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false,HelpMessage = "This parameter is used if you want to query LocationName(s)")]
         [Alias('Identity')]
         [String]$LocationName='*',
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,HelpMessage = "Specify the server where StifleR Server is installed")]
         [ValidateNotNullOrEmpty()]
         [Alias('ComputerName','Computer','__SERVER')]
         [String]$Server,
-
+        
+        [Parameter(HelpMessage = "This parameter is used if you want to query SubnetID(s)")]
         [String]$SubnetID='*',
+        [Parameter(HelpMessage = "This parameter is used if you want to query for specific properties")]
         [Array]$Property='*'
     )
 
