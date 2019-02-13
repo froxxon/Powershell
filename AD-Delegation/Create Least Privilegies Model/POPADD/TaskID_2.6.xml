@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tasks Version="2.0">
+  <AD0001 Name="Create User Account" Level="DataMgmt" ID="AD0001" GroupName="User-Create" Type="ACE" Category="User Object">
+    <ACE0 ACE="CreateChild;All;bf967aba-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0001>
+  <AD0002 Name="Delete User Account" Level="DataMgmt" ID="AD0002" GroupName="User-Delete" Type="ACE" Category="User Object">
+    <ACE0 ACE="DeleteChild;All;bf967aba-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+    <ACE1 ACE="DeleteTree;Descendents;00000000-0000-0000-0000-000000000000;bf967aba-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0002>
+  <AD0003 Name="Modify User Account Properties" Level="DataMgmt" ID="AD0003" GroupName="User-Modify_Properties" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;00000000-0000-0000-0000-000000000000;bf967aba-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0003>
+  <AD0004 Name="Rename User Account" Level="DataMgmt" ID="AD0004" GroupName="User-Rename" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;3e0abfd0-126a-11d0-a060-00aa006c33ed;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, WriteProperty;Descendents;bf9679f2-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE2 ACE="ReadProperty, WriteProperty;Descendents;bf967a0e-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE3 ACE="ReadProperty, WriteProperty;Descendents;f0f8ff90-1191-11d0-a060-00aa006c33ed;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE4 ACE="ReadProperty, WriteProperty;Descendents;f0f8ff8e-1191-11d0-a060-00aa006c33ed;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE5 ACE="ReadProperty, WriteProperty;Descendents;28630ebb-41d5-11d1-a9c1-0000f80367c1;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE6 ACE="ReadProperty, WriteProperty;Descendents;bf967953-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE7 ACE="ReadProperty, WriteProperty;Descendents;bf967a41-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE8 ACE="ReadProperty, WriteProperty;Descendents;bf96793f-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0004>
+  <AD0005 Name="Move user Account From OU" Level="DataMgmt" ID="AD0005" GroupName="User-Move_FromOu" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;00000000-0000-0000-0000-000000000000;bf967aba-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="DeleteChild;All;bf967aba-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0005>
+  <AD0007 Name="Disable/Enabled User Account" Level="DataMgmt" ID="AD0007" GroupName="User-Modify_Enabled_Disabled" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;bf967a68-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0007>
+  <AD0011 Name="Reset User Account Password" Level="DataMgmt" ID="AD0011" GroupName="User-Reset_Passwords" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;bf967a0a-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ExtendedRight;Descendents;00299570-246d-11d0-a768-00aa006e0529;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0011>
+  <AD0012 Name="Unlock User Accounts" Level="DataMgmt" ID="AD0012" GroupName="User-Unlock" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;28630ebf-41d5-11d1-a9c1-0000f80367c1;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0012>
+  <AD0014 Name="Create Groups" Level="DataMgmt" ID="AD0014" GroupName="Group-Create" Type="ACE" Category="Group Object">
+    <ACE0 ACE="CreateChild;All;bf967a9c-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0014>
+  <AD0015 Name="Add/Remove Members to Group" Level="DataMgmt" ID="AD0015" GroupName="Group-Modify_Members" Type="ACE" Category="Group Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;bf9679c0-0de6-11d0-a285-00aa003049e2;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0015>
+  <AD0016 Name="Change Group Scope Type" Level="DataMgmt" ID="AD0016" GroupName="Group-Modify_Scope_Type" Type="ACE" Category="Group Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;9a9a021e-4a5b-11d1-a9c3-0000f80367c1;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0016>
+  <AD0017 Name="Modify Group Properties" Level="DataMgmt" ID="AD0017" GroupName="Group-Modify_Properties" Type="ACE" Category="Group Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;77b5b886-944a-11d1-aebd-0000f80367c1;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, WriteProperty;Descendents;e48d0154-bcf8-11d1-8702-00c04fb96050;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE2 ACE="ReadProperty, WriteProperty;Descendents;0296c120-40da-11d1-a9c0-0000f80367c1;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0017>
+  <AD0019 Name="Delete a Group" Level="DataMgmt" ID="AD0019" GroupName="Group-Delete" Type="ACE" Category="Group Object">
+    <ACE0 ACE="DeleteChild;All;bf967a9c-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0019>
+  <AD0020 Name="Rename a group" Level="DataMgmt" ID="AD0020" GroupName="Group-Rename" Type="ACE" Category="Group Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;bf96793f-0de6-11d0-a285-00aa003049e2;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, WriteProperty;Descendents;3e0abfd0-126a-11d0-a060-00aa006c33ed;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE2 ACE="ReadProperty, WriteProperty;Descendents;bf967a0e-0de6-11d0-a285-00aa003049e2;bf967a9c-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0020>
+  <AD0025 Name="Create Computer Accounts" Level="DataMgmt" ID="AD0025" GroupName="Computer-Create" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="CreateChild;All;bf967a86-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0025>
+  <AD0027 Name="Delete Computer Accounts" Level="DataMgmt" ID="AD0027" GroupName="Computer-Delete" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="DeleteTree;Descendents;00000000-0000-0000-0000-000000000000;bf967a86-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="DeleteChild;All;bf967a86-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0027>
+  <AD0028 Name="Manage Computer Account  (Full Control)" Level="DataMgmt" ID="AD0028" GroupName="Computer-Manage" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="GenericAll;Descendents;00000000-0000-0000-0000-000000000000;bf967a86-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0028>
+  <AD0029 Name="Modify Computer Account Properties" Level="DataMgmt" ID="AD0029" GroupName="Computer-Modify_Properties" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;e48d0154-bcf8-11d1-8702-00c04fb96050;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, WriteProperty;Descendents;0296c120-40da-11d1-a9c0-0000f80367c1;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE2 ACE="ReadProperty, WriteProperty;Descendents;77b5b886-944a-11d1-aebd-0000f80367c1;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0029>
+  <AD0030 Name="Move a Computer Account From OU" Level="DataMgmt" ID="AD0030" GroupName="Computer-Move_FromOu" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="DeleteChild;All;bf967a86-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, WriteProperty, DeleteTree;Descendents;00000000-0000-0000-0000-000000000000;bf967a86-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0030>
+  <AD0031 Name="Reset a Computer Account" Level="DataMgmt" ID="AD0031" GroupName="Computer-Reset" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="ExtendedRight;Descendents;00299570-246d-11d0-a768-00aa006e0529;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0031>
+  <AD0032 Name="Disable/Enable a Computer Account" Level="DataMgmt" ID="AD0032" GroupName="Computer-Modify_Enabled_Disabled" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;bf967a68-0de6-11d0-a285-00aa003049e2;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0032>
+  <AD0035 Name="Create Print Object" Level="DataMgmt" ID="AD0035" GroupName="Printer-Create" Type="ACE" Category="Print Object">
+    <ACE0 ACE="CreateChild;All;bf967aa8-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0035>
+  <AD0036 Name="Delete Print Object" Level="DataMgmt" ID="AD0036" GroupName="Printer-Delete" Type="ACE" Category="Print Object">
+    <ACE0 ACE="DeleteChild;All;bf967aa8-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0036>
+  <AD0037 Name="Publish Shared Folders" Level="DataMgmt" ID="AD0037" GroupName="SharedFolder-Create" Type="ACE" Category="Print Object">
+    <ACE0 ACE="CreateChild;All;bf967abb-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0037>
+  <AD0038 Name="Remove Published Shared Folders" Level="DataMgmt" ID="AD0038" GroupName="SharedFolder-Delete" Type="ACE" Category="Print Object">
+    <ACE0 ACE="DeleteChild;All;bf967abb-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0038>
+  <AD0130 Name="Create a Site Object" Level="Tier 0" ID="AD0130" GroupName="Site-Create" Type="ACE" Category="Forest Operations">
+    <ACE0 ACE="CreateChild;All;bf967ab3-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0130>
+  <AD0131 Name="Create a Site Link Object" Level="Tier 0" ID="AD0131" Category="Forest Operations" GroupName="SiteLink-Create" Type="ACE">
+    <ACE0 ACE="CreateChild;All;d50c2cde-8951-11d1-aebc-0000f80367c1;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0131>
+  <AD0132 Name="Create a Subnet Object" Level="Tier 0" ID="AD0132" GroupName="Subnet-Create" Type="ACE" Category="Forest Operations">
+    <ACE0 ACE="DeleteChild;All;b7b13124-b82e-11d0-afee-0000f80367c1;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0132>
+  <AD0134 Name="Associate an Existing Subnet Object with a Site" Level="Tier 0" ID="AD0134" GroupName="Subnet-Modify_Site" Type="ACE" Category="Forest Operations">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;00000000-0000-0000-0000-000000000000;b7b13124-b82e-11d0-afee-0000f80367c1;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0134>
+  <AD0143 Name="Delete a Site Link Object" Level="Tier 0" ID="AD0143" GroupName="SiteLink-Delete" Type="ACE" Category="Forest Operations">
+    <ACE0 ACE="DeleteChild;All;d50c2cde-8951-11d1-aebc-0000f80367c1;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0143>
+  <AD0144 Name="Delete a Site Object" Level="Tier 0" ID="AD0144" GroupName="Site-Delete" Type="ACE" Category="Forest Operations">
+    <ACE0 ACE="DeleteChild;All;bf967ab3-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0144>
+  <AD0145 Name="Delete a Subnet Object" Level="Tier 0" ID="AD0145" GroupName="Subnet-Delete" Type="ACE" Category="Forest Operations">
+    <ACE0 ACE="DeleteChild;All;b7b13124-b82e-11d0-afee-0000f80367c1;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0145>
+  <AD0153 Name="Create GPO" Level="DataMgmt" ID="AD0153" GroupName="Group Policy Creator Owners" Type="Group" Category="Group Policy">
+    <ACE0 ACE="CreateChild;None;f30e3bc2-9ff0-11d1-b603-0000f80367c1;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;None;None" Trustee="" Target="" />
+  </AD0153>
+  <AD0154 Name="Configure GPO" Level="DataMgmt" GroupName="GPO-Manage" ID="AD0154" Type="Group" Category="Group Policy" />
+  <AD0155 Name="Perform Resultant Set of GPOs" Level="DataMgmt" ID="AD0155" GroupName="GPO-Validate_RSOP" Type="ACE" Category="Group Policy">
+    <ACE0 ACE="ExtendedRight;All;b7b1b3de-ab09-4242-9e30-9980e5d322f7;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0155>
+  <AD0157 Name="Backup the GPO to the file" Level="Tier 0" GroupName="GPO-Backup" ID="AD0157" Type="ACE" Category="Group Policy" />
+  <AD0164 Name="Link GPO" Level="DataMgmt" ID="AD0164" GroupName="GPO-Link" Type="ACE" Category="Group Policy">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;f30e3bbf-9ff0-11d1-b603-0000f80367c1;bf967aa5-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, WriteProperty;Descendents;f30e3bbe-9ff0-11d1-b603-0000f80367c1;bf967aa5-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0164>
+  <AD0165 Name="Create an Organizational  Unit" Level="DataMgmt" ID="AD0165" GroupName="OU-Create" Type="ACE" Category="Oranizational Unit">
+    <ACE0 ACE="CreateChild;All;bf967aa5-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0165>
+  <AD0166 Name="Delete an Organizational Unit" Level="DataMgmt" ID="AD0166" GroupName="OU-Delete" Type="ACE" Category="Oranizational Unit">
+    <ACE0 ACE="DeleteChild;All;All;bf967aa5-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+    <ACE1 ACE="DeleteTree;Descendents;00000000-0000-0000-0000-000000000000;bf967aa5-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0166>
+  <AD0167 Name="Delegating administration permission" Level="DataMgmt" ID="AD0167" GroupName="Permission-Delegate" Type="ACE" Category="Oranizational Unit">
+    <ACE0 ACE="WriteDacl;All;00000000-0000-0000-0000-000000000000;00000000-0000-0000-0000-000000000000;None;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0167>
+  <AD0168 Name="Adding objects to OU" Level="DataMgmt" ID="AD0168" GroupName="OU-Create_AllObjects" Type="ACE" Category="Oranizational Unit">
+    <ACE0 ACE="CreateChild;Descendents;00000000-0000-0000-0000-000000000000;bf967aa5-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0168>
+  <AD0169 Name="Deleting objects in OU" Level="DataMgmt" ID="AD0169" GroupName="OU-Delete_AllObjects" Type="ACE" Category="Oranizational Unit">
+    <ACE0 ACE="DeleteChild;Descendents;00000000-0000-0000-0000-000000000000;bf967aa5-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD0169>
+  <AD0170 Name="Moving Objects between OU's" Level="DataMgmt" ID="AD0170" GroupName="OU_Move_AllObjects" Type="ACE" Category="Oranizational Unit">
+    <ACE0 ACE="CreateChild, DeleteChild, WriteProperty, DeleteTree, GenericRead;All;00000000-0000-0000-0000-000000000000;00000000-0000-0000-0000-000000000000;None;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0170>
+  <AD0174 Name="Manage Schema Partition replication" Level="Tier 0" GroupName="SchemaNC-ManageReplication" ID="AD0174" Type="ACE" Category="Forest Operations" />
+  <AD0175 Name="Managing the Forest Functional level" Level="Tier 0" GroupName="Forest-FunctionalLevel" ID="AD0175" Type="ACE" Category="Forest Operations" />
+  <AD0203 Name="Backup System State on a Domain Controller" Level="Tier 0" GroupName="DomainController-BackupAD" ID="AD0203" Type="ACE" Category="Domain Operations" />
+  <AD0213 Name="Transfer the Domain Operations Master Roles" Level="Tier 0" GroupName="Domain-FSMO" ID="AD0213" Type="ACE" Category="Domain Operations" />
+  <AD0214 Name="Transfer and seizing the forest-wide operations master roles" Level="Tier 0" GroupName="Forest-FSMO" ID="AD0214" Type="ACE" Category="Forest Operations" />
+  <AD0251 Name="Restore AD DS from Backup (Nonauthoritative Restore)" Level="Tier 0" GroupName="DomainController-RestoreAD" ID="AD0251" Type="ACE" Category="Domain Operations" />
+  <AD0284 Name="Restore an Object from the Recycle Bin" Level="Tier 0" ID="AD0284" GroupName="Domain-ReanimateTombstone" Type="ACE" Category="Domain Operations">
+    <ACE0 ACE="ListChildren, ReadProperty, WriteProperty;All;00000000-0000-0000-0000-000000000000;00000000-0000-0000-0000-000000000000;None;Allow;False;None;None" Trustee="" Target="CN=Deleted Objects," />
+    <ACE1 ACE="ExtendedRight;All;45ec5156-db7e-47bb-b53f-dbeb2d03c40f;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD0284>
+  <AD0289 Name="Enable Active Directory Recycle Bin" Level="Tier 0" GroupName="Forest-EnableRecyclebin" ID="AD0289" Type="ACE" Category="Forest Operations" />
+  <AD0304 Name="Restore a GPO" Level="Tier 0" GroupName="GPO-Restore" ID="AD0304" Type="ACE" Category="Group Policy" />
+  <AD0307 Name="Add/Remove All Members from the protected groups" Level="Tier 0" ID="AD0307" GroupName="Group-Modify_Members-AdminSDHolder" Type="ACE" Category="Protected Groups">
+    <ACE0 ACE="ReadProperty, WriteProperty;None;bf9679c0-0de6-11d0-a285-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;None;None" Trustee="" Target="" />
+  </AD0307>
+  <AD0316 Name="Read Directory service event log" Level="Tier 0" Instruction="Create a group policy for your delegation settings and link it to the domain controller OU. This right is set by using a Registry preference item. Use the SID of the task group and add it to the currently configured ChannelAccess rights (wevtutil gl &quot;directory service&quot; ). Create the Registry preference item manually or use PowerShell. Set-GPPrefRegistryValue -Action Update -Context Computer -Key &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Directory Service&quot; -Name &quot;&lt;Your Group Policy Name&gt;&quot; -Type String -Value &quot;&lt;Replace with your SDDL string&gt;&quot; -ValueName CustomSD&#xD;&#xA;" ID="AD0316" GroupName="DomainController-Read_DirectoryServiceLog" Type="GPO" Category="DC Monitoring" />
+  <AD0317 Name="Read DFS Replication event log" Level="Tier 0" Instruction="Create a group policy for your delegation settings and link it to the domain controller OU. This right is set by using a Registry preference item. Add (A;;0x1;;;&lt;Task Group Sid&gt;) to the currently configured ChannelAccess rights (wevtutil gl &quot;dfs replication&quot; ). Create the Registry preference item manually or use PowerShell. Set-GPPrefRegistryValue -Action Update -Context Computer -Key &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\DFS Replication&quot; -Name &quot;&lt;Your Group Policy Name&gt;&quot; -Type String -Value &quot;&lt;Replace with current SDDL string + (A;;0x1;;;&lt;Task Group Sid&gt;)&gt;&quot; -ValueName CustomSD&#xD;&#xA;" ID="AD0317" GroupName="DomainController-Read_DFSReplicationLog" Type="GPO" Category="DC Monitoring" />
+  <AD7001 Name="Rename a Computer Account" Level="DataMgmt" ID="AD7001" GroupName="Computer-Rename" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="Self;Descendents;f3a64788-5306-11d1-a9c5-0000f80367c1;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, WriteProperty;Descendents;3e0abfd0-126a-11d0-a060-00aa006c33ed;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE2 ACE="ReadProperty, WriteProperty;Descendents;bf96793f-0de6-11d0-a285-00aa003049e2;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE3 ACE="ReadProperty, WriteProperty;Descendents;5f202010-79a5-11d0-9020-00c04fc2d4cf;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE4 ACE="Self;Descendents;72e39547-7b18-11d1-adef-00c04fd8d5cd;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7001>
+  <AD7002 Name="Logon locally to Domain Controller" Level="Tier 0" GroupName="DomainController-Logon" ID="AD7002" Type="GPO" Category="DC Management" />
+  <AD7003 Name="Restore Object to OU" Level="Tier 0" ID="AD7003" GroupName="RecycleBin-Restore" Type="ACE" Category="Domain Operations">
+    <ACE0 ACE="CreateChild, WriteProperty;All;00000000-0000-0000-0000-000000000000;00000000-0000-0000-0000-000000000000;None;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD7003>
+  <AD7004 Name="Create WMI Filter " Level="Tier 0" ID="AD7004" GroupName="WMIFilter-Create" Type="ACE" Category="Group Policy">
+    <ACE0 ACE="CreateChild, ReadProperty, WriteProperty, GenericExecute;None;00000000-0000-0000-0000-000000000000;00000000-0000-0000-0000-000000000000;None;Allow;False;None;None" Trustee="" Target="" />
+  </AD7004>
+  <AD7005 Name="Modify User Account Properties - accountExpires (Account Expires)" Level="DataMgmt" ID="AD7005" GroupName="User-Modify_AccountExpires" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;bf967915-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7005>
+  <AD7006 Name="Modify User Account Properties - userWorkstation (Log on to)" Level="DataMgmt" ID="AD7006" GroupName="User-Modify_Logonto" Type="ACE" Category="User Object">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;bf9679d7-0de6-11d0-a285-00aa003049e2;bf967aba-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7006>
+  <AD7007 Name="Log on through Remote Desktop Services to Domain Controller" Level="Tier 0" Instruction="Create a group policy for your delegation settings and link it to the domain controller OU. Grant this group Allow log on through Remote Desktop Services." ID="AD7007" GroupName="DomainController-Logon_RDP" Type="GPO" Category="DC Management" />
+  <AD7008 Name="Shutdown or Restart Domian Controller" Level="Tier 0" GroupName="DomainController-Shutdown" ID="AD7008" Type="GPO" Category="DC Management" />
+  <AD7010 Name="Managing the Domain Functional level" Level="Tier 0" GroupName="Domain-FunctionalLevel" ID="AD7010" Type="ACE" Category="Domain Operations" />
+  <AD7011 Name="Modify forest-wide LDAP settings" Level="Tier 0" GroupName="Forest-lDAPAdminLimits" ID="AD7011" Type="ACE" Category="Forest Operations" />
+  <AD7012 Name="Create and delete child domains" Level="Tier 0" GroupName="Forest-Manage_Domains" ID="AD7012" Type="ACE" Category="Forest Operations" />
+  <AD7013 Name="Manage Config Partition replication" Level="Tier 0" GroupName="ConfigNC-ManageReplication" ID="AD7013" Type="ACE" Category="Forest Operations" />
+  <AD7014 Name="Manage Domain Partition replication" Level="Tier 0" GroupName="Domain-ManageReplication" ID="AD7014" Type="ACE" Category="Domain Operations" />
+  <AD7015 Name="Read DNS Zone" Level="Tier 0" GroupName="DNS-ReadZone" ID="AD7015" Type="ACE" Category="DNS" />
+  <AD7016 Name="Manage Organizational Unit (Full Control)" Level="DataMgmt" ID="AD7016" GroupName="OU-FullControl" Type="ACE" Category="Oranizational Unit">
+    <ACE0 ACE="GenericAll;All;00000000-0000-0000-0000-000000000000;00000000-0000-0000-0000-000000000000;None;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD7016>
+  <AD7017 Name="Read Sysem event log" Level="Tier 0" Instruction="Create a group policy for your delegation settings and link it to the domain controller OU. This right is granted withthe following policy setting:Computer Configuration/Policies/Administrative Templates/Windows Components/Event Log Service/System/Configure log access”. Value should be the currently configured ChannelAccess rights (wevtutil gl &quot;system&quot; ) and (A;;0x1;;;&lt;Task Group Sid&gt;)." ID="AD7017" GroupName="DomainController-Read_SystemLog" Type="GPO" Category="DC Monitoring" />
+  <AD7018 Name="Read Security event log" Level="Tier 0" Instruction="Create a group policy for your delegation settings and link it to the domain controller OU. This right is granted withthe following policy setting:Computer Configuration/Policies/Administrative Templates/Windows Components/Event Log Service/Security/Configure log access”. Value should be the currently configured ChannelAccess rights (wevtutil gl &quot;Security&quot; ) and (A;;0x1;;;&lt;Task Group Sid&gt;)." ID="AD7018" GroupName="DomainController-Read_SecurityLog" Type="GPO" Category="DC Monitoring" />
+  <AD7019 Name="Read Application event log" Level="Tier 0" Instruction="Create a group policy for your delegation settings and link it to the domain controller OU. This right is granted withthe following policy setting:Computer Configuration/Policies/Administrative Templates/Windows Components/Event Log Service/Application/Configure log access”. Value should be the currently configured ChannelAccess rights (wevtutil gl &quot;Application&quot; ) and (A;;0x1;;;&lt;Task Group Sid&gt;)." ID="AD7019" GroupName="DomainController-Read_ApplicationLog" Type="GPO" Category="DC Monitoring" />
+  <AD7020 Name="Read all event log" Level="Tier 0" Instruction="Add the task group to the BUILTIN\Event Log Readers group." ID="AD7020" GroupName="DomainController-Read_Eventlogs" Type="GPO" Category="DC Monitoring" />
+  <AD7021 Name="Manage User Account  (Full Control)" Level="DataMgmt" ID="AD7021" GroupName="User-Manage" Type="ACE" Category="User Object">
+    <ACE0 ACE="GenericAll;Descendents;00000000-0000-0000-0000-000000000000;bf967aba-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7021>
+  <AD7022 Name="Manage Group (Full Control)" Level="DataMgmt" ID="AD7022" GroupName="Group-Manage" Type="ACE" Category="Group Object">
+    <ACE0 ACE="GenericAll;Descendents;00000000-0000-0000-0000-000000000000;bf967a9c-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7022>
+  <AD7037 Name="Deny Logon Restrictions  to T2 systems " Level="DataMgmt" GroupName="Computer-DenyLogon-T2" ID="AD7037" Type="GPO" Category="Control restrictions" />
+  <AD7038 Name="Deny Logon Restrictions  to T1 systems " Level="DataMgmt" GroupName="Computer-DenyLogon-T1" ID="AD7038" Type="GPO" Category="Control restrictions" />
+  <AD7039 Name="Deny Logon Restrictions  to T0 systems " Level="DataMgmt" GroupName="Computer-DenyLogon-T0" ID="AD7039" Type="GPO" Category="Control restrictions" />
+  <AD7040 Name="Modify User Account Properties - Account Restirctions Property Set" Level="DataMgmt" GroupName="User-Modify_AccountRestrictions" ID="AD7040" Type="ACE" Category="User Object" />
+  <AD7041 Name="Member of Domain Admins" Level="Tier 0" GroupName="Domain Admins" ID="AD7041" Type="Group" Category="Protected Groups">
+    <Group DomainRID="512" />
+  </AD7041>
+  <AD7042 Name="Member of Enterprise Admins" Level="Tier 0" GroupName="Enterprise Admins" ID="AD7042" Type="Group" Category="Protected Groups" />
+  <AD7043 Name="Member of Schema Admins" Level="Tier 0" GroupName="Schema Admins" ID="AD7043" Type="Group" Category="Protected Groups">
+    <Group ForestRID="518" />
+  </AD7043>
+  <AD7044 Name="Member of Account Operators" Level="Tier 0" GroupName="Account Operators" ID="AD7044" Type="Group" Category="Protected Groups">
+    <Group BuiltInSID="S-1-5-32-548" />
+  </AD7044>
+  <AD7046 Name="Join Computer" Level="DataMgmt" GroupName="Computer-Join" ID="AD7046" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="Self, DeleteTree, Delete, GenericRead;Descendents;00000000-0000-0000-0000-000000000000;bf967a86-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="WriteProperty;Descendents;3e0abfd0-126a-11d0-a060-00aa006c33ed;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="WriteProperty;Descendents;bf967953-0de6-11d0-a285-00aa003049e2;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE3 ACE="WriteProperty;Descendents;bf967950-0de6-11d0-a285-00aa003049e2;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE4 ACE="WriteProperty;Descendents;4c164200-20c0-11d0-a768-00aa006e0529;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE5 ACE="WriteProperty;Descendents;5f202010-79a5-11d0-9020-00c04fc2d4cf;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE6 ACE="ExtendedRight;Descendents;00299570-246d-11d0-a768-00aa006e0529;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7046>
+  <AD7047 Name="Manage Computer Account Limted (No Write Permission, No All Extended Rights), Cant read LAPS passwords" Level="DataMgmt" GroupName="Computer-Manage_Limited" ID="AD7047" Type="ACE" Category="Computer Object">
+    <ACE0 ACE="CreateChild, DeleteChild, Self, WriteProperty, DeleteTree, Delete, GenericRead, WriteOwner;Descendents;00000000-0000-0000-0000-000000000000;bf967a86-0de6-11d0-a285-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ExtendedRight;Descendents;68b1d179-0d15-4d4f-ab71-46152e79a7bc;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE2 ACE="ExtendedRight;Descendents;00299570-246d-11d0-a768-00aa006e0529;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE3 ACE="ExtendedRight;Descendents;ab721a56-1e2f-11d0-9819-00aa0040529b;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE4 ACE="ExtendedRight;Descendents;ab721a54-1e2f-11d0-9819-00aa0040529b;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE5 ACE="ExtendedRight;Descendents;ab721a53-1e2f-11d0-9819-00aa0040529b;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7047>
+  <AD7048 Name="Member of Server Operators" Category="Protected Groups" Level="Tier 0" GroupName="Server Operators" ID="AD7048" Type="Group" />
+  <AD7049 Name="Member of Administrators" Category="Protected Groups" Level="Tier 0" GroupName="Administrators" ID="AD7049" Type="Group" />
+  <AD7050 Name="Member of Backup Operators" Category="Protected Groups" Level="Tier 0" GroupName="Backup Operators" ID="AD7050" Type="Group" />
+  <AD7051 Name="Member of Print Operators" Category="Protected Groups" Level="Tier 0" GroupName="Print Operators" ID="AD7051" Type="Group" />
+  <AD7052 Name="Read AdmPwd Password (LAPS)" Category="Computer Object" Level="DataMgmt" GroupName="Computer-Read_AdmPwd" ID="AD7052" Type="ACE">
+    <ACE0 ACE="ReadProperty, ExtendedRight;Descendents;GUID:ms-Mcs-AdmPwd;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly&#xD;&#xA;&#xD;&#xA;" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty;Descendents;GUID:ms-Mcs-AdmPwdExpirationTime;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7052>
+  <AD7053 Name="Reset AdmPwd Password (LAPS)" Category="Computer Object" Level="DataMgmt" GroupName="Computer-Reset_AdmPwd" ID="AD7053" Type="ACE">
+    <ACE0 ACE="ReadProperty, WriteProperty;Descendents;GUID:ms-Mcs-AdmPwdExpirationTime;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7053>
+  <AD7054 Name="Read Bitlocker Recovery Key" Category="Computer Object" Level="DataMgmt" GroupName="Computer-Read_BitlockerRecovery" ID="AD7054" Type="ACE">
+    <ACE0 ACE="ReadProperty, ExtendedRight;Descendents;00000000-0000-0000-0000-000000000000;ea715d30-8f53-40d0-bd1e-6109186d782c;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly&#xD;&#xA;" Trustee="" Target="" />
+  </AD7054>
+  <AD7055 Name="Read TPM Owner" Category="Computer Object" Level="DataMgmt" GroupName="Computer-Read_TPMOwner" ID="AD7055" Type="ACE">
+    <ACE0 ACE="ReadProperty, ExtendedRight;Descendents;00000000-0000-0000-0000-000000000000;85045b6a-47a6-4243-a7cc-6890701f662c;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+    <ACE1 ACE="ReadProperty, ExtendedRight;Descendents;aa4e1a6d-550d-4e05-8c35-4afcb917a9fe;bf967a86-0de6-11d0-a285-00aa003049e2;ObjectAceTypePresent, InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7055>
+  <AD7056 Name="Create Contact Object" Category="Contact Object" Level="DataMgmt" GroupName="Contact-Create" ID="AD7056" Type="ACE">
+    <ACE0 ACE="CreateChild;All;5cb41ed0-0e4c-11d0-a286-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+  </AD7056>
+  <AD7057 Name="Manage Contact Object" Category="Contact Object" Level="DataMgmt" GroupName="Contact-Manage" ID="AD7057" Type="ACE">
+    <ACE0 ACE="GenericAll;Descendents;00000000-0000-0000-0000-000000000000;5cb41ed0-0e4c-11d0-a286-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7057>
+  <AD7058 Name="Delete Contact Object" Category="Contact Object" Level="DataMgmt" GroupName="Contact-Delete" ID="AD7058" Type="ACE">
+    <ACE0 ACE="DeleteChild;All;5cb41ed0-0e4c-11d0-a286-00aa003049e2;00000000-0000-0000-0000-000000000000;ObjectAceTypePresent;Allow;False;ContainerInherit;None" Trustee="" Target="" />
+    <ACE1 ACE="DeleteTree;Descendents;00000000-0000-0000-0000-000000000000;5cb41ed0-0e4c-11d0-a286-00aa003049e2;InheritedObjectAceTypePresent;Allow;False;ContainerInherit;InheritOnly" Trustee="" Target="" />
+  </AD7058>
+  <AD7059 Name="Member of Exchange Organization Administrators" Category="Exchange Managment" Level="Tier 1" GroupName="Exchange Organization Administrators" ID="AD7059" Type="Group" />
+  <AD7060 Name="Member of Compliance Management" Category="Exchange Managment" Level="Tier 1" GroupName="Compliance Management" ID="AD7060" Type="Group" />
+  <AD7061 Name="Member of Delegated Setup" Category="Exchange Managment" Level="Tier 1" GroupName="Delegated Setup" ID="AD7061" Type="Group" />
+  <AD7062 Name="Member of Discovery Management" Category="Exchange Managment" Level="Tier 1" GroupName="Discovery Management" ID="AD7062" Type="Group" />
+  <AD7063 Name="Member of Help Desk" Category="Exchange Managment" Level="Tier 1" GroupName="Help Desk" ID="AD7063" Type="Group" />
+  <AD7064 Name="Member of Hygiene Management" Category="Exchange Managment" Level="Tier 1" GroupName="Hygiene Management" ID="AD7064" Type="Group" />
+  <AD7065 Name="Member of Managed Availability Servers" Category="Exchange Managment" Level="Tier 1" GroupName="Managed Availability Servers" ID="AD7065" Type="Group" />
+  <AD7066 Name="Member of Organization Management" Category="Exchange Managment" Level="Tier 1" GroupName="Organization Management" ID="AD7066" Type="Group" />
+  <AD7067 Name="Member of Public Folder Management" Category="Exchange Managment" Level="Tier 1" GroupName="Public Folder Management" ID="AD7067" Type="Group" />
+  <AD7068 Name="Member of Recipient Management" Category="Exchange Managment" Level="Tier 1" GroupName="Recipient Management" ID="AD7068" Type="Group" />
+  <AD7069 Name="Member of Records Management" Category="Exchange Managment" Level="Tier 1" GroupName="Records Management" ID="AD7069" Type="Group" />
+  <AD7070 Name="Member of Server Management" Category="Exchange Managment" Level="Tier 1" GroupName="Server Management" ID="AD7070" Type="Group" />
+  <AD7071 Name="Member of UM Management" Category="Exchange Managment" Level="Tier 1" GroupName="UM Management" ID="AD7071" Type="Group" />
+  <AD7072 Name="Member of View-Only Organization Management" Category="Exchange Managment" Level="Tier 1" GroupName="View-Only Organization Management" ID="AD7072" Type="Group" />
+  <AD7073 Name="Local Server Administrator" Category="Local OS Management" Level="Tier 1" GroupName="Server-LocalAdmin" ID="AD7073" Type="GPO" />
+  <AD7074 Name="Local Workstation Administrator" Category="Local OS Management" Level="Tier 2" GroupName="Workstation-LocalAdmin" ID="AD7074" Type="GPO" />
+  <AD7075 Name="Remote Assistance User" Category="Remote Management" Level="" GroupName="Workstation-RemoteAssistance" ID="AD7075" Type="" />
+</Tasks>

@@ -1,0 +1,5 @@
+Task-Server-LocalAdmin-Exchange;Role-T1-Messaging
+Task-Server-LocalAdmin-Network Adminservers;Role-T1-COM
+Task-Server-LocalAdmin-Radius;Role-T1-COM
+Task-Server-LocalAdmin-SCOM;Role-T1-Monitoring
+Task-Server-LocalAdmin-Sharepoint;Role-T1-SharePoint

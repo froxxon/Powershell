@@ -1,0 +1,6 @@
+Role-T1-Operations;AGPMReviewers
+Role-T1-COM;DNSAdmins;DHCP Administrators;Task-Server-LocalUser-Adminservers
+Role-T1-SharePoint;Task-Server-LocalAdmin-Sharepoint;Task-Server-LocalUser-Adminservers
+Role-T1-Storage;Task-Server-LocalAdmin-StorageServers
+Role-T2-Messaging;RemoteAssistanceAdmin
+Role-T2-Operations;RemoteAssistanceAdmin
