@@ -1,4 +1,4 @@
-﻿Function Get-StifleRServerConnection {
+﻿Function Verify-ServerConnection {
 
     param ( [String]$Server )
 
@@ -87,7 +87,7 @@ Function Get-Subnet {
         $ClassProperties = @()
         $SubnetInfo = @()
 
-        Get-StifleRServerConnection $Server
+        Verify-ServerConnection $Server
 
         # Check if the specified properties exists in the Subnet class
         if ( $Property -ne '*' ) {
@@ -166,6 +166,9 @@ Function Get-Client {
     .PARAMETER ExactMatch
         Use this switch if you want to look for the exact match of the specified value of the Client parameter
 
+    .PARAMETER SubnetID
+        Use this parameter if you want to display all clients on a specific subnet
+
     .EXAMPLE
 	Get-StiflerClient -Client Client01 -Server 'server01'
         Pull information about the client Client01 from server01
@@ -184,19 +187,20 @@ Function Get-Client {
     .FUNCTIONALITY
         Clients
     #>
-    
+
     param (
-        [Parameter(Mandatory, HelpMessage = "Specify the client you want to retrieve information about", ValueFromPipeline, ValueFromPipelineByPropertyName)][ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory, HelpMessage = "Specify the client you want to retrieve information about", ValueFromPipeline, ValueFromPipelineByPropertyName,ParameterSetName = "Client")][ValidateNotNullOrEmpty()]
         [string[]]$Client,
         [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
-        [Parameter(HelpMessage = "Specify specific properties")]
+        [Parameter(HelpMessage = "Specify specific properties",ParameterSetName = "Subnet")]
+        [string]$SubnetID,
         [array]$Property,
         [switch]$ExactMatch
     )
 
     begin {
-        Get-StifleRServerConnection $Server
+        Verify-ServerConnection $Server
     
         $defaultProperties = @(‘ComputerName’,’ClientIPAddress','Version')
         $defaultDisplayPropertySet = New-Object System.Management.Automation.PSPropertySet(‘DefaultDisplayPropertySet’,[string[]]$defaultProperties)
@@ -204,14 +208,31 @@ Function Get-Client {
 
         If ( $Property -eq '*' ) { $defaultProperties = '*' }
         If ( $Property -ne $Null -and $Property -notcontains '*' ) { $defaultProperties = $Property }
+
+        If ( $SubnetID ) {
+            $VerifyIPaddress = $([bool]($SubnetID -as [ipaddress] -and ($SubnetID.ToCharArray() | ?{$_ -eq "."}).count -eq 3))
+            If ( $VerifyIPaddress ) {
+                if ( Get-Subnet -Server $Server -SubnetID $Target ) { $SubnetIDExist = $True }
+            }
+        }
     }
 
     process {
         if ( $ExactMatch ) {
-            $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "ComputerName = '$Client'" -ComputerName $Server
+            If ( $SubnetIDExist ) {
+                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "NetworkID = '$SubnetID'" -ComputerName $Server
+            }
+            Else {
+                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "ComputerName = '$Client'" -ComputerName $Server
+            }
         }
         Else {
-            $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "ComputerName LIKE '%$Client%'" -ComputerName $Server
+            If ( $SubnetIDExist ) {
+                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "NetworkID LIKE '%$SubnetID%'" -ComputerName $Server
+            }
+            Else {
+                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "ComputerName LIKE '%$Client%'" -ComputerName $Server
+            }
         }
         $ClientInformation | Add-Member MemberSet PSStandardMembers $PSStandardMembers
     }
@@ -222,6 +243,46 @@ Function Get-Client {
 }
 
 Function Set-BITSJob {
+
+    <#
+    .SYNOPSIS
+        Use this to cancel, complete, resume or suspend the downloads in StifleR.
+
+    .DESCRIPTION
+        If you need to push the big red button, go no further!
+        Details:
+        - This skips the necessity of using WBEMTest or similiar tools to WMIExplorer to get the same functionality...
+
+    .PARAMETER Target (Identity)
+        Specify the client or subnetID that will be targeted for the action, this parameter can't be used in combination with TargetLevel All
+
+    .PARAMETER TargetLevel
+        Specify what kind of target you would like, a single Client, a specific SubnetID och All
+
+    .PARAMETER Action
+        Specify if you want to Cancel, Complete, Resume or Suspend all jobs
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel-Target 192.168.20.2
+        Cancels all current transfers on the subnet 192.168.20.2
+
+    .EXAMPLE
+	Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01
+        Suspends all current transfers on the client Client01
+    
+    .EXAMPLE
+	Set-StiflerBITSJob -Server server01 -TargetLevel All -Action Resume
+        Resumes all the transfers known to StifleR as suspended earlier on all subnets
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Set-StiflerBITSJob-Get-5607a465
+
+    .FUNCTIONALITY
+        BITS
+    #>
     
     [CmdletBinding()]
     param (
@@ -237,7 +298,7 @@ Function Set-BITSJob {
     )
 
     begin {
-        Get-StifleRServerConnection $Server
+        Verify-ServerConnection $Server
     }
 
     process {
@@ -307,32 +368,39 @@ Function Update-SubnetBandwidth {
     .DESCRIPTION
     This function'll update StifleR managed subnet bandwidth
     
-    .PARAMETER SubnetId
+    .PARAMETER SubnetID
     Specify subnet you want to update
     
     .PARAMETER TargetBandwidth
     Specify targeted bandwidth in MB
+
+    .PARAMETER LEDBATTargetBandwidth
+    Specify targeted LEDBAT bandwidth in MB
     
     .PARAMETER WellConnected
     Specify if subnet should be tagged as well connected
     
-    .PARAMETER StiflerServer
+    .PARAMETER Server
     Specify StifleR server name, default is localhost
     
     .EXAMPLE
-    Update-SrSubnetBandwidth -SubnetId "192.168.2.0" -TargetBandwidth 20
+    Update-StifleRSubnetBandwidth -SubnetId "192.168.2.0" -TargetBandwidth 20 -Server server01
+
     .EXAMPLE
-    Update-SrSubnetBandwidth -SubnetId "192.168.2.0" -WellConnected Yes
+    Update-StifleRSubnetBandwidth -SubnetId "192.168.2.0" -LEDBATTargetBandwidth 20 -Server server01
+
     .EXAMPLE
-    Update-SrSubnetBandwidth -SubnetId "192.168.2.0" -WellConnected No
+    Update-StifleRSubnetBandwidth -SubnetId "192.168.2.0" -WellConnected Yes (/No) -Server server01
+
     .EXAMPLE
-    Get-SrSubnet -Filter "192.168" | Update-SrSubnetBandwidth -TargetBandwidth 20
+    Get-StifleRSubnet -SubnetID '192.168' -Server server01 | Update-SrSubnetBandwidth -TargetBandwidth 20 -Server server01
     
     .NOTES
-    Author:         Michal Kirejczyk
-    Version:        1.0.1
-    Date:           2018-12-13
+    Author:         Michal Kirejczyk (original) / Fredrik Bergman (modifier)
+    Version:        1.0.2
+    Date:           2019-04-10
     What's new:
+                    1.0.2 (2019-04-10) - Added LEDBATBandwidth modifier and some modifications of the cmdlet
                     1.0.1 (2018-12-13) - Function now requires exact subnetId to be provided, use Get-SrSubnet | Update-SrSubnetBandwidth if you want to use wildcard 
                     1.0.0 (2018-12-12) - Function Created
     #>
@@ -342,94 +410,61 @@ Function Update-SubnetBandwidth {
         [Parameter(Mandatory, HelpMessage = "Specify subnets you want to update", ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = "Default")]
         [Parameter(Mandatory, HelpMessage = "Specify subnets you want to update", ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = "LEDBATTargetBandwidth")]
         [Parameter(Mandatory, HelpMessage = "Specify subnets you want to update", ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = "WellConnected")]
-        [ValidateNotNullOrEmpty()]
-        [string[]]$SubnetId,
+        [ValidateNotNullOrEmpty()][string[]]$SubnetID,
         [Parameter(Mandatory, HelpMessage = "Specify targeted bandwidth in MB", Position = 1, ParameterSetName = "Default")]
-        [ValidateNotNullOrEmpty()]
-        [int]$TargetBandwidth,
+        [ValidateNotNullOrEmpty()][int]$TargetBandwidth,
         [Parameter(Mandatory, HelpMessage = "Specify LEDBAT targeted bandwidth in MB", Position = 1, ParameterSetName = "LEDBATTargetBandwidth")]
-        [ValidateNotNullOrEmpty()]
-        [int]$LEDBATTargetBandwidth,
+        [ValidateNotNullOrEmpty()][int]$LEDBATTargetBandwidth,
         [Parameter(Mandatory, HelpMessage = "Specify this switch if you want to set subnet to well connected", Position = 2, ParameterSetName = "WellConnected")]
-        [ValidateSet("Yes", "No")]
-        [ValidateNotNullOrEmpty()]
-        [string]$WellConnected,
+        [ValidateSet("Yes", "No")][ValidateNotNullOrEmpty()][string]$WellConnected,
         [Parameter(Mandatory = $false, HelpMessage = "Specify StifleR server", Position = 3, ParameterSetName = "Default")]
         [Parameter(Mandatory = $false, HelpMessage = "Specify StifleR server", Position = 3, ParameterSetName = "LEDBATTargetBandwidth")]
         [Parameter(Mandatory = $false, HelpMessage = "Specify StifleR server", Position = 3, ParameterSetName = "WellConnected")]
-        [ValidateNotNullOrEmpty()]
-        [string]$StiflerServer = $env:COMPUTERNAME
+        [ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')][string]$Server = $env:COMPUTERNAME
     )
     begin {
-        # Populate default Write-Log parameters
-        $functionName = $MyInvocation.MyCommand
-        $PSDefaultParameterValues.Clear()
-        $PSDefaultParameterValues.Add('Write-Log:ExecutionScenario', "$ExecutionScenario")
-        $PSDefaultParameterValues.Add('Write-Log:FunctionName', "$functionName")
-        $PSDefaultParameterValues.Add('Write-Log:LogPath', "$(Join-Path -Path $env:ProgramData -ChildPath "2Pint Software\StifleR\Logs\stiflerservermodule.log")")
-        $PSDefaultParameterValues.Add('Write-Log:ErrorAction', "SilentlyContinue")
-        # If verbose write verbose
-        if ($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent) {
-            $PSDefaultParameterValues.Add('Write-Log:Verbose', $true)
-            $PSDefaultParameterValues.Add('Get-SrSubnet:Verbose', $true)
-        }
+        Verify-ServerConnection $Server
     }
+
     process {
         try {
             # Get Subnets
-            Write-Host "Attempting to get $SubnetId"
-            # Execute every subnet
-            foreach ($s in $SubnetId) {              
-                $query = "SELECT * FROM Subnets WHERE subnetId = '$s'"
-                $subnet = Get-CimInstance -Namespace Root\StifleR -Query $query -ComputerName $StiflerServer
-                if ($subnet) {
+            foreach ($s in $SubnetID) {              
+                $Subnet = Get-CimInstance -Namespace 'root\StifleR' -Query "SELECT * FROM Subnets WHERE SubnetID = '$s'" -ComputerName $Server
+                if ($Subnet) {
                     try {
-                        # Update bandwidth based on targetedbandwidth or wellconnected
-                        #Target bandwidth
+                        # Update bandwidth based on TargetedBandwidth, LEDBATTargetBandwidth or WellConnected
                         if ($TargetBandwidth) {
                             [int]$calculateToKb = $TargetBandwidth * 1024
-                            Write-Host "Attempting to update $SubnetId bandwidth to $TargetBandwidth MB"
-                            if ($subnet.TargetBandwidth -ne $calculateToKb) {
-                                Set-CimInstance -InputObject $subnet -ComputerName $StiflerServer -Property @{TargetBandwidth = $calculateToKb} -ErrorAction Stop
-                                Write-Host "$SubnetId updated"
+                            if ($Subnet.TargetBandwidth -ne $calculateToKb) {
+                                #Set-CimInstance -InputObject $Subnet -ComputerName $Server -Property @{TargetBandwidth = $calculateToKb} -ErrorAction Stop
+                                Write-Host "$SubnetId Targetbandwidth successfully updated"
                             }
-                            else {
-                                Write-Host "No updated needed on $SubnetId"
-                            }
+                            else { Write-Host "$SubnetId Targetbandwidth already has the specified value" }
                         }
-                        #Target bandwidth
+
                         if ($LEDBATTargetBandwidth) {
                             [int]$calculateToKb = $LEDBATTargetBandwidth * 1024
-                            Write-Host "Attempting to update $SubnetId LEDBAT bandwidth to $LEDBATTargetBandwidth MB"
                             if ($subnet.LEDBATTargetBandwidth -ne $calculateToKb) {
-                                Set-CimInstance -InputObject $subnet -ComputerName $StiflerServer -Property @{LEDBATTargetBandwidth = $calculateToKb} -ErrorAction Stop
-                                Write-Host "$SubnetId updated"
+                                #Set-CimInstance -InputObject $subnet -ComputerName $Server -Property @{LEDBATTargetBandwidth = $calculateToKb} -ErrorAction Stop
+                                Write-Host "$SubnetId LEDTargetbandwidth successfully updated"
                             }
-                            else {
-                                Write-Host "No updated needed on $SubnetId"
-                            }
+                            else { Write-Host "$SubnetId LEDTargetbandwidth already has the specified value" }
                         }
-                        # Well connected = Yes
-                        elseif ($WellConnected -eq "Yes") {
-                            Write-Host "Attempting to set $SubnetId to well connected"
+
+                        if ($WellConnected -eq "Yes") {
                             if ($subnet.WellConnected -ne $true) {
-                                Set-CimInstance -InputObject $subnet -ComputerName $StiflerServer -Property @{WellConnected = $true} -ErrorAction Stop
-                                Write-Host "$SubnetId updated"
+                                #Set-CimInstance -InputObject $subnet -ComputerName $Server -Property @{WellConnected = $true} -ErrorAction Stop
+                                Write-Host "$SubnetId WellConnected successfully updated"
                             }
-                            else {
-                                Write-Host "No updated needed on $SubnetId"
-                            }
+                            else { Write-Host "$SubnetId Wellconnected already has the specified value" }
                         }
-                        # Well connected = No
                         elseif ($WellConnected -eq "No") {
-                            Write-Host "Attempting to disable well connected on $SubnetId"
                             if ($subnet.WellConnected -ne $false) {
-                                Set-CimInstance -InputObject $subnet -ComputerName $StiflerServer -Property @{WellConnected = $false} -ErrorAction Stop
-                                Write-Host "$SubnetId updated"
+                                #Set-CimInstance -InputObject $subnet -ComputerName $Server -Property @{WellConnected = $false} -ErrorAction Stop
+                                Write-Host "$SubnetId WellConnected successfully disabled"
                             }
-                            else {
-                                Write-Host "No updated needed on $SubnetId"
-                            }
+                            else { Write-Host "$SubnetId WellConnected already has the specified value" }
                         }
                     }
                     catch {
@@ -463,7 +498,7 @@ Function Add-Subnet {
     )
 
     begin {
-        Get-StifleRServerConnection $Server
+        Verify-ServerConnection $Server
     }
 
     process {
@@ -488,7 +523,7 @@ Function Remove-Subnet {
     )
 
     begin {
-        Get-StifleRServerConnection $Server
+        Verify-ServerConnection $Server
     }
 
     process {
@@ -496,6 +531,67 @@ Function Remove-Subnet {
 
     end {
         write-host "Cmdlet in development"
+    }
+
+}
+
+Function Get-SignalRHubHealth {
+
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Verify-ServerConnection $Server
+    }
+
+    process {
+        Get-CIMInstance -Namespace 'root\StifleR' -Query "Select * from StiflerEngine WHERE id = 1" -ComputerName $Server | FL -property NumberOfClients, ActiveNetworks, ActiveRedLeaders,HubConnectionInitiated,HubConnectionCompleted,ClientINfoInitiated, ClientInfoCompleted, JobReportInitiated ,JobReportCompleted,JobReporDeltatInitiated,JobReportDeltaCompleted
+    }
+}
+
+Function Get-SubnetQUeues {
+
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Verify-ServerConnection $Server
+    }
+
+    process {
+        $Clients = Get-CIMInstance -Namespace 'root\StifleR' -Query "Select * from Clients" -ComputerName $Server | Select TotalQueueSize_BITS, TotalQueueSize_DO, NetworkID
+        $Clients | Group-Object NetworkID | %{
+            New-Object psobject -Property @{
+                NetworkID = $_.Name
+                BITSTotal =“{0:N2}” -f (($_.Group | Measure-Object TotalQueueSize_BITS -Sum).Sum /1MB)
+                DOTotal = “{0:N2}” -f(($_.Group | Measure-Object TotalQueueSize_DO -Sum).Sum /1MB)
+                Clients = $_.Count
+            }
+        } |  Sort-Object -Property Clients | FT -AutoSize
+        Write-Host "Total Client Count: " $Clients.count
+    }
+}
+
+Function Get-ClientVersions {
+
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Verify-ServerConnection $Server
+    }
+
+    process {
+        Get-CimInstance -Namespace 'root\StifleR' -Query "Select * from Clients" -ComputerName $Server | Select -Unique version
     }
 
 }
