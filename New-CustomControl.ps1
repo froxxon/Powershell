@@ -1,4 +1,7 @@
-﻿Function New-CustomControl {
+# Examples of one way to simplify the creation of Formobjects, no errorhandling nor ParameterSets added at this point though...
+# 2019-05-03 - Created by Fredrik Bergman
+
+Function New-CustomControl {
 
     param (
         [ValidateSet('Button','CheckBox','CheckedListBox','Form','Label','ListBox','RadioButton','TabControl','TabPage','TextBox')]
