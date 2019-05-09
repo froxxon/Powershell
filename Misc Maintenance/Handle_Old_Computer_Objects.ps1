@@ -1,4 +1,8 @@
-﻿# Change to your environments site code for SCCM
+# This scripts is supposed to run as a scheduled task with a service acccounts
+# Required permissions for this to work is that this account can Disable and Delete computer objects in Active Directory
+# and Delete resources from SCCM
+
+# Change to your environments site code for SCCM
 $SCCMSiteCode = "<ENTER SITE CODE>"
 # Change to path where logfiles should be saved
 $LogFile = "<ENTER PATH>\Handle_Old_Computer_Objects.log"
