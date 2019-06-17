@@ -259,7 +259,7 @@ function Change-Row {
             $ListBox.Items.Clear()
             foreach ( $Line in $DefaultContent ) {
                 $ListBox.Items.Add($Line) | out-null
-                ff ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
+                if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
                     $menuOptTaskbar.Checked = $true
                 }
                 else {
@@ -292,7 +292,7 @@ function Change-Row {
                     $ListBox.Items.Clear()
                     foreach ( $Line in $DefaultContent ) {
                         $ListBox.Items.Add($Line) | out-null
-                        ff ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
+                        if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
                             $menuOptTaskbar.Checked = $true
                         }
                         else {
@@ -324,7 +324,7 @@ function Change-Row {
                     $ListBox.Items.Clear()
                     foreach ( $Line in $Content ) {
                         $ListBox.Items.Add($Line) | out-null
-                        ff ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
+                        if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
                             $menuOptTaskbar.Checked = $true
                         }
                         else {
