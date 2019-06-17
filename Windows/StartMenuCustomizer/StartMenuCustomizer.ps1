@@ -37,7 +37,7 @@ function Verify-CloseUnsavedChanges {
 }
 
 function Manage-Taskbarsettings {
-    write-host $menuOptTaskbar.CheckState
+    #write-host $menuOptTaskbar.CheckState
     if ( $menuOptTaskbar.Checked -eq $true ) {
     }
     else {
@@ -550,9 +550,9 @@ function Change-Row {
         foreach ( $Line in $DefaultContent ) {
             $ListBox.Items.Add($Line) | out-null
             if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
-                $menuOptTaskbar.CheckState
+                #$menuOptTaskbar.CheckState
                 $menuOptTaskbar.Checked = $true
-                $menuOptTaskbar.CheckState
+                #$menuOptTaskbar.CheckState
             }
             else {
                 $menuOptTaskbar.Checked = $false
