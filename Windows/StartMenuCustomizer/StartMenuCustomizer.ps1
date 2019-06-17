@@ -49,7 +49,7 @@ function Manage-Taskbarsettings {
     }
 }
 
-function Add-Item ( [string]$string = "hej" ) {
+function Insert-NewItem ( [string]$string = "hej" ) {
     $PanelNewItem.BringToFront()
 }
 
@@ -157,12 +157,11 @@ function Move-SelectedItem ([string]$Direction) {
         $ListBox.Items.RemoveAt($pos +2)
     }
     $ListBox.EndUpdate()
-    Change-Row
+    Change-ListBoxRow
     $global:Modified = $true
 }
 
-function Change-Row {
-
+function Change-ListBoxRow {
     if ( $ListBox.SelectedItem.TrimStart() -like "*start:Group*" ) {
         $PanelGroup.BringToFront()
         $ComboType.SelectedItem = 'Group'
@@ -205,7 +204,6 @@ function Change-Row {
     }
     $PositionRow.Text = "$($ListBox.SelectedIndex + 1)"
 
-    #if ( $ListBox.SelectedItem.TrimStart() -like '<start:*' -or $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:*' -or ($ListBox.SelectedItem.TrimStart() -like '<taskbar:*' -and $ListBox.SelectedItem.TrimStart() -notlike '<taskbar:TaskbarPinList*')) {
     if ( $ListBox.SelectedItem.TrimStart() -like '<start:*' -or $ListBox.SelectedItem.TrimStart() -like '</start:*' -or $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:Start*' -or $ListBox.SelectedItem.TrimStart() -like '<taskbar:*' ) {
         $BtnMoveUp.Enabled = $true
         $BtnMoveDown.Enabled = $true
@@ -224,6 +222,16 @@ function Change-Row {
             $BtnRemoveItem.Enabled = $false
             If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like "*<start:Group*" ) { $BtnMoveUp.Enabled = $false }
             If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like "*<start:Group*" ) { $BtnMoveDown.Enabled = $false }
+        }
+        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
+            $BtnRemoveItem.Enabled = $false
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like "*</start:Folder*" ) { $BtnMoveUp.Enabled = $false }
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like "*</start:Folder*" ) { $BtnMoveDown.Enabled = $false }
+        }
+        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
+            $BtnRemoveItem.Enabled = $false
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like "*</start:Group*" ) { $BtnMoveUp.Enabled = $false }
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like "*</start:Group*" ) { $BtnMoveDown.Enabled = $false }
         }
         if ( $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:*' -or $ListBox.SelectedItem.TrimStart() -like '<taskbar:TaskbarPinList*') {
             $BtnMoveUp.Enabled = $false
@@ -269,7 +277,7 @@ function Change-Row {
 #endregion
 
 #region Menu
-    function New-File {
+    function New-LayoutFile {
         $SaveChanges = Verify-CloseUnsavedChanges
         if ( $SaveChanges -eq 'No' ) {
             $ListBox.Items.Clear()
@@ -324,7 +332,7 @@ function Change-Row {
         }
     }
     
-    function Open-File {
+    function Open-LayoutFile {
         $SaveChanges = Verify-CloseUnsavedChanges
         if ( $SaveChanges -eq 'No' ) {
             $inputFileName = $Null
@@ -365,19 +373,19 @@ function Change-Row {
                     Add-Content -Path $CurrentFileName -Value $Line -Encoding UTF8 -Force
                 }
                 $global:Modified = $false
-                Open-File
+                Open-LayoutFile
             }
             else {
                 $Result = Save-As
                 if ( $Result -eq 'OK' ) {
                     $global:Modified = $false
-                    Open-File
+                    Open-LayoutFile
                 }
             }
         }
     }
     
-    function Save {
+    function Save-LayoutFile {
         if ( $CurrentFileName -ne '' ) {
             Out-File $CurrentFileName -Encoding UTF8 -Force
             foreach ( $Line in $ListBox.Items ) {
@@ -386,10 +394,10 @@ function Change-Row {
             $global:Modified = $false
             $mainForm.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
         }
-        else { Save-As }
+        else { Save-As-NewLayoutFile }
     }
     
-    function Save-As {
+    function Save-As-NewLayoutFile {
         $outputFileName = $Null
         $selectSaveAsForm = New-Object System.Windows.Forms.SaveFileDialog
         $selectSaveAsForm.Filter = "XML-file (*.xml)|*.xml"
@@ -411,7 +419,7 @@ function Change-Row {
         return $Result
     }
 
-    function About {
+    function About_SMLC {
         $aboutForm          = New-Object System.Windows.Forms.Form
         $aboutFormExit      = New-Object System.Windows.Forms.Button
         $aboutFormImage     = New-Object System.Windows.Forms.PictureBox
@@ -462,19 +470,19 @@ function Change-Row {
     [void]$menuMain.Items.Add($menuFile)
     $menuNew.Text = "New"
     $menuNew.ShortcutKeys = "Ctrl+N"
-    $menuNew.Add_Click({New-File})
+    $menuNew.Add_Click({New-LayoutFile})
     [void]$menuFile.DropDownItems.Add($menuNew)
     $menuOpen.Text = "Open..."
     $menuOpen.ShortcutKeys = "Ctrl+O"
-    $menuOpen.Add_Click({Open-File})
+    $menuOpen.Add_Click({Open-LayoutFile})
     [void]$menuFile.DropDownItems.Add($menuOpen)
     $menuSave.Text = "Save"
     $menuSave.ShortcutKeys = "Ctrl+S"
-    $menuSave.Add_Click({Save})
+    $menuSave.Add_Click({Save-LayoutFile})
     [void]$menuFile.DropDownItems.Add($menuSave)
     $menuSaveAs.Text = "Save As..."
     $menuSaveAs.ShortcutKeys = "Shift+Ctrl+S"
-    $menuSaveAs.Add_Click({Save-As})
+    $menuSaveAs.Add_Click({Save-As-NewLayoutFile})
     [void]$menuFile.DropDownItems.Add($menuSaveAs)
 
     # Menu Options - Tools / Options
@@ -488,7 +496,7 @@ function Change-Row {
     [void]$menuOptions.DropDownItems.Add($menuOptTaskbar)
         
     $menuAbout.Text = "About"
-    $menuAbout.Add_Click({About})
+    $menuAbout.Add_Click({About_SMLC})
     [void]$menuMain.Items.Add($menuAbout)    
 #endregion
 #endregion
@@ -537,7 +545,7 @@ function Change-Row {
     $BtnInsertNewItem.Enabled = $false
     $BtnInsertNewItem.Width = 100
     $BtnInsertNewItem.Location = New-Object System.Drawing.Point(917,702)
-    $BtnInsertNewItem.Add_Click({Add-Item})
+    $BtnInsertNewItem.Add_Click({Insert-NewItem})
     $mainForm.Controls.Add($BtnInsertNewItem)
     
     $BtnRemoveItem = New-Object System.Windows.Forms.Button
@@ -561,7 +569,7 @@ function Change-Row {
     $ListBox.HorizontalScrollbar=$true
     $ListBox.Width = 1017
     $ListBox.Height = 670
-    $ListBox.Add_SelectedIndexChanged({Change-Row})
+    $ListBox.Add_SelectedIndexChanged({Change-ListBoxRow})
     if ( $DefaultContent -ne $Null ) {
         if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
             $menuOptTaskbar.Checked = $true
