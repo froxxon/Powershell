@@ -37,8 +37,13 @@ function Verify-CloseUnsavedChanges {
 }
 
 function Manage-Taskbarsettings {
-    #write-host $menuOptTaskbar.CheckState
     if ( $menuOptTaskbar.Checked -eq $true ) {
+        $ListBox.Items.Insert($($ListBox.Items.Count -1),'    <CustomTaskbarLayoutCollection PinListPlacement="Replace">')
+        $ListBox.Items.Insert($($ListBox.Items.Count -1),'      <defaultlayout:TaskbarLayout>')
+        $ListBox.Items.Insert($($ListBox.Items.Count -1),'        <taskbar:TaskbarPinList>')
+        $ListBox.Items.Insert($($ListBox.Items.Count -1),'        </taskbar:TaskbarPinList>')
+        $ListBox.Items.Insert($($ListBox.Items.Count -1),'      </defaultlayout:TaskbarLayout>')
+        $ListBox.Items.Insert($($ListBox.Items.Count -1),'    </CustomTaskbarLayoutCollection>')
     }
     else {
     }
@@ -200,16 +205,27 @@ function Change-Row {
     }
     $PositionRow.Text = "$($ListBox.SelectedIndex + 1)"
 
-    if ( $ListBox.SelectedItem.TrimStart() -like '<start:*' -or $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:*' -or ($ListBox.SelectedItem.TrimStart() -like '<taskbar:*' -and $ListBox.SelectedItem.TrimStart() -notlike '<taskbar:TaskbarPinList*')) {
+    #if ( $ListBox.SelectedItem.TrimStart() -like '<start:*' -or $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:*' -or ($ListBox.SelectedItem.TrimStart() -like '<taskbar:*' -and $ListBox.SelectedItem.TrimStart() -notlike '<taskbar:TaskbarPinList*')) {
+    if ( $ListBox.SelectedItem.TrimStart() -like '<start:*' -or $ListBox.SelectedItem.TrimStart() -like '</start:*' -or $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:Start*' -or $ListBox.SelectedItem.TrimStart() -like '<taskbar:*' ) {
         $BtnMoveUp.Enabled = $true
         $BtnMoveDown.Enabled = $true
         $BtnRemoveItem.Enabled = $true
         $BtnInsertNewItem.Enabled = $true
-        if ( $ListBox.Items.Item($ListBox.SelectedIndex-1)  -like "*<defaultlayout:*" -or $ListBox.Items.Item($ListBox.SelectedIndex-1)  -like "*<taskbar:taskBarPinList*" ) { $BtnMoveUp.Enabled = $false }
+        if ( $ListBox.Items.Item($ListBox.SelectedIndex-1)  -like "*<defaultlayout:Start*" -or $ListBox.Items.Item($ListBox.SelectedIndex-1)  -like "*<taskbar:taskBarPinList*" ) { $BtnMoveUp.Enabled = $false }
         else { $BtnMoveUp.Enabled = $true }
-        if ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like "*</defaultlayout:*" -or $ListBox.Items.Item($ListBox.SelectedIndex+1)  -like "*</taskbar:*" ) { $BtnMoveDown.Enabled = $false }
+        if ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like "*</defaultlayout:Start*" -or $ListBox.Items.Item($ListBox.SelectedIndex+1)  -like "*</taskbar:*" ) { $BtnMoveDown.Enabled = $false }
         else { $BtnMoveDown.Enabled = $true }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:*' ) {
+        if ( $ListBox.SelectedItem.TrimStart() -like '</start:Folder*' ) {
+            $BtnRemoveItem.Enabled = $false
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like "*<start:Folder*" ) { $BtnMoveUp.Enabled = $false }
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like "*<start:Folder*" ) { $BtnMoveDown.Enabled = $false }
+        }
+        if ( $ListBox.SelectedItem.TrimStart() -like '</start:Group*' ) {
+            $BtnRemoveItem.Enabled = $false
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like "*<start:Group*" ) { $BtnMoveUp.Enabled = $false }
+            If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like "*<start:Group*" ) { $BtnMoveDown.Enabled = $false }
+        }
+        if ( $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:*' -or $ListBox.SelectedItem.TrimStart() -like '<taskbar:TaskbarPinList*') {
             $BtnMoveUp.Enabled = $false
             $BtnMoveDown.Enabled = $false
             $BtnRemoveItem.Enabled = $false
@@ -257,14 +273,14 @@ function Change-Row {
         $SaveChanges = Verify-CloseUnsavedChanges
         if ( $SaveChanges -eq 'No' ) {
             $ListBox.Items.Clear()
+            if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
+                $menuOptTaskbar.Checked = $true
+            }
+            else {
+                $menuOptTaskbar.Checked = $false
+            }
             foreach ( $Line in $DefaultContent ) {
                 $ListBox.Items.Add($Line) | out-null
-                if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
-                    $menuOptTaskbar.Checked = $true
-                }
-                else {
-                    $menuOptTaskbar.Checked = $false
-                }
             }
             $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
             $global:CurrentFileName = ''
@@ -290,14 +306,14 @@ function Change-Row {
                 $Result = Save-As
                 if ( $Result -eq 'OK' ) {
                     $ListBox.Items.Clear()
+                    if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
+                        $menuOptTaskbar.Checked = $true
+                    }
+                    else {
+                        $menuOptTaskbar.Checked = $false
+                    }
                     foreach ( $Line in $DefaultContent ) {
                         $ListBox.Items.Add($Line) | out-null
-                        if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
-                            $menuOptTaskbar.Checked = $true
-                        }
-                        else {
-                            $menuOptTaskbar.Checked = $false
-                        }
                     }
                     $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
                     $global:CurrentFileName = ".\Untitled1.xml"
@@ -320,16 +336,16 @@ function Change-Row {
             if ($Result -eq "OK") {
                 $inputFileName = $selectOpenForm.FileName
                 $Content = Get-Content $inputFileName -Encoding UTF8
+                if ( $Content -like '*<CustomTaskbarLayoutCollection*' ) {
+                    $menuOptTaskbar.Checked = $true
+                }
+                else {
+                    $menuOptTaskbar.Checked = $false
+                }
                 if ( $Content[0] -like '<LayoutModificationTemplate *' ) {
                     $ListBox.Items.Clear()
                     foreach ( $Line in $Content ) {
                         $ListBox.Items.Add($Line) | out-null
-                        if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
-                            $menuOptTaskbar.Checked = $true
-                        }
-                        else {
-                            $menuOptTaskbar.Checked = $false
-                        }
                     }
                     $global:CurrentFileName = $inputFileName
                     $global:Modified = $false
@@ -547,16 +563,14 @@ function Change-Row {
     $ListBox.Height = 670
     $ListBox.Add_SelectedIndexChanged({Change-Row})
     if ( $DefaultContent -ne $Null ) {
+        if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
+            $menuOptTaskbar.Checked = $true
+        }
+        else {
+            $menuOptTaskbar.Checked = $false
+        }
         foreach ( $Line in $DefaultContent ) {
             $ListBox.Items.Add($Line) | out-null
-            if ( $Line -like '*<CustomTaskbarLayoutCollection*' ) {
-                #$menuOptTaskbar.CheckState
-                $menuOptTaskbar.Checked = $true
-                #$menuOptTaskbar.CheckState
-            }
-            else {
-                $menuOptTaskbar.Checked = $false
-            }
         }
     }
     if ( $ListBox.Items.Count -gt 0 ) { $ListBox.SelectedIndex = 0 }
