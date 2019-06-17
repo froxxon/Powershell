@@ -1,0 +1,18 @@
+<La4youtModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification" xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout">
+  <LayoutOptions StartTileGroupCellWidth="6" StartTileGroupsColumnCount="1" />
+  <DefaultLayoutOverride LayoutCustomizationRestrictionType="OnlySpecifiedGroups">
+    <StartLayoutCollection>
+      <defaultlayout:StartLayout GroupCellWidth="6">
+hej
+hej
+hej
+      </defaultlayout:StartLayout>
+    </StartLayoutCollection>
+  </DefaultLayoutOverride>
+    <CustomTaskbarLayoutCollection PinListPlacement="Replace">
+      <defaultlayout:TaskbarLayout>
+        <taskbar:TaskbarPinList>
+        </taskbar:TaskbarPinList>
+      </defaultlayout:TaskbarLayout>
+    </CustomTaskbarLayoutCollection>
+</LayoutModificationTemplate>
