@@ -46,7 +46,49 @@ function Manage-Taskbarsettings {
         $ListBox.Items.Insert($($ListBox.Items.Count -1),'    </CustomTaskbarLayoutCollection>')
     }
     else {
+        $MessageBody = "All parts of the custom taskbar will be removed.`n`nAre you sure?"
+        $MessageTitle = "Removing custom Taskbar"
+        $Choice = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,"YesNo","Warning")
+        If ( $Choice -eq 'Yes' ) {
+            $AssocRow = $Null
+            $AssocRows = 0
+            foreach ( $item in $ListBox.Items ) {
+                if ( $Item.TrimStart() -like '<CustomTaskbarLayoutCollection*' ) {
+                    $AssocRow = $ListBox.Items.IndexOf($Item)
+                }
+            }
+
+            $Counter = 0
+            $TempRow = $AssocRow
+            do {
+                if ( $ListBox.Items.Item($TempRow) -like "*</CustomTaskbarLayoutCollection*" ) { $EndFound = $true }
+                else {
+                    $TempRow++
+                    if ( $TempRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                }
+                $AssocRows++
+            } until ( $Endfound -eq $true )         
+        
+            [int]$Temp = $PositionRow.Text - 1
+            $ListBox.BeginUpdate()
+            $Counter = 0
+            do {
+                $Counter++
+                try {
+                    $ListBox.Items.RemoveAt($AssocRow)
+                }
+                catch {}
+                try {
+                    $ListBox.SelectedIndex = $Temp
+                }
+                catch {}
+            }
+            until ( $Counter -eq $AssocRows )
+            $ListBox.EndUpdate()
+        }
+        Else { $menuOptTaskbar.Checked = $true }
     }
+    $global:Modified = $true
 }
 
 function Insert-NewItem ( [string]$string = "hej" ) {
@@ -97,50 +139,57 @@ function Remove-Item {
 }
 
 function Remove-All {
-    $AssocRow = $Null
-    $AssocRows = 0
-    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
-        $AssocRow = $ListBox.SelectedIndex
-        do {
-            if ( $ListBox.Items.Item($AssocRow) -like "*</start:Folder*" ) { $EndFound = $true }
-            else {
-                $AssocRow++
-                if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
-            }
-            $AssocRows++
-        } until ( $Endfound -eq $true )
-        $AssocRow = $AssocRow - 1
-    }
-    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
-        $AssocRow = $ListBox.SelectedIndex
-        do {
-            if ( $ListBox.Items.Item($AssocRow) -like "*</start:Group*" ) { $EndFound = $true }
-            else {
-                $AssocRow++
-                if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
-            }
-            $AssocRows++
-        } until ( $Endfound -eq $true )         
-        $AssocRow = $AssocRow - 1
-    }
+    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) { $RemoveAllType = "folder" }
+    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) { $RemoveAllType = "group" }
+    $MessageBody = "All parts of the selected $RemoveAllType will be removed.`n`nAre you sure?"
+    $MessageTitle = "Removing entire $RemoveAllType"
+    $Choice = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,"YesNo","Warning")
+    If ( $Choice -eq 'Yes' ) {
+        $AssocRow = $Null
+        $AssocRows = 0
+        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
+            $AssocRow = $ListBox.SelectedIndex
+            do {
+                if ( $ListBox.Items.Item($AssocRow) -like "*</start:Folder*" ) { $EndFound = $true }
+                else {
+                    $AssocRow++
+                    if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                }
+                $AssocRows++
+            } until ( $Endfound -eq $true )
+            $AssocRow = $AssocRow - 1
+        }
+        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
+            $AssocRow = $ListBox.SelectedIndex
+            do {
+                if ( $ListBox.Items.Item($AssocRow) -like "*</start:Group*" ) { $EndFound = $true }
+                else {
+                    $AssocRow++
+                    if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                }
+                $AssocRows++
+            } until ( $Endfound -eq $true )         
+            $AssocRow = $AssocRow - 1
+        }
 
-    [int]$Temp = $PositionRow.Text - 1
-    $ListBox.BeginUpdate()
-    $Counter = 0
-    do {
-        $Counter++
-        try {
-            $ListBox.Items.RemoveAt($ListBox.SelectedIndex)
+        [int]$Temp = $PositionRow.Text - 1
+        $ListBox.BeginUpdate()
+        $Counter = 0
+        do {
+            $Counter++
+            try {
+                $ListBox.Items.RemoveAt($ListBox.SelectedIndex)
+            }
+            catch {}
+            try {
+                $ListBox.SelectedIndex = $Temp
+            }
+            catch {}
         }
-        catch {}
-        try {
-            $ListBox.SelectedIndex = $Temp
-        }
-        catch {}
+        until ( $Counter -eq $AssocRows )
+        $ListBox.EndUpdate()
+        $global:Modified = $true
     }
-    until ( $Counter -eq $AssocRows )
-    $ListBox.EndUpdate()
-    $global:Modified = $true
 }
 
 function Move-SelectedItem ([string]$Direction) {
@@ -265,6 +314,7 @@ function Change-ListBoxRow {
     $mainForm = New-Object system.Windows.Forms.Form
     $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
     $mainForm.FormBorderStyle = 'Fixed3D'
+    $mainForm.BackColor = '#ffffff'
     $mainForm.MaximizeBox = $false
     if ( $(Test-Path variable:global:psISE) -eq $False ) {
         $mainForm.Size = New-Object System.Drawing.Size(1290,778)
@@ -429,6 +479,7 @@ function Change-ListBoxRow {
         $aboutForm.AcceptButton  = $aboutFormExit
         $aboutForm.CancelButton  = $aboutFormExit
         $aboutForm.ClientSize    = "350, 115"
+        $aboutForm.BackColor     = '#ffffff'
         $aboutForm.ControlBox    = $false
         $aboutForm.FormBorderStyle = 'Fixed3D'
         $aboutForm.ShowInTaskBar = $false
@@ -506,6 +557,7 @@ function Change-ListBoxRow {
     $ComboType.Location = New-Object System.Drawing.Point(1080,27)
     $ComboType.Width = 170
     $ComboType.Enabled = $false
+    $ComboType.FlatStyle = 3
     $ComboTypeItems = @('Group','Folder','Tile','LayoutModificationTemplate','LayoutOptions','DefaultLayoutOverride','StartLayoutCollection','StartLayout','DesktopApplicationTile')
     foreach ( $ComboTypeItem in $ComboTypeItems ) {
         $ComboType.Items.Add($ComboTypeItem) | out-null
@@ -526,6 +578,7 @@ function Change-ListBoxRow {
     
     $BtnMoveUp = New-Object System.Windows.Forms.Button
     $BtnMoveUp.Enabled = $false
+    $BtnMoveUp.FlatStyle = 3
     $BtnMoveUp.Location = New-Object System.Drawing.Point(75,702)
     $BtnMoveUp.Width = 100
     $BtnMoveUp.Text = "Move &up"
@@ -534,6 +587,7 @@ function Change-ListBoxRow {
     
     $BtnMoveDown = New-Object System.Windows.Forms.Button
     $BtnMoveDown.Enabled = $false
+    $BtnMoveDOwn.FlatStyle = 3
     $BtnMoveDown.Location = New-Object System.Drawing.Point(180,702)
     $BtnMoveDown.Width = 100
     $BtnMoveDown.Text = "Move &down"
@@ -543,6 +597,7 @@ function Change-ListBoxRow {
     $BtnInsertNewItem = New-Object System.Windows.Forms.Button
     $BtnInsertNewItem.Text = "Insert new &item"
     $BtnInsertNewItem.Enabled = $false
+    $BtnInsertNewItem.FlatStyle = 3
     $BtnInsertNewItem.Width = 100
     $BtnInsertNewItem.Location = New-Object System.Drawing.Point(917,702)
     $BtnInsertNewItem.Add_Click({Insert-NewItem})
@@ -551,6 +606,7 @@ function Change-ListBoxRow {
     $BtnRemoveItem = New-Object System.Windows.Forms.Button
     $BtnRemoveItem.Text = "&Remove"
     $BtnRemoveItem.Enabled = $false
+    $BtnRemoveItem.FlatStyle = 3
     $BtnRemoveItem.Width = 100
     $BtnRemoveItem.Location = New-Object System.Drawing.Point(285,702)
     $BtnRemoveItem.Add_Click({Remove-Item})
@@ -559,15 +615,46 @@ function Change-ListBoxRow {
     $BtnRemoveAll = New-Object System.Windows.Forms.Button
     $BtnRemoveAll.Text = "Remove All"
     $BtnRemoveAll.Visible = $false
+    $BtnRemoveAll.FlatStyle = 3
     $BtnRemoveAll.Width = 150
     $BtnRemoveAll.Location = New-Object System.Drawing.Point(390,702)
     $BtnRemoveAll.Add_Click({Remove-All})
     $mainForm.Controls.Add($BtnRemoveAll)
 
     $ListBox = New-Object System.Windows.Forms.ListBox
-    $ListBox.Location = New-Object System.Drawing.Point(0,27)
+    $ListBox.Location = New-Object System.Drawing.Point(10,27)
     $ListBox.HorizontalScrollbar=$true
-    $ListBox.Width = 1017
+    $ListBox.DrawMode = [System.Windows.Forms.DrawMode]::OwnerDrawFixed
+    $ListBox.add_DrawItem({
+        param([object]$s, [System.Windows.Forms.DrawItemEventArgs]$e)
+        if ( $e.Index -gt -1 ) {
+            if ( $e.Index % 2 -eq 0) {
+                $color = [System.Drawing.Color]::WhiteSmoke
+            }
+            else {
+                $color = [System.Drawing.Color]::White
+            }
+
+            if ( $($s.items[$e.index]) -like "*<start:Group*" -or $($s.items[$e.index]) -like "*</start:Group*" ) {
+                $color = [System.Drawing.Color]::Honeydew
+            }
+            if ( $($s.items[$e.index]) -like "*<start:Folder*" -or $($s.items[$e.index]) -like "*</start:Folder*" ) {
+                $color = [System.Drawing.Color]::Ivory
+            }
+            if(($e.State -band [System.Windows.Forms.DrawItemState]::Selected) -eq [System.Windows.Forms.DrawItemState]::Selected) {
+                $color = [System.Drawing.SystemColors]::Highlight
+            }
+            $backgroundBrush = New-Object System.Drawing.SolidBrush $color
+            $textBrush = New-Object System.Drawing.SolidBrush $e.ForeColor
+            $e.Graphics.FillRectangle($backgroundBrush, $e.Bounds)
+            $e.Graphics.DrawString($s.Items[$e.Index], $e.Font, $textBrush, $e.Bounds.Left, $e.Bounds.Top, [System.Drawing.StringFormat]::GenericDefault)
+            $backgroundBrush.Dispose()
+            $textBrush.Dispose()
+        }
+        #$e.DrawFocusRectangle()
+    })
+    $ListBox.BorderStyle = "Fixed3D"
+    $ListBox.Width = 1007
     $ListBox.Height = 670
     $ListBox.Add_SelectedIndexChanged({Change-ListBoxRow})
     if ( $DefaultContent -ne $Null ) {
