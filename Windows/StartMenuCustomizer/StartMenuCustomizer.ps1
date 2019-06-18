@@ -46,6 +46,7 @@ function Manage-Taskbarsettings {
         $ListBox.Items.Insert($($ListBox.Items.Count -1),'        </taskbar:TaskbarPinList>')
         $ListBox.Items.Insert($($ListBox.Items.Count -1),'      </defaultlayout:TaskbarLayout>')
         $ListBox.Items.Insert($($ListBox.Items.Count -1),'    </CustomTaskbarLayoutCollection>')
+        $global:Modified = $true
     }
     else {
         $MessageBody = "All parts of the custom taskbar will be removed.`n`nAre you sure?"
@@ -87,10 +88,12 @@ function Manage-Taskbarsettings {
             }
             until ( $Counter -eq $AssocRows )
             $ListBox.EndUpdate()
+            $global:Modified = $true
         }
-        Else { $menuOptTaskbar.Checked = $true }
+        Else {
+            $menuOptTaskbar.Checked = $true
+        }
     }
-    $global:Modified = $true
 }
 
 function Insert-NewItem ( [string]$string = "hej" ) {
