@@ -1,4 +1,6 @@
 ﻿#region DeclarationOfVariables
+    Add-Type -AssemblyName System.Windows.Forms
+    #Add-Type -AssemblyName PresentationFramework
     $HidePSWindow = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' # Part of the process to hide the Powershellwindow if it is not run through ISE
     Add-Type -name win -member $HidePSWindow -namespace native # Part of the process to hide the Powershellwindow if it is not run through ISE
     if ( $(Test-Path variable:global:psISE) -eq $False ) { [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0) } # This hides the Powershellwindow in the background if ISE isn't running
@@ -30,7 +32,7 @@ function Verify-CloseUnsavedChanges {
     if ( $Modified -eq $true ) {
         $MessageBody = "There are unsaved changes to the document.`n`nDo you want to save them before closing?"
         $MessageTitle = "Unsaved changes"
-        $Choice = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,"YesNoCancel","Warning")
+        $Choice = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,"YesNoCancel","Warning")
     }
     else { $Choice = 'No' }
     return $Choice
@@ -48,7 +50,7 @@ function Manage-Taskbarsettings {
     else {
         $MessageBody = "All parts of the custom taskbar will be removed.`n`nAre you sure?"
         $MessageTitle = "Removing custom Taskbar"
-        $Choice = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,"YesNo","Warning")
+        $Choice = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,"YesNo","Warning")
         If ( $Choice -eq 'Yes' ) {
             $AssocRow = $Null
             $AssocRows = 0
@@ -143,7 +145,7 @@ function Remove-All {
     if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) { $RemoveAllType = "group" }
     $MessageBody = "All parts of the selected $RemoveAllType will be removed.`n`nAre you sure?"
     $MessageTitle = "Removing entire $RemoveAllType"
-    $Choice = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,"YesNo","Warning")
+    $Choice = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,"YesNo","Warning")
     If ( $Choice -eq 'Yes' ) {
         $AssocRow = $Null
         $AssocRows = 0
@@ -310,7 +312,6 @@ function Change-ListBoxRow {
 }
 
 #region mainForm
-    Add-Type -AssemblyName System.Windows.Forms
     $mainForm = New-Object system.Windows.Forms.Form
     $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
     $mainForm.FormBorderStyle = 'Fixed3D'
@@ -412,7 +413,7 @@ function Change-ListBoxRow {
                 else {
                     $MessageBody = "This document is an invalid Start menu XML-file.`n`nAborting operation!"
                     $MessageTitle = "Unable to open XML-file"
-                    $Choice = [System.Windows.MessageBox]::Show($MessageBody,$MessageTitle,"OK","Error")
+                    $Choice = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,"OK","Error")
                 }      
             }
         }
