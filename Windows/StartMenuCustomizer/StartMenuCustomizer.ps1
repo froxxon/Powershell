@@ -316,6 +316,18 @@ function Change-ListBoxRow {
     $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
     $mainForm.FormBorderStyle = 'Fixed3D'
     $mainForm.BackColor = '#ffffff'
+    $mainForm.add_FormClosing({
+        $SaveChanges = Verify-CloseUnsavedChanges
+        If ( $SaveChanges -eq 'Yes ' ) {
+            $SaveBeforeClosing = Save-LayoutFile
+            If ( $SaveBeforeClosing -eq 'Cancel' ) {
+                $_.Cancel = $true
+            }
+        }
+        If ( $SaveChanges -eq 'Cancel' ) {
+            $_.Cancel = $true
+        }
+    })
     $mainForm.MaximizeBox = $false
     if ( $(Test-Path variable:global:psISE) -eq $False ) {
         $mainForm.Size = New-Object System.Drawing.Size(1290,778)
