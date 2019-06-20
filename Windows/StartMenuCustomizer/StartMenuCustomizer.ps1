@@ -1,6 +1,5 @@
 ﻿#region DeclarationOfVariables
     Add-Type -AssemblyName System.Windows.Forms
-    #Add-Type -AssemblyName PresentationFramework
     $HidePSWindow = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' # Part of the process to hide the Powershellwindow if it is not run through ISE
     Add-Type -name win -member $HidePSWindow -namespace native # Part of the process to hide the Powershellwindow if it is not run through ISE
     if ( $(Test-Path variable:global:psISE) -eq $False ) { [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0) } # This hides the Powershellwindow in the background if ISE isn't running
@@ -453,11 +452,16 @@ function Apply-TextViewResult {
 }
 
 #region mainForm
-    $mainForm = New-Object system.Windows.Forms.Form
-    $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
-    $mainForm.Font = 'MS Sans Serif,10,style=Regular'
-    $mainForm.FormBorderStyle = 'Fixed3D'
-    $mainForm.BackColor = '#ffffff'
+    $mainForm = New-Object system.Windows.Forms.Form -Property @{
+        Text            = 'Start Menu (Layout) Customizer - Untitled1.xml'
+        Font            = 'MS Sans Serif,10,style=Regular'
+        FormBorderStyle = 'Fixed3D'
+        BackColor       = '#ffffff'
+        MaximizeBox     = $false
+        Icon            = [System.Drawing.Icon]::ExtractAssociatedIcon($PSHOME + "\powershell_ise.exe")
+        StartPosition   = 'CenterScreen'
+        Size            = New-Object System.Drawing.Size(1280,768)
+    }
     $mainForm.add_FormClosing({
         $SaveChanges = Verify-CloseUnsavedChanges
         If ( $SaveChanges -eq 'Yes ' ) {
@@ -470,15 +474,9 @@ function Apply-TextViewResult {
             $_.Cancel = $true
         }
     })
-    $mainForm.MaximizeBox = $false
     if ( $(Test-Path variable:global:psISE) -eq $False ) {
         $mainForm.Size = New-Object System.Drawing.Size(1290,778)
     }
-    else {
-        $mainForm.Size = New-Object System.Drawing.Size(1280,768)
-    }
-    $mainForm.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($PSHOME + "\powershell_ise.exe")
-    $mainForm.StartPosition = "centerscreen"
 #endregion
 
 #region Menu
@@ -887,10 +885,15 @@ function Apply-TextViewResult {
     $mainTxtBox.Add_TextChanged({$BtnTextViewApply.Enabled = $true})
     $mainForm.Controls.Add($mainTxtBox)
 
-    $ListBox = New-Object System.Windows.Forms.ListBox
-    $ListBox.Location = New-Object System.Drawing.Point(242,27)
-    #$ListBox.HorizontalScrollbar = $true
-    $ListBox.DrawMode = [System.Windows.Forms.DrawMode]::OwnerDrawFixed
+    $ListBox = New-Object System.Windows.Forms.ListBox -Property @{
+        Location = New-Object System.Drawing.Point(242,27)
+        DrawMode = [System.Windows.Forms.DrawMode]::OwnerDrawFixed
+        BorderStyle = "Fixed3D"
+        Width = 1010
+        Height = 670
+    }
+    $ListBox.HorizontalScrollbar = $true
+    $ListBox.HorizontalExtent = 2250
     $ListBox.add_DrawItem({
         param([object]$s, [System.Windows.Forms.DrawItemEventArgs]$e)
         if ( $e.Index -gt -1 ) {
@@ -926,9 +929,6 @@ function Apply-TextViewResult {
         }
         #$e.DrawFocusRectangle()
     })
-    $ListBox.BorderStyle = "Fixed3D"
-    $ListBox.Width = 1010
-    $ListBox.Height = 670
     $ListBox.Add_SelectedIndexChanged({Change-ListBoxRow})
     if ( $DefaultContent -ne $Null ) {
         if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
@@ -947,68 +947,95 @@ function Apply-TextViewResult {
 
 #region Panels
     #region PanelFolder
-        $PanelFolder = New-Object System.Windows.Forms.Panel
-        $PanelFolder.Size = New-Object Drawing.Size @(220,630)
-        $PanelFolder.Location = New-Object System.Drawing.Point(10,65)
+        $PanelFolder = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelFolder)
     #endregion
 
     #region PanelGroup
-        $PanelGroup = New-Object System.Windows.Forms.Panel
-        $PanelGroup.Size = New-Object Drawing.Size @(220,630)
-        $PanelGroup.Location = New-Object System.Drawing.Point(10,65)
+        $PanelGroup = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelGroup)
     #endregion
 
     #region PanelTIle
-        $PanelTile = New-Object System.Windows.Forms.Panel
-        $PanelTile.Size = New-Object Drawing.Size @(220,630)
-        $PanelTile.Location = New-Object System.Drawing.Point(10,65)
+        $PanelTile = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelTIle)
-        $LabelTileSize = New-Object System.Windows.Forms.Label
-        $LabelTileSize.Location = New-Object System.Drawing.Point(0,5)
-        $LabelTileSize.Text = "Size"
-        $LabelTileSize.Width = '50'
+        
+        $LabelTileSize = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,5)
+            Text = "Size"
+            Width = '50'
+        }
         $PanelTile.Controls.Add($LabelTileSize)
-        $ComboTileSize = New-Object System.Windows.Forms.ComboBox
-        $ComboTileSize.Location = New-Object System.Drawing.Point(50,0)
-        $ComboTileSize.DropDownStyle = 'DropDownList'
-        $ComboTileSize.Width = 170
+
+        $ComboTileSize = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location = New-Object System.Drawing.Point(50,0)
+            DropDownStyle = 'DropDownList'
+            Width = 170
+        }
         $SizeItems = @('1x1','2x2','2x4','4x4')
         foreach ( $SizeItem in $SizeItems ) {
             $ComboTileSize.Items.Add($SizeItem) | out-null
         }
         $PanelTile.Controls.Add($ComboTileSize)
-        $LabelTileColumn = New-Object System.Windows.Forms.Label
-        $LabelTileColumn.Text = "Column"
-        $LabelTileColumn.Width = '50'
-        $LabelTileColumn.Location = New-Object System.Drawing.Point(0,35)
+
+        $LabelTileColumn = New-Object System.Windows.Forms.Label -Property @{
+            Text = "Column"
+            Width = '55'
+            Location = New-Object System.Drawing.Point(0,35)
+        }
         $PanelTile.Controls.Add($LabelTileColumn)
-        $NumericTileCol = New-Object System.Windows.Forms.NumericUpDown
-        $NumericTileCol.TextAlign = "Center"
-        $NumericTileCol.Width = 170
-        $NumericTileCol.Location = New-Object System.Drawing.Point(50,32)
+        
+        $NumericTileCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
+            BackColor = 'White'
+            Maximum = 5
+            ReadOnly = $true        
+            BorderStyle = 'None'
+            TextAlign = "Center"
+            Width = 170
+            Location = New-Object System.Drawing.Point(50,32)
+        }
         $PanelTile.Controls.Add($NumericTileCol)
-        $LabelTileRow = New-Object System.Windows.Forms.Label
-        $LabelTileRow.Text = "Row"
-        $LabelTileRow.Width = '50'
-        $LabelTileRow.Location = New-Object System.Drawing.Point(0,70)
+
+        $LabelTileRow = New-Object System.Windows.Forms.Label -Property @{
+            Text = "Row"
+            Width = '50'
+            Location = New-Object System.Drawing.Point(0,70)
+        }
         $PanelTile.Controls.Add($LabelTileRow)
-        $NumericTileRow = New-Object System.Windows.Forms.NumericUpDown
-        $NumericTileRow.TextAlign = "Center"
-        $NumericTileRow.Width = 170
-        $NumericTileRow.Location = New-Object System.Drawing.Point(50,67)
+
+        $NumericTileRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
+            BackColor = 'White'
+            Maximum = 20
+            ReadOnly = $true
+            BorderStyle = 'None'
+            TextAlign = "Center"
+            Width = 170
+            Location = New-Object System.Drawing.Point(50,67)
+        }
         $PanelTile.Controls.Add($NumericTileRow)
-        $LblAppUserModelID = New-Object System.Windows.Forms.Label
-        $LblAppUserModelID.Text = "AppUserModelID"
-        $LblAppUserModelID.Width = '100'
-        $LblAppUserModelID.Location = New-Object System.Drawing.Point(0,105)
+
+        $LblAppUserModelID = New-Object System.Windows.Forms.Label -Property @{
+            Text = "AppUserModelID"
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,105)
+        }
         $PanelTile.Controls.Add($LblAppUserModelID)
-        $ComboBoxAppUserModelID = New-Object System.Windows.Forms.ComboBox
-        $ComboBoxAppUserModelID.Location = New-Object System.Drawing.Point(0,130)
-        $ComboBoxAppUserModelID.DropDownHeight= 473
-        $ComboBoxAppUserModelID.DropDownWidth = 1237
-        $ComboBoxAppUserModelID.Width = 218
+
+        $ComboBoxAppUserModelID = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location = New-Object System.Drawing.Point(0,130)
+            DropDownHeight= 473
+            DropDownWidth = 1237
+            Width = 218
+        }
         try {
             $InitialAllXPackages = Get-AppxPackage -AllUsers
             $InitialAllXPackages += Get-AppxPackage
@@ -1029,117 +1056,141 @@ function Apply-TextViewResult {
                 $ComboBoxAppUserModelID.Items.Add($Package) | out-null
             }
         }
-        $PanelTile.Controls.Add($ComboBoxAppUserModelID)
-        
+        $PanelTile.Controls.Add($ComboBoxAppUserModelID)        
     #endregion
 
     #region PanelLayoutModificationTemplate
-        $PanelLayoutModificationTemplate = New-Object System.Windows.Forms.Panel
-        $PanelLayoutModificationTemplate.Size = New-Object Drawing.Size @(220,630)
-        $PanelLayoutModificationTemplate.Location = New-Object System.Drawing.Point(10,65)
+        $PanelLayoutModificationTemplate = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelLayoutModificationTemplate)
     #endregion
 
     #region PanelLayoutOptions
-        $PanelLayoutOptions = New-Object System.Windows.Forms.Panel
-        $PanelLayoutOptions.Size = New-Object Drawing.Size @(220,630)
-        $PanelLayoutOptions.Location = New-Object System.Drawing.Point(10,65)
+        $PanelLayoutOptions = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelLayoutOptions)
     #endregion
 
     #region PanelDefaultLayoutOverride
-        $PanelDefaultLayoutOverride = New-Object System.Windows.Forms.Panel
-        $PanelDefaultLayoutOverride.Size = New-Object Drawing.Size @(220,630)
-        $PanelDefaultLayoutOverride.Location = New-Object System.Drawing.Point(10,65)
+        $PanelDefaultLayoutOverride = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelDefaultLayoutOverride)
     #endregion
 
     #region PanelStartLayoutCollection
-        $PanelStartLayoutCollection = New-Object System.Windows.Forms.Panel
-        $PanelStartLayoutCollection.Size = New-Object Drawing.Size @(220,630)
-        $PanelStartLayoutCollection.Location = New-Object System.Drawing.Point(10,65)
+        $PanelStartLayoutCollection = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelStartLayoutCollection)
     #endregion
 
     #region PanelStartLayout
-        $PanelStartlayout = New-Object System.Windows.Forms.Panel
-        $PanelStartlayout.Size = New-Object Drawing.Size @(220,630)
-        $PanelStartlayout.Location = New-Object System.Drawing.Point(10,65)
+        $PanelStartlayout = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelStartlayout)
     #endregion
 
     #region PanelDesktopApplicationTile
-        $PanelDAT = New-Object System.Windows.Forms.Panel
-        $PanelDAT.Size = New-Object Drawing.Size @(220,630)
-        $PanelDAT.Location = New-Object System.Drawing.Point(10,65)
+        $PanelDAT = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelDAT)
-        $LblDATTileSize = New-Object System.Windows.Forms.Label
-        $LblDATTileSize.Location = New-Object System.Drawing.Point(0,5)
-        $LblDATTileSize.Text = "Size"
-        $LblDATTileSize.Width = '50'
+
+        $LblDATTileSize = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,5)
+            Text = "Size"
+            Width = '50'
+        }
         $PanelDAT.Controls.Add($LblDATTileSize)
-        $ComboDATSize = New-Object System.Windows.Forms.ComboBox
-        $ComboDATSize.Location = New-Object System.Drawing.Point(50,0)
-        $ComboDATSize.DropDownStyle = 'DropDownList'
-        $ComboDATSize.Width = 170
+
+        $ComboDATSize = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location = New-Object System.Drawing.Point(50,0)
+            DropDownStyle = 'DropDownList'
+            Width = 170
+        }
         $SizeItems = @('1x1','2x2','2x4','4x4')
         foreach ( $SizeItem in $SizeItems ) {
             $ComboDATSize.Items.Add($SizeItem) | out-null
         }
         $PanelDAT.Controls.Add($ComboDATSize)
-        $LblDATColumn = New-Object System.Windows.Forms.Label
-        $LblDATColumn.Text = "Column"
-        $LblDATColumn.Width = '50'
-        $LblDATColumn.Location = New-Object System.Drawing.Point(0,35)
+        
+        $LblDATColumn = New-Object System.Windows.Forms.Label -Property @{
+            Text = "Column"
+            Width = '60'
+            Location = New-Object System.Drawing.Point(0,35)
+        }
         $PanelDAT.Controls.Add($LblDATColumn)
-        $NumericDATCol = New-Object System.Windows.Forms.NumericUpDown
-        $NumericDATCol.TextAlign = "Center"
-        $NumericDATCol.Width = 170
-        $NumericDATCol.Location = New-Object System.Drawing.Point(50,32)
+        $NumericDATCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
+            BackColor = 'White'
+            Maximum = 5
+            ReadOnly = $true
+            BorderStyle = 'None'
+            TextAlign = "Center"
+            Width = 170
+            Location = New-Object System.Drawing.Point(50,32)
+        }
         $PanelDAT.Controls.Add($NumericDATCol)
-        $LblDATRow = New-Object System.Windows.Forms.Label
-        $LblDATRow.Text = "Row"
-        $LblDATRow.Width = '50'
-        $LblDATRow.Location = New-Object System.Drawing.Point(0,70)
+        $LblDATRow = New-Object System.Windows.Forms.Label -Property @{
+            Text = "Row"
+            Width = '50'
+            Location = New-Object System.Drawing.Point(0,70)
+        }
         $PanelDAT.Controls.Add($LblDATRow)
-        $NumericDATRow = New-Object System.Windows.Forms.NumericUpDown
-        $NumericDATRow.TextAlign = "Center"
-        $NumericDATRow.Width = 170
-        $NumericDATRow.Location = New-Object System.Drawing.Point(50,67)
+        $NumericDATRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
+            BackColor = 'White'
+            Maximum = 20
+            ReadOnly = $true
+            BorderStyle = 'None'
+            TextAlign = "Center"
+            Width = 170
+            Location = New-Object System.Drawing.Point(50,67)
+        }
         $PanelDAT.Controls.Add($NumericDATRow)
-        $LblDesktopApplicationTile = New-Object System.Windows.Forms.Label
-        $LblDesktopApplicationTile.Text = "DesktopApplicationLinkPath"
-        $LblDesktopApplicationTile.Width = '150'
-        $LblDesktopApplicationTile.Location = New-Object System.Drawing.Point(0,105)
+
+        $LblDesktopApplicationTile = New-Object System.Windows.Forms.Label -Property @{
+            Text = "DesktopApplicationLinkPath"
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,105)
+        }
         $PanelDAT.Controls.Add($LblDesktopApplicationTile)
-        $ComboBoxDAT = New-Object System.Windows.Forms.ComboBox
-        $ComboBoxDAT.Location = New-Object System.Drawing.Point(0,130)
-        $ComboBoxDAT.DropDownHeight = 473
-        $ComboBoxDAT.DropDownWidth = 1237
-        $ComboBoxDAT.Width = 218
+
+        $ComboBoxDAT = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location = New-Object System.Drawing.Point(0,130)
+            DropDownHeight = 473
+            DropDownWidth = 1237
+            Width = 218
+        }
         $AllLinks = @()
         $AllUserLinks = $(Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
     	$AllUserLinks = $AllUserLinks.Substring($($AllUserLinks[0].IndexOf($("Roaming\"))+8))
         $AllUserLinks = $AllUserLinks | ForEach-Object {"%APPDATA%\$_"}
-        $AllComputerLinks = Get-ChildItem "$env:PROGRAMDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse
         $AllLinks += $AllUserLinks
-        $AllLinks += $AllComputerLinks.FullName
-        $AllLinks = $AllLinks | Sort-Object
-
+        $AllLinks += $(Get-ChildItem "$env:PROGRAMDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
         $AllLinks = $AllLinks.replace("C:\ProgramData", "%ALLUSERSPROFILE%")
+        $AllLinks = $AllLinks | Sort-Object
         if ( $AllLinks.Count -gt 0 ) {
             ForEach ( $Item in $AllLinks ) {
                 $ComboBoxDAT.Items.Add($Item) | out-null
             }
         }
         $PanelDAT.Controls.Add($ComboBoxDAT)
-
     #endregion
 
     #region PanelNewItem
-        $PanelNewItem = New-Object System.Windows.Forms.Panel
-        $PanelNewItem.Size = New-Object Drawing.Size @(220,630)
-        $PanelNewItem.Location = New-Object System.Drawing.Point(10,65)
+        $PanelNewItem = New-Object System.Windows.Forms.Panel -Property @{
+            Size = New-Object Drawing.Size @(220,630)
+            Location = New-Object System.Drawing.Point(10,65)
+        }
         $mainForm.Controls.Add($PanelNewItem)
     #endregion
 #endregion
