@@ -124,7 +124,7 @@ function Manage-Taskbarsettings {
                 $AssocRows++
             } until ( $Endfound -eq $true )         
         
-            [int]$Temp = $PositionRow.Text - 1
+            [int]$Temp = $LblPositionRow.Text - 1
             $ListBox.BeginUpdate()
             $Counter = 0
             do {
@@ -177,7 +177,7 @@ function Remove-Item {
         $AssocRow = $AssocRow - 1
     }
 
-    [int]$Temp = $PositionRow.Text - 1
+    [int]$Temp = $LblPositionRow.Text - 1
     $ListBox.BeginUpdate()
     try {
         $ListBox.Items.RemoveAt($ListBox.SelectedIndex)
@@ -229,7 +229,7 @@ function Remove-All {
             $AssocRow = $AssocRow - 1
         }
 
-        [int]$Temp = $PositionRow.Text - 1
+        [int]$Temp = $LblPositionRow.Text - 1
         $ListBox.BeginUpdate()
         $Counter = 0
         do {
@@ -334,7 +334,7 @@ function Change-ListBoxRow {
             $Counter++
         }
     }
-    $PositionRow.Text = "$($ListBox.SelectedIndex + 1)"
+    $LblPositionRow.Text = "$($ListBox.SelectedIndex + 1)"
 
     if ( $ListBox.SelectedItem.TrimStart() -like '<start:*' -or $ListBox.SelectedItem.TrimStart() -like '</start:*' -or $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:Start*' -or $ListBox.SelectedItem.TrimStart() -like '<taskbar:*' ) {
         $BtnMoveUp.Enabled = $true
@@ -400,8 +400,8 @@ function Show-DesignView {
     $mainTxtBox.Enabled = $true
     $menuOptTaskbar.Enabled = $false
     $ComboType.Visible = $false
-    $LabelRow.Visible = $false
-    $PositionRow.Visible = $false
+    $LblRow.Visible = $false
+    $LblPositionRow.Visible = $false
     $BtnMoveUp.Visible = $false
     $BtnMoveDown.Visible = $false
     $BtnRemoveItem.Visible = $false
@@ -425,8 +425,8 @@ function Hide-DesignView {
     $mainTxtBox.Enabled = $false
     $menuOptTaskbar.Enabled = $true
     $ComboType.Visible = $true
-    $LabelRow.Visible = $true
-    $PositionRow.Visible = $true
+    $LblRow.Visible = $true
+    $LblPositionRow.Visible = $true
     $BtnMoveUp.Visible = $true
     $BtnMoveDown.Visible = $true
     $BtnRemoveItem.Visible = $true
@@ -455,6 +455,7 @@ function Apply-TextViewResult {
 #region mainForm
     $mainForm = New-Object system.Windows.Forms.Form
     $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
+    $mainForm.Font = 'MS Sans Serif,10,style=Regular'
     $mainForm.FormBorderStyle = 'Fixed3D'
     $mainForm.BackColor = '#ffffff'
     $mainForm.add_FormClosing({
@@ -721,37 +722,62 @@ function Apply-TextViewResult {
     $ComboType.Location = New-Object System.Drawing.Point(60,32)
     $ComboType.Width = 170
     $ComboType.Enabled = $false
-    $ComboType.FlatStyle = 3
+    $ComboType.FlatStyle = 0
     $ComboTypeItems = @('Group','Folder','Tile','LayoutModificationTemplate','LayoutOptions','DefaultLayoutOverride','StartLayoutCollection','StartLayout','DesktopApplicationTile')
     foreach ( $ComboTypeItem in $ComboTypeItems ) {
         $ComboType.Items.Add($ComboTypeItem) | out-null
     }
     $mainForm.Controls.Add($ComboType)
     
-    $LabelRow = New-Object System.Windows.Forms.Label
-    $LabelRow.Location = New-Object System.Drawing.Point(10,706)
-    $LabelRow.Text = "Line:"
-    $LabelRow.Width = 30
-    $mainForm.Controls.Add($LabelRow)
+    $LblRow = New-Object System.Windows.Forms.Label
+    $LblRow.Location = New-Object System.Drawing.Point(10,706)
+    $LblRow.Text = "Line:"
+    $LblRow.Width = 32
+    $mainForm.Controls.Add($LblRow)
     
-    $PositionRow = New-Object System.Windows.Forms.Label
-    $PositionRow.Location = New-Object System.Drawing.Point(38,706)
-    $PositionRow.Text = 1
-    $PositionRow.AutoSize = $true
-    $mainForm.Controls.Add($PositionRow)
+    $LblPositionRow = New-Object System.Windows.Forms.Label
+    $LblPositionRow.Location = New-Object System.Drawing.Point(38,706)
+    $LblPositionRow.Text = 1
+    $LblPositionRow.AutoSize = $true
+    $mainForm.Controls.Add($LblPositionRow)
     
     $BtnMoveUp = New-Object System.Windows.Forms.Button
-    $BtnMoveUp.Enabled = $false
-    $BtnMoveUp.FlatStyle = 3
+    $BtnMoveUp.Add_EnabledChanged({
+        if ( $this.Enabled -eq $false ) {
+            $this.FlatAppearance.BorderColor = 'LightGray'
+            $this.FlatAppearance.BorderSize = 1
+        }
+        else {
+            $this.FlatAppearance.BorderColor = 'LightBlue'
+            $this.FlatAppearance.BorderSize = 2
+        }
+    })
+    $BtnMoveUp.FlatStyle = 0
+    $BtnMoveUp.FlatAppearance.BorderColor = 'LightBlue'
+    $BtnMoveUp.FlatAppearance.BorderSize = 2
     $BtnMoveUp.Location = New-Object System.Drawing.Point(75,702)
     $BtnMoveUp.Width = 100
     $BtnMoveUp.Text = "Move &up"
     $BtnMoveUp.Add_Click({Move-SelectedItem -Direction Up})
+    $BtnMoveUp.Enabled = $false
     $mainForm.Controls.Add($BtnMoveUp)
     
     $BtnMoveDown = New-Object System.Windows.Forms.Button
+    $BtnMoveDown.Add_EnabledChanged({
+       if ( $this.Enabled -eq $false ) {
+            $this.FlatAppearance.BorderColor = 'LightGray'
+            $this.FlatAppearance.BorderSize = 1
+        }
+        else {
+            $this.FlatAppearance.BorderColor = 'LightBlue'
+            $this.FlatAppearance.BorderSize = 2
+        }
+    })
+    $BtnMoveDown.FlatStyle = 0
+    $BtnMoveDown.FlatAppearance.BorderColor = 'LightBlue'
+    $BtnMoveDown.FlatAppearance.BorderSize = 2
     $BtnMoveDown.Enabled = $false
-    $BtnMoveDOwn.FlatStyle = 3
+    $BtnMoveDOwn.FlatStyle = 0
     $BtnMoveDown.Location = New-Object System.Drawing.Point(180,702)
     $BtnMoveDown.Width = 100
     $BtnMoveDown.Text = "Move &down"
@@ -759,9 +785,22 @@ function Apply-TextViewResult {
     $mainForm.Controls.Add($BtnMoveDown)
     
     $BtnInsertNewItem = New-Object System.Windows.Forms.Button
-    $BtnInsertNewItem.Text = "Insert new &item"
+    $BtnInsertNewItem.Text = "Create &item"
+    $BtnInsertNewItem.Add_EnabledChanged({
+       if ( $this.Enabled -eq $false ) {
+            $this.FlatAppearance.BorderColor = 'LightGray'
+            $this.FlatAppearance.BorderSize = 1
+        }
+        else {
+            $this.FlatAppearance.BorderColor = 'LightBlue'
+            $this.FlatAppearance.BorderSize = 2
+        }
+    })
+    $BtnInsertNewItem.FlatStyle = 0
+    $BtnInsertNewItem.FlatAppearance.BorderColor = 'LightBlue'
+    $BtnInsertNewItem.FlatAppearance.BorderSize = 2
     $BtnInsertNewItem.Enabled = $false
-    $BtnInsertNewItem.FlatStyle = 3
+    $BtnInsertNewItem.FlatStyle = 0
     $BtnInsertNewItem.Width = 100
     $BtnInsertNewItem.Location = New-Object System.Drawing.Point(285,702)
     $BtnInsertNewItem.Add_Click({Insert-NewItem})
@@ -769,8 +808,21 @@ function Apply-TextViewResult {
 
     $BtnRemoveItem = New-Object System.Windows.Forms.Button
     $BtnRemoveItem.Text = "&Remove"
+    $BtnRemoveItem.Add_EnabledChanged({
+       if ( $this.Enabled -eq $false ) {
+            $this.FlatAppearance.BorderColor = 'LightGray'
+            $this.FlatAppearance.BorderSize = 1
+        }
+        else {
+            $this.FlatAppearance.BorderColor = 'LightBlue'
+            $this.FlatAppearance.BorderSize = 2
+        }
+    })
+    $BtnRemoveItem.FlatStyle = 0
+    $BtnRemoveItem.FlatAppearance.BorderColor = 'LightBlue'
+    $BtnRemoveItem.FlatAppearance.BorderSize = 2
     $BtnRemoveItem.Enabled = $false
-    $BtnRemoveItem.FlatStyle = 3
+    $BtnRemoveItem.FlatStyle = 0
     $BtnRemoveItem.Width = 100
     $BtnRemoveItem.Location = New-Object System.Drawing.Point(390,702)
     $BtnRemoveItem.Add_Click({Remove-Item})
@@ -778,8 +830,11 @@ function Apply-TextViewResult {
     
     $BtnRemoveAll = New-Object System.Windows.Forms.Button
     $BtnRemoveAll.Text = "Remove All"
+    $BtnRemoveAll.FlatStyle = 0
+    $BtnRemoveAll.FlatAppearance.BorderColor = 'LightBlue'
+    $BtnRemoveAll.FlatAppearance.BorderSize = 2
     $BtnRemoveAll.Visible = $false
-    $BtnRemoveAll.FlatStyle = 3
+    $BtnRemoveAll.FlatStyle = 0
     $BtnRemoveAll.Width = 150
     $BtnRemoveAll.Location = New-Object System.Drawing.Point(495,702)
     $BtnRemoveAll.Add_Click({Remove-All})
@@ -787,9 +842,22 @@ function Apply-TextViewResult {
 
     $BtnTextViewApply = New-Object System.Windows.Forms.Button
     $BtnTextViewApply.Text = "Save changes"
+    $BtnTextViewApply.Add_EnabledChanged({
+       if ( $this.Enabled -eq $false ) {
+            $this.FlatAppearance.BorderColor = 'LightGray'
+            $this.FlatAppearance.BorderSize = 1
+        }
+        else {
+            $this.FlatAppearance.BorderColor = 'LightBlue'
+            $this.FlatAppearance.BorderSize = 2
+        }
+    })
+    $BtnTextViewApply.FlatStyle = 0
+    $BtnTextViewApply.FlatAppearance.BorderColor = 'LightBlue'
+    $BtnTextViewApply.FlatAppearance.BorderSize = 2
     $BtnTextViewApply.Enabled = $false
     $BtnTextViewApply.Visible = $false
-    $BtnTextViewApply.FlatStyle = 3
+    $BtnTextViewApply.FlatStyle = 0
     $BtnTextViewApply.Width = 100
     $BtnTextViewApply.Location = New-Object System.Drawing.Point(1040,702)
     $BtnTextViewApply.Add_Click({ Apply-TextViewResult })
@@ -797,7 +865,7 @@ function Apply-TextViewResult {
     
     $BtnChangeView = New-Object System.Windows.Forms.Button
     $BtnChangeView.Text = "Text-&view"
-    $BtnChangeView.FlatStyle = 3
+    $BtnChangeView.FlatStyle = 0
     $BtnChangeView.Width = 100
     $BtnChangeView.Location = New-Object System.Drawing.Point(1150,702)
     $BtnChangeView.Add_Click({
