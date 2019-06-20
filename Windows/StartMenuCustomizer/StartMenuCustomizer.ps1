@@ -24,6 +24,58 @@ $DefaultContent = @"
     </CustomTaskbarLayoutCollection>
 </LayoutModificationTemplate>
 "@
+$DefaultContent = @"
+<LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification" xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout">
+  <LayoutOptions StartTileGroupCellWidth="6" StartTileGroupsColumnCount="1" />
+  <DefaultLayoutOverride LayoutCustomizationRestrictionType="OnlySpecifiedGroups">
+    <StartLayoutCollection>
+      <defaultlayout:StartLayout GroupCellWidth="6">
+        <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Flashplayer.lnk" />
+        <start:Group Name="Rekommenderat">
+          <start:Folder Size="2x2" Column="0" Row="0">
+            <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
+            <start:DesktopApplicationTile Size="2x2" Column="2" Row="0" DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Accessories\Internet Explorer.lnk" />
+            <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Google Chrome.lnk" />
+          </start:Folder>
+          <start:DesktopApplicationTile Size="2x2" Column="2" Row="0" DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" />
+          <start:Folder Size="2x2" Column="0" Row="2">
+            <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.WindowsMaps_8wekyb3d8bbwe!App" />
+            <start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.Windows.Photos_8wekyb3d8bbwe!App" />
+            <start:Tile Size="2x2" Column="4" Row="0" AppUserModelID="Microsoft.BingWeather_8wekyb3d8bbwe!App" />
+            <start:Tile Size="2x2" Column="0" Row="2" AppUserModelID="Microsoft.WindowsCalculator_8wekyb3d8bbwe!App" />
+          </start:Folder>
+        </start:Group>
+        <start:Group Name="Office">
+          <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Word.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Word 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\PowerPoint.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\PowerPoint 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Excel.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Excel 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\OneNote.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\OneNote 2016.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype for Business 2016.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype för företag 2016.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype för företag.lnk" />
+        </start:Group>
+      </defaultlayout:StartLayout>
+    </StartLayoutCollection>
+  </DefaultLayoutOverride>
+    <CustomTaskbarLayoutCollection PinListPlacement="Replace">
+      <defaultlayout:TaskbarLayout>
+        <taskbar:TaskbarPinList>
+          <taskbar:UWA AppUserModelID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Accessories\Internet Explorer.lnk" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook 2016.lnk" />
+        </taskbar:TaskbarPinList>
+      </defaultlayout:TaskbarLayout>
+    </CustomTaskbarLayoutCollection>
+</LayoutModificationTemplate>
+"@
     $DefaultContent = $DefaultContent.Replace("`r","")
     $DefaultContent = $DefaultContent.Split("`n")
 #endregion
@@ -227,10 +279,21 @@ function Change-ListBoxRow {
     if ( $ListBox.SelectedItem.TrimStart() -like "*start:Tile*" ) {
         $PanelTile.BringToFront()
         $ComboType.SelectedItem = 'Tile'
-        $ComboTileSize.SelectedItem = $($($ListBox.SelectedItem.Substring($($ListBox.SelectedItem.IndexOf('Size="')),9))).Substring(6,3)
-        $NumericTileCol.Text = $($($ListBox.SelectedItem.Substring($($ListBox.SelectedItem.IndexOf('Column="')),9))).Substring(8,1)
-        $NumericTileRow.Text = $($($ListBox.SelectedItem.Substring($($ListBox.SelectedItem.IndexOf('Row="')),8))).Substring(5,1)
-        $IndexAppUserModelID = $($ListBox.SelectedItem.Substring($($ListBox.SelectedItem.IndexOf('AppUserModelID="')),8))
+        $SelectedItem = $ListBox.SelectedItem.Split('"')
+        $Counter = 0
+        foreach ( $Item in $SelectedItem ) {
+            if ( $Item -like '*Size=*' ) { $ComboTileSize.SelectedItem = $SelectedItem[$Counter +1] }
+            if ( $Item -like '*Row=*' ) { $NumericTileRow.Text = $SelectedItem[$Counter +1] }
+            if ( $Item -like '*Column=*' ) { $NumericTileCol.Text = $SelectedItem[$Counter +1] }
+            if ( $Item -like '*AppUserModelID=*' ) {
+                if ( $ComboBoxAppUserModelID.Items -contains $SelectedItem[$Counter +1] ) {
+                    $ComboBoxAppUserModelID.SelectedItem = $SelectedItem[$Counter +1]
+                }
+                    else { $ComboBoxAppUserModelID.Text = $SelectedItem[$Counter +1]
+                }
+            }
+            $Counter++
+        }
     }
     if ( $ListBox.SelectedItem.TrimStart() -like "*LayoutModificationTemplate*" ) {
         Try { $PanelLayoutModificationTemplate.BringToFront() } Catch {}
@@ -253,8 +316,23 @@ function Change-ListBoxRow {
         $ComboType.SelectedItem = 'StartLayout'
     }
     if ( $ListBox.SelectedItem.TrimStart() -like "*start:DesktopApplicationTile*" ) {
-        $PanelDesktopApplicationTile.BringToFront()
+        $PanelDAT.BringToFront()
         $ComboType.SelectedItem = 'DesktopApplicationTile'
+        $SelectedItem = $ListBox.SelectedItem.Split('"')
+        $Counter = 0
+        foreach ( $Item in $SelectedItem ) {
+            if ( $Item -like '*Size=*' ) { $ComboDATSize.SelectedItem = $SelectedItem[$Counter +1] }
+            if ( $Item -like '*Row=*' ) { $NumericDATRow.Text = $SelectedItem[$Counter +1] }
+            if ( $Item -like '*Column=*' ) { $NumericDATCol.Text = $SelectedItem[$Counter +1] }
+            if ( $Item -like '*DesktopApplicationLinkPath=*' ) {
+                if ( $ComboBoxDAT.Items -contains $SelectedItem[$Counter +1] ) {
+                    $ComboBoxDAT.SelectedItem = $SelectedItem[$Counter +1]
+                }
+                    else { $ComboBoxDAT.Text = $SelectedItem[$Counter +1]
+                }
+            }
+            $Counter++
+        }
     }
     $PositionRow.Text = "$($ListBox.SelectedIndex + 1)"
 
@@ -314,6 +392,66 @@ function Change-ListBoxRow {
     }
 }
 
+function Show-DesignView {
+    $BtnChangeView.Text = "&Cancel"
+    $ListBox.Visible = $false
+    $ListBox.Enabled = $false
+    $mainTxtBox.Visible = $true
+    $mainTxtBox.Enabled = $true
+    $menuOptTaskbar.Enabled = $false
+    $ComboType.Visible = $false
+    $LabelRow.Visible = $false
+    $PositionRow.Visible = $false
+    $BtnMoveUp.Visible = $false
+    $BtnMoveDown.Visible = $false
+    $BtnRemoveItem.Visible = $false
+    $BtnRemoveAll.Visible = $false
+    $BtnInsertNewItem.Visible = $false
+    $BtnTextViewApply.Visible = $true
+    $mainTxtBox.BringToFront()
+    $mainTxtBox.Clear()
+    foreach ( $item in $ListBox.Items ) {
+        $mainTxtBox.Text += "$Item`n"
+    }
+    $BtnTextViewApply.Enabled = $false
+    $mainTxtBox.Focus()
+}
+
+function Hide-DesignView {
+    $BtnChangeView.Text = "Text-&view"
+    $ListBox.Visible = $true
+    $ListBox.Enabled = $true
+    $mainTxtBox.Visible = $false
+    $mainTxtBox.Enabled = $false
+    $menuOptTaskbar.Enabled = $true
+    $ComboType.Visible = $true
+    $LabelRow.Visible = $true
+    $PositionRow.Visible = $true
+    $BtnMoveUp.Visible = $true
+    $BtnMoveDown.Visible = $true
+    $BtnRemoveItem.Visible = $true
+    $BtnInsertNewItem.Visible = $true
+    $BtnTextViewApply.Visible = $false
+    $ListBox.SelectedIndex = 0
+}
+
+function Apply-TextViewResult {
+            $ListBox.Items.Clear()
+            if ( $mainTxtBox.Text -contains '<CustomTaskbarLayoutCollection' ) {
+                $menuOptTaskbar.Checked = $true
+            }
+            else {
+                $menuOptTaskbar.Checked = $false
+            }
+
+            foreach ( $Line in $mainTxtBox.Text.Split("`n") ) {
+                if ( $Line -ne '' ) {
+                    $ListBox.Items.Add($Line.TrimEnd()) | out-null
+                }
+            }
+            Hide-DesignView
+}
+
 #region mainForm
     $mainForm = New-Object system.Windows.Forms.Form
     $mainForm.Text = "Start Menu (Layout) Customizer - Untitled1.xml"
@@ -360,6 +498,7 @@ function Change-ListBoxRow {
             $global:CurrentFileName = ''
             $ListBox.SelectedIndex = 0
             $global:Modified = $false
+            Hide-DesignView
         }
         if ( $SaveChanges -eq 'Yes' ) {
             if ( $CurrentFileName -ne '' ) {
@@ -375,6 +514,7 @@ function Change-ListBoxRow {
                 $global:CurrentFileName = ".\Untitled1.xml"
                 $ListBox.SelectedIndex = 0
                 $global:Modified = $false
+                Hide-DesignView
             }
             else {
                 $Result = Save-As
@@ -393,6 +533,7 @@ function Change-ListBoxRow {
                     $global:CurrentFileName = ".\Untitled1.xml"
                     $ListBox.SelectedIndex = 0
                     $global:Modified = $false
+                    Hide-DesignView
                 }
             }
         }
@@ -430,6 +571,7 @@ function Change-ListBoxRow {
                     $MessageTitle = "Unable to open XML-file"
                     $Choice = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,"OK","Error")
                 }      
+                Hide-DesignView
             }
         }
         if ( $SaveChanges -eq 'Yes' ) {
@@ -569,8 +711,14 @@ function Change-ListBoxRow {
 #endregion
 
 #region controls in mainForm
+    $LabelType = New-Object System.Windows.Forms.Label
+    $LabelType.Location = New-Object System.Drawing.Point(10,35)
+    $LabelType.Text = "Type:"
+    $LabelType.Autosize = $true
+    $mainForm.Controls.Add($LabelType)
+
     $ComboType = New-Object System.Windows.Forms.ComboBox
-    $ComboType.Location = New-Object System.Drawing.Point(1080,27)
+    $ComboType.Location = New-Object System.Drawing.Point(60,32)
     $ComboType.Width = 170
     $ComboType.Enabled = $false
     $ComboType.FlatStyle = 3
@@ -615,16 +763,16 @@ function Change-ListBoxRow {
     $BtnInsertNewItem.Enabled = $false
     $BtnInsertNewItem.FlatStyle = 3
     $BtnInsertNewItem.Width = 100
-    $BtnInsertNewItem.Location = New-Object System.Drawing.Point(917,702)
+    $BtnInsertNewItem.Location = New-Object System.Drawing.Point(285,702)
     $BtnInsertNewItem.Add_Click({Insert-NewItem})
     $mainForm.Controls.Add($BtnInsertNewItem)
-    
+
     $BtnRemoveItem = New-Object System.Windows.Forms.Button
     $BtnRemoveItem.Text = "&Remove"
     $BtnRemoveItem.Enabled = $false
     $BtnRemoveItem.FlatStyle = 3
     $BtnRemoveItem.Width = 100
-    $BtnRemoveItem.Location = New-Object System.Drawing.Point(285,702)
+    $BtnRemoveItem.Location = New-Object System.Drawing.Point(390,702)
     $BtnRemoveItem.Add_Click({Remove-Item})
     $mainForm.Controls.Add($BtnRemoveItem)
     
@@ -633,35 +781,76 @@ function Change-ListBoxRow {
     $BtnRemoveAll.Visible = $false
     $BtnRemoveAll.FlatStyle = 3
     $BtnRemoveAll.Width = 150
-    $BtnRemoveAll.Location = New-Object System.Drawing.Point(390,702)
+    $BtnRemoveAll.Location = New-Object System.Drawing.Point(495,702)
     $BtnRemoveAll.Add_Click({Remove-All})
     $mainForm.Controls.Add($BtnRemoveAll)
 
+    $BtnTextViewApply = New-Object System.Windows.Forms.Button
+    $BtnTextViewApply.Text = "Save changes"
+    $BtnTextViewApply.Enabled = $false
+    $BtnTextViewApply.Visible = $false
+    $BtnTextViewApply.FlatStyle = 3
+    $BtnTextViewApply.Width = 100
+    $BtnTextViewApply.Location = New-Object System.Drawing.Point(1040,702)
+    $BtnTextViewApply.Add_Click({ Apply-TextViewResult })
+    $mainForm.Controls.Add($BtnTextViewApply)
+    
+    $BtnChangeView = New-Object System.Windows.Forms.Button
+    $BtnChangeView.Text = "Text-&view"
+    $BtnChangeView.FlatStyle = 3
+    $BtnChangeView.Width = 100
+    $BtnChangeView.Location = New-Object System.Drawing.Point(1150,702)
+    $BtnChangeView.Add_Click({
+        if ( $BtnChangeView.Text -eq 'Text-&view' ) {
+            Show-DesignView
+        }
+        else { Hide-DesignView }
+    })
+    $mainForm.Controls.Add($BtnChangeView)
+
+    $mainTxtBox = New-Object System.Windows.Forms.RichTextBox
+    $mainTxtBox.Location = New-Object System.Drawing.Point(10,27)
+    $mainTxtBox.WordWrap = $false
+    $mainTxtBox.BorderStyle = "Fixed3D"
+    $mainTxtBox.Width = 1240
+    $mainTxtBox.Height = 670
+    $mainTxtBox.Enabled = $false
+    $mainTxtBox.Visible = $false
+    $mainTxtBox.Add_TextChanged({$BtnTextViewApply.Enabled = $true})
+    $mainForm.Controls.Add($mainTxtBox)
+
     $ListBox = New-Object System.Windows.Forms.ListBox
-    $ListBox.Location = New-Object System.Drawing.Point(10,27)
-    $ListBox.HorizontalScrollbar=$true
+    $ListBox.Location = New-Object System.Drawing.Point(242,27)
+    #$ListBox.HorizontalScrollbar = $true
     $ListBox.DrawMode = [System.Windows.Forms.DrawMode]::OwnerDrawFixed
     $ListBox.add_DrawItem({
         param([object]$s, [System.Windows.Forms.DrawItemEventArgs]$e)
         if ( $e.Index -gt -1 ) {
             if ( $e.Index % 2 -eq 0) {
-                $color = [System.Drawing.Color]::WhiteSmoke
+                $backcolor = [System.Drawing.Color]::WhiteSmoke
             }
             else {
-                $color = [System.Drawing.Color]::White
+                $backcolor = [System.Drawing.Color]::White
             }
 
             if ( $($s.items[$e.index]) -like "*<start:Group*" -or $($s.items[$e.index]) -like "*</start:Group*" ) {
-                $color = [System.Drawing.Color]::Honeydew
+                $backcolor = [System.Drawing.Color]::Honeydew
             }
             if ( $($s.items[$e.index]) -like "*<start:Folder*" -or $($s.items[$e.index]) -like "*</start:Folder*" ) {
-                $color = [System.Drawing.Color]::Ivory
+                $backcolor = [System.Drawing.Color]::Ivory
             }
             if(($e.State -band [System.Windows.Forms.DrawItemState]::Selected) -eq [System.Windows.Forms.DrawItemState]::Selected) {
-                $color = [System.Drawing.SystemColors]::Highlight
+                #$color = [System.Drawing.SystemColors]::WindowText
+                $backcolor = [System.Drawing.Color]::LightBlue
+                $forecolor = [System.Drawing.Color]::Black
+                $textBrush = New-Object System.Drawing.SolidBrush $forecolor
+
             }
-            $backgroundBrush = New-Object System.Drawing.SolidBrush $color
-            $textBrush = New-Object System.Drawing.SolidBrush $e.ForeColor
+            else {
+                $forecolor = [System.Drawing.Color]::Black
+                $textBrush = New-Object System.Drawing.SolidBrush $e.ForeColor
+            }
+            $backgroundBrush = New-Object System.Drawing.SolidBrush $backcolor
             $e.Graphics.FillRectangle($backgroundBrush, $e.Bounds)
             $e.Graphics.DrawString($s.Items[$e.Index], $e.Font, $textBrush, $e.Bounds.Left, $e.Bounds.Top, [System.Drawing.StringFormat]::GenericDefault)
             $backgroundBrush.Dispose()
@@ -670,7 +859,7 @@ function Change-ListBoxRow {
         #$e.DrawFocusRectangle()
     })
     $ListBox.BorderStyle = "Fixed3D"
-    $ListBox.Width = 1007
+    $ListBox.Width = 1010
     $ListBox.Height = 670
     $ListBox.Add_SelectedIndexChanged({Change-ListBoxRow})
     if ( $DefaultContent -ne $Null ) {
@@ -686,33 +875,27 @@ function Change-ListBoxRow {
     }
     if ( $ListBox.Items.Count -gt 0 ) { $ListBox.SelectedIndex = 0 }
     $mainForm.Controls.Add($ListBox)
-    
-    $LabelType = New-Object System.Windows.Forms.Label
-    $LabelType.Location = New-Object System.Drawing.Point(1030,30)
-    $LabelType.Text = "Type:"
-    $LabelType.Autosize = $true
-    $mainForm.Controls.Add($LabelType)
 #endregion
 
 #region Panels
     #region PanelFolder
         $PanelFolder = New-Object System.Windows.Forms.Panel
         $PanelFolder.Size = New-Object Drawing.Size @(220,630)
-        $PanelFolder.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelFolder.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelFolder)
     #endregion
 
     #region PanelGroup
         $PanelGroup = New-Object System.Windows.Forms.Panel
         $PanelGroup.Size = New-Object Drawing.Size @(220,630)
-        $PanelGroup.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelGroup.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelGroup)
     #endregion
 
     #region PanelTIle
         $PanelTile = New-Object System.Windows.Forms.Panel
         $PanelTile.Size = New-Object Drawing.Size @(220,630)
-        $PanelTile.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelTile.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelTIle)
         $LabelTileSize = New-Object System.Windows.Forms.Label
         $LabelTileSize.Location = New-Object System.Drawing.Point(0,5)
@@ -748,68 +931,149 @@ function Change-ListBoxRow {
         $NumericTileRow.Width = 170
         $NumericTileRow.Location = New-Object System.Drawing.Point(50,67)
         $PanelTile.Controls.Add($NumericTileRow)
-        $mainForm.Controls.Add($BtnMoveUp)
+        $LblAppUserModelID = New-Object System.Windows.Forms.Label
+        $LblAppUserModelID.Text = "AppUserModelID"
+        $LblAppUserModelID.Width = '100'
+        $LblAppUserModelID.Location = New-Object System.Drawing.Point(0,105)
+        $PanelTile.Controls.Add($LblAppUserModelID)
+        $ComboBoxAppUserModelID = New-Object System.Windows.Forms.ComboBox
+        $ComboBoxAppUserModelID.Location = New-Object System.Drawing.Point(0,130)
+        $ComboBoxAppUserModelID.DropDownHeight= 473
+        $ComboBoxAppUserModelID.DropDownWidth = 1237
+        $ComboBoxAppUserModelID.Width = 218
+        try {
+            $InitialAllXPackages = Get-AppxPackage -AllUsers
+            $InitialAllXPackages += Get-AppxPackage
+        }
+        catch {
+            try { $InitialAllXPackages = Get-AppxPackage }
+            catch {}
+        }
+        $AllXPackages = @()
+        foreach ( $app in $InitialAllXPackages ) {
+            foreach ( $id in (Get-AppxPackageManifest $app).package.applications.application.id ) {
+                $AllXPackages += $app.packagefamilyname + "!" + $id
+            }
+        }
+        $AllXPackages = $AllXPackages | Select -Unique | Sort-Object
+        if ( $AllXPackages.Count -gt 0 ) {
+            ForEach ( $Package in $AllXPackages ) {
+                $ComboBoxAppUserModelID.Items.Add($Package) | out-null
+            }
+        }
+        $PanelTile.Controls.Add($ComboBoxAppUserModelID)
+        
     #endregion
 
     #region PanelLayoutModificationTemplate
         $PanelLayoutModificationTemplate = New-Object System.Windows.Forms.Panel
         $PanelLayoutModificationTemplate.Size = New-Object Drawing.Size @(220,630)
-        $PanelLayoutModificationTemplate.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelLayoutModificationTemplate.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelLayoutModificationTemplate)
     #endregion
 
     #region PanelLayoutOptions
         $PanelLayoutOptions = New-Object System.Windows.Forms.Panel
         $PanelLayoutOptions.Size = New-Object Drawing.Size @(220,630)
-        $PanelLayoutOptions.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelLayoutOptions.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelLayoutOptions)
     #endregion
 
     #region PanelDefaultLayoutOverride
         $PanelDefaultLayoutOverride = New-Object System.Windows.Forms.Panel
         $PanelDefaultLayoutOverride.Size = New-Object Drawing.Size @(220,630)
-        $PanelDefaultLayoutOverride.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelDefaultLayoutOverride.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelDefaultLayoutOverride)
     #endregion
 
     #region PanelStartLayoutCollection
         $PanelStartLayoutCollection = New-Object System.Windows.Forms.Panel
         $PanelStartLayoutCollection.Size = New-Object Drawing.Size @(220,630)
-        $PanelStartLayoutCollection.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelStartLayoutCollection.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelStartLayoutCollection)
     #endregion
 
     #region PanelStartLayout
         $PanelStartlayout = New-Object System.Windows.Forms.Panel
         $PanelStartlayout.Size = New-Object Drawing.Size @(220,630)
-        $PanelStartlayout.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelStartlayout.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelStartlayout)
     #endregion
 
     #region PanelDesktopApplicationTile
-        $PanelDesktopApplicationTile = New-Object System.Windows.Forms.Panel
-        $PanelDesktopApplicationTile.Size = New-Object Drawing.Size @(220,630)
-        $PanelDesktopApplicationTile.Location = New-Object System.Drawing.Point(1030,60)
-        $mainForm.Controls.Add($PanelDesktopApplicationTile)
+        $PanelDAT = New-Object System.Windows.Forms.Panel
+        $PanelDAT.Size = New-Object Drawing.Size @(220,630)
+        $PanelDAT.Location = New-Object System.Drawing.Point(10,65)
+        $mainForm.Controls.Add($PanelDAT)
+        $LblDATTileSize = New-Object System.Windows.Forms.Label
+        $LblDATTileSize.Location = New-Object System.Drawing.Point(0,5)
+        $LblDATTileSize.Text = "Size"
+        $LblDATTileSize.Width = '50'
+        $PanelDAT.Controls.Add($LblDATTileSize)
+        $ComboDATSize = New-Object System.Windows.Forms.ComboBox
+        $ComboDATSize.Location = New-Object System.Drawing.Point(50,0)
+        $ComboDATSize.DropDownStyle = 'DropDownList'
+        $ComboDATSize.Width = 170
+        $SizeItems = @('1x1','2x2','2x4','4x4')
+        foreach ( $SizeItem in $SizeItems ) {
+            $ComboDATSize.Items.Add($SizeItem) | out-null
+        }
+        $PanelDAT.Controls.Add($ComboDATSize)
+        $LblDATColumn = New-Object System.Windows.Forms.Label
+        $LblDATColumn.Text = "Column"
+        $LblDATColumn.Width = '50'
+        $LblDATColumn.Location = New-Object System.Drawing.Point(0,35)
+        $PanelDAT.Controls.Add($LblDATColumn)
+        $NumericDATCol = New-Object System.Windows.Forms.NumericUpDown
+        $NumericDATCol.TextAlign = "Center"
+        $NumericDATCol.Width = 170
+        $NumericDATCol.Location = New-Object System.Drawing.Point(50,32)
+        $PanelDAT.Controls.Add($NumericDATCol)
+        $LblDATRow = New-Object System.Windows.Forms.Label
+        $LblDATRow.Text = "Row"
+        $LblDATRow.Width = '50'
+        $LblDATRow.Location = New-Object System.Drawing.Point(0,70)
+        $PanelDAT.Controls.Add($LblDATRow)
+        $NumericDATRow = New-Object System.Windows.Forms.NumericUpDown
+        $NumericDATRow.TextAlign = "Center"
+        $NumericDATRow.Width = 170
+        $NumericDATRow.Location = New-Object System.Drawing.Point(50,67)
+        $PanelDAT.Controls.Add($NumericDATRow)
+        $LblDesktopApplicationTile = New-Object System.Windows.Forms.Label
+        $LblDesktopApplicationTile.Text = "DesktopApplicationLinkPath"
+        $LblDesktopApplicationTile.Width = '150'
+        $LblDesktopApplicationTile.Location = New-Object System.Drawing.Point(0,105)
+        $PanelDAT.Controls.Add($LblDesktopApplicationTile)
+        $ComboBoxDAT = New-Object System.Windows.Forms.ComboBox
+        $ComboBoxDAT.Location = New-Object System.Drawing.Point(0,130)
+        $ComboBoxDAT.DropDownHeight = 473
+        $ComboBoxDAT.DropDownWidth = 1237
+        $ComboBoxDAT.Width = 218
+        $AllLinks = @()
+        $AllUserLinks = $(Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
+    	$AllUserLinks = $AllUserLinks.Substring($($AllUserLinks[0].IndexOf($("Roaming\"))+8))
+        $AllUserLinks = $AllUserLinks | ForEach-Object {"%APPDATA%\$_"}
+        $AllComputerLinks = Get-ChildItem "$env:PROGRAMDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse
+        $AllLinks += $AllUserLinks
+        $AllLinks += $AllComputerLinks.FullName
+        $AllLinks = $AllLinks | Sort-Object
+
+        $AllLinks = $AllLinks.replace("C:\ProgramData", "%ALLUSERSPROFILE%")
+        if ( $AllLinks.Count -gt 0 ) {
+            ForEach ( $Item in $AllLinks ) {
+                $ComboBoxDAT.Items.Add($Item) | out-null
+            }
+        }
+        $PanelDAT.Controls.Add($ComboBoxDAT)
+
     #endregion
 
     #region PanelNewItem
         $PanelNewItem = New-Object System.Windows.Forms.Panel
         $PanelNewItem.Size = New-Object Drawing.Size @(220,630)
-        $PanelNewItem.Location = New-Object System.Drawing.Point(1030,60)
+        $PanelNewItem.Location = New-Object System.Drawing.Point(10,65)
         $mainForm.Controls.Add($PanelNewItem)
     #endregion
-#endregion
-
-#region GetApplicationLinks
-    $AllUserLinks = Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse
-    $AllComputerLinks = Get-ChildItem "$env:PROGRAMDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse
-    #$AllLinks[0].FullName # Name
-    try { $AllXPackages = Get-AppxPackage -AllUsers | Select-Object Name, PackageFamilyName }
-    catch {
-        try { $AllXPackages = Get-AppxPackage | Select-Object Name, PackageFamilyName }
-        catch {}
-    }
 #endregion
 
 $mainForm.ShowDialog()
