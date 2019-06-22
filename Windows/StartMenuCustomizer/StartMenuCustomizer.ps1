@@ -23,58 +23,6 @@ $DefaultContent = @"
     </CustomTaskbarLayoutCollection>
 </LayoutModificationTemplate>
 "@
-$DefaultContent = @"
-<LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification" xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout">
-  <LayoutOptions StartTileGroupCellWidth="6" StartTileGroupsColumnCount="1" />
-  <DefaultLayoutOverride LayoutCustomizationRestrictionType="OnlySpecifiedGroups">
-    <StartLayoutCollection>
-      <defaultlayout:StartLayout GroupCellWidth="6">
-        <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Flashplayer.lnk" />
-        <start:Group Name="Rekommenderat">
-          <start:Folder Size="2x2" Column="0" Row="0">
-            <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
-            <start:DesktopApplicationTile Size="2x2" Column="2" Row="0" DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Accessories\Internet Explorer.lnk" />
-            <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Google Chrome.lnk" />
-          </start:Folder>
-          <start:DesktopApplicationTile Size="2x2" Column="2" Row="0" DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" />
-          <start:Folder Size="2x2" Column="0" Row="2">
-            <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.WindowsMaps_8wekyb3d8bbwe!App" />
-            <start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.Windows.Photos_8wekyb3d8bbwe!App" />
-            <start:Tile Size="2x2" Column="4" Row="0" AppUserModelID="Microsoft.BingWeather_8wekyb3d8bbwe!App" />
-            <start:Tile Size="2x2" Column="0" Row="2" AppUserModelID="Microsoft.WindowsCalculator_8wekyb3d8bbwe!App" />
-          </start:Folder>
-        </start:Group>
-        <start:Group Name="Office">
-          <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
-          <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook 2016.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="2" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Word.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="2" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Word 2016.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="3" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\PowerPoint.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="3" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\PowerPoint 2016.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="2" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Excel.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="2" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Excel 2016.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="3" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\OneNote.lnk" />
-          <start:DesktopApplicationTile Size="1x1" Column="3" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\OneNote 2016.lnk" />
-          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype for Business 2016.lnk" />
-          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype för företag 2016.lnk" />
-          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype för företag.lnk" />
-        </start:Group>
-      </defaultlayout:StartLayout>
-    </StartLayoutCollection>
-  </DefaultLayoutOverride>
-    <CustomTaskbarLayoutCollection PinListPlacement="Replace">
-      <defaultlayout:TaskbarLayout>
-        <taskbar:TaskbarPinList>
-          <taskbar:UWA AppUserModelID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
-          <taskbar:DesktopApp DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Accessories\Internet Explorer.lnk" />
-          <taskbar:DesktopApp DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" />
-          <taskbar:DesktopApp DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
-          <taskbar:DesktopApp DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook 2016.lnk" />
-        </taskbar:TaskbarPinList>
-      </defaultlayout:TaskbarLayout>
-    </CustomTaskbarLayoutCollection>
-</LayoutModificationTemplate>
-"@
     $DefaultContent = $DefaultContent.Replace("`r","")
     $DefaultContent = $DefaultContent.Split("`n")
 #endregion
@@ -399,16 +347,10 @@ function Show-DesignView {
     $mainTxtBox.Enabled = $true
     $menuOptTaskbar.Enabled = $false
     $ComboType.Visible = $false
-    $LblRow.Visible = $false
-    $LblPositionRow.Visible = $false
-    $BtnMoveUp.Visible = $false
-    $BtnMoveDown.Visible = $false
-    $BtnRemoveItem.Visible = $false
-    $BtnRemoveAll.Visible = $false
-    $BtnInsertNewItem.Visible = $false
     $BtnTextViewApply.Visible = $true
     $mainTxtBox.BringToFront()
     $mainTxtBox.Clear()
+    $PanelButtons.Visible = $false
     foreach ( $item in $ListBox.Items ) {
         $mainTxtBox.Text += "$Item`n"
     }
@@ -418,19 +360,14 @@ function Show-DesignView {
 
 function Hide-DesignView {
     $BtnChangeView.Text = 'Text-&view'
+    $BtnTextViewApply.Visible = $false
     $ListBox.Visible = $true
     $ListBox.Enabled = $true
     $mainTxtBox.Visible = $false
     $mainTxtBox.Enabled = $false
     $menuOptTaskbar.Enabled = $true
     $ComboType.Visible = $true
-    $LblRow.Visible = $true
-    $LblPositionRow.Visible = $true
-    $BtnMoveUp.Visible = $true
-    $BtnMoveDown.Visible = $true
-    $BtnRemoveItem.Visible = $true
-    $BtnInsertNewItem.Visible = $true
-    $BtnTextViewApply.Visible = $false
+    $PanelButtons.Visible = $true
     $ListBox.SelectedIndex = 0
 }
 
@@ -724,6 +661,15 @@ function Apply-TextViewResult {
 #endregion
 
 #region controls in mainForm
+    #region ButtonPanel
+        $PanelButtons = New-Object System.Windows.Forms.Panel -Property @{
+            BorderStyle = 0
+            Size     = New-Object Drawing.Size @(1000,35)
+            Location = New-Object System.Drawing.Point(0,703)
+        }
+        $mainForm.Controls.Add($PanelButtons)
+    #endregion
+
     $LabelType = New-Object System.Windows.Forms.Label -Property @{
         Location = New-Object System.Drawing.Point(10,35)
         Text = 'Type:'
@@ -744,25 +690,24 @@ function Apply-TextViewResult {
     $mainForm.Controls.Add($ComboType)
     
     $LblRow = New-Object System.Windows.Forms.Label -Property @{
-        Location = New-Object System.Drawing.Point(10,706)
+        Location = New-Object System.Drawing.Point(10,3)
         Text = 'Line:'
-        Width = 32
+        Width = 35
     }
-    $mainForm.Controls.Add($LblRow)
+    $PanelButtons.Controls.Add($LblRow)
     
     $LblPositionRow = New-Object System.Windows.Forms.Label -Property @{
-        Location = New-Object System.Drawing.Point(38,706)
+        Location = New-Object System.Drawing.Point(45,3)
         Text = 1
         AutoSize = $true
     }
-    $mainForm.Controls.Add($LblPositionRow)
+    $PanelButtons.Controls.Add($LblPositionRow)
     
     $BtnMoveUp = New-Object System.Windows.Forms.Button -Property @{
         FlatStyle = 0
-        Location  = New-Object System.Drawing.Point(75,702)
+        Location  = New-Object System.Drawing.Point(75,0)
         Width     = 100
         Text      = 'Move &up'
-        Enabled   = $false
     }
     $BtnMoveUp.FlatAppearance.BorderColor = 'LightBlue'
     $BtnMoveUp.FlatAppearance.BorderSize = 2
@@ -776,13 +721,13 @@ function Apply-TextViewResult {
             $this.FlatAppearance.BorderSize = 2
         }
     })
+    $BtnMoveUp.Enabled = $false
     $BtnMoveUp.Add_Click({Move-SelectedItem -Direction Up})
-    $mainForm.Controls.Add($BtnMoveUp)
+    $PanelButtons.Controls.Add($BtnMoveUp)
     
     $BtnMoveDown = New-Object System.Windows.Forms.Button -Property @{
         FlatStyle = 0
-        Enabled   = $false
-        Location  = New-Object System.Drawing.Point(180,702)
+        Location  = New-Object System.Drawing.Point(180,0)
         Width     = 100
         Text      = 'Move &down'
     }
@@ -798,15 +743,15 @@ function Apply-TextViewResult {
             $this.FlatAppearance.BorderSize = 2
         }
     })
+    $BtnMoveDown.Enabled = $false
     $BtnMoveDown.Add_Click({Move-SelectedItem -Direction Down})
-    $mainForm.Controls.Add($BtnMoveDown)
+    $PanelButtons.Controls.Add($BtnMoveDown)
     
     $BtnInsertNewItem = New-Object System.Windows.Forms.Button -Property @{
         Text = 'Create &item'
         FlatStyle = 0
-        Enabled = $false
         Width = 100
-        Location = New-Object System.Drawing.Point(285,702)
+        Location = New-Object System.Drawing.Point(285,0)
     }
     $BtnInsertNewItem.FlatAppearance.BorderColor = 'LightBlue'
     $BtnInsertNewItem.FlatAppearance.BorderSize = 2
@@ -820,15 +765,15 @@ function Apply-TextViewResult {
             $this.FlatAppearance.BorderSize = 2
         }
     })
+    $BtnInsertNewItem.Enabled = $false
     $BtnInsertNewItem.Add_Click({Insert-NewItem})
-    $mainForm.Controls.Add($BtnInsertNewItem)
+    $PanelButtons.Controls.Add($BtnInsertNewItem)
 
     $BtnRemoveItem = New-Object System.Windows.Forms.Button -Property @{
         Text = '&Remove'
         FlatStyle = 0
-        Enabled = $false
         Width = 100
-        Location = New-Object System.Drawing.Point(390,702)
+        Location = New-Object System.Drawing.Point(390,0)
     }
     $BtnRemoveItem.FlatAppearance.BorderColor = 'LightBlue'
     $BtnRemoveItem.FlatAppearance.BorderSize = 2
@@ -842,20 +787,21 @@ function Apply-TextViewResult {
             $this.FlatAppearance.BorderSize = 2
         }
     })
+    $BtnRemoveItem.Enabled = $false
     $BtnRemoveItem.Add_Click({Remove-Item})
-    $mainForm.Controls.Add($BtnRemoveItem)
+    $PanelButtons.Controls.Add($BtnRemoveItem)
     
     $BtnRemoveAll = New-Object System.Windows.Forms.Button -Property @{
         Text      = 'Remove All'
         FlatStyle = 0
         Visible   = $false
         Width     = 150
-        Location  = New-Object System.Drawing.Point(495,702)
+        Location  = New-Object System.Drawing.Point(495,0)
     }
     $BtnRemoveAll.FlatAppearance.BorderColor = 'LightBlue'
     $BtnRemoveAll.FlatAppearance.BorderSize = 2
     $BtnRemoveAll.Add_Click({Remove-All})
-    $mainForm.Controls.Add($BtnRemoveAll)
+    $PanelButtons.Controls.Add($BtnRemoveAll)
 
     $BtnTextViewApply = New-Object System.Windows.Forms.Button -Property @{
         Text      = 'Save changes'
