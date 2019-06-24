@@ -40,15 +40,15 @@ function Verify-CloseUnsavedChanges {
 
 function Manage-Taskbarsettings {
     if ( $menuOptTaskbar.Checked -eq $true ) {
-        $ListBox.Items.Insert($($ListBox.Items.Count -1),'    <CustomTaskbarLayoutCollection PinListPlacement="Replace">')
-        $ListBox.Items.Insert($($ListBox.Items.Count -1),'      <defaultlayout:TaskbarLayout>')
-        $ListBox.Items.Insert($($ListBox.Items.Count -1),'        <taskbar:TaskbarPinList>')
-        $ListBox.Items.Insert($($ListBox.Items.Count -1),'        </taskbar:TaskbarPinList>')
-        $ListBox.Items.Insert($($ListBox.Items.Count -1),'      </defaultlayout:TaskbarLayout>')
-        $ListBox.Items.Insert($($ListBox.Items.Count -1),'    </CustomTaskbarLayoutCollection>')
-        $ListBox.Items[0] = "$($ListBox.Items[0].Substring(0,$($ListBox.Items[0].Length -1))) xmlns:taskbar=""http://schemas.microsoft.com/Start/2014/TaskbarLayout"">"
+        $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'    <CustomTaskbarLayoutCollection PinListPlacement="Replace">')
+        $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'      <defaultlayout:TaskbarLayout>')
+        $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'        <taskbar:TaskbarPinList>')
+        $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'        </taskbar:TaskbarPinList>')
+        $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'      </defaultlayout:TaskbarLayout>')
+        $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'    </CustomTaskbarLayoutCollection>')
+        $LBxMain.Items[0] = "$($LBxMain.Items[0].Substring(0,$($LBxMain.Items[0].Length -1))) xmlns:taskbar=""http://schemas.microsoft.com/Start/2014/TaskbarLayout"">"
         $TxtLMTTaskbar.Visible = $true
-        $LabelLMTTaskbar.Visible = $true
+        $LblLMTTaskbar.Visible = $true
         $global:Modified = $true
     }
     else {
@@ -59,127 +59,138 @@ function Manage-Taskbarsettings {
         If ( $Choice -eq 'Yes' ) {
             $AssocRow = $Null
             $AssocRows = 0
-            foreach ( $item in $ListBox.Items ) {
+            foreach ( $item in $LBxMain.Items ) {
                 if ( $Item.TrimStart() -like '<CustomTaskbarLayoutCollection*' ) {
-                    $AssocRow = $ListBox.Items.IndexOf($Item)
+                    $AssocRow = $LBxMain.Items.IndexOf($Item)
                 }
             }
 
             $Counter = 0
             $TempRow = $AssocRow
             do {
-                if ( $ListBox.Items.Item($TempRow) -like '*</CustomTaskbarLayoutCollection*' ) { $EndFound = $true }
+                if ( $LBxMain.Items.Item($TempRow) -like '*</CustomTaskbarLayoutCollection*' ) { $EndFound = $true }
                 else {
                     $TempRow++
-                    if ( $TempRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                    if ( $TempRow -eq $LBxMain.Items.Count ) { $Endfound = $true }
                 }
                 $AssocRows++
             } until ( $Endfound -eq $true )         
         
             [int]$Temp = $LblPositionRow.Text - 1
-            $ListBox.BeginUpdate()
+            $LBxMain.BeginUpdate()
             $Counter = 0
             do {
                 $Counter++
                 try {
-                    $ListBox.Items.RemoveAt($AssocRow)
+                    $LBxMain.Items.RemoveAt($AssocRow)
                 }
                 catch {}
                 try {
-                    $ListBox.SelectedIndex = $Temp
+                    $LBxMain.SelectedIndex = $Temp
                 }
                 catch {}
             }
             until ( $Counter -eq $AssocRows )
-            $ListBox.Items[0] = $ListBOx.Items[0].Replace(' xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"','')
-            $ListBox.EndUpdate()
+            $LBxMain.Items[0] = $LBxMain.Items[0].Replace(' xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"','')
+            $LBxMain.EndUpdate()
             $global:Modified = $true
             $TxtLMTTaskbar.Visible = $false
-            $LabelLMTTaskbar.Visible = $false
+            $LblLMTTaskbar.Visible = $false
         }
         Else {
             $menuOptTaskbar.Checked = $true
             $TxtLMTTaskbar.Visible = $true
-            $LabelLMTTaskbar.Visible = $true
+            $LblLMTTaskbar.Visible = $true
         }
     }
 }
 
 function Insert-NewItem {
-    $PanelNewItem.BringToFront()
+    if ( $LBxMain.SelectedItem.TrimStart() -like '<taskbar*' ) {
+        $CBxTypeItems = @('Taskbar link')
+    }
+    else {
+        $CBxTypeItems = @('DesktopApplicationTile','Folder','Group','Tile')
+    }
+    $CBxType.Items.Clear()
+    foreach ( $CBxTypeItem in $CBxTypeItems ) {
+        $CBxType.Items.Add($CBxTypeItem) | out-null
+    }
+    $CBxType.SelectedIndex = 0
+    $PnlNewItem.BringToFront()
 }
 
 function Remove-Item {
     $AssocRow = $Null
-    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
-        $AssocRow = $ListBox.SelectedIndex
+    if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) {
+        $AssocRow = $LBxMain.SelectedIndex
         do {
-            if ( $ListBox.Items.Item($AssocRow) -like '*</start:Folder*' ) { $EndFound = $true }
+            if ( $LBxMain.Items.Item($AssocRow) -like '*</start:Folder*' ) { $EndFound = $true }
             else {
                 $AssocRow++
-                if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                if ( $AssocRow -eq $LBxMain.Items.Count ) { $Endfound = $true }
             }
         } until ( $Endfound -eq $true ) 
         $AssocRow = $AssocRow - 1
     }
-    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
-        $AssocRow = $ListBox.SelectedIndex
+    if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
+        $AssocRow = $LBxMain.SelectedIndex
         do {
-            if ( $ListBox.Items.Item($AssocRow) -like '*</start:Group*' ) { $EndFound = $true }
+            if ( $LBxMain.Items.Item($AssocRow) -like '*</start:Group*' ) { $EndFound = $true }
             else {
                 $AssocRow++
-                if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                if ( $AssocRow -eq $LBxMain.Items.Count ) { $Endfound = $true }
             }
         } until ( $Endfound -eq $true ) 
         $AssocRow = $AssocRow - 1
     }
 
     [int]$Temp = $LblPositionRow.Text - 1
-    $ListBox.BeginUpdate()
+    $LBxMain.BeginUpdate()
     try {
-        $ListBox.Items.RemoveAt($ListBox.SelectedIndex)
+        $LBxMain.Items.RemoveAt($LBxMain.SelectedIndex)
     }
     catch {
         if ( $AssocRow -ne $Null ) {
-            $ListBox.Items.RemoveAt($AssocRow)
+            $LBxMain.Items.RemoveAt($AssocRow)
         }
     }
-    $ListBox.EndUpdate()
+    $LBxMain.EndUpdate()
     try {
-        $ListBox.SelectedIndex = $Temp
+        $LBxMain.SelectedIndex = $Temp
     }
     catch {}
     $global:Modified = $true
 }
 
 function Remove-All {
-    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) { $RemoveAllType = 'folder' }
-    if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) { $RemoveAllType = 'group' }
+    if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) { $RemoveAllType = 'folder' }
+    if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) { $RemoveAllType = 'group' }
     $MessageBody  = "All parts of the selected $RemoveAllType will be removed.`n`nAre you sure?"
     $MessageTitle = "Removing entire $RemoveAllType"
     $Choice       = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,'YesNo','Warning')
     If ( $Choice -eq 'Yes' ) {
         $AssocRow = $Null
         $AssocRows = 0
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
-            $AssocRow = $ListBox.SelectedIndex
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) {
+            $AssocRow = $LBxMain.SelectedIndex
             do {
-                if ( $ListBox.Items.Item($AssocRow) -like '*</start:Folder*' ) { $EndFound = $true }
+                if ( $LBxMain.Items.Item($AssocRow) -like '*</start:Folder*' ) { $EndFound = $true }
                 else {
                     $AssocRow++
-                    if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                    if ( $AssocRow -eq $LBxMain.Items.Count ) { $Endfound = $true }
                 }
                 $AssocRows++
             } until ( $Endfound -eq $true )
             $AssocRow = $AssocRow - 1
         }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
-            $AssocRow = $ListBox.SelectedIndex
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
+            $AssocRow = $LBxMain.SelectedIndex
             do {
-                if ( $ListBox.Items.Item($AssocRow) -like '*</start:Group*' ) { $EndFound = $true }
+                if ( $LBxMain.Items.Item($AssocRow) -like '*</start:Group*' ) { $EndFound = $true }
                 else {
                     $AssocRow++
-                    if ( $AssocRow -eq $ListBox.Items.Count ) { $Endfound = $true }
+                    if ( $AssocRow -eq $LBxMain.Items.Count ) { $Endfound = $true }
                 }
                 $AssocRows++
             } until ( $Endfound -eq $true )         
@@ -187,51 +198,50 @@ function Remove-All {
         }
 
         [int]$Temp = $LblPositionRow.Text - 1
-        $ListBox.BeginUpdate()
+        $LBxMain.BeginUpdate()
         $Counter = 0
         do {
             $Counter++
             try {
-                $ListBox.Items.RemoveAt($ListBox.SelectedIndex)
+                $LBxMain.Items.RemoveAt($LBxMain.SelectedIndex)
             }
             catch {}
             try {
-                $ListBox.SelectedIndex = $Temp
+                $LBxMain.SelectedIndex = $Temp
             }
             catch {}
         }
         until ( $Counter -eq $AssocRows )
-        $ListBox.EndUpdate()
+        $LBxMain.EndUpdate()
         $global:Modified = $true
     }
 }
 
 function Move-SelectedItem ([string]$Direction) {
-    $ListBox.BeginUpdate()
-    $pos = $ListBox.SelectedIndex
+    $LBxMain.BeginUpdate()
+    $pos = $LBxMain.SelectedIndex
     if ( $Direction -eq 'Up' ) {
-        $ListBox.items.insert($pos -1,$ListBox.Items.Item($pos))
-        $ListBox.SelectedIndex = ($pos -1)
-        $ListBox.Items.RemoveAt($pos +1)
+        $LBxMain.items.insert($pos -1,$LBxMain.Items.Item($pos))
+        $LBxMain.SelectedIndex = ($pos -1)
+        $LBxMain.Items.RemoveAt($pos +1)
     }
     else {
-        $ListBox.items.insert($pos,$ListBox.Items.Item($pos +1))
-        $ListBox.SelectedIndex = ($pos +1)
-        $ListBox.Items.RemoveAt($pos +2)
+        $LBxMain.items.insert($pos,$LBxMain.Items.Item($pos +1))
+        $LBxMain.SelectedIndex = ($pos +1)
+        $LBxMain.Items.RemoveAt($pos +2)
     }
-    $ListBox.EndUpdate()
+    $LBxMain.EndUpdate()
     Change-ListBoxRow
     $global:Modified = $true
 }
 
 function Change-ListBoxRow {
     $SelectionTabExist = $false
-    if ( $ListBox.SelectedItem ) {
-        if ( $ListBox.SelectedItem.TrimStart() -like '<LayoutModificationTemplate*' ) {
-            If ( $PanelLayoutModificationTemplate ) {
-                $PanelLayoutModificationTemplate.BringToFront()
-                $ComboType.SelectedItem = 'LayoutModificationTemplate'
-                $SelectedItem = $ListBox.SelectedItem.Split('"')
+    if ( $LBxMain.SelectedItem ) {
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<LayoutModificationTemplate*' ) {
+            If ( $PnlLayoutModificationTemplate ) {
+                $PnlLayoutModificationTemplate.BringToFront()
+                $SelectedItem = $LBxMain.SelectedItem.Split('"')
                 $Counter = 0
                 foreach ( $Item in $SelectedItem ) {
                     if ( $Item -like '*xmlns:defaultlayout=*' ) { $TxtLMTDefaultLayout.Text = $SelectedItem[$Counter +1] }
@@ -244,112 +254,119 @@ function Change-ListBoxRow {
             }
             $SelectionTabExist = $true
         }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<LayoutOptions*' ) {
-            $PanelLayoutOptions.BringToFront()
-            $ComboType.SelectedItem = 'LayoutOptions'
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<LayoutOptions*' ) {
+            $PnlLayoutOptions.BringToFront()
             $SelectionTabExist = $true
         }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<DefaultLayoutOverride*' ) {
-            $PanelDefaultLayoutOverride.BringToFront()
-            $ComboType.SelectedItem = 'DefaultLayoutOverride'
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<DefaultLayoutOverride*' ) {
+            $PnlDefaultLayoutOverride.BringToFront()
             $SelectionTabExist = $true
         }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<StartLayoutCollection*' ) {
-            $PanelStartLayoutCollection.BringToFront()
-            $ComboType.SelectedItem = 'StartLayoutCollection'
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<StartLayoutCollection*' ) {
+            $PnlStartLayoutCollection.BringToFront()
             $SelectionTabExist = $true
         }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:StartLayout*' ) {
-            $PanelStartlayout.BringToFront()
-            $ComboType.SelectedItem = 'StartLayout'
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<defaultlayout:StartLayout*' ) {
+            $PnlStartlayout.BringToFront()
             $SelectionTabExist = $true
         }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
-            $PanelGroup.BringToFront()
-            $ComboType.SelectedItem = 'Group'
-            $SelectionTabExist = $true
-        }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
-            $PanelFolder.BringToFront()
-            $ComboType.SelectedItem = 'Folder'
-            $SelectionTabExist = $true
-        }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Tile*' ) {
-            $PanelTile.BringToFront()
-            $ComboType.SelectedItem = 'Tile'
-            $SelectedItem = $ListBox.SelectedItem.Split('"')
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
+            $PnlGroup.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
             $Counter = 0
             foreach ( $Item in $SelectedItem ) {
-                if ( $Item -like '*Size=*' ) { $ComboTileSize.SelectedItem = $SelectedItem[$Counter +1] }
-                if ( $Item -like '*Row=*' ) { $NumericTileRow.Text = $SelectedItem[$Counter +1] }
-                if ( $Item -like '*Column=*' ) { $NumericTileCol.Text = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Name=*' ) { $TxtGroupName.Text = $SelectedItem[$Counter +1] }
+                $Counter++
+            }
+            $SelectionTabExist = $true
+        }
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) {
+            $PnlFolder.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
+            $Counter = 0
+            foreach ( $Item in $SelectedItem ) {
+                if ( $Item -like '*Size=*' ) { $CBxFolderSize.SelectedItem = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Row=*' ) { $NumFolderRow.Text = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Column=*' ) { $NumFolderCol.Text = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Name=*' ) { $TxtFolderName.Text = $SelectedItem[$Counter +1] }
+                $Counter++
+            }
+            $SelectionTabExist = $true
+        }
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Tile*' ) {
+            $PnlTile.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
+            $Counter = 0
+            foreach ( $Item in $SelectedItem ) {
+                if ( $Item -like '*Size=*' ) { $CBxTileSize.SelectedItem = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Row=*' ) { $NumTileRow.Text = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Column=*' ) { $NumTileCol.Text = $SelectedItem[$Counter +1] }
                 if ( $Item -like '*AppUserModelID=*' ) {
-                    if ( $ComboBoxAppUserModelID.Items -contains $SelectedItem[$Counter +1] ) {
-                        $ComboBoxAppUserModelID.SelectedItem = $SelectedItem[$Counter +1]
+                    if ( $CBxBoxAppUserModelID.Items -contains $SelectedItem[$Counter +1] ) {
+                        $CBxBoxAppUserModelID.SelectedItem = $SelectedItem[$Counter +1]
                     }
-                        else { $ComboBoxAppUserModelID.Text = $SelectedItem[$Counter +1]
+                        else { $CBxBoxAppUserModelID.Text = $SelectedItem[$Counter +1]
                     }
                 }
                 $Counter++
             }
             $SelectionTabExist = $true
         }
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:DesktopApplicationTile*' ) {
-            $PanelDAT.BringToFront()
-            $ComboType.SelectedItem = 'DesktopApplicationTile'
-            $SelectedItem = $ListBox.SelectedItem.Split('"')
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:DesktopApplicationTile*' ) {
+            $PnlDAT.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
             $Counter = 0
             foreach ( $Item in $SelectedItem ) {
-                if ( $Item -like '*Size=*' ) { $ComboDATSize.SelectedItem = $SelectedItem[$Counter +1] }
-                if ( $Item -like '*Row=*' ) { $NumericDATRow.Text = $SelectedItem[$Counter +1] }
-                if ( $Item -like '*Column=*' ) { $NumericDATCol.Text = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Size=*' ) { $CBxDATSize.SelectedItem = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Row=*' ) { $NumDATRow.Text = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*Column=*' ) { $NumDATCol.Text = $SelectedItem[$Counter +1] }
                 if ( $Item -like '*DesktopApplicationLinkPath=*' ) {
-                    if ( $ComboBoxDAT.Items -contains $SelectedItem[$Counter +1] ) {
-                        $ComboBoxDAT.SelectedItem = $SelectedItem[$Counter +1]
+                    if ( $CBxBoxDAT.Items -contains $SelectedItem[$Counter +1] ) {
+                        $CBxBoxDAT.SelectedItem = $SelectedItem[$Counter +1]
                     }
-                        else { $ComboBoxDAT.Text = $SelectedItem[$Counter +1]
+                        else { $CBxBoxDAT.Text = $SelectedItem[$Counter +1]
                     }
                 }
                 $Counter++
             }
             $SelectionTabExist = $true
         }
-        $LblPositionRow.Text = "$($ListBox.SelectedIndex + 1)"
+        $LblPositionRow.Text = "$($LBxMain.SelectedIndex + 1)"
 
         if ( $SelectionTabExist -eq $false ) {
-            $PanelEmpty.BringToFront()
+            $PnlEmpty.BringToFront()
         }
 
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:*' -or $ListBox.SelectedItem.TrimStart() -like '</start:*' -or $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:Start*' -or $ListBox.SelectedItem.TrimStart() -like '<taskbar:*' ) {
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:*' -or $LBxMain.SelectedItem.TrimStart() -like '</start:*' -or $LBxMain.SelectedItem.TrimStart() -like '<defaultlayout:Start*' -or $LBxMain.SelectedItem.TrimStart() -like '<taskbar:*' ) {
             $BtnMoveUp.Enabled = $true
             $BtnMoveDown.Enabled = $true
             $BtnRemoveItem.Enabled = $true
             $BtnInsertNewItem.Enabled = $true
-            if ( $ListBox.Items.Item($ListBox.SelectedIndex-1)  -like '*<defaultlayout:Start*' -or $ListBox.Items.Item($ListBox.SelectedIndex-1)  -like '*<taskbar:taskBarPinList*' ) { $BtnMoveUp.Enabled = $false }
+            if ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1)  -like '*<defaultlayout:Start*' -or $LBxMain.Items.Item($LBxMain.SelectedIndex-1)  -like '*<taskbar:taskBarPinList*' ) { $BtnMoveUp.Enabled = $false }
             else { $BtnMoveUp.Enabled = $true }
-            if ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like '*</defaultlayout:Start*' -or $ListBox.Items.Item($ListBox.SelectedIndex+1)  -like '*</taskbar:*' ) { $BtnMoveDown.Enabled = $false }
+            if ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</defaultlayout:Start*' -or $LBxMain.Items.Item($LBxMain.SelectedIndex+1)  -like '*</taskbar:*' ) { $BtnMoveDown.Enabled = $false }
             else { $BtnMoveDown.Enabled = $true }
-            if ( $ListBox.SelectedItem.TrimStart() -like '</start:Folder*' ) {
+            if ( $LBxMain.SelectedItem.TrimStart() -like '</start:Folder*' ) {
                 $BtnRemoveItem.Enabled = $false
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like '*<start:Folder*' ) { $BtnMoveUp.Enabled = $false }
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like '*<start:Folder*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*<start:Folder*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*<start:Folder*' ) { $BtnMoveDown.Enabled = $false }
             }
-            if ( $ListBox.SelectedItem.TrimStart() -like '</start:Group*' ) {
+            if ( $LBxMain.SelectedItem.TrimStart() -like '</start:Group*' ) {
                 $BtnRemoveItem.Enabled = $false
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like '*<start:Group*' ) { $BtnMoveUp.Enabled = $false }
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like '*<start:Group*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*<start:Group*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*<start:Group*' ) { $BtnMoveDown.Enabled = $false }
             }
-            if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
+            if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) {
                 $BtnRemoveItem.Enabled = $false
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like '*</start:Folder*' ) { $BtnMoveUp.Enabled = $false }
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like '*</start:Folder*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*</start:Folder*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</start:Folder*' ) { $BtnMoveDown.Enabled = $false }
             }
-            if ( $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
+            if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
                 $BtnRemoveItem.Enabled = $false
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex-1) -like '*</start:Group*' ) { $BtnMoveUp.Enabled = $false }
-                If ( $ListBox.Items.Item($ListBox.SelectedIndex+1) -like '*</start:Group*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*</start:Group*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</start:Group*' ) { $BtnMoveDown.Enabled = $false }
             }
-            if ( $ListBox.SelectedItem.TrimStart() -like '<defaultlayout:*' -or $ListBox.SelectedItem.TrimStart() -like '<taskbar:TaskbarPinList*') {
+            if ( $LBxMain.SelectedItem.TrimStart() -like '<defaultlayout:*' -or $LBxMain.SelectedItem.TrimStart() -like '<taskbar:TaskbarPinList*') {
                 $BtnMoveUp.Enabled = $false
                 $BtnMoveDown.Enabled = $false
                 $BtnRemoveItem.Enabled = $false
@@ -362,9 +379,9 @@ function Change-ListBoxRow {
             $BtnRemoveItem.Enabled = $false
         }
 
-        if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' -or $ListBox.SelectedItem.TrimStart() -like '<start:Group*' ) {
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' -or $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
             $BtnRemoveAll.Visible = $true
-            if ( $ListBox.SelectedItem.TrimStart() -like '<start:Folder*' ) {
+            if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) {
                 $BtnRemoveAll.Text = 'Remove &entire Folder'
             }
             else {
@@ -379,55 +396,54 @@ function Change-ListBoxRow {
 
 function Show-DesignView {
     $BtnChangeView.Text = '&Cancel'
-    $ListBox.Visible = $false
-    $ListBox.Enabled = $false
-    $mainTxtBox.Visible = $true
-    $mainTxtBox.Enabled = $true
+    $LBxMain.Visible = $false
+    $LBxMain.Enabled = $false
+    $TxtMain.Visible = $true
+    $TxtMain.Enabled = $true
     $menuOptTaskbar.Enabled = $false
-    $ComboType.Visible = $false
+    $CBxType.Visible = $false
     $BtnTextViewApply.Visible = $true
-    $mainTxtBox.BringToFront()
-    $mainTxtBox.Clear()
-    $PanelButtons.Visible = $false
-    foreach ( $item in $ListBox.Items ) {
-        $mainTxtBox.Text += "$Item`n"
+    $TxtMain.BringToFront()
+    $TxtMain.Clear()
+    $PnlButtons.Visible = $false
+    foreach ( $item in $LBxMain.Items ) {
+        $TxtMain.Text += "$Item`n"
     }
     $BtnTextViewApply.Enabled = $false
-    $mainTxtBox.Focus()
+    $TxtMain.Focus()
 }
 
 function Hide-DesignView {
     $BtnChangeView.Text = 'Text-&view'
     $BtnTextViewApply.Visible = $false
-    $ListBox.Visible = $true
-    $ListBox.Enabled = $true
-    $mainTxtBox.Visible = $false
-    $mainTxtBox.Enabled = $false
+    $LBxMain.Visible = $true
+    $LBxMain.Enabled = $true
+    $TxtMain.Visible = $false
+    $TxtMain.Enabled = $false
     $menuOptTaskbar.Enabled = $true
-    $ComboType.Visible = $true
-    $PanelButtons.Visible = $true
-    $ListBox.SelectedIndex = 0
+    $PnlButtons.Visible = $true
+    $LBxMain.SelectedIndex = 0
 }
 
 function Apply-TextViewResult {
-            $ListBox.Items.Clear()
-            if ( $mainTxtBox.Text -contains '<CustomTaskbarLayoutCollection' ) {
+            $LBxMain.Items.Clear()
+            if ( $TxtMain.Text -contains '<CustomTaskbarLayoutCollection' ) {
                 $menuOptTaskbar.Checked = $true
             }
             else {
                 $menuOptTaskbar.Checked = $false
             }
 
-            foreach ( $Line in $mainTxtBox.Text.Split("`n") ) {
+            foreach ( $Line in $TxtMain.Text.Split("`n") ) {
                 if ( $Line -ne '' ) {
-                    $ListBox.Items.Add($Line.TrimEnd()) | out-null
+                    $LBxMain.Items.Add($Line.TrimEnd()) | out-null
                 }
             }
             Hide-DesignView
 }
 
 #region mainForm
-    $mainForm = New-Object system.Windows.Forms.Form -Property @{
+    $FrmMain = New-Object system.Windows.Forms.Form -Property @{
         Text            = 'Start Menu (Layout) Customizer - Untitled1.xml'
         Font            = 'MS Sans Serif,10,style=Regular'
         FormBorderStyle = 'Fixed3D'
@@ -437,7 +453,7 @@ function Apply-TextViewResult {
         StartPosition   = 'CenterScreen'
         Size            = New-Object System.Drawing.Size(1280,768)
     }
-    $mainForm.add_FormClosing({
+    $FrmMain.add_FormClosing({
         $SaveChanges = Verify-CloseUnsavedChanges
         If ( $SaveChanges -eq 'Yes ' ) {
             $SaveBeforeClosing = Save-LayoutFile
@@ -450,7 +466,7 @@ function Apply-TextViewResult {
         }
     })
     if ( $(Test-Path variable:global:psISE) -eq $False ) {
-        $mainForm.Size = New-Object System.Drawing.Size(1290,778)
+        $FrmMain.Size = New-Object System.Drawing.Size(1290,778)
     }
 #endregion
 
@@ -458,7 +474,7 @@ function Apply-TextViewResult {
     function New-LayoutFile {
         $SaveChanges = Verify-CloseUnsavedChanges
         if ( $SaveChanges -eq 'No' ) {
-            $ListBox.Items.Clear()
+            $LBxMain.Items.Clear()
             if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
                 $menuOptTaskbar.Checked = $true
             }
@@ -466,34 +482,34 @@ function Apply-TextViewResult {
                 $menuOptTaskbar.Checked = $false
             }
             foreach ( $Line in $DefaultContent ) {
-                $ListBox.Items.Add($Line) | out-null
+                $LBxMain.Items.Add($Line) | out-null
             }
-            $mainForm.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
+            $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
             $global:CurrentFileName = ''
-            $ListBox.SelectedIndex = 0
+            $LBxMain.SelectedIndex = 0
             $global:Modified = $false
             Hide-DesignView
         }
         if ( $SaveChanges -eq 'Yes' ) {
             if ( $CurrentFileName -ne '' ) {
                 Out-File $CurrentFileName
-                foreach ( $Line in $ListBox.Items ) {
+                foreach ( $Line in $LBxMain.Items ) {
                     Add-Content -Path $CurrentFileName -Value $Line -Encoding UTF8 -Force
                 }
-                $ListBox.Items.Clear()
+                $LBxMain.Items.Clear()
                 foreach ( $Line in $DefaultContent ) {
-                    $ListBox.Items.Add($Line) | out-null
+                    $LBxMain.Items.Add($Line) | out-null
                 }
-                $mainForm.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
+                $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
                 $global:CurrentFileName = '.\Untitled1.xml'
-                $ListBox.SelectedIndex = 0
+                $LBxMain.SelectedIndex = 0
                 $global:Modified = $false
                 Hide-DesignView
             }
             else {
                 $Result = Save-As
                 if ( $Result -eq 'OK' ) {
-                    $ListBox.Items.Clear()
+                    $LBxMain.Items.Clear()
                     if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
                         $menuOptTaskbar.Checked = $true
                     }
@@ -501,11 +517,11 @@ function Apply-TextViewResult {
                         $menuOptTaskbar.Checked = $false
                     }
                     foreach ( $Line in $DefaultContent ) {
-                        $ListBox.Items.Add($Line) | out-null
+                        $LBxMain.Items.Add($Line) | out-null
                     }
-                    $mainForm.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
+                    $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
                     $global:CurrentFileName = '.\Untitled1.xml'
-                    $ListBox.SelectedIndex = 0
+                    $LBxMain.SelectedIndex = 0
                     $global:Modified = $false
                     Hide-DesignView
                 }
@@ -533,13 +549,13 @@ function Apply-TextViewResult {
                     $menuOptTaskbar.Checked = $false
                 }
                 if ( $Content[0] -like '<LayoutModificationTemplate *' ) {
-                    $ListBox.Items.Clear()
+                    $LBxMain.Items.Clear()
                     foreach ( $Line in $Content ) {
-                        $ListBox.Items.Add($Line) | out-null
+                        $LBxMain.Items.Add($Line) | out-null
                     }
                     $global:CurrentFileName = $inputFileName
                     $global:Modified = $false
-                    $mainForm.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
+                    $FrmMain.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
                 }
                 else {
                     $MessageBody  = 'This document is an invalid Start menu XML-file.`n`nAborting operation!'
@@ -552,7 +568,7 @@ function Apply-TextViewResult {
         if ( $SaveChanges -eq 'Yes' ) {
             if ( $CurrentFileName -ne '' ) {
                 Out-File $CurrentFileName
-                foreach ( $Line in $ListBox.Items ) {
+                foreach ( $Line in $LBxMain.Items ) {
                     Add-Content -Path $CurrentFileName -Value $Line -Encoding UTF8 -Force
                 }
                 $global:Modified = $false
@@ -571,11 +587,11 @@ function Apply-TextViewResult {
     function Save-LayoutFile {
         if ( $CurrentFileName -ne '' ) {
             Out-File $CurrentFileName -Encoding UTF8 -Force
-            foreach ( $Line in $ListBox.Items ) {
+            foreach ( $Line in $LBxMain.Items ) {
                 Add-Content -Path $CurrentFileName -Value $Line -Encoding UTF8 -Force
             }
             $global:Modified = $false
-            $mainForm.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
+            $FrmMain.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
         }
         else { Save-As-NewLayoutFile }
     }
@@ -592,12 +608,12 @@ function Apply-TextViewResult {
             $outputFileName = $selectSaveAsForm.FileName
             if ( $outputFileName -ne $Null ) {
                 Out-File $outputFileName
-                foreach ( $Line in $ListBox.Items ) {
+                foreach ( $Line in $LBxMain.Items ) {
                     Add-Content -Path $outputFileName -Value $Line -Encoding UTF8 -Force
                 }
                 $global:CurrentFileName = $outputFileName
                 $global:Modified = $false
-                $mainForm.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
+                $FrmMain.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
             }
         }
         return $Result
@@ -644,7 +660,7 @@ function Apply-TextViewResult {
 #region Menuitems
     $menuMain = New-Object System.Windows.Forms.MenuStrip
     $menuMain.ResetBackColor()
-    [void]$mainForm.Controls.Add($menuMain)
+    [void]$FrmMain.Controls.Add($menuMain)
 
     $menuFile = New-Object System.Windows.Forms.ToolStripMenuItem -Property @{
         Text = 'File'
@@ -701,46 +717,27 @@ function Apply-TextViewResult {
 
 #region controls in mainForm
     #region ButtonPanel
-        $PanelButtons = New-Object System.Windows.Forms.Panel -Property @{
+        $PnlButtons = New-Object System.Windows.Forms.Panel -Property @{
             BorderStyle = 0
             Size     = New-Object Drawing.Size @(1000,35)
             Location = New-Object System.Drawing.Point(0,703)
         }
-        $mainForm.Controls.Add($PanelButtons)
+        $FrmMain.Controls.Add($PnlButtons)
     #endregion
-
-    $LabelType = New-Object System.Windows.Forms.Label -Property @{
-        Location = New-Object System.Drawing.Point(10,35)
-        Text = 'Type:'
-        Autosize = $true
-    }
-    $mainForm.Controls.Add($LabelType)
-
-    $ComboType = New-Object System.Windows.Forms.ComboBox -Property @{
-        Location = New-Object System.Drawing.Point(60,32)
-        Width = 170
-        Enabled = $false
-        FlatStyle = 0
-    }
-    $ComboTypeItems = @('Group','Folder','Tile','LayoutModificationTemplate','LayoutOptions','DefaultLayoutOverride','StartLayoutCollection','StartLayout','DesktopApplicationTile')
-    foreach ( $ComboTypeItem in $ComboTypeItems ) {
-        $ComboType.Items.Add($ComboTypeItem) | out-null
-    }
-    $mainForm.Controls.Add($ComboType)
-    
+ 
     $LblRow = New-Object System.Windows.Forms.Label -Property @{
         Location = New-Object System.Drawing.Point(10,3)
         Text = 'Line:'
         Width = 35
     }
-    $PanelButtons.Controls.Add($LblRow)
+    $PnlButtons.Controls.Add($LblRow)
     
     $LblPositionRow = New-Object System.Windows.Forms.Label -Property @{
         Location = New-Object System.Drawing.Point(45,3)
         Text = 1
         AutoSize = $true
     }
-    $PanelButtons.Controls.Add($LblPositionRow)
+    $PnlButtons.Controls.Add($LblPositionRow)
     
     $BtnMoveUp = New-Object System.Windows.Forms.Button -Property @{
         FlatStyle = 0
@@ -762,7 +759,7 @@ function Apply-TextViewResult {
     })
     $BtnMoveUp.Enabled = $false
     $BtnMoveUp.Add_Click({Move-SelectedItem -Direction Up})
-    $PanelButtons.Controls.Add($BtnMoveUp)
+    $PnlButtons.Controls.Add($BtnMoveUp)
     
     $BtnMoveDown = New-Object System.Windows.Forms.Button -Property @{
         FlatStyle = 0
@@ -784,7 +781,7 @@ function Apply-TextViewResult {
     })
     $BtnMoveDown.Enabled = $false
     $BtnMoveDown.Add_Click({Move-SelectedItem -Direction Down})
-    $PanelButtons.Controls.Add($BtnMoveDown)
+    $PnlButtons.Controls.Add($BtnMoveDown)
     
     $BtnInsertNewItem = New-Object System.Windows.Forms.Button -Property @{
         Text = 'Create &item'
@@ -806,7 +803,7 @@ function Apply-TextViewResult {
     })
     $BtnInsertNewItem.Enabled = $false
     $BtnInsertNewItem.Add_Click({Insert-NewItem})
-    $PanelButtons.Controls.Add($BtnInsertNewItem)
+    $PnlButtons.Controls.Add($BtnInsertNewItem)
 
     $BtnRemoveItem = New-Object System.Windows.Forms.Button -Property @{
         Text = '&Remove'
@@ -828,7 +825,7 @@ function Apply-TextViewResult {
     })
     $BtnRemoveItem.Enabled = $false
     $BtnRemoveItem.Add_Click({Remove-Item})
-    $PanelButtons.Controls.Add($BtnRemoveItem)
+    $PnlButtons.Controls.Add($BtnRemoveItem)
     
     $BtnRemoveAll = New-Object System.Windows.Forms.Button -Property @{
         Text      = 'Remove All'
@@ -840,7 +837,7 @@ function Apply-TextViewResult {
     $BtnRemoveAll.FlatAppearance.BorderColor = 'LightBlue'
     $BtnRemoveAll.FlatAppearance.BorderSize = 2
     $BtnRemoveAll.Add_Click({Remove-All})
-    $PanelButtons.Controls.Add($BtnRemoveAll)
+    $PnlButtons.Controls.Add($BtnRemoveAll)
 
     $BtnTextViewApply = New-Object System.Windows.Forms.Button -Property @{
         Text      = 'Save changes'
@@ -863,7 +860,7 @@ function Apply-TextViewResult {
     $BtnTextViewApply.FlatAppearance.BorderColor = 'LightBlue'
     $BtnTextViewApply.FlatAppearance.BorderSize = 2
     $BtnTextViewApply.Add_Click({ Apply-TextViewResult })
-    $mainForm.Controls.Add($BtnTextViewApply)
+    $FrmMain.Controls.Add($BtnTextViewApply)
     
     $BtnChangeView = New-Object System.Windows.Forms.Button -Property @{
         Text      = 'Text-&view'
@@ -877,30 +874,30 @@ function Apply-TextViewResult {
         }
         else { Hide-DesignView }
     })
-    $mainForm.Controls.Add($BtnChangeView)
+    $FrmMain.Controls.Add($BtnChangeView)
 
-    $mainTxtBox = New-Object System.Windows.Forms.RichTextBox -Property @{
+    $TxtMain = New-Object System.Windows.Forms.RichTextBox -Property @{
         Location    = New-Object System.Drawing.Point(0,27)
         WordWrap    = $false
         BorderStyle = 'None'
-        Width       = $mainForm.Width - 10
+        Width       = $FrmMain.Width - 10
         Height      = 670
         Enabled     = $false
         Visible     = $false
     }
-    $mainTxtBox.Add_TextChanged({$BtnTextViewApply.Enabled = $true})
-    $mainForm.Controls.Add($mainTxtBox)
+    $TxtMain.Add_TextChanged({$BtnTextViewApply.Enabled = $true})
+    $FrmMain.Controls.Add($TxtMain)
 
-    $ListBox = New-Object System.Windows.Forms.ListBox -Property @{
+    $LbxMain = New-Object System.Windows.Forms.ListBox -Property @{
         Location    = New-Object System.Drawing.Point(242,27)
         DrawMode    = [System.Windows.Forms.DrawMode]::OwnerDrawFixed
         BorderStyle = 'Fixed3D'
         Width       = 1010
         Height      = 670
     }
-    $ListBox.HorizontalScrollbar = $true
-    $ListBox.HorizontalExtent = 2250
-    $ListBox.add_DrawItem({
+    $LBxMain.HorizontalScrollbar = $true
+    $LBxMain.HorizontalExtent = 2250
+    $LBxMain.add_DrawItem({
         param([object]$s, [System.Windows.Forms.DrawItemEventArgs]$e)
         if ( $e.Index -gt -1 ) {
             if ( $e.Index % 2 -eq 0) {
@@ -935,7 +932,7 @@ function Apply-TextViewResult {
         }
         #$e.DrawFocusRectangle()
     })
-    $ListBox.Add_SelectedIndexChanged({Change-ListBoxRow})
+    $LBxMain.Add_SelectedIndexChanged({Change-ListBoxRow})
     if ( $DefaultContent -ne $Null ) {
         if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
             $menuOptTaskbar.Checked = $true
@@ -944,223 +941,389 @@ function Apply-TextViewResult {
             $menuOptTaskbar.Checked = $false
         }
         foreach ( $Line in $DefaultContent ) {
-            $ListBox.Items.Add($Line) | out-null
+            $LBxMain.Items.Add($Line) | out-null
         }
     }
-    if ( $ListBox.Items.Count -gt 0 ) { $ListBox.SelectedIndex = 0 }
-    $mainForm.Controls.Add($ListBox)
+    if ( $LBxMain.Items.Count -gt 0 ) { $LBxMain.SelectedIndex = 0 }
+    $FrmMain.Controls.Add($LbxMain)
 #endregion
 
 #region Panels
     #region PanelLayoutModificationTemplate
-        $PanelLayoutModificationTemplate = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlLayoutModificationTemplate = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelLayoutModificationTemplate)
+        $FrmMain.Controls.Add($PnlLayoutModificationTemplate)
 
-        $LabelLMTDefaultLayout = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = 10
+        $LblTypeLMT = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Type: LayoutModificationTemplate'
+            AutoSize = $true
+        }
+        $PnlLayoutModificationTemplate.Controls.Add($LblTypeLMT)
+
+        $YAxis = $YAxis + 30
+        $LblLMTDefaultLayout = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'xmlns:defaultlayout'
             Autosize = $true
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($LabelLMTDefaultLayout)
+        $PnlLayoutModificationTemplate.Controls.Add($LblLMTDefaultLayout)
         
+        $YAxis = $YAxis + 20
         $TxtLMTDefaultLayout = New-Object System.Windows.Forms.TextBox -Property @{
             BackColor   = 'White'
             Width       = 220
-            Location    = New-Object System.Drawing.Point(0,30)
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($TxtLMTDefaultLayout)
+        $PnlLayoutModificationTemplate.Controls.Add($TxtLMTDefaultLayout)
 
-        $LabelLMTStart = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = $YAxis + 30
+        $LblLMTStart = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'xmlns:start'
             AutoSize = $true
-            Location = New-Object System.Drawing.Point(0,65)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($LabelLMTStart)
+        $PnlLayoutModificationTemplate.Controls.Add($LblLMTStart)
 
+        $YAxis = $YAxis + 20
         $TxtLMTStart = New-Object System.Windows.Forms.TextBox -Property @{
             BackColor   = 'White'
             Width       = 220
-            Location    = New-Object System.Drawing.Point(0,90)
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($TxtLMTStart)
+        $PnlLayoutModificationTemplate.Controls.Add($TxtLMTStart)
 
-        $LabelLMTxmlns = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = $YAxis + 30
+        $LblLMTxmlns = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'xmlns'
             AutoSize = $true
-            Location = New-Object System.Drawing.Point(0,125)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($LabelLMTxmlns)
+        $PnlLayoutModificationTemplate.Controls.Add($LblLMTxmlns)
 
+        $YAxis = $YAxis + 20
         $TxtLMTxlmns = New-Object System.Windows.Forms.TextBox -Property @{
             BackColor   = 'White'
             Width       = 220
-            Location    = New-Object System.Drawing.Point(0,150)
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($TxtLMTxlmns)
+        $PnlLayoutModificationTemplate.Controls.Add($TxtLMTxlmns)
 
-        $LabelLMTVersion = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = $YAxis + 30
+        $LblLMTVersion = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'Version'
             AutoSize = $true
-            Location = New-Object System.Drawing.Point(0,185)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($LabelLMTVersion)
+        $PnlLayoutModificationTemplate.Controls.Add($LblLMTVersion)
 
+        $YAxis = $YAxis + 20
         $TxtLMTVersion = New-Object System.Windows.Forms.TextBox -Property @{
             BackColor   = 'White'
             Width       = 220
-            Location    = New-Object System.Drawing.Point(0,210)
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($TxtLMTVersion)
+        $PnlLayoutModificationTemplate.Controls.Add($TxtLMTVersion)
 
-        $LabelLMTTaskbar = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = $YAxis + 30
+        $LblLMTTaskbar = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'xmlns:taskbar'
             AutoSize = $true
-            Location = New-Object System.Drawing.Point(0,245)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($LabelLMTTaskbar)
+        $PnlLayoutModificationTemplate.Controls.Add($LblLMTTaskbar)
 
+        $YAxis = $YAxis + 20
         $TxtLMTTaskbar = New-Object System.Windows.Forms.TextBox -Property @{
             BackColor   = 'White'
             Width       = 220
-            Location    = New-Object System.Drawing.Point(0,270)
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelLayoutModificationTemplate.Controls.Add($TxtLMTTaskbar)
+        $PnlLayoutModificationTemplate.Controls.Add($TxtLMTTaskbar)
 
         if ( $menuOptTaskbar.Checked -eq $true ) {
-            $LabelLMTTaskbar.Visible = $true
+            $LblLMTTaskbar.Visible = $true
             $TxtLMTTaskbar.Visible = $true
         }
         else {
-            $LabelLMTTaskbar.Visible = $false
+            $LblLMTTaskbar.Visible = $false
             $TxtLMTTaskbar.Visible = $false
         }
         Change-ListBoxRow
     #endregion
 
     #region PanelLayoutOptions
-        $PanelLayoutOptions = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlLayoutOptions = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelLayoutOptions)
+        $FrmMain.Controls.Add($PnlLayoutOptions)
+
+        $LblTypeLayoutOptions = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,5)
+            Text     = 'Type: LayoutOptions'
+            AutoSize = $true
+        }
+        $PnlLayoutOptions.Controls.Add($LblTypeLayoutOptions)
     #endregion
 
     #region PanelDefaultLayoutOverride
-        $PanelDefaultLayoutOverride = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlDefaultLayoutOverride = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelDefaultLayoutOverride)
+        $FrmMain.Controls.Add($PnlDefaultLayoutOverride)
+
+        $LblTypeDefaultLayoutOverride = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,5)
+            Text     = 'Type: DefaultLayoutOverride'
+            AutoSize = $true
+        }
+        $PnlDefaultLayoutOverride.Controls.Add($LblTypeDefaultLayoutOverride)
     #endregion
 
     #region PanelStartLayoutCollection
-        $PanelStartLayoutCollection = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlStartLayoutCollection = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelStartLayoutCollection)
+        $FrmMain.Controls.Add($PnlStartLayoutCollection)
+
+        $LblTypeStartLayoutCollection = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,5)
+            Text     = 'Type: StartLayoutCollection'
+            AutoSize = $true
+        }
+        $PnlStartLayoutCollection.Controls.Add($LblTypeStartLayoutCollection)
     #endregion
 
     #region PanelStartLayout
-        $PanelStartlayout = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlStartlayout = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelStartlayout)
+        $FrmMain.Controls.Add($PnlStartlayout)
+
+        $LblTypeStartLayout = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,5)
+            Text     = 'Type: StartLayout'
+            AutoSize = $true
+        }
+        $PnlStartlayout.Controls.Add($LblTypeStartLayout)
     #endregion
 
     #region PanelFolder
-        $PanelFolder = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlFolder = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelFolder)
-    #endregion
+        $FrmMain.Controls.Add($PnlFolder)
 
-    #region PanelGroup
-        $PanelGroup = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
-        }
-        $mainForm.Controls.Add($PanelGroup)
-    #endregion
-
-    #region PanelTIle
-        $PanelTile = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
-        }
-        $mainForm.Controls.Add($PanelTIle)
-        
-        $LabelTileSize = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = 10
+        $LblTypeFolder = New-Object System.Windows.Forms.Label -Property @{
             Location = New-Object System.Drawing.Point(0,5)
-            Text     = 'Size'
-            Width    = 50
+            Text     = 'Type: Folder'
+            AutoSize = $true
         }
-        $PanelTile.Controls.Add($LabelTileSize)
+        $PnlFolder.Controls.Add($LblTypeFolder)
 
-        $ComboTileSize = New-Object System.Windows.Forms.ComboBox -Property @{
-            Location      = New-Object System.Drawing.Point(50,0)
+        $YAxis = $YAxis + 30
+        $LblFolderSize = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Size'
+            AutoSize = $true
+        }
+        $PnlFolder.Controls.Add($LblFolderSize)
+
+        $YAxis = $YAxis + 20
+        $CBxFolderSize = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location      = New-Object System.Drawing.Point(0,$YAxis)
             DropDownStyle = 'DropDownList'
-            Width         = 170
+            Width         = 220
         }
         $SizeItems = @('1x1','2x2','2x4','4x4')
         foreach ( $SizeItem in $SizeItems ) {
-            $ComboTileSize.Items.Add($SizeItem) | out-null
+            $CBxFolderSize.Items.Add($SizeItem) | out-null
         }
-        $PanelTile.Controls.Add($ComboTileSize)
+        $PnlFolder.Controls.Add($CBxFolderSize)
 
-        $LabelTileColumn = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = $YAxis + 30
+        $LblFolderColumn = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'Column'
-            Width    = 55
-            Location = New-Object System.Drawing.Point(0,35)
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelTile.Controls.Add($LabelTileColumn)
+        $PnlFolder.Controls.Add($LblFolderColumn)
         
-        $NumericTileCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
+        $YAxis = $YAxis + 20
+        $NumFolderCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
             BackColor   = 'White'
             Maximum     = 5
             ReadOnly    = $true        
-            BorderStyle = 'None'
             TextAlign   = "Center"
-            Width       = 170
-            Location    = New-Object System.Drawing.Point(50,32)
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelTile.Controls.Add($NumericTileCol)
+        $PnlFolder.Controls.Add($NumFolderCol)
 
-        $LabelTileRow = New-Object System.Windows.Forms.Label -Property @{
+        $YAxis = $YAxis + 30
+        $LblFolderRow = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'Row'
-            Width    = 50
-            Location = New-Object System.Drawing.Point(0,70)
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelTile.Controls.Add($LabelTileRow)
+        $PnlFolder.Controls.Add($LblFolderRow)
 
-        $NumericTileRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
+        $YAxis = $YAxis + 20
+        $NumFolderRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
             BackColor   = 'White'
             Maximum     = 20
             ReadOnly    = $true
-            BorderStyle = 'None'
             TextAlign   = 'Center'
-            Width       = 170
-            Location    = New-Object System.Drawing.Point(50,67)
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelTile.Controls.Add($NumericTileRow)
+        $PnlFolder.Controls.Add($NumFolderRow)
 
+        $YAxis = $YAxis + 30
+        $LblFolderName = New-Object System.Windows.Forms.Label -Property @{
+            Text     = 'Name'
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlFolder.Controls.Add($LblFolderName)
+
+        $YAxis = $YAxis + 20
+        $TxtFolderName = New-Object System.Windows.Forms.TextBox -Property @{
+            BackColor   = 'White'
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlFolder.Controls.Add($TxtFolderName)
+    #endregion
+
+    #region PanelGroup
+        $PnlGroup = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
+        }
+        $FrmMain.Controls.Add($PnlGroup)
+
+        $YAxis = 10
+        $LblTypeGroup = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,5)
+            Text     = 'Type: Group'
+            AutoSize = $true
+        }
+        $PnlGroup.Controls.Add($LblTypeGroup)
+
+        $YAxis = $YAxis + 30
+        $LblGroupName = New-Object System.Windows.Forms.Label -Property @{
+            Text     = 'Name'
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlGroup.Controls.Add($LblGroupName)
+
+        $YAxis = $YAxis + 20
+        $TxtGroupName = New-Object System.Windows.Forms.TextBox -Property @{
+            BackColor   = 'White'
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlGroup.Controls.Add($TxtGroupName)
+    #endregion
+
+    #region PanelTIle
+        $PnlTile = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
+        }
+        $FrmMain.Controls.Add($PnlTIle)
+
+        $YAxis = 10
+        $LblTypeTile = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Type: Tile'
+            AutoSize = $true
+        }
+        $PnlTIle.Controls.Add($LblTypeTile)
+        
+        $YAxis = $YAxis + 30
+        $LblTileSize = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Size'
+            AutoSize = $true
+        }
+        $PnlTile.Controls.Add($LblTileSize)
+
+        $YAxis = $YAxis + 20
+        $CBxTileSize = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location      = New-Object System.Drawing.Point(0,$YAxis)
+            DropDownStyle = 'DropDownList'
+            Width         = 220
+        }
+        $SizeItems = @('1x1','2x2','2x4','4x4')
+        foreach ( $SizeItem in $SizeItems ) {
+            $CBxTileSize.Items.Add($SizeItem) | out-null
+        }
+        $PnlTile.Controls.Add($CBxTileSize)
+
+        $YAxis = $YAxis + 30
+        $LblTileColumn = New-Object System.Windows.Forms.Label -Property @{
+            Text     = 'Column'
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlTile.Controls.Add($LblTileColumn)
+        
+        $YAxis = $YAxis + 20
+        $NumTileCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
+            BackColor   = 'White'
+            Maximum     = 5
+            ReadOnly    = $true        
+            TextAlign   = "Center"
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlTile.Controls.Add($NumTileCol)
+
+        $YAxis = $YAxis + 30
+        $LblTileRow = New-Object System.Windows.Forms.Label -Property @{
+            Text     = 'Row'
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlTile.Controls.Add($LblTileRow)
+
+        $YAxis = $YAxis + 20
+        $NumTileRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
+            BackColor   = 'White'
+            Maximum     = 20
+            ReadOnly    = $true
+            TextAlign   = 'Center'
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlTile.Controls.Add($NumTileRow)
+
+        $YAxis = $YAxis + 30
         $LblAppUserModelID = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'AppUserModelID'
             AutoSize = $true
-            Location = New-Object System.Drawing.Point(0,105)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelTile.Controls.Add($LblAppUserModelID)
+        $PnlTile.Controls.Add($LblAppUserModelID)
 
-        $ComboBoxAppUserModelID = New-Object System.Windows.Forms.ComboBox -Property @{
-            Location       = New-Object System.Drawing.Point(0,130)
+        $YAxis = $YAxis + 20
+        $CBxBoxAppUserModelID = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location       = New-Object System.Drawing.Point(0,$YAxis)
             DropDownHeight = 473
             DropDownWidth  = 1237            
-            Width          = 218
+            Width          = 220
         }
         try {
             $InitialAllXPackages = Get-AppxPackage -AllUsers
@@ -1179,82 +1342,99 @@ function Apply-TextViewResult {
         $AllXPackages = $AllXPackages | Select -Unique | Sort-Object
         if ( $AllXPackages.Count -gt 0 ) {
             ForEach ( $Package in $AllXPackages ) {
-                $ComboBoxAppUserModelID.Items.Add($Package) | out-null
+                $CBxBoxAppUserModelID.Items.Add($Package) | out-null
             }
         }
-        $PanelTile.Controls.Add($ComboBoxAppUserModelID)        
+        $PnlTile.Controls.Add($CBxBoxAppUserModelID)        
     #endregion
 
     #region PanelDesktopApplicationTile
-        $PanelDAT = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlDAT = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelDAT)
+        $FrmMain.Controls.Add($PnlDAT)
 
+        $YAxis = 10
+        $LblTypeDAT = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Type: DesktopApplicationTile'
+            AutoSize = $true
+        }
+        $PnlDAT.Controls.Add($LblTypeDAT)
+
+        $YAxis = $YAxis + 30
         $LblDATTileSize = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text     = 'Size'
-            Width    = 50
+            AutoSize = $true
         }
-        $PanelDAT.Controls.Add($LblDATTileSize)
+        $PnlDAT.Controls.Add($LblDATTileSize)
 
-        $ComboDATSize = New-Object System.Windows.Forms.ComboBox -Property @{
-            Location      = New-Object System.Drawing.Point(50,0)
+        $YAxis = $YAxis + 20
+        $CBxDATSize = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location      = New-Object System.Drawing.Point(0,$YAxis)
             DropDownStyle = 'DropDownList'
-            Width         = 170
+            Width         = 220
         }
         $SizeItems = @('1x1','2x2','2x4','4x4')
         foreach ( $SizeItem in $SizeItems ) {
-            $ComboDATSize.Items.Add($SizeItem) | out-null
+            $CBxDATSize.Items.Add($SizeItem) | out-null
         }
-        $PanelDAT.Controls.Add($ComboDATSize)
+        $PnlDAT.Controls.Add($CBxDATSize)
         
+        $YAxis = $YAxis + 30
         $LblDATColumn = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'Column'
-            Width    = 60
-            Location = New-Object System.Drawing.Point(0,35)
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelDAT.Controls.Add($LblDATColumn)
-        $NumericDATCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
+        $PnlDAT.Controls.Add($LblDATColumn)
+
+        $YAxis = $YAxis + 20
+        $NumDATCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
             BackColor   = 'White'
             Maximum     = 5
             ReadOnly    = $true
-            BorderStyle = 'None'
             TextAlign   = 'Center'
-            Width       = 170
-            Location    = New-Object System.Drawing.Point(50,32)
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelDAT.Controls.Add($NumericDATCol)
+        $PnlDAT.Controls.Add($NumDATCol)
+
+        $YAxis = $YAxis + 30
         $LblDATRow = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'Row'
-            Width    = 50
-            Location = New-Object System.Drawing.Point(0,70)
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelDAT.Controls.Add($LblDATRow)
-        $NumericDATRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
+        $PnlDAT.Controls.Add($LblDATRow)
+
+        $YAxis = $YAxis + 20
+        $NumDATRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
             BackColor   = 'White'
             Maximum     = 20
             ReadOnly    = $true
-            BorderStyle = 'None'
             TextAlign   = 'Center'
-            Width       = 170
-            Location    = New-Object System.Drawing.Point(50,67)
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelDAT.Controls.Add($NumericDATRow)
+        $PnlDAT.Controls.Add($NumDATRow)
 
+        $YAxis = $YAxis + 30
         $LblDesktopApplicationTile = New-Object System.Windows.Forms.Label -Property @{
             Text     = 'DesktopApplicationLinkPath'
             AutoSize = $true
-            Location = New-Object System.Drawing.Point(0,105)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PanelDAT.Controls.Add($LblDesktopApplicationTile)
+        $PnlDAT.Controls.Add($LblDesktopApplicationTile)
 
-        $ComboBoxDAT = New-Object System.Windows.Forms.ComboBox -Property @{
-            Location       = New-Object System.Drawing.Point(0,130)
+        $YAxis = $YAxis + 20
+        $CBxBoxDAT = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location       = New-Object System.Drawing.Point(0,$YAxis)
             DropDownHeight = 473
             DropDownWidth  = 1237
-            Width          = 218
+            Width          = 220
         }
         $AllLinks = @()
         $AllUserLinks = $(Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
@@ -1266,27 +1446,42 @@ function Apply-TextViewResult {
         $AllLinks = $AllLinks | Sort-Object
         if ( $AllLinks.Count -gt 0 ) {
             ForEach ( $Item in $AllLinks ) {
-                $ComboBoxDAT.Items.Add($Item) | out-null
+                $CBxBoxDAT.Items.Add($Item) | out-null
             }
         }
-        $PanelDAT.Controls.Add($ComboBoxDAT)
+        $PnlDAT.Controls.Add($CBxBoxDAT)
     #endregion
 
     #region PanelNewItem
-        $PanelNewItem = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlNewItem = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelNewItem)
+        $FrmMain.Controls.Add($PnlNewItem)
+
+        $LblType = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,10)
+            Text = 'Type:'
+            Autosize = $true
+        }
+        $PnlNewItem.Controls.Add($LblType)
+        
+        $CBxType = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location = New-Object System.Drawing.Point(50,10)
+            DropDownStyle = 'DropDownList'
+            Width = 170
+            #FlatStyle = 0
+        }
+        $PnlNewItem.Controls.Add($CBxType)
     #endregion
 
     #region PanelEmpty
-        $PanelEmpty = New-Object System.Windows.Forms.Panel -Property @{
-            Size     = New-Object Drawing.Size @(220,630)
-            Location = New-Object System.Drawing.Point(10,65)
+        $PnlEmpty = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $mainForm.Controls.Add($PanelEmpty)
+        $FrmMain.Controls.Add($PnlEmpty)
     #endregion
 #endregion
 
-$mainForm.ShowDialog()
+$FrmMain.ShowDialog()
