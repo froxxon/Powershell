@@ -91,7 +91,7 @@ function Manage-Taskbarsettings {
                 catch {}
             }
             until ( $Counter -eq $AssocRows )
-            $ListBox.Items[0] = $ListBOx.Items[0].Replace(' xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification" xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"','')
+            $ListBox.Items[0] = $ListBOx.Items[0].Replace(' xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"','')
             $ListBox.EndUpdate()
             $global:Modified = $true
             $TxtLMTTaskbar.Visible = $false
