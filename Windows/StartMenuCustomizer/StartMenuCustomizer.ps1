@@ -613,9 +613,10 @@ function Show-DesignView {
     $TxtMain.BringToFront()
     $TxtMain.Clear()
     $PnlButtons.Visible = $false
-    foreach ( $item in $LBxMain.Items ) {
-        $TxtMain.Text += "$Item`n"
-    }
+    $TxtMain.Lines = $LBxMain.Items
+    #foreach ( $item in $LBxMain.Items ) {
+    #    $TxtMain.Text += "$Item`n"
+    #}
     $BtnTextViewApply.Enabled = $false
     $TxtMain.Focus()
 }
