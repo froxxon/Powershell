@@ -633,21 +633,52 @@ function Hide-DesignView {
 }
 
 function Apply-TextViewResult {
-            $LBxMain.Items.Clear()
-            if ( $TxtMain.Text -contains '<CustomTaskbarLayoutCollection' ) {
-                $menuOptTaskbar.Checked = $true
+    $BadCode = $false
+    $Counter = 1
+    $Errors = @()
+    foreach ( $Line in $TxtMain.Text.Split("`n") ) {
+        if ( $Line -eq "" ) {
+            $Errors += "Line: $Counter - Remove empty line"
+        }
+        else {
+            if ( $Line.TrimStart().Substring(0,1) -ne '<' ) {
+                $Errors += "Line: $Counter - Missing '<' as first character after initial whitespace"
             }
-            else {
-                $menuOptTaskbar.Checked = $false
+            if ( $Line.TrimEnd().Substring($Line.Length-1,1) -ne '>' ) {
+                $Errors += "Line: $Counter - Missing '>' as last character"
             }
+            $CharCount = ($Line.Split('"') | measure-object).Count -1
+            if ( $CharCount % 2 -ne 0) {
+	            $Errors += "Line: $Counter - Odd occurrence of '""'"
+            }
+        }
+        $Counter++
+    }
 
-            foreach ( $Line in $TxtMain.Text.Split("`n") ) {
-                if ( $Line -ne '' ) {
-                    $LBxMain.Items.Add($Line.TrimEnd()) | out-null
-                }
+    if ( $Errors.Count -eq 0 ) {
+        $LBxMain.Items.Clear()
+        if ( $TxtMain.Text -contains '<CustomTaskbarLayoutCollection' ) {
+            $menuOptTaskbar.Checked = $true
+        }
+        else {
+            $menuOptTaskbar.Checked = $false
+        }
+
+        foreach ( $Line in $TxtMain.Text.Split("`n") ) {
+            if ( $Line -ne '' ) {
+                $LBxMain.Items.Add($Line.TrimEnd()) | out-null
             }
-            Hide-DesignView
-            $global:Modified = $true
+        }
+        Hide-DesignView
+        $global:Modified = $true
+    }
+    else {
+        $LBxErrors.Items.Clear()
+        foreach ( $Item in $Errors ) {
+            $LBxErrors.Items.Add($Item)
+        }
+        [void]$FrmError.ShowDialog()
+    }
 }
 
 #region mainForm
@@ -676,6 +707,59 @@ function Apply-TextViewResult {
     if ( $(Test-Path variable:global:psISE) -eq $False ) {
         $FrmMain.Size = New-Object System.Drawing.Size(1290,778)
     }
+#endregion
+
+#region ErrorForm
+    $FrmError = New-Object System.Windows.Forms.Form -Property @{
+        ClientSize      = '850, 497'
+        BackColor       = 'White'
+        FormBorderStyle = 'Fixed3D'
+        ShowIcon        = $false
+        MaximizeBox     = $false
+        MinimizeBox     = $false
+        ShowInTaskBar   = $false
+        StartPosition   = 'CenterParent'
+        Text            = 'Errors to handle before saving'
+    }
+
+    $LBxErrors = New-Object System.Windows.Forms.ListBox -Property @{
+        Location    = New-Object System.Drawing.Point(0,0)
+        DrawMode    = [System.Windows.Forms.DrawMode]::OwnerDrawFixed
+        BorderStyle = 'Fixed3D'
+        Width       = 850
+        Height      = 470
+    }
+    $LBxErrors.HorizontalScrollbar = $true
+    $LBxErrors.HorizontalExtent = 1000
+    $LBxErrors.add_DrawItem({
+        param([object]$s, [System.Windows.Forms.DrawItemEventArgs]$e)
+        if ( $e.Index -gt -1 ) {
+            if ( $e.Index % 2 -eq 0) {
+                $backcolor = [System.Drawing.Color]::WhiteSmoke
+            }
+            else {
+                $backcolor = [System.Drawing.Color]::White
+            }
+
+            if(($e.State -band [System.Windows.Forms.DrawItemState]::Selected) -eq [System.Windows.Forms.DrawItemState]::Selected) {
+                #$color = [System.Drawing.SystemColors]::WindowText
+                $backcolor = [System.Drawing.Color]::LightBlue
+                $forecolor = [System.Drawing.Color]::Black
+                $textBrush = New-Object System.Drawing.SolidBrush $forecolor
+
+            }
+            else {
+                $forecolor = [System.Drawing.Color]::Black
+                $textBrush = New-Object System.Drawing.SolidBrush $e.ForeColor
+            }
+            $backgroundBrush = New-Object System.Drawing.SolidBrush $backcolor
+            $e.Graphics.FillRectangle($backgroundBrush, $e.Bounds)
+            $e.Graphics.DrawString($s.Items[$e.Index], $e.Font, $textBrush, $e.Bounds.Left, $e.Bounds.Top, [System.Drawing.StringFormat]::GenericDefault)
+            $backgroundBrush.Dispose()
+            $textBrush.Dispose()
+        }
+    })
+    $FrmError.Controls.Add($LBxErrors)  
 #endregion
 
 #region Menu
@@ -852,7 +936,7 @@ function Apply-TextViewResult {
         $aboutFormText      = New-Object System.Windows.Forms.Label -Property @{
             Location = '100, 40'
             Size     = '300, 30'
-            Text     = '          Fredrik Bergman `n`r www.onpremproblems.com'
+            Text     = "          Fredrik Bergman `n`r www.onpremproblems.com"
         }
         $aboutForm.Controls.Add($aboutFormText)
      
@@ -860,6 +944,7 @@ function Apply-TextViewResult {
             Location = '135, 75'
             Text     = 'OK'
         }
+        $aboutFormExit.Add_Click({ $aboutForm.Close() })
         $aboutForm.Controls.Add($aboutFormExit)
      
         [void]$aboutForm.ShowDialog()
@@ -1054,7 +1139,7 @@ function Apply-TextViewResult {
     $PnlButtons.Controls.Add($BtnRemoveAll)
 
     $BtnTextViewApply = New-Object System.Windows.Forms.Button -Property @{
-        Text      = 'Save changes'
+        Text      = 'Save'
         FlatStyle = 0
         Enabled   = $false
         Visible   = $false
@@ -1864,4 +1949,4 @@ function Apply-TextViewResult {
     #endregion
 #endregion
 
-$FrmMain.ShowDialog()
+[void]$FrmMain.ShowDialog()
