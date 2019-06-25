@@ -157,53 +157,140 @@ function Manage-Taskbarsettings {
     }
 }
 
-function Insert-NewItem {
-    if ( $LBxMain.SelectedItem.TrimStart() -like '<taskbar*' ) {
-        $CBxTypeItems = @('DesktopApp','UWA')
+function Apply-Changes {
+    if ( $LBxMain.SelectedItem -like '*DesktopApplicationTile*' ) {
+    }
+    if ( $LBxMain.SelectedItem -like '*Folder*' ) {
+    }
+    if ( $LBxMain.SelectedItem -like '*Group*' ) {
+    }
+    if ( $LBxMain.SelectedItem -like '*start:Tile*' ) {
+    }
+    if ( $LBxMain.SelectedItem -like '*DesktopApp*' ) {
+    }
+    if ( $LBxMain.SelectedItem -like '*UWA*' ) {
+        $Line = "          <taskbar:UWA AppUserModelID=""$($CBxTaskbarUWA.Text)"" />"
+    }
+
+    if ( $LBxMain.Enabled -eq $true ) {
+        $LBxMain.Items[$LbxMain.SelectedIndex] = $Line
     }
     else {
-        $SelectedRow = $LBxMain.SelectedIndex
-        $AlreadyInGroup = $false
-        Do {
-            if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '</start:Group*' ) {
-                $SelectedRow = 1
-            }
-            if ( $SelectedRow -ne 1 ) {
-                if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '<start:Group*' ) {
-                    $AlreadyInGroup = $true
-                }
-            }
-            $SelectedRow = $SelectedRow - 1
+        if ( $CBxInsertNewItem.SelectedItem -eq 'DesktopApplicationTile' ) {
+            $CBxDATSize.SelectedIndex = 1
+            $NumDATCol.Text = 0
+            $NumDATRow.Text = 0
+            $CBxDAT.Text = ''
+            $CBXDATSize.Focus()
+            Disable-ControlsWhenNewItemSelected
+            $PnlDesktopApplicationTile.BringToFront()
         }
-        Until ( $SelectedRow -eq 0 -or $AlreadyInGroup -eq $true)
-
-        $SelectedRow = $LBxMain.SelectedIndex
-        $AlreadyInFolder = $false
-        Do {
-            if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '</start:Folder*' ) {
-                $SelectedRow = 1
-            }
-            if ( $SelectedRow -ne 1 ) {
-                if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '<start:Folder*' ) {
-                    $AlreadyInFolder = $true
-                }
-            }
-            $SelectedRow = $SelectedRow - 1
+        if ( $CBxInsertNewItem.SelectedItem -eq 'Folder' ) {
+            $CBxFolderSize.SelectedIndex = 1
+            $NumFolderCol.Text = 0
+            $NumFolderRow.Text = 0
+            $TxtFolderName.Text = ''
+            $CBxFolderSize.Focus()
+            Disable-ControlsWhenNewItemSelected
+            $PnlFolder.BringToFront()
         }
-        Until ( $SelectedRow -eq 0 -or $AlreadyInFolder -eq $true)
-        
-        $CBxTypeItems = @('DesktopApplicationTile','Tile')
-        if ( $AlreadyInGroup -eq $false ) { $CBxTypeItems += 'Group' }
-        if ( $AlreadyInFolder -eq $false ) { $CBxTypeItems += 'Folder' }
-        $CBxTypeItems = $CBxTypeItems | Sort-Object
+        if ( $CBxInsertNewItem.SelectedItem -eq 'Group' ) {
+            $TxtGroupName.Text = ''
+            $TxtGroupName.Focus()
+            Disable-ControlsWhenNewItemSelected
+            $PnlGroup.BringToFront()
+        }
+        if ( $CBxInsertNewItem.SelectedItem -eq 'Tile' ) {
+            $CBxTileSize.SelectedIndex = 1
+            $NumTileCol.Text = 0
+            $NumTileRow.Text = 0
+            $CBxTileAppUserModelID.Text = ''
+            $CBxTileSize.Focus()
+            Disable-ControlsWhenNewItemSelected
+            $PnlTile.BringToFront()
+        }
+        if ( $CBxInsertNewItem.SelectedItem -eq 'DesktopApp' ) {
+            $CBxTaskbarDesktopApp.Text = ''
+            $CBxTaskbarDesktopApp.Focus()
+            Disable-ControlsWhenNewItemSelected
+            $PnlTaskbarDesktopApp.BringToFront()
+        }
+        if ( $CBxInsertNewItem.SelectedItem -eq 'UWA' ) {
+            $BtnTaskbarUWAApply.Enabled = $false
+            $BtnTaskbarUWACancel.Visible = $false
+            Enable-ControlsWhenNewItemDone
+            $LBxMain.Items.Insert($LBxMain.SelectedIndex+1,$Line)
+            $PnlTaskbarUWA.BringToFront()
+        }
     }
+}
 
-    $CBxType.Items.Clear()
-    foreach ( $CBxTypeItem in $CBxTypeItems ) {
-        $CBxType.Items.Add($CBxTypeItem) | out-null
+function Open-NewItemPanel {
+    if ( $CBxInsertNewItem.SelectedItem -eq 'DesktopApplicationTile' ) {
+        $CBxDATSize.SelectedIndex = 1
+        $NumDATCol.Text = 0
+        $NumDATRow.Text = 0
+        $CBxDAT.Text = ''
+        $CBXDATSize.Focus()
+        Disable-ControlsWhenNewItemSelected
+        $PnlDesktopApplicationTile.BringToFront()
     }
-    $CBxType.SelectedIndex = 0
-    $PnlNewItem.BringToFront()
+    if ( $CBxInsertNewItem.SelectedItem -eq 'Folder' ) {
+        $CBxFolderSize.SelectedIndex = 1
+        $NumFolderCol.Text = 0
+        $NumFolderRow.Text = 0
+        $TxtFolderName.Text = ''
+        $CBxFolderSize.Focus()
+        Disable-ControlsWhenNewItemSelected
+        $PnlFolder.BringToFront()
+    }
+    if ( $CBxInsertNewItem.SelectedItem -eq 'Group' ) {
+        $TxtGroupName.Text = ''
+        $TxtGroupName.Focus()
+        Disable-ControlsWhenNewItemSelected
+        $PnlGroup.BringToFront()
+    }
+    if ( $CBxInsertNewItem.SelectedItem -eq 'Tile' ) {
+        $CBxTileSize.SelectedIndex = 1
+        $NumTileCol.Text = 0
+        $NumTileRow.Text = 0
+        $CBxTileAppUserModelID.Text = ''
+        $CBxTileSize.Focus()
+        Disable-ControlsWhenNewItemSelected
+        $PnlTile.BringToFront()
+    }
+    if ( $CBxInsertNewItem.SelectedItem -eq 'DesktopApp' ) {
+        $CBxTaskbarDesktopApp.Text = ''
+        $CBxTaskbarDesktopApp.Focus()
+        Disable-ControlsWhenNewItemSelected
+        $PnlTaskbarDesktopApp.BringToFront()
+    }
+    if ( $CBxInsertNewItem.SelectedItem -eq 'UWA' ) {
+        $CBxTaskbarUWA.Text = ''
+        $BtnTaskbarUWAApply.Enabled = $false
+        $CBxTaskbarUWA.Focus()
+        $BtnTaskbarUWACancel.Visible = $true
+        Disable-ControlsWhenNewItemSelected
+        $PnlTaskbarUWA.BringToFront()
+    }
+}
+
+function Disable-ControlsWhenNewItemSelected {
+    $PnlButtons.Enabled = $false
+    $LBxMain.Enabled = $false
+    $menuMain.Enabled = $false
+    $CBxInsertNewItem.Enabled = $false
+    $BtnInsertNewItem.Enabled = $false
+    $BtnChangeView.Enabled = $false
+}
+
+function Enable-ControlsWhenNewItemDone {
+    $PnlButtons.Enabled = $true
+    $LBxMain.Enabled = $true
+    $menuMain.Enabled = $true
+    $CBxInsertNewItem.Enabled = $true
+    $BtnInsertNewItem.Enabled = $true
+    $BtnChangeView.Enabled = $true
 }
 
 function Get-AllLinks {
@@ -220,9 +307,9 @@ function Get-AllLinks {
     $CBxTaskbarDesktopApp.Items.Clear()
     if ( $AllLinks.Count -gt 0 ) {
         ForEach ( $Item in $AllLinks ) {
-            $CBxDAT.Items.Add($Item) | out-null
+            [void]$CBxDAT.Items.Add($Item)
             if ( $menuOptTaskbar.Checked -eq $true ) {
-                $CBxTaskbarDesktopApp.Items.Add($Item) | out-null
+                [void]$CBxTaskbarDesktopApp.Items.Add($Item)
             }
         }
     }
@@ -250,9 +337,9 @@ function Get-AllXPackages {
     $Cbx
     if ( $AllXPackages.Count -gt 0 ) {
         ForEach ( $Package in $AllXPackages ) {
-            $CBxTileAppUserModelID.Items.Add($Package) | out-null
+            [void]$CBxTileAppUserModelID.Items.Add($Package)
             if ( $menuOptTaskbar.Checked -eq $true ) {
-                $CBxTaskbarUWA.Items.Add($Package) | out-null
+                [void]$CBxTaskbarUWA.Items.Add($Package)
             }
         }
     }
@@ -478,7 +565,7 @@ function Change-ListBoxRow {
             $SelectionTabExist = $true
         }
         if ( $LBxMain.SelectedItem.TrimStart() -like '<start:DesktopApplicationTile*' ) {
-            $PnlDAT.BringToFront()
+            $PnlDesktopApplicationTile.BringToFront()
             $SelectedItem = $LBxMain.SelectedItem.Split('"')
             $Counter = 0
             foreach ( $Item in $SelectedItem ) {
@@ -549,6 +636,7 @@ function Change-ListBoxRow {
             $BtnMoveDown.Enabled = $true
             $BtnRemoveItem.Enabled = $true
             $BtnInsertNewItem.Enabled = $true
+            $CBxInsertNewItem.Enabled = $true
             if ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1)  -like '*<defaultlayout:Start*' -or $LBxMain.Items.Item($LBxMain.SelectedIndex-1)  -like '*<taskbar:taskBarPinList*' ) { $BtnMoveUp.Enabled = $false }
             else { $BtnMoveUp.Enabled = $true }
             if ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</defaultlayout:Start*' -or $LBxMain.Items.Item($LBxMain.SelectedIndex+1)  -like '*</taskbar:*' ) { $BtnMoveDown.Enabled = $false }
@@ -583,21 +671,71 @@ function Change-ListBoxRow {
             $BtnMoveUp.Enabled = $false
             $BtnMoveDown.Enabled = $false
             $BtnInsertNewItem.Enabled = $false
+            $CBxInsertNewItem.Enabled = $false
             $BtnRemoveItem.Enabled = $false
         }
 
         if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' -or $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
             $BtnRemoveAll.Visible = $true
             if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) {
-                $BtnRemoveAll.Text = 'Remove &entire Folder'
+                $BtnRemoveAll.Text = 'R&emove Folder'
             }
             else {
-                $BtnRemoveAll.Text = 'Remove &entire Group'
+                $BtnRemoveAll.Text = 'R&emove Group'
             }
         }
         else {
             $BtnRemoveAll.Visible = $false
         }
+
+        if ( $CBxInsertNewItem.Enabled -eq $true ) {
+            if ( $LBxMain.SelectedItem.TrimStart() -like '<taskbar*' ) {
+                $CBxTypeItems = @('DesktopApp','UWA')
+            }
+            else {
+                $SelectedRow = $LBxMain.SelectedIndex
+                $AlreadyInGroup = $false
+                Do {
+                    if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '</start:Group*' ) {
+                        $SelectedRow = 1
+                    }
+                    if ( $SelectedRow -ne 1 ) {
+                        if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '<start:Group*' ) {
+                            $AlreadyInGroup = $true
+                        }
+                    }
+                    $SelectedRow = $SelectedRow - 1
+                }
+                Until ( $SelectedRow -eq 0 -or $AlreadyInGroup -eq $true)
+
+                $SelectedRow = $LBxMain.SelectedIndex
+                $AlreadyInFolder = $false
+                Do {
+                    if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '</start:Folder*' ) {
+                        $SelectedRow = 1
+                    }
+                    if ( $SelectedRow -ne 1 ) {
+                        if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '<start:Folder*' ) {
+                            $AlreadyInFolder = $true
+                        }
+                    }
+                    $SelectedRow = $SelectedRow - 1
+                }
+                Until ( $SelectedRow -eq 0 -or $AlreadyInFolder -eq $true)
+        
+                $CBxTypeItems = @('DesktopApplicationTile','Tile')
+                if ( $AlreadyInGroup -eq $false ) { $CBxTypeItems += 'Group' }
+                if ( $AlreadyInFolder -eq $false ) { $CBxTypeItems += 'Folder' }
+                $CBxTypeItems = $CBxTypeItems | Sort-Object
+            }
+
+            $CBxInsertNewItem.Items.Clear()
+            foreach ( $CBxTypeItem in $CBxTypeItems ) {
+                [void]$CBxInsertNewItem.Items.Add($CBxTypeItem)
+            }
+            $CBxInsertNewItem.SelectedIndex = 0
+        }
+        $BtnTaskbarUWAApply.Enabled = $false
     }
 }
 
@@ -608,15 +746,11 @@ function Show-DesignView {
     $TxtMain.Visible = $true
     $TxtMain.Enabled = $true
     $menuOptTaskbar.Enabled = $false
-    $CBxType.Visible = $false
     $BtnTextViewApply.Visible = $true
     $TxtMain.BringToFront()
     $TxtMain.Clear()
     $PnlButtons.Visible = $false
     $TxtMain.Lines = $LBxMain.Items
-    #foreach ( $item in $LBxMain.Items ) {
-    #    $TxtMain.Text += "$Item`n"
-    #}
     $BtnTextViewApply.Enabled = $false
     $TxtMain.Focus()
 }
@@ -631,6 +765,7 @@ function Hide-DesignView {
     $menuOptTaskbar.Enabled = $true
     $PnlButtons.Visible = $true
     $LBxMain.SelectedIndex = 0
+    $LblPositionRow.Text = 1
 }
 
 function Apply-TextViewResult {
@@ -667,7 +802,7 @@ function Apply-TextViewResult {
 
         foreach ( $Line in $TxtMain.Text.Split("`n") ) {
             if ( $Line -ne '' ) {
-                $LBxMain.Items.Add($Line.TrimEnd()) | out-null
+                [void]$LBxMain.Items.Add($Line.TrimEnd())
             }
         }
         Hide-DesignView
@@ -775,7 +910,7 @@ function Apply-TextViewResult {
                 $menuOptTaskbar.Checked = $false
             }
             foreach ( $Line in $DefaultContent ) {
-                $LBxMain.Items.Add($Line) | out-null
+                [void]$LBxMain.Items.Add($Line)
             }
             $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
             $global:CurrentFileName = ''
@@ -791,7 +926,7 @@ function Apply-TextViewResult {
                 }
                 $LBxMain.Items.Clear()
                 foreach ( $Line in $DefaultContent ) {
-                    $LBxMain.Items.Add($Line) | out-null
+                    [void]$LBxMain.Items.Add($Line)
                 }
                 $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
                 $global:CurrentFileName = '.\Untitled1.xml'
@@ -810,7 +945,7 @@ function Apply-TextViewResult {
                         $menuOptTaskbar.Checked = $false
                     }
                     foreach ( $Line in $DefaultContent ) {
-                        $LBxMain.Items.Add($Line) | out-null
+                        [void]$LBxMain.Items.Add($Line)
                     }
                     $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
                     $global:CurrentFileName = '.\Untitled1.xml'
@@ -844,7 +979,7 @@ function Apply-TextViewResult {
                 if ( $Content[0] -like '<LayoutModificationTemplate *' ) {
                     $LBxMain.Items.Clear()
                     foreach ( $Line in $Content ) {
-                        $LBxMain.Items.Add($Line) | out-null
+                        [void]$LBxMain.Items.Add($Line)
                     }
                     $global:CurrentFileName = $inputFileName
                     $global:Modified = $false
@@ -1018,30 +1153,28 @@ function Apply-TextViewResult {
 #region controls in mainForm
     #region ButtonPanel
         $PnlButtons = New-Object System.Windows.Forms.Panel -Property @{
-            BorderStyle = 0
-            Size     = New-Object Drawing.Size @(1000,35)
-            Location = New-Object System.Drawing.Point(0,703)
+            Size     = New-Object Drawing.Size @(750,35)
+            Location = New-Object System.Drawing.Point(242,703)
         }
         $FrmMain.Controls.Add($PnlButtons)
     #endregion
  
     $LblRow = New-Object System.Windows.Forms.Label -Property @{
-        Location = New-Object System.Drawing.Point(10,3)
+        Location = New-Object System.Drawing.Point(10,707)
         Text = 'Line:'
         Width = 35
     }
-    $PnlButtons.Controls.Add($LblRow)
+    $FrmMain.Controls.Add($LblRow)
     
     $LblPositionRow = New-Object System.Windows.Forms.Label -Property @{
-        Location = New-Object System.Drawing.Point(45,3)
-        Text = 1
+        Location = New-Object System.Drawing.Point(45,707)
         AutoSize = $true
     }
-    $PnlButtons.Controls.Add($LblPositionRow)
+    $FrmMain.Controls.Add($LblPositionRow)
     
     $BtnMoveUp = New-Object System.Windows.Forms.Button -Property @{
         FlatStyle = 0
-        Location  = New-Object System.Drawing.Point(75,0)
+        Location  = New-Object System.Drawing.Point(0,0)
         Width     = 100
         Text      = 'Move &up'
     }
@@ -1063,7 +1196,7 @@ function Apply-TextViewResult {
     
     $BtnMoveDown = New-Object System.Windows.Forms.Button -Property @{
         FlatStyle = 0
-        Location  = New-Object System.Drawing.Point(180,0)
+        Location  = New-Object System.Drawing.Point(105,0)
         Width     = 100
         Text      = 'Move &down'
     }
@@ -1083,33 +1216,11 @@ function Apply-TextViewResult {
     $BtnMoveDown.Add_Click({Move-SelectedItem -Direction Down})
     $PnlButtons.Controls.Add($BtnMoveDown)
     
-    $BtnInsertNewItem = New-Object System.Windows.Forms.Button -Property @{
-        Text = 'Create &item'
-        FlatStyle = 0
-        Width = 100
-        Location = New-Object System.Drawing.Point(285,0)
-    }
-    $BtnInsertNewItem.FlatAppearance.BorderColor = 'LightBlue'
-    $BtnInsertNewItem.FlatAppearance.BorderSize = 2
-    $BtnInsertNewItem.Add_EnabledChanged({
-       if ( $this.Enabled -eq $false ) {
-            $this.FlatAppearance.BorderColor = 'LightGray'
-            $this.FlatAppearance.BorderSize = 1
-        }
-        else {
-            $this.FlatAppearance.BorderColor = 'LightBlue'
-            $this.FlatAppearance.BorderSize = 2
-        }
-    })
-    $BtnInsertNewItem.Enabled = $false
-    $BtnInsertNewItem.Add_Click({Insert-NewItem})
-    $PnlButtons.Controls.Add($BtnInsertNewItem)
-
     $BtnRemoveItem = New-Object System.Windows.Forms.Button -Property @{
         Text = '&Remove'
         FlatStyle = 0
         Width = 100
-        Location = New-Object System.Drawing.Point(390,0)
+        Location = New-Object System.Drawing.Point(210,0)
     }
     $BtnRemoveItem.FlatAppearance.BorderColor = 'LightBlue'
     $BtnRemoveItem.FlatAppearance.BorderSize = 2
@@ -1131,8 +1242,8 @@ function Apply-TextViewResult {
         Text      = 'Remove All'
         FlatStyle = 0
         Visible   = $false
-        Width     = 150
-        Location  = New-Object System.Drawing.Point(495,0)
+        Width     = 125
+        Location  = New-Object System.Drawing.Point(315,0)
     }
     $BtnRemoveAll.FlatAppearance.BorderColor = 'LightBlue'
     $BtnRemoveAll.FlatAppearance.BorderSize = 2
@@ -1176,6 +1287,37 @@ function Apply-TextViewResult {
     })
     $FrmMain.Controls.Add($BtnChangeView)
 
+    $CBxInsertNewItem = New-Object System.Windows.Forms.ComboBox -Property @{
+        Width         = 175
+        Location      = New-Object System.Drawing.Point(242,28)
+        DropDownStyle = 'DropDownList'
+    }
+    [void]$CBxInsertNewItem.Items.Add('DesktopApplicationTile')
+    $CBxInsertNewItem.SelectedIndex = 0
+    $FrmMain.Controls.Add($CBxInsertNewItem)
+
+    $BtnInsertNewItem = New-Object System.Windows.Forms.Button -Property @{
+        Text      = 'New &item'
+        FlatStyle = 0
+        Width     = 100
+        Location  = New-Object System.Drawing.Point(422,28)
+    }
+    $BtnInsertNewItem.FlatAppearance.BorderColor = 'LightBlue'
+    $BtnInsertNewItem.FlatAppearance.BorderSize = 2
+    $BtnInsertNewItem.Add_EnabledChanged({
+       if ( $this.Enabled -eq $false ) {
+            $this.FlatAppearance.BorderColor = 'LightGray'
+            $this.FlatAppearance.BorderSize = 1
+        }
+        else {
+            $this.FlatAppearance.BorderColor = 'LightBlue'
+            $this.FlatAppearance.BorderSize = 2
+        }
+    })
+    $BtnInsertNewItem.Enabled = $false
+    $BtnInsertNewItem.Add_Click({Open-NewItemPanel})
+    $FrmMain.Controls.Add($BtnInsertNewItem)
+
     $TxtMain = New-Object System.Windows.Forms.RichTextBox -Property @{
         Location    = New-Object System.Drawing.Point(0,27)
         WordWrap    = $false
@@ -1186,14 +1328,15 @@ function Apply-TextViewResult {
         Visible     = $false
     }
     $TxtMain.Add_TextChanged({$BtnTextViewApply.Enabled = $true})
+    $TxtMain.Add_SelectionChanged({$LblPositionRow.Text = $TxtMain.GetLineFromCharIndex($TxtMain.SelectionStart)+1})
     $FrmMain.Controls.Add($TxtMain)
 
-    $LbxMain = New-Object System.Windows.Forms.ListBox -Property @{
-        Location    = New-Object System.Drawing.Point(242,27)
+    $LBxMain = New-Object System.Windows.Forms.ListBox -Property @{
+        Location    = New-Object System.Drawing.Point(242,57)
         DrawMode    = [System.Windows.Forms.DrawMode]::OwnerDrawFixed
         BorderStyle = 'Fixed3D'
         Width       = 1010
-        Height      = 670
+        Height      = 645
     }
     $LBxMain.HorizontalScrollbar = $true
     $LBxMain.HorizontalExtent = 2250
@@ -1214,7 +1357,6 @@ function Apply-TextViewResult {
                 $backcolor = [System.Drawing.Color]::Ivory
             }
             if(($e.State -band [System.Windows.Forms.DrawItemState]::Selected) -eq [System.Windows.Forms.DrawItemState]::Selected) {
-                #$color = [System.Drawing.SystemColors]::WindowText
                 $backcolor = [System.Drawing.Color]::LightBlue
                 $forecolor = [System.Drawing.Color]::Black
                 $textBrush = New-Object System.Drawing.SolidBrush $forecolor
@@ -1241,7 +1383,7 @@ function Apply-TextViewResult {
             $menuOptTaskbar.Checked = $false
         }
         foreach ( $Line in $DefaultContent ) {
-            $LBxMain.Items.Add($Line) | out-null
+            [void]$LBxMain.Items.Add($Line)
         }
     }
     if ( $LBxMain.Items.Count -gt 0 ) { $LBxMain.SelectedIndex = 0 }
@@ -1279,7 +1421,52 @@ function Apply-TextViewResult {
             DropDownWidth  = 1237
             Width          = 220
         }
+        $CBxTaskbarUWA.Add_TextChanged({
+            if ( $CBxTaskBarUWA.Text -ne '' ) {
+                $BtnTaskbarUWAApply.Enabled = $true
+            }
+            else {
+                $BtnTaskbarUWAApply.Enabled = $false
+            }
+        })
         $PnlTaskbarUWA.Controls.Add($CBxTaskbarUWA)
+
+        $YAxis = $YAxis + 35
+        $BtnTaskbarUWAApply = New-Object System.Windows.Forms.Button -Property @{
+            Text      = 'Apply'
+            FlatStyle = 0
+            Width     = 100
+            Location  = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $BtnTaskbarUWAApply.Add_EnabledChanged({
+           if ( $this.Enabled -eq $false ) {
+                $this.FlatAppearance.BorderColor = 'LightGray'
+                $this.FlatAppearance.BorderSize = 1
+            }
+            else {
+                $this.FlatAppearance.BorderColor = 'LightBlue'
+                $this.FlatAppearance.BorderSize = 2
+            }
+        })
+        $BtnTaskbarUWAApply.Enabled = $false
+        $BtnTaskbarUWAApply.Add_Click({Apply-Changes})
+        $PnlTaskbarUWA.Controls.Add($BtnTaskbarUWAApply)
+
+        $BtnTaskbarUWACancel = New-Object System.Windows.Forms.Button -Property @{
+            Text      = 'Cancel'
+            FlatStyle = 0
+            Width     = 100
+            Location  = New-Object System.Drawing.Point(120,$YAxis)
+        }
+        $BtnTaskbarUWACancel.FlatAppearance.BorderColor = 'LightBlue'
+        $BtnTaskbarUWACancel.FlatAppearance.BorderSize = 2
+        $BtnTaskbarUWACancel.Visible = $false
+        $BtnTaskbarUWACancel.Add_Click({
+            $BtnTaskbarUWACancel.Visible = $false
+            Enable-ControlsWhenNewItemDone
+            Change-ListBoxRow
+        })
+        $PnlTaskbarUWA.Controls.Add($BtnTaskbarUWACancel)
     #endregion
 
     #region PanelTaskbarDesktopApp
@@ -1450,8 +1637,8 @@ function Apply-TextViewResult {
             Width         = 220
             Location      = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('6') | out-null
-        $CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('8') | out-null
+        [void]$CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('6')
+        [void]$CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('8')
         $PnlLayoutOptions.Controls.Add($CBxLayoutOptionsStartTileGroupCellWidth)
 
         $YAxis = $YAxis + 30
@@ -1487,8 +1674,8 @@ function Apply-TextViewResult {
             Location       = New-Object System.Drawing.Point(0,$YAxis)
             Width          = 220
         }
-        $CBxLayoutOptionsFullScreen.Items.Add('True') | out-null
-        $CBxLayoutOptionsFullScreen.Items.Add('False') | out-null
+        [void]$CBxLayoutOptionsFullScreen.Items.Add('True')
+        [void]$CBxLayoutOptionsFullScreen.Items.Add('False')
         $PnlLayoutOptions.Controls.Add($CBxLayoutOptionsFullScreen)
 
     #endregion
@@ -1521,8 +1708,8 @@ function Apply-TextViewResult {
             Location       = New-Object System.Drawing.Point(0,$YAxis)
             Width          = 220
         }
-        $CBxDefaultLayoutOverrideLCRT.Items.Add('OnlySpecifiedGroups') | out-null
-        $CBxDefaultLayoutOverrideLCRT.Items.Add('Off') | out-null
+        [void]$CBxDefaultLayoutOverrideLCRT.Items.Add('OnlySpecifiedGroups')
+        [void]$CBxDefaultLayoutOverrideLCRT.Items.Add('Off')
         $PnlDefaultLayoutOverride.Controls.Add($CBxDefaultLayoutOverrideLCRT)
     #endregion
 
@@ -1571,9 +1758,9 @@ function Apply-TextViewResult {
             Width         = 220
             Location      = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $CBxStartLayoutGroupCellWidth.Items.Add('6') | out-null
-        $CBxStartLayoutGroupCellWidth.Items.Add('8') | out-null
-        $CBxStartLayoutGroupCellWidth.Items.Add('Off') | out-null
+        [void]$CBxStartLayoutGroupCellWidth.Items.Add('6')
+        [void]$CBxStartLayoutGroupCellWidth.Items.Add('8')
+        [void]$CBxStartLayoutGroupCellWidth.Items.Add('Off')
         $PnlStartlayout.Controls.Add($CBxStartLayoutGroupCellWidth)
     #endregion
 
@@ -1608,7 +1795,7 @@ function Apply-TextViewResult {
         }
         $SizeItems = @('1x1','2x2','2x4','4x4')
         foreach ( $SizeItem in $SizeItems ) {
-            $CBxFolderSize.Items.Add($SizeItem) | out-null
+            [void]$CBxFolderSize.Items.Add($SizeItem)
         }
         $PnlFolder.Controls.Add($CBxFolderSize)
 
@@ -1730,7 +1917,7 @@ function Apply-TextViewResult {
         }
         $SizeItems = @('1x1','2x2','2x4','4x4')
         foreach ( $SizeItem in $SizeItems ) {
-            $CBxTileSize.Items.Add($SizeItem) | out-null
+            [void]$CBxTileSize.Items.Add($SizeItem)
         }
         $PnlTile.Controls.Add($CBxTileSize)
 
@@ -1792,11 +1979,11 @@ function Apply-TextViewResult {
     #endregion
 
     #region PanelDesktopApplicationTile
-        $PnlDAT = New-Object System.Windows.Forms.Panel -Property @{
+        $PnlDesktopApplicationTile = New-Object System.Windows.Forms.Panel -Property @{
             Size     = New-Object Drawing.Size @(220,666)
             Location = New-Object System.Drawing.Point(10,27)
         }
-        $FrmMain.Controls.Add($PnlDAT)
+        $FrmMain.Controls.Add($PnlDesktopApplicationTile)
 
         $YAxis = 10
         $LblTypeDAT = New-Object System.Windows.Forms.Label -Property @{
@@ -1804,7 +1991,7 @@ function Apply-TextViewResult {
             Text     = 'Type: DesktopApplicationTile'
             AutoSize = $true
         }
-        $PnlDAT.Controls.Add($LblTypeDAT)
+        $PnlDesktopApplicationTile.Controls.Add($LblTypeDAT)
 
         $YAxis = $YAxis + 30
         $LblDATTileSize = New-Object System.Windows.Forms.Label -Property @{
@@ -1812,7 +1999,7 @@ function Apply-TextViewResult {
             Text     = 'Size'
             AutoSize = $true
         }
-        $PnlDAT.Controls.Add($LblDATTileSize)
+        $PnlDesktopApplicationTile.Controls.Add($LblDATTileSize)
 
         $YAxis = $YAxis + 20
         $CBxDATSize = New-Object System.Windows.Forms.ComboBox -Property @{
@@ -1822,9 +2009,9 @@ function Apply-TextViewResult {
         }
         $SizeItems = @('1x1','2x2','2x4','4x4')
         foreach ( $SizeItem in $SizeItems ) {
-            $CBxDATSize.Items.Add($SizeItem) | out-null
+            [void]$CBxDATSize.Items.Add($SizeItem)
         }
-        $PnlDAT.Controls.Add($CBxDATSize)
+        $PnlDesktopApplicationTile.Controls.Add($CBxDATSize)
         
         $YAxis = $YAxis + 30
         $LblDATColumn = New-Object System.Windows.Forms.Label -Property @{
@@ -1832,7 +2019,7 @@ function Apply-TextViewResult {
             AutoSize = $true
             Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PnlDAT.Controls.Add($LblDATColumn)
+        $PnlDesktopApplicationTile.Controls.Add($LblDATColumn)
 
         $YAxis = $YAxis + 20
         $NumDATCol = New-Object System.Windows.Forms.NumericUpDown -Property @{
@@ -1843,7 +2030,7 @@ function Apply-TextViewResult {
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PnlDAT.Controls.Add($NumDATCol)
+        $PnlDesktopApplicationTile.Controls.Add($NumDATCol)
 
         $YAxis = $YAxis + 30
         $LblDATRow = New-Object System.Windows.Forms.Label -Property @{
@@ -1851,7 +2038,7 @@ function Apply-TextViewResult {
             AutoSize = $true
             Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PnlDAT.Controls.Add($LblDATRow)
+        $PnlDesktopApplicationTile.Controls.Add($LblDATRow)
 
         $YAxis = $YAxis + 20
         $NumDATRow = New-Object System.Windows.Forms.NumericUpDown -Property @{
@@ -1862,7 +2049,7 @@ function Apply-TextViewResult {
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PnlDAT.Controls.Add($NumDATRow)
+        $PnlDesktopApplicationTile.Controls.Add($NumDATRow)
 
         $YAxis = $YAxis + 30
         $LblDesktopApplicationTile = New-Object System.Windows.Forms.Label -Property @{
@@ -1870,7 +2057,7 @@ function Apply-TextViewResult {
             AutoSize = $true
             Location = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PnlDAT.Controls.Add($LblDesktopApplicationTile)
+        $PnlDesktopApplicationTile.Controls.Add($LblDesktopApplicationTile)
 
         $YAxis = $YAxis + 20
         $CBxDAT = New-Object System.Windows.Forms.ComboBox -Property @{
@@ -1880,7 +2067,7 @@ function Apply-TextViewResult {
             Width          = 220
         }
         Get-AllLinks
-        $PnlDAT.Controls.Add($CBxDAT)
+        $PnlDesktopApplicationTile.Controls.Add($CBxDAT)
     #endregion
 
     #region PanelTaskbarLayoutCollection
@@ -1912,8 +2099,8 @@ function Apply-TextViewResult {
             Width         = 220
             Location      = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Replace') | out-null
-        $CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Off') | out-null
+        [void]$CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Replace')
+        [void]$CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Off')
         $PnlTaskbarLayoutCollection.Controls.Add($CbxTaskbarLayoutCollectionPinListPlacement)
     #endregion
 
