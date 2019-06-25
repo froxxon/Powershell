@@ -24,6 +24,58 @@ $DefaultContent = @"
     </CustomTaskbarLayoutCollection>
 </LayoutModificationTemplate>
 "@
+$DefaultContent = @"
+<LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification" xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout">
+  <LayoutOptions StartTileGroupCellWidth="6" StartTileGroupsColumnCount="1" />
+  <DefaultLayoutOverride LayoutCustomizationRestrictionType="OnlySpecifiedGroups">
+    <StartLayoutCollection>
+      <defaultlayout:StartLayout GroupCellWidth="6">
+        <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Flashplayer.lnk" />
+        <start:Group Name="Rekommenderat">
+          <start:Folder Size="2x2" Column="0" Row="0">
+            <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
+            <start:DesktopApplicationTile Size="2x2" Column="2" Row="0" DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Accessories\Internet Explorer.lnk" />
+            <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Google Chrome.lnk" />
+          </start:Folder>
+          <start:DesktopApplicationTile Size="2x2" Column="2" Row="0" DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" />
+          <start:Folder Size="2x2" Column="0" Row="2">
+            <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.WindowsMaps_8wekyb3d8bbwe!App" />
+            <start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.Windows.Photos_8wekyb3d8bbwe!App" />
+            <start:Tile Size="2x2" Column="4" Row="0" AppUserModelID="Microsoft.BingWeather_8wekyb3d8bbwe!App" />
+            <start:Tile Size="2x2" Column="0" Row="2" AppUserModelID="Microsoft.WindowsCalculator_8wekyb3d8bbwe!App" />
+          </start:Folder>
+        </start:Group>
+        <start:Group Name="Office">
+          <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Word.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Word 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\PowerPoint.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\PowerPoint 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Excel.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="2" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Excel 2016.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\OneNote.lnk" />
+          <start:DesktopApplicationTile Size="1x1" Column="3" Row="1" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\OneNote 2016.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype for Business 2016.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype för företag 2016.lnk" />
+          <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Skype för företag.lnk" />
+        </start:Group>
+      </defaultlayout:StartLayout>
+    </StartLayoutCollection>
+  </DefaultLayoutOverride>
+    <CustomTaskbarLayoutCollection PinListPlacement="Replace">
+      <defaultlayout:TaskbarLayout>
+        <taskbar:TaskbarPinList>
+          <taskbar:UWA AppUserModelID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Accessories\Internet Explorer.lnk" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
+          <taskbar:DesktopApp DesktopApplicationLinkPath="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\Outlook 2016.lnk" />
+        </taskbar:TaskbarPinList>
+      </defaultlayout:TaskbarLayout>
+    </CustomTaskbarLayoutCollection>
+</LayoutModificationTemplate>
+"@
     $DefaultContent = $DefaultContent.Replace("`r","")
     $DefaultContent = $DefaultContent.Split("`n")
 #endregion
@@ -107,17 +159,103 @@ function Manage-Taskbarsettings {
 
 function Insert-NewItem {
     if ( $LBxMain.SelectedItem.TrimStart() -like '<taskbar*' ) {
-        $CBxTypeItems = @('Taskbar link')
+        $CBxTypeItems = @('DesktopApp','UWA')
     }
     else {
-        $CBxTypeItems = @('DesktopApplicationTile','Folder','Group','Tile')
+        $SelectedRow = $LBxMain.SelectedIndex
+        $AlreadyInGroup = $false
+        Do {
+            if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '</start:Group*' ) {
+                $SelectedRow = 1
+            }
+            if ( $SelectedRow -ne 1 ) {
+                if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '<start:Group*' ) {
+                    $AlreadyInGroup = $true
+                }
+            }
+            $SelectedRow = $SelectedRow - 1
+        }
+        Until ( $SelectedRow -eq 0 -or $AlreadyInGroup -eq $true)
+
+        $SelectedRow = $LBxMain.SelectedIndex
+        $AlreadyInFolder = $false
+        Do {
+            if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '</start:Folder*' ) {
+                $SelectedRow = 1
+            }
+            if ( $SelectedRow -ne 1 ) {
+                if ( $LBxMain.Items[$SelectedRow].TrimStart() -like '<start:Folder*' ) {
+                    $AlreadyInFolder = $true
+                }
+            }
+            $SelectedRow = $SelectedRow - 1
+        }
+        Until ( $SelectedRow -eq 0 -or $AlreadyInFolder -eq $true)
+        
+        $CBxTypeItems = @('DesktopApplicationTile','Tile')
+        if ( $AlreadyInGroup -eq $false ) { $CBxTypeItems += 'Group' }
+        if ( $AlreadyInFolder -eq $false ) { $CBxTypeItems += 'Folder' }
+        $CBxTypeItems = $CBxTypeItems | Sort-Object
     }
+
     $CBxType.Items.Clear()
     foreach ( $CBxTypeItem in $CBxTypeItems ) {
         $CBxType.Items.Add($CBxTypeItem) | out-null
     }
     $CBxType.SelectedIndex = 0
     $PnlNewItem.BringToFront()
+}
+
+function Get-AllLinks {
+    $AllLinks = @()
+    $AllUserLinks = $(Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
+    $AllUserLinks = $AllUserLinks.Substring($($AllUserLinks[0].IndexOf($('Roaming\'))+8))
+    $AllUserLinks = $AllUserLinks | ForEach-Object {"%APPDATA%\$_"}
+    $AllLinks += $AllUserLinks
+    $AllLinks += $(Get-ChildItem "$env:PROGRAMDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
+    $AllLinks = $AllLinks.replace('C:\ProgramData','%ALLUSERSPROFILE%')
+    $AllLinks = $AllLinks | Sort-Object
+
+    $CBxDAT.Items.Clear()
+    $CBxTaskbarDesktopApp.Items.Clear()
+    if ( $AllLinks.Count -gt 0 ) {
+        ForEach ( $Item in $AllLinks ) {
+            $CBxDAT.Items.Add($Item) | out-null
+            if ( $menuOptTaskbar.Checked -eq $true ) {
+                $CBxTaskbarDesktopApp.Items.Add($Item) | out-null
+            }
+        }
+    }
+}
+
+function Get-AllXPackages {
+    try {
+        $InitialAllXPackages = Get-AppxPackage -AllUsers
+        $InitialAllXPackages += Get-AppxPackage
+    }
+    catch {
+        try { $InitialAllXPackages = Get-AppxPackage }
+        catch {}
+    }
+    $AllXPackages = @()
+    foreach ( $app in $InitialAllXPackages ) {
+        foreach ( $id in (Get-AppxPackageManifest $app).package.applications.application.id ) {
+            $AllXPackages += $app.packagefamilyname + "!" + $id
+        }
+    }
+    $AllXPackages = $AllXPackages | Select -Unique | Sort-Object
+
+    $CBxTileAppUserModelID.Items.Clear()
+    $CBxTaskbarUWA.Items.Clear()
+    $Cbx
+    if ( $AllXPackages.Count -gt 0 ) {
+        ForEach ( $Package in $AllXPackages ) {
+            $CBxTileAppUserModelID.Items.Add($Package) | out-null
+            if ( $menuOptTaskbar.Checked -eq $true ) {
+                $CBxTaskbarUWA.Items.Add($Package) | out-null
+            }
+        }
+    }
 }
 
 function Remove-Item {
@@ -256,18 +394,45 @@ function Change-ListBoxRow {
         }
         if ( $LBxMain.SelectedItem.TrimStart() -like '<LayoutOptions*' ) {
             $PnlLayoutOptions.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
+            $Counter = 0
+            if ( $LBxMain.SelectedItem.TrimStart() -like '*FullScreenStart="true"*' ) {
+                $CBxLayoutOptionsFullScreen.SelectedItem = 'True'
+            }
+            else {
+                $CBxLayoutOptionsFullScreen.SelectedItem = 'False'
+            }
+            foreach ( $Item in $SelectedItem ) {
+                if ( $Item -like '*StartTileGroupCellWidth=*' ) { $CBxLayoutOptionsStartTileGroupCellWidth.SelectedItem = $SelectedItem[$Counter +1] }
+                if ( $Item -like '*StartTileGroupsColumnCount=*' ) { $NumLayoutOptionsStartTileGroupsColumnCount.Text = $SelectedItem[$Counter +1] }
+                $Counter++
+            }
             $SelectionTabExist = $true
         }
         if ( $LBxMain.SelectedItem.TrimStart() -like '<DefaultLayoutOverride*' ) {
             $PnlDefaultLayoutOverride.BringToFront()
-            $SelectionTabExist = $true
-        }
-        if ( $LBxMain.SelectedItem.TrimStart() -like '<StartLayoutCollection*' ) {
-            $PnlStartLayoutCollection.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
+            if ( $LBxMain.SelectedItem.TrimStart() -like '*LayoutCustomizationRestrictionType="OnlySpecifiedGroups"*' ) {
+                $CBxDefaultLayoutOverrideLCRT.SelectedItem = 'OnlySpecifiedGroups'
+            }
+            else {
+                $CBxDefaultLayoutOverrideLCRT.SelectedItem = 'Off'
+            }
             $SelectionTabExist = $true
         }
         if ( $LBxMain.SelectedItem.TrimStart() -like '<defaultlayout:StartLayout*' ) {
             $PnlStartlayout.BringToFront()
+            if ( $LBxMain.SelectedItem -like '*GroupCellWidth*' ) {
+                $SelectedItem = $LBxMain.SelectedItem.Split('"')
+                $Counter = 0
+                foreach ( $Item in $SelectedItem ) {
+                    if ( $Item -like '*GroupCellWidth=*' ) { $CbxStartLayoutGroupCellWidth.SelectedItem = $SelectedItem[$Counter +1] }
+                    $Counter++
+                }
+            }
+            else {
+                $CbxStartLayoutGroupCellWidth.SelectedItem = 'Off'
+            }
             $SelectionTabExist = $true
         }
         if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
@@ -302,10 +467,10 @@ function Change-ListBoxRow {
                 if ( $Item -like '*Row=*' ) { $NumTileRow.Text = $SelectedItem[$Counter +1] }
                 if ( $Item -like '*Column=*' ) { $NumTileCol.Text = $SelectedItem[$Counter +1] }
                 if ( $Item -like '*AppUserModelID=*' ) {
-                    if ( $CBxBoxAppUserModelID.Items -contains $SelectedItem[$Counter +1] ) {
-                        $CBxBoxAppUserModelID.SelectedItem = $SelectedItem[$Counter +1]
+                    if ( $CBxTileAppUserModelID.Items -contains $SelectedItem[$Counter +1] ) {
+                        $CBxTileAppUserModelID.SelectedItem = $SelectedItem[$Counter +1]
                     }
-                        else { $CBxBoxAppUserModelID.Text = $SelectedItem[$Counter +1]
+                        else { $CBxTileAppUserModelID.Text = $SelectedItem[$Counter +1]
                     }
                 }
                 $Counter++
@@ -321,13 +486,55 @@ function Change-ListBoxRow {
                 if ( $Item -like '*Row=*' ) { $NumDATRow.Text = $SelectedItem[$Counter +1] }
                 if ( $Item -like '*Column=*' ) { $NumDATCol.Text = $SelectedItem[$Counter +1] }
                 if ( $Item -like '*DesktopApplicationLinkPath=*' ) {
-                    if ( $CBxBoxDAT.Items -contains $SelectedItem[$Counter +1] ) {
-                        $CBxBoxDAT.SelectedItem = $SelectedItem[$Counter +1]
+                    if ( $CBxDAT.Items -contains $SelectedItem[$Counter +1] ) {
+                        $CBxDAT.SelectedItem = $SelectedItem[$Counter +1]
                     }
-                        else { $CBxBoxDAT.Text = $SelectedItem[$Counter +1]
+                        else { $CBxDAT.Text = $SelectedItem[$Counter +1]
                     }
                 }
                 $Counter++
+            }
+            $SelectionTabExist = $true
+        }
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<CustomTaskbarLayoutCollection*' ) {
+            $PnlTaskbarLayoutCollection.BringToFront()
+            if ( $LBxMain.SelectedItem.TrimStart() -like '*PinListPlacement="Replace"*' ) {
+                $CbxTaskbarLayoutCollectionPinListPlacement.SelectedItem = 'Replace'
+            }
+            else {
+                $CbxTaskbarLayoutCollectionPinListPlacement.SelectedItem = 'Off'
+            }
+            $SelectionTabExist = $true
+        }
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<taskbar:UWA*' ) {
+            $PnlTaskbarUWA.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
+            $Counter = 0
+            foreach ( $Item in $SelectedItem ) {
+                if ( $Item -like '*AppUserModelID=*' ) {
+                    if ( $CBxTaskbarUWA.Items -contains $SelectedItem[$Counter +1] ) {
+                        $CBxTaskbarUWA.SelectedItem = $SelectedItem[$Counter +1]
+                    }
+                        else { $CBxTaskbarUWA.Text = $SelectedItem[$Counter +1]
+                    }
+                }
+            }
+            $SelectionTabExist = $true
+        }
+        $LblPositionRow.Text = "$($LBxMain.SelectedIndex + 1)"
+
+        if ( $LBxMain.SelectedItem.TrimStart() -like '<taskbar:DesktopApp*' ) {
+            $PnlTaskbarDesktopApp.BringToFront()
+            $SelectedItem = $LBxMain.SelectedItem.Split('"')
+            $Counter = 0
+            foreach ( $Item in $SelectedItem ) {
+                if ( $Item -like '*DesktopApplicationLinkPath=*' ) {
+                    if ( $CBxTaskbarDesktopApp.Items -contains $SelectedItem[$Counter +1] ) {
+                        $CBxTaskbarDesktopApp.SelectedItem = $SelectedItem[$Counter +1]
+                    }
+                        else { $CBxTaskbarDesktopApp.Text = $SelectedItem[$Counter +1]
+                    }
+                }
             }
             $SelectionTabExist = $true
         }
@@ -440,6 +647,7 @@ function Apply-TextViewResult {
                 }
             }
             Hide-DesignView
+            $global:Modified = $true
 }
 
 #region mainForm
@@ -706,6 +914,12 @@ function Apply-TextViewResult {
     }
     $menuOptTaskbar.Add_Click({Manage-Taskbarsettings})
     [void]$menuOptions.DropDownItems.Add($menuOptTaskbar)
+
+    $menuOptRefreshLinksAndPkgs = New-Object System.Windows.Forms.ToolStripMenuItem -Property @{
+        Text         = 'Refresh links & packages'
+    }
+    $menuOptTaskbar.Add_Click({Get-AllLinks ; Get-AllXPackages})
+    [void]$menuOptions.DropDownItems.Add($menuOptRefreshLinksAndPkgs)
         
     $menuAbout = New-Object System.Windows.Forms.ToolStripMenuItem -Property @{
         Text = 'About'
@@ -949,6 +1163,72 @@ function Apply-TextViewResult {
 #endregion
 
 #region Panels
+    #region PanelTaskbarUWA
+        $PnlTaskbarUWA = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
+        }
+        $FrmMain.Controls.Add($PnlTaskbarUWA)
+
+        $YAxis = 10
+        $LblTaskbarUWA = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Type: Taskbar:UWA'
+            AutoSize = $true
+        }
+        $PnlTaskbarUWA.Controls.Add($LblTaskbarUWA)
+
+        $YAxis = $YAxis + 30
+        $LblTaskbarUWA = New-Object System.Windows.Forms.Label -Property @{
+            Text     = 'AppUserModelID'
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlTaskbarUWA.Controls.Add($LblTaskbarUWA)
+
+        $YAxis = $YAxis + 20
+        $CBxTaskbarUWA = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location       = New-Object System.Drawing.Point(0,$YAxis)
+            DropDownHeight = 473
+            DropDownWidth  = 1237
+            Width          = 220
+        }
+        $PnlTaskbarUWA.Controls.Add($CBxTaskbarUWA)
+    #endregion
+
+    #region PanelTaskbarDesktopApp
+        $PnlTaskbarDesktopApp = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
+        }
+        $FrmMain.Controls.Add($PnlTaskbarDesktopApp)
+
+        $YAxis = 10
+        $LblTaskbarDesktopApp = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Type: Taskbar:DesktopApp'
+            AutoSize = $true
+        }
+        $PnlTaskbarDesktopApp.Controls.Add($LblTaskbarDesktopApp)
+
+        $YAxis = $YAxis + 30
+        $LblTaskbarDesktopApp = New-Object System.Windows.Forms.Label -Property @{
+            Text     = 'DesktopApplicationLinkPath'
+            AutoSize = $true
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlTaskbarDesktopApp.Controls.Add($LblTaskbarDesktopApp)
+
+        $YAxis = $YAxis + 20
+        $CBxTaskbarDesktopApp = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location       = New-Object System.Drawing.Point(0,$YAxis)
+            DropDownHeight = 473
+            DropDownWidth  = 1237
+            Width          = 220
+        }
+        $PnlTaskbarDesktopApp.Controls.Add($CBxTaskbarDesktopApp)
+    #endregion
+
     #region PanelLayoutModificationTemplate
         $PnlLayoutModificationTemplate = New-Object System.Windows.Forms.Panel -Property @{
             Size     = New-Object Drawing.Size @(220,666)
@@ -1062,12 +1342,69 @@ function Apply-TextViewResult {
         }
         $FrmMain.Controls.Add($PnlLayoutOptions)
 
+        $YAxis = 10
         $LblTypeLayoutOptions = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text     = 'Type: LayoutOptions'
             AutoSize = $true
         }
         $PnlLayoutOptions.Controls.Add($LblTypeLayoutOptions)
+
+        $YAxis = $YAxis + 30
+        $LblLayoutOptionsStartTileGroupCellWidth = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'StartTileGroupCellWidth'
+            AutoSize = $true
+        }
+        $PnlLayoutOptions.Controls.Add($LblLayoutOptionsStartTileGroupCellWidth)
+
+        $YAxis = $YAxis + 20
+        $CbxLayoutOptionsStartTileGroupCellWidth = New-Object System.Windows.Forms.ComboBox -Property @{
+            DropDownStyle = 'DropDownList'
+            Width         = 220
+            Location      = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('6') | out-null
+        $CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('8') | out-null
+        $PnlLayoutOptions.Controls.Add($CBxLayoutOptionsStartTileGroupCellWidth)
+
+        $YAxis = $YAxis + 30
+        $LblLayoutOptionsStartTileGroupsColumnCount = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'StartTileGroupsColumnCount'
+            AutoSize = $true
+        }
+        $PnlLayoutOptions.Controls.Add($LblLayoutOptionsStartTileGroupsColumnCount)
+
+        $YAxis = $YAxis + 20
+        $NumLayoutOptionsStartTileGroupsColumnCount = New-Object System.Windows.Forms.NumericUpDown -Property @{
+            BackColor   = 'White'
+            Minimum     = 1
+            Maximum     = 2
+            ReadOnly    = $true
+            TextAlign   = 'Center'
+            Width       = 220
+            Location    = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $PnlLayoutOptions.Controls.Add($NumLayoutOptionsStartTileGroupsColumnCount)
+
+        $YAxis = $YAxis + 30
+        $LblLayoutOptionsFullScreen = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'FullScreenStart'
+            AutoSize = $true
+        }
+        $PnlLayoutOptions.Controls.Add($LblLayoutOptionsFullScreen)
+
+        $YAxis = $YAxis + 20
+        $CBxLayoutOptionsFullScreen = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location       = New-Object System.Drawing.Point(0,$YAxis)
+            Width          = 220
+        }
+        $CBxLayoutOptionsFullScreen.Items.Add('True') | out-null
+        $CBxLayoutOptionsFullScreen.Items.Add('False') | out-null
+        $PnlLayoutOptions.Controls.Add($CBxLayoutOptionsFullScreen)
+
     #endregion
 
     #region PanelDefaultLayoutOverride
@@ -1077,12 +1414,30 @@ function Apply-TextViewResult {
         }
         $FrmMain.Controls.Add($PnlDefaultLayoutOverride)
 
+        $YAxis = 10
         $LblTypeDefaultLayoutOverride = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text     = 'Type: DefaultLayoutOverride'
             AutoSize = $true
         }
         $PnlDefaultLayoutOverride.Controls.Add($LblTypeDefaultLayoutOverride)
+
+        $YAxis = $YAxis + 30
+        $LblDefaultLayoutOverrideLCRT = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'LayoutCustomizationRestrictionType'
+            AutoSize = $true
+        }
+        $PnlDefaultLayoutOverride.Controls.Add($LblDefaultLayoutOverrideLCRT)
+
+        $YAxis = $YAxis + 20
+        $CBxDefaultLayoutOverrideLCRT = New-Object System.Windows.Forms.ComboBox -Property @{
+            Location       = New-Object System.Drawing.Point(0,$YAxis)
+            Width          = 220
+        }
+        $CBxDefaultLayoutOverrideLCRT.Items.Add('OnlySpecifiedGroups') | out-null
+        $CBxDefaultLayoutOverrideLCRT.Items.Add('Off') | out-null
+        $PnlDefaultLayoutOverride.Controls.Add($CBxDefaultLayoutOverrideLCRT)
     #endregion
 
     #region PanelStartLayoutCollection
@@ -1092,8 +1447,9 @@ function Apply-TextViewResult {
         }
         $FrmMain.Controls.Add($PnlStartLayoutCollection)
 
+        $YAxis = 10
         $LblTypeStartLayoutCollection = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text     = 'Type: StartLayoutCollection'
             AutoSize = $true
         }
@@ -1107,12 +1463,32 @@ function Apply-TextViewResult {
         }
         $FrmMain.Controls.Add($PnlStartlayout)
 
+        $YAxis = 10
         $LblTypeStartLayout = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text     = 'Type: StartLayout'
             AutoSize = $true
         }
         $PnlStartlayout.Controls.Add($LblTypeStartLayout)
+
+        $YAxis = $YAxis + 30
+        $LblStartLayoutGroupCellWidth = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'GroupCellWidth'
+            AutoSize = $true
+        }
+        $PnlStartlayout.Controls.Add($LblStartLayoutGroupCellWidth)
+
+        $YAxis = $YAxis + 20
+        $CbxStartLayoutGroupCellWidth = New-Object System.Windows.Forms.ComboBox -Property @{
+            DropDownStyle = 'DropDownList'
+            Width         = 220
+            Location      = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $CBxStartLayoutGroupCellWidth.Items.Add('6') | out-null
+        $CBxStartLayoutGroupCellWidth.Items.Add('8') | out-null
+        $CBxStartLayoutGroupCellWidth.Items.Add('Off') | out-null
+        $PnlStartlayout.Controls.Add($CBxStartLayoutGroupCellWidth)
     #endregion
 
     #region PanelFolder
@@ -1124,7 +1500,7 @@ function Apply-TextViewResult {
 
         $YAxis = 10
         $LblTypeFolder = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text     = 'Type: Folder'
             AutoSize = $true
         }
@@ -1214,7 +1590,7 @@ function Apply-TextViewResult {
 
         $YAxis = 10
         $LblTypeGroup = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,5)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text     = 'Type: Group'
             AutoSize = $true
         }
@@ -1319,33 +1695,14 @@ function Apply-TextViewResult {
         $PnlTile.Controls.Add($LblAppUserModelID)
 
         $YAxis = $YAxis + 20
-        $CBxBoxAppUserModelID = New-Object System.Windows.Forms.ComboBox -Property @{
+        $CBxTileAppUserModelID = New-Object System.Windows.Forms.ComboBox -Property @{
             Location       = New-Object System.Drawing.Point(0,$YAxis)
             DropDownHeight = 473
             DropDownWidth  = 1237            
             Width          = 220
         }
-        try {
-            $InitialAllXPackages = Get-AppxPackage -AllUsers
-            $InitialAllXPackages += Get-AppxPackage
-        }
-        catch {
-            try { $InitialAllXPackages = Get-AppxPackage }
-            catch {}
-        }
-        $AllXPackages = @()
-        foreach ( $app in $InitialAllXPackages ) {
-            foreach ( $id in (Get-AppxPackageManifest $app).package.applications.application.id ) {
-                $AllXPackages += $app.packagefamilyname + "!" + $id
-            }
-        }
-        $AllXPackages = $AllXPackages | Select -Unique | Sort-Object
-        if ( $AllXPackages.Count -gt 0 ) {
-            ForEach ( $Package in $AllXPackages ) {
-                $CBxBoxAppUserModelID.Items.Add($Package) | out-null
-            }
-        }
-        $PnlTile.Controls.Add($CBxBoxAppUserModelID)        
+        Get-AllXPackages
+        $PnlTile.Controls.Add($CBxTileAppUserModelID)        
     #endregion
 
     #region PanelDesktopApplicationTile
@@ -1430,26 +1787,48 @@ function Apply-TextViewResult {
         $PnlDAT.Controls.Add($LblDesktopApplicationTile)
 
         $YAxis = $YAxis + 20
-        $CBxBoxDAT = New-Object System.Windows.Forms.ComboBox -Property @{
+        $CBxDAT = New-Object System.Windows.Forms.ComboBox -Property @{
             Location       = New-Object System.Drawing.Point(0,$YAxis)
             DropDownHeight = 473
             DropDownWidth  = 1237
             Width          = 220
         }
-        $AllLinks = @()
-        $AllUserLinks = $(Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
-    	$AllUserLinks = $AllUserLinks.Substring($($AllUserLinks[0].IndexOf($('Roaming\'))+8))
-        $AllUserLinks = $AllUserLinks | ForEach-Object {"%APPDATA%\$_"}
-        $AllLinks += $AllUserLinks
-        $AllLinks += $(Get-ChildItem "$env:PROGRAMDATA\Microsoft\Windows\Start Menu\*.lnk" -Recurse).FullName
-        $AllLinks = $AllLinks.replace('C:\ProgramData','%ALLUSERSPROFILE%')
-        $AllLinks = $AllLinks | Sort-Object
-        if ( $AllLinks.Count -gt 0 ) {
-            ForEach ( $Item in $AllLinks ) {
-                $CBxBoxDAT.Items.Add($Item) | out-null
-            }
+        Get-AllLinks
+        $PnlDAT.Controls.Add($CBxDAT)
+    #endregion
+
+    #region PanelTaskbarLayoutCollection
+        $PnlTaskbarLayoutCollection = New-Object System.Windows.Forms.Panel -Property @{
+            Size     = New-Object Drawing.Size @(220,666)
+            Location = New-Object System.Drawing.Point(10,27)
         }
-        $PnlDAT.Controls.Add($CBxBoxDAT)
+        $FrmMain.Controls.Add($PnlTaskbarLayoutCollection)
+
+        $YAxis = 10
+        $LblTypeStartLayoutCollection = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'Type: TaskbarLayoutCollection'
+            AutoSize = $true
+        }
+        $PnlTaskbarLayoutCollection.Controls.Add($LblTypeStartLayoutCollection)
+
+        $YAxis = $YAxis + 30
+        $LblTaskbarLayoutCollectionPinListPlacement = New-Object System.Windows.Forms.Label -Property @{
+            Location = New-Object System.Drawing.Point(0,$YAxis)
+            Text     = 'PinListPlacement'
+            AutoSize = $true
+        }
+        $PnlTaskbarLayoutCollection.Controls.Add($LblTaskbarLayoutCollectionPinListPlacement)
+
+        $YAxis = $YAxis + 20
+        $CbxTaskbarLayoutCollectionPinListPlacement = New-Object System.Windows.Forms.ComboBox -Property @{
+            DropDownStyle = 'DropDownList'
+            Width         = 220
+            Location      = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Replace') | out-null
+        $CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Off') | out-null
+        $PnlTaskbarLayoutCollection.Controls.Add($CbxTaskbarLayoutCollectionPinListPlacement)
     #endregion
 
     #region PanelNewItem
@@ -1459,15 +1838,16 @@ function Apply-TextViewResult {
         }
         $FrmMain.Controls.Add($PnlNewItem)
 
+        $YAxis = 10
         $LblType = New-Object System.Windows.Forms.Label -Property @{
-            Location = New-Object System.Drawing.Point(0,10)
+            Location = New-Object System.Drawing.Point(0,$YAxis)
             Text = 'Type:'
             Autosize = $true
         }
         $PnlNewItem.Controls.Add($LblType)
         
         $CBxType = New-Object System.Windows.Forms.ComboBox -Property @{
-            Location = New-Object System.Drawing.Point(50,10)
+            Location = New-Object System.Drawing.Point(50,$YAxis)
             DropDownStyle = 'DropDownList'
             Width = 170
             #FlatStyle = 0
