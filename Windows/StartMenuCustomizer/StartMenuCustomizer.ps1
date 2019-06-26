@@ -102,12 +102,12 @@ function Manage-Taskbarsettings {
         $LBxMain.Items[0] = "$($LBxMain.Items[0].Substring(0,$($LBxMain.Items[0].Length -1))) xmlns:taskbar=""http://schemas.microsoft.com/Start/2014/TaskbarLayout"">"
         $TxtLMTTaskbar.Visible = $true
         $LblLMTTaskbar.Visible = $true
+        $BtnLayoutModificationTemplateApply.Location = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y + 50))
         $global:Modified = $true
     }
     else {
         $MessageBody  = 'All parts of the custom taskbar will be removed.`n`nAre you sure?'
         $MessageTitle = 'Removing custom Taskbar'
-
         $Choice       = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,'YesNo','Warning')
         If ( $Choice -eq 'Yes' ) {
             $AssocRow = $Null
@@ -149,6 +149,7 @@ function Manage-Taskbarsettings {
             $global:Modified = $true
             $TxtLMTTaskbar.Visible = $false
             $LblLMTTaskbar.Visible = $false
+            $BtnLayoutModificationTemplateApply.Location = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y - 50))
         }
         Else {
             $menuOptTaskbar.Checked = $true
@@ -179,6 +180,12 @@ function Apply-Changes {
     }
 
     if ( $LBxMain.Enabled -eq $true ) {
+        if ( $LBxMain.SelectedItem -like '*LayoutModificationTemplate*' ) {
+            if ( $menuOptTaskbar.Checked -eq $true ) {
+                $TaskbarXMLNSExist = " xmlns:taskbar=""$($TxtLMTTaskbar.Text)"""
+            }
+            $Line = "<LayoutModificationTemplate xmlns:defaultlayout=""$($TxtLMTDefaultLayout.Text)"" xmlns:start=""$($TxtLMTStart.Text)"" Version=""$($NumLMTVersion.Text)"" xmlns=""$($TxtLMTxlmns.Text)""$TaskbarXMLNSExist>"
+        }
         if ( $LBxMain.SelectedItem -like '*DesktopApplicationTile*' ) {
             $Line = "$Whitespace<start:DesktopApplicationTile Size=""$($CBxDATSize.Text)"" Column=""$($NumDATCol.Text)"" Row=""$($NumDATRow.Text)"" DesktopApplicationLinkPath=""$($CBxDAT.Text)"" />"
         }
@@ -550,7 +557,7 @@ function Change-ListBoxRow {
                     if ( $Item -like '*xmlns:start=*' ) { $TxtLMTStart.Text = $SelectedItem[$Counter +1] }
                     if ( $Item -like '*xmlns=*' ) { $TxtLMTxlmns.Text = $SelectedItem[$Counter +1] }
                     if ( $Item -like '*xmlns:taskbar=*' ) { $TxtLMTTaskbar.Text = $SelectedItem[$Counter +1] }
-                    if ( $Item -like '*version=*' ) { $TxtLMTVersion.Text = $SelectedItem[$Counter +1] }
+                    if ( $Item -like '*version=*' ) { $NumLMTVersion.Text = $SelectedItem[$Counter +1] }
                     $Counter++
                 }
             }
@@ -1675,6 +1682,14 @@ function Apply-TextViewResult {
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
+        $TxtLMTDefaultLayout.Add_TextChanged({
+            if ( $this.Text -ne '' ) {
+                $BtnLayoutModificationTemplateApply.Enabled = $true
+            }
+            else {
+                $BtnLayoutModificationTemplateApply.Enabled = $false
+            }
+        })
         $PnlLayoutModificationTemplate.Controls.Add($TxtLMTDefaultLayout)
 
         $YAxis = $YAxis + 30
@@ -1691,6 +1706,14 @@ function Apply-TextViewResult {
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
+        $TxtLMTStart.Add_TextChanged({
+            if ( $this.Text -ne '' ) {
+                $BtnLayoutModificationTemplateApply.Enabled = $true
+            }
+            else {
+                $BtnLayoutModificationTemplateApply.Enabled = $false
+            }
+        })
         $PnlLayoutModificationTemplate.Controls.Add($TxtLMTStart)
 
         $YAxis = $YAxis + 30
@@ -1707,6 +1730,14 @@ function Apply-TextViewResult {
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
+        $TxtLMTxlmns.Add_TextChanged({
+            if ( $this.Text -ne '' ) {
+                $BtnLayoutModificationTemplateApply.Enabled = $true
+            }
+            else {
+                $BtnLayoutModificationTemplateApply.Enabled = $false
+            }
+        })
         $PnlLayoutModificationTemplate.Controls.Add($TxtLMTxlmns)
 
         $YAxis = $YAxis + 30
@@ -1718,12 +1749,22 @@ function Apply-TextViewResult {
         $PnlLayoutModificationTemplate.Controls.Add($LblLMTVersion)
 
         $YAxis = $YAxis + 20
-        $TxtLMTVersion = New-Object System.Windows.Forms.TextBox -Property @{
+        $NumLMTVersion = New-Object System.Windows.Forms.NumericUpDown -Property @{
             BackColor   = 'White'
+            Minimum     = '1'
+            TextAlign   = 'Center'
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
-        $PnlLayoutModificationTemplate.Controls.Add($TxtLMTVersion)
+        $NumLMTVersion.Add_TextChanged({
+            if ( $this.Text -ne '' ) {
+                $BtnLayoutModificationTemplateApply.Enabled = $true
+            }
+            else {
+                $BtnLayoutModificationTemplateApply.Enabled = $false
+            }
+        })
+        $PnlLayoutModificationTemplate.Controls.Add($NumLMTVersion)
 
         $YAxis = $YAxis + 30
         $LblLMTTaskbar = New-Object System.Windows.Forms.Label -Property @{
@@ -1739,6 +1780,14 @@ function Apply-TextViewResult {
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
+        $TxtLMTTaskbar.Add_TextChanged({
+            if ( $this.Text -ne '' ) {
+                $BtnLayoutModificationTemplateApply.Enabled = $true
+            }
+            else {
+                $BtnLayoutModificationTemplateApply.Enabled = $false
+            }
+        })
         $PnlLayoutModificationTemplate.Controls.Add($TxtLMTTaskbar)
 
         if ( $menuOptTaskbar.Checked -eq $true ) {
@@ -2161,7 +2210,7 @@ function Apply-TextViewResult {
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
         $TxtGroupName.Add_TextChanged({
-            if ( $TxtGroupName.Text -ne '' ) {
+            if ( $this.Text -ne '' ) {
                 $BtnGroupApply.Enabled = $true
             }
             else {
