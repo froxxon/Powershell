@@ -169,7 +169,7 @@ function Apply-Changes {
         1..$($LBxMain.SelectedItem.IndexOf('<')) | % {
         $Whitespace = "$Whitespace "
     }
-                $CBxDAT.Add_TextChanged({
+        $CBxDAT.Add_TextChanged({
             if ( $this.Text -ne '' ) {
                 $BtnDesktopApplicationTileApply.Enabled = $true
             }
@@ -186,16 +186,34 @@ function Apply-Changes {
             }
             $Line = "<LayoutModificationTemplate xmlns:defaultlayout=""$($TxtLMTDefaultLayout.Text)"" xmlns:start=""$($TxtLMTStart.Text)"" Version=""$($NumLMTVersion.Text)"" xmlns=""$($TxtLMTxlmns.Text)""$TaskbarXMLNSExist>"
         }
+        if ( $LBxMain.SelectedItem -like '*LayoutOptions*' ) {
+            if ( $CBxLayoutOptionsFullScreen.SelectedItem -eq 'True' ) {
+                $FullScreenOn = "FullScreenStart=""true"""
+            }
+            $Line = "  <LayoutOptions StartTileGroupCellWidth=""$($CbxLayoutOptionsStartTileGroupCellWidth.Text)"" StartTileGroupsColumnCount=""$($NumLayoutOptionsStartTileGroupsColumnCount.Text)"" $FullScreenOn />"
+        }
+        if ( $LBxMain.SelectedItem -like '*DefaultLayoutOverride*' ) {
+            if ( $CBxDefaultLayoutOverrideLCRT.SelectedItem -ne 'Off' ) {
+                $OnlySpecifiedGroups = " LayoutCustomizationRestrictionType=""OnlySpecifiedGroups"""
+            }
+            $Line = "  <DefaultLayoutOverride$OnlySpecifiedGroups>"
+        }
+        if ( $LBxMain.SelectedItem -like '*defaultlayout:StartLayout*' ) {
+            if ( $CbxStartLayoutGroupCellWidth.SelectedItem -ne 'Off' ) {
+                $GroupCellWidth = " GroupCellWidth=""$($CbxStartLayoutGroupCellWidth.SelectedItem)"""
+            }
+            $Line = "      <defaultlayout:StartLayout$GroupCellWidth>"
+        }
         if ( $LBxMain.SelectedItem -like '*DesktopApplicationTile*' ) {
             $Line = "$Whitespace<start:DesktopApplicationTile Size=""$($CBxDATSize.Text)"" Column=""$($NumDATCol.Text)"" Row=""$($NumDATRow.Text)"" DesktopApplicationLinkPath=""$($CBxDAT.Text)"" />"
         }
-        if ( $LBxMain.SelectedItem -like '*Folder*' ) {
+        if ( $LBxMain.SelectedItem -like '*start:Folder*' ) {
             if ( $TxtFolderName.Text -ne '' ) {
                 $FolderName = "Name=""$($TxtFolderName.Text)"""
             }
             $Line = "$Whitespace<start:Folder $FolderName Size=""$($CBxFolderSize.Text)"" Column=""$($NumFolderCol.Text)"" Row=""$($NumFolderRow.Text)"">"
         }
-        if ( $LBxMain.SelectedItem -like '*Group*' ) {
+        if ( $LBxMain.SelectedItem -like '*start:Group*' ) {
             $Line = "$Whitespace<start:Group Name=""$($TxtGroupName.Text)"" />"
         }
         if ( $LBxMain.SelectedItem -like '*start:Tile*' ) {
@@ -1853,6 +1871,9 @@ function Apply-TextViewResult {
         }
         [void]$CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('6')
         [void]$CBxLayoutOptionsStartTileGroupCellWidth.Items.Add('8')
+        $CbxLayoutOptionsStartTileGroupCellWidth.Add_SelectedIndexChanged({
+            $BtnLayoutOptionsApply.Enabled = $true
+        })
         $PnlLayoutOptions.Controls.Add($CBxLayoutOptionsStartTileGroupCellWidth)
 
         $YAxis = $YAxis + 30
@@ -1873,6 +1894,9 @@ function Apply-TextViewResult {
             Width       = 220
             Location    = New-Object System.Drawing.Point(0,$YAxis)
         }
+        $NumLayoutOptionsStartTileGroupsColumnCount.Add_TextChanged({
+            $BtnLayoutOptionsApply.Enabled = $true
+        })
         $PnlLayoutOptions.Controls.Add($NumLayoutOptionsStartTileGroupsColumnCount)
 
         $YAxis = $YAxis + 30
@@ -1885,11 +1909,15 @@ function Apply-TextViewResult {
 
         $YAxis = $YAxis + 20
         $CBxLayoutOptionsFullScreen = New-Object System.Windows.Forms.ComboBox -Property @{
+            DropDownStyle = 'DropDownList'
             Location       = New-Object System.Drawing.Point(0,$YAxis)
             Width          = 220
         }
         [void]$CBxLayoutOptionsFullScreen.Items.Add('True')
         [void]$CBxLayoutOptionsFullScreen.Items.Add('Off')
+        $CBxLayoutOptionsFullScreen.Add_SelectedIndexChanged({
+            $BtnLayoutOptionsApply.Enabled = $true
+        })
         $PnlLayoutOptions.Controls.Add($CBxLayoutOptionsFullScreen)
 
         $YAxis = $YAxis + 35
@@ -1940,11 +1968,15 @@ function Apply-TextViewResult {
 
         $YAxis = $YAxis + 20
         $CBxDefaultLayoutOverrideLCRT = New-Object System.Windows.Forms.ComboBox -Property @{
+            DropDownStyle = 'DropDownList'
             Location       = New-Object System.Drawing.Point(0,$YAxis)
             Width          = 220
         }
         [void]$CBxDefaultLayoutOverrideLCRT.Items.Add('OnlySpecifiedGroups')
         [void]$CBxDefaultLayoutOverrideLCRT.Items.Add('Off')
+        $CBxDefaultLayoutOverrideLCRT.Add_SelectedIndexChanged({
+            $BtnDefaultLayoutOverrideApply.Enabled = $true
+        })
         $PnlDefaultLayoutOverride.Controls.Add($CBxDefaultLayoutOverrideLCRT)
 
         $YAxis = $YAxis + 35
@@ -2017,6 +2049,9 @@ function Apply-TextViewResult {
         [void]$CBxStartLayoutGroupCellWidth.Items.Add('6')
         [void]$CBxStartLayoutGroupCellWidth.Items.Add('8')
         [void]$CBxStartLayoutGroupCellWidth.Items.Add('Off')
+        $CBxStartLayoutGroupCellWidth.Add_SelectedIndexChanged({
+            $BtnStartLayoutApply.Enabled = $true
+        })
         $PnlStartlayout.Controls.Add($CBxStartLayoutGroupCellWidth)
 
         $YAxis = $YAxis + 35
