@@ -1,4 +1,5 @@
-﻿#region DeclarationOfVariables
+﻿clear-host
+#region DeclarationOfVariables
     Add-Type -AssemblyName System.Windows.Forms
     $HidePSWindow = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' # Part of the process to hide the Powershellwindow if it is not run through ISE
     Add-Type -name win -member $HidePSWindow -namespace native # Part of the process to hide the Powershellwindow if it is not run through ISE
@@ -280,7 +281,7 @@ function Open-NewItemPanel {
         $NumFolderRow.Text = 0
         $TxtFolderName.Text = ''
         $CBxFolderSize.Focus()
-        $BtnFolderApply.Enabled = $false
+        $BtnFolderApply.Enabled = $true
         $BtnFolderCancel.Visible = $true
         Disable-ControlsWhenNewItemSelected
         $PnlFolder.BringToFront()
@@ -288,7 +289,7 @@ function Open-NewItemPanel {
     if ( $CBxInsertNewItem.SelectedItem -eq 'Group' ) {
         $TxtGroupName.Text = ''
         $TxtGroupName.Focus()
-        $BtnGroupApply.Enabled = $false
+        $BtnGroupApply.Enabled = $true
         $BtnGroupCancel.Visible = $true
         Disable-ControlsWhenNewItemSelected
         $PnlGroup.BringToFront()
@@ -490,19 +491,32 @@ function Remove-All {
 }
 
 function Move-SelectedItem ([string]$Direction) {
-    $LBxMain.BeginUpdate()
     $pos = $LBxMain.SelectedIndex
     if ( $Direction -eq 'Up' ) {
         $LBxMain.items.insert($pos -1,$LBxMain.Items.Item($pos))
+        if ( $LBxMain.SelectedItem -like '*<start:Group*' -or $LBxMain.SelectedItem -like '*<start:Folder*' ) {
+            $LBxMain.Items[$LBxMain.SelectedIndex-1] = "  $($LBxMain.Items[$LBxMain.SelectedIndex-1])"
+        }
+        if ( $LBxMain.SelectedItem -like '*</start:Group*' -or $LBxMain.SelectedItem -like '*</start:Folder*' ) {
+            $LBxMain.Items[$LBxMain.SelectedIndex-1] = $LBxMain.Items[$LBxMain.SelectedIndex-1].Substring(2)
+        }
         $LBxMain.SelectedIndex = ($pos -1)
         $LBxMain.Items.RemoveAt($pos +1)
     }
     else {
         $LBxMain.items.insert($pos,$LBxMain.Items.Item($pos +1))
+        if ( $LBxMain.SelectedItem -like '*<start:Group*' -or $LBxMain.SelectedItem -like '*<start:Folder*' ) {
+            $LBxMain.Items[$LBxMain.SelectedIndex-1] = $LBxMain.Items[$LBxMain.SelectedIndex-1].Substring(2)
+            if ( $LBxMain.Items[$LBxMain.SelectedIndex -1] -like '*<start:Group*' -or $LBxMain.Items[$LBxMain.SelectedIndex -1] -like '*<start:Folder*' ) {
+                $LBxMain.Items[$LBxMain.SelectedIndex] = "  $($LBxMain.Items[$LBxMain.SelectedIndex])"
+            }
+        }
+        if ( $LBxMain.SelectedItem -like '*</start:Group*' -or $LBxMain.SelectedItem -like '*</start:Folder*' ) {
+            $LBxMain.Items[$LBxMain.SelectedIndex-1] = "  $($LBxMain.Items[$LBxMain.SelectedIndex-1])"
+        }
         $LBxMain.SelectedIndex = ($pos +1)
         $LBxMain.Items.RemoveAt($pos +2)
     }
-    $LBxMain.EndUpdate()
     Change-ListBoxRow
     $global:Modified = $true
 }
@@ -692,21 +706,29 @@ function Change-ListBoxRow {
                 $BtnRemoveItem.Enabled = $false
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*<start:Folder*' ) { $BtnMoveUp.Enabled = $false }
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*<start:Folder*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*</start:Group*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</start:Group*' ) { $BtnMoveDown.Enabled = $false }
             }
             if ( $LBxMain.SelectedItem.TrimStart() -like '</start:Group*' ) {
                 $BtnRemoveItem.Enabled = $false
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*<start:Group*' ) { $BtnMoveUp.Enabled = $false }
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*<start:Group*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*</start:Folder*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</start:Folder*' ) { $BtnMoveDown.Enabled = $false }
             }
             if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) {
                 $BtnRemoveItem.Enabled = $false
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*</start:Folder*' ) { $BtnMoveUp.Enabled = $false }
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</start:Folder*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*<start:Group*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*<start:Group*' ) { $BtnMoveDown.Enabled = $false }
             }
             if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) {
                 $BtnRemoveItem.Enabled = $false
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*</start:Group*' ) { $BtnMoveUp.Enabled = $false }
                 If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*</start:Group*' ) { $BtnMoveDown.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex-1) -like '*<start:Folder*' ) { $BtnMoveUp.Enabled = $false }
+                If ( $LBxMain.Items.Item($LBxMain.SelectedIndex+1) -like '*<start:Folder*' ) { $BtnMoveDown.Enabled = $false }
             }
             if ( $LBxMain.SelectedItem.TrimStart() -like '<defaultlayout:*' -or $LBxMain.SelectedItem.TrimStart() -like '<taskbar:TaskbarPinList*') {
                 $BtnMoveUp.Enabled = $false
@@ -790,6 +812,11 @@ function Change-ListBoxRow {
             $BtnGroupApply.Enabled = $false
             $BtnDesktopApplicationTileApply.Enabled = $false
             $BtnTileApply.Enabled = $false
+            $BtnLayoutModificationTemplateApply.Enabled = $false
+            $BtnLayoutOptionsApply.Enabled = $false
+            $BtnDefaultLayoutOverrideApply.Enabled = $false
+            $BtnStartLayoutApply.Enabled = $false
+            $BtnTaskbarLayoutCollectionApply.Enabled = $false
         }
         Catch {}
     }
@@ -1707,6 +1734,27 @@ function Apply-TextViewResult {
             $TxtLMTTaskbar.Visible = $false
         }
         Change-ListBoxRow
+
+        $YAxis = $YAxis + 35
+        $BtnLayoutModificationTemplateApply = New-Object System.Windows.Forms.Button -Property @{
+            Text      = 'Apply'
+            FlatStyle = 0
+            Width     = 100
+            Location  = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $BtnLayoutModificationTemplateApply.Add_EnabledChanged({
+           if ( $this.Enabled -eq $false ) {
+                $this.FlatAppearance.BorderColor = 'LightGray'
+                $this.FlatAppearance.BorderSize = 1
+            }
+            else {
+                $this.FlatAppearance.BorderColor = 'LightBlue'
+                $this.FlatAppearance.BorderSize = 2
+            }
+        })
+        $BtnLayoutModificationTemplateApply.Enabled = $false
+        $BtnLayoutModificationTemplateApply.Add_Click({Apply-Changes})
+        $PnlLayoutModificationTemplate.Controls.Add($BtnLayoutModificationTemplateApply)
     #endregion
 
     #region PanelLayoutOptions
@@ -1779,6 +1827,27 @@ function Apply-TextViewResult {
         [void]$CBxLayoutOptionsFullScreen.Items.Add('Off')
         $PnlLayoutOptions.Controls.Add($CBxLayoutOptionsFullScreen)
 
+        $YAxis = $YAxis + 35
+        $BtnLayoutOptionsApply = New-Object System.Windows.Forms.Button -Property @{
+            Text      = 'Apply'
+            FlatStyle = 0
+            Width     = 100
+            Location  = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $BtnLayoutOptionsApply.Add_EnabledChanged({
+           if ( $this.Enabled -eq $false ) {
+                $this.FlatAppearance.BorderColor = 'LightGray'
+                $this.FlatAppearance.BorderSize = 1
+            }
+            else {
+                $this.FlatAppearance.BorderColor = 'LightBlue'
+                $this.FlatAppearance.BorderSize = 2
+            }
+        })
+        $BtnLayoutOptionsApply.Enabled = $false
+        $BtnLayoutOptionsApply.Add_Click({Apply-Changes})
+        $PnlLayoutOptions.Controls.Add($BtnLayoutOptionsApply)
+
     #endregion
 
     #region PanelDefaultLayoutOverride
@@ -1812,6 +1881,27 @@ function Apply-TextViewResult {
         [void]$CBxDefaultLayoutOverrideLCRT.Items.Add('OnlySpecifiedGroups')
         [void]$CBxDefaultLayoutOverrideLCRT.Items.Add('Off')
         $PnlDefaultLayoutOverride.Controls.Add($CBxDefaultLayoutOverrideLCRT)
+
+        $YAxis = $YAxis + 35
+        $BtnDefaultLayoutOverrideApply = New-Object System.Windows.Forms.Button -Property @{
+            Text      = 'Apply'
+            FlatStyle = 0
+            Width     = 100
+            Location  = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $BtnDefaultLayoutOverrideApply.Add_EnabledChanged({
+           if ( $this.Enabled -eq $false ) {
+                $this.FlatAppearance.BorderColor = 'LightGray'
+                $this.FlatAppearance.BorderSize = 1
+            }
+            else {
+                $this.FlatAppearance.BorderColor = 'LightBlue'
+                $this.FlatAppearance.BorderSize = 2
+            }
+        })
+        $BtnDefaultLayoutOverrideApply.Enabled = $false
+        $BtnDefaultLayoutOverrideApply.Add_Click({Apply-Changes})
+        $PnlDefaultLayoutOverride.Controls.Add($BtnDefaultLayoutOverrideApply)
     #endregion
 
     #region PanelStartLayoutCollection
@@ -1863,6 +1953,27 @@ function Apply-TextViewResult {
         [void]$CBxStartLayoutGroupCellWidth.Items.Add('8')
         [void]$CBxStartLayoutGroupCellWidth.Items.Add('Off')
         $PnlStartlayout.Controls.Add($CBxStartLayoutGroupCellWidth)
+
+        $YAxis = $YAxis + 35
+        $BtnStartLayoutApply = New-Object System.Windows.Forms.Button -Property @{
+            Text      = 'Apply'
+            FlatStyle = 0
+            Width     = 100
+            Location  = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $BtnStartLayoutApply.Add_EnabledChanged({
+           if ( $this.Enabled -eq $false ) {
+                $this.FlatAppearance.BorderColor = 'LightGray'
+                $this.FlatAppearance.BorderSize = 1
+            }
+            else {
+                $this.FlatAppearance.BorderColor = 'LightBlue'
+                $this.FlatAppearance.BorderSize = 2
+            }
+        })
+        $BtnStartLayoutApply.Enabled = $false
+        $BtnStartLayoutApply.Add_Click({Apply-Changes})
+        $PnlStartLayout.Controls.Add($BtnStartLayoutApply)
     #endregion
 
     #region PanelFolder
@@ -2404,7 +2515,36 @@ function Apply-TextViewResult {
         }
         [void]$CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Replace')
         [void]$CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Off')
+        $CBxTaskbarLayoutCollectionPinListPlacement.Add_TextChanged({
+            if ( $this.Text -ne '' ) {
+                $BtnTaskbarLayoutCollectionApply.Enabled = $true
+            }
+            else {
+                $BtnTaskbarLayoutCollectionApply.Enabled = $false
+            }
+        })
         $PnlTaskbarLayoutCollection.Controls.Add($CbxTaskbarLayoutCollectionPinListPlacement)
+
+        $YAxis = $YAxis + 35
+        $BtnTaskbarLayoutCollectionApply = New-Object System.Windows.Forms.Button -Property @{
+            Text      = 'Apply'
+            FlatStyle = 0
+            Width     = 100
+            Location  = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        $BtnTaskbarLayoutCollectionApply.Add_EnabledChanged({
+           if ( $this.Enabled -eq $false ) {
+                $this.FlatAppearance.BorderColor = 'LightGray'
+                $this.FlatAppearance.BorderSize = 1
+            }
+            else {
+                $this.FlatAppearance.BorderColor = 'LightBlue'
+                $this.FlatAppearance.BorderSize = 2
+            }
+        })
+        $BtnTaskbarLayoutCollectionApply.Enabled = $false
+        $BtnTaskbarLayoutCollectionApply.Add_Click({Apply-Changes})
+        $PnlTaskbarLayoutCollection.Controls.Add($BtnTaskbarLayoutCollectionApply)
     #endregion
 
     #region PanelNewItem
