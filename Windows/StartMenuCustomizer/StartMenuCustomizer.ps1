@@ -500,6 +500,14 @@ function Move-SelectedItem ([string]$Direction) {
         if ( $LBxMain.SelectedItem -like '*</start:Group*' -or $LBxMain.SelectedItem -like '*</start:Folder*' ) {
             $LBxMain.Items[$LBxMain.SelectedIndex-1] = $LBxMain.Items[$LBxMain.SelectedIndex-1].Substring(2)
         }
+        if ( $LBxMain.SelectedItem -notlike '*</start:Group*' -and $LBxMain.SelectedItem -notlike '*</start:Folder*' -and $LBxMain.SelectedItem -notlike '*<start:Group*' -and $LBxMain.SelectedItem -notlike '*<start:Folder*' ) {
+            if ( $LBxMain.Items[($LBxMain.SelectedIndex -1)] -like '*</start:Group*' -or $LBxMain.Items[($LBxMain.SelectedIndex -1)] -like '*</start:Folder*' ) {
+                $LBxMain.Items[$LBxMain.SelectedIndex-2] = "  $($LBxMain.Items[$LBxMain.SelectedIndex-2])"
+            }
+            if ( $LBxMain.Items[($LBxMain.SelectedIndex -1)] -like '*<start:Group*' -or $LBxMain.Items[($LBxMain.SelectedIndex -1)] -like '*<start:Folder*' ) {
+                $LBxMain.Items[$LBxMain.SelectedIndex-2] = $LBxMain.Items[$LBxMain.SelectedIndex-2].Substring(2)
+            }
+        }
         $LBxMain.SelectedIndex = ($pos -1)
         $LBxMain.Items.RemoveAt($pos +1)
     }
@@ -513,6 +521,15 @@ function Move-SelectedItem ([string]$Direction) {
         }
         if ( $LBxMain.SelectedItem -like '*</start:Group*' -or $LBxMain.SelectedItem -like '*</start:Folder*' ) {
             $LBxMain.Items[$LBxMain.SelectedIndex-1] = "  $($LBxMain.Items[$LBxMain.SelectedIndex-1])"
+        }
+        if ( $LBxMain.SelectedItem -notlike '*</start:Group*' -and $LBxMain.SelectedItem -notlike '*</start:Folder*' -and $LBxMain.SelectedItem -notlike '*<start:Group*' -and $LBxMain.SelectedItem -notlike '*<start:Folder*' ) {
+            #TEST
+            if ( $LBxMain.Items[($LBxMain.SelectedIndex+1)] -like '*<start:Group*' -or $LBxMain.Items[($LBxMain.SelectedIndex+1)] -like '*<start:Folder*' ) {
+                #$LBxMain.Items[$LBxMain.SelectedIndex+2] = "  $($LBxMain.Items[$LBxMain.SelectedIndex+2])"
+            }
+            if ( $LBxMain.Items[($LBxMain.SelectedIndex+1)] -like '*</start:Group*' -or $LBxMain.Items[($LBxMain.SelectedIndex+1)] -like '*</start:Folder*' ) {
+                #$LBxMain.Items[$LBxMain.SelectedIndex+2] = $LBxMain.Items[$LBxMain.SelectedIndex+2].Substring(2)
+            }
         }
         $LBxMain.SelectedIndex = ($pos +1)
         $LBxMain.Items.RemoveAt($pos +2)
