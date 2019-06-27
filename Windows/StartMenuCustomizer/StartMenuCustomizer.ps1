@@ -162,7 +162,6 @@ function Manage-Taskbarsettings {
 function Apply-Changes {
     $Whitespace = ''
     if ( $LBXMain.SelectedIndex -ne 0 ) {
-    write-host $LBxMain.Items[$LBxMain.SelectedIndex]
         if ( $LBxMain.SelectedItem -like '*<start:Group*' -or $LBxMain.SelectedItem -like '*<start:Folder*' -or $LBxMain.SelectedItem -like '*<defaultlayout:Start*' -or $LBxMain.SelectedItem -like '*<taskbar:TaskbarPinList*' ) {
             $Whitespace = '  '
         }
@@ -218,6 +217,12 @@ function Apply-Changes {
         }
         if ( $LBxMain.SelectedItem -like '*start:Tile*' ) {
             $Line = "$Whitespace<start:Tile Size=""$($CBxTileSize.Text)"" Column=""$($NumTileCol.Text)"" Row=""$($NumTileRow.Text)"" AppUserModelID=""$($CBxTileAppUserModelID.Text)"" />"
+        }
+        if ( $LBxMain.SelectedItem -like '*<CustomTaskbarLayoutCollection*' ) {
+            if ( $CbxTaskbarLayoutCollectionPinListPlacement.SelectedItem -ne 'Off' ) {
+                $PinListPlacement = " PinListPlacement=""$($CbxTaskbarLayoutCollectionPinListPlacement.SelectedItem)"">"
+            }
+            $Line = "    <CustomTaskbarLayoutCollection$PinListPlacement"
         }
         if ( $LBxMain.SelectedItem -like '*taskbar:DesktopApp*' ) {
             $Line = "$Whitespace<taskbar:DesktopApp DesktopApplicationLinkPath=""$($CBxTaskbarDesktopApp.Text)"" />"
@@ -1506,9 +1511,6 @@ function Apply-TextViewResult {
         else {
             $menuOptTaskbar.Checked = $false
         }
-        foreach ( $Line in $DefaultContent ) {
-            [void]$LBxMain.Items.Add($Line)
-        }
     }
     if ( $LBxMain.Items.Count -gt 0 ) { $LBxMain.SelectedIndex = 0 }
     $FrmMain.Controls.Add($LbxMain)
@@ -2615,13 +2617,8 @@ function Apply-TextViewResult {
         }
         [void]$CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Replace')
         [void]$CBxTaskbarLayoutCollectionPinListPlacement.Items.Add('Off')
-        $CBxTaskbarLayoutCollectionPinListPlacement.Add_TextChanged({
-            if ( $this.Text -ne '' ) {
-                $BtnTaskbarLayoutCollectionApply.Enabled = $true
-            }
-            else {
-                $BtnTaskbarLayoutCollectionApply.Enabled = $false
-            }
+        $CBxTaskbarLayoutCollectionPinListPlacement.Add_SelectedIndexChanged({
+            $BtnTaskbarLayoutCollectionApply.Enabled = $true
         })
         $PnlTaskbarLayoutCollection.Controls.Add($CbxTaskbarLayoutCollectionPinListPlacement)
 
@@ -2679,5 +2676,18 @@ function Apply-TextViewResult {
         $FrmMain.Controls.Add($PnlEmpty)
     #endregion
 #endregion
+
+if ( $DefaultContent -ne $Null ) {
+    if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
+        $menuOptTaskbar.Checked = $true
+    }
+    else {
+        $menuOptTaskbar.Checked = $false
+    }
+    foreach ( $Line in $DefaultContent ) {
+        [void]$LBxMain.Items.Add($Line)
+    }
+}
+$LBxMain.SelectedIndex = 0
 
 [void]$FrmMain.ShowDialog()
