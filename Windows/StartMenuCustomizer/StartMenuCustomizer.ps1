@@ -9,7 +9,7 @@
     [bool]$global:Modified = $false
 
 Try {
-    $DefaultContent = Get-Cont3ent "C:\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.xml"
+    $DefaultContent = Get-Content "C:\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.xml"
 }
 Catch {
     $DefaultContent = @"
@@ -29,6 +29,7 @@ Catch {
     </CustomTaskbarLayoutCollection>
 </LayoutModificationTemplate>
 "@
+
 #$DefaultContent = @"
 #<LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification" xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout">
 #  <LayoutOptions StartTileGroupCellWidth="6" StartTileGroupsColumnCount="1" />
@@ -112,7 +113,7 @@ Catch {
 
 function Verify-CloseUnsavedChanges {
     if ( $Modified -eq $true ) {
-        $MessageBody  = 'There are unsaved changes to the document.`n`nDo you want to save them before closing?'
+        $MessageBody  = "There are unsaved changes to the document.`n`nDo you want to save them before closing?"
         $MessageTitle = 'Unsaved changes'
         $Choice       = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,"YesNoCancel","Warning")
     }
@@ -120,7 +121,7 @@ function Verify-CloseUnsavedChanges {
     return $Choice
 }
 
-function Manage-Taskbarsettings {
+function Manage-Taskbarsettings ([bool]$Automatic) {
     if ( $menuOptTaskbar.Checked -eq $true ) {
         $TxtLMTTaskbar.Visible = $true
         $LblLMTTaskbar.Visible = $true
@@ -134,9 +135,14 @@ function Manage-Taskbarsettings {
         $global:Modified = $true
     }
     else {
-        $MessageBody  = 'All parts of the custom taskbar will be removed.`n`nAre you sure?'
+        $MessageBody  = "All parts of the custom taskbar will be removed.`n`nAre you sure?"
         $MessageTitle = 'Removing custom Taskbar'
-        $Choice       = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,'YesNo','Warning')
+        if ( $Automatic -eq $true ) {
+            $Choice = 'Yes'
+        }
+        else {
+            $Choice = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,'YesNo','Warning')
+        }
         If ( $Choice -eq 'Yes' ) {
             $AssocRow = $Null
             $AssocRows = 0
@@ -1154,11 +1160,11 @@ function Apply-TextViewResult {
                     $FrmMain.Text = "Start Menu (Layout) Customizer - $CurrentFileName"
                 }
                 else {
-                    $MessageBody  = 'This document is an invalid Start menu XML-file.`n`nAborting operation!'
+                    $MessageBody  = "This document is an invalid Start menu XML-file.`n`nAborting operation!"
                     $MessageTitle = 'Unable to open XML-file'
                     $Choice       = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,'OK','Error')
                 }      
-                Manage-Taskbarsettings
+                Manage-Taskbarsettings -Automatic $true
                 Hide-DesignView
             }
         }
