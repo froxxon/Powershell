@@ -1,9 +1,9 @@
 ﻿clear-host
 #region DeclarationOfVariables
     Add-Type -AssemblyName System.Windows.Forms
-    $HidePSWindow = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' # Part of the process to hide the Powershellwindow if it is not run through ISE
-    Add-Type -name win -member $HidePSWindow -namespace native # Part of the process to hide the Powershellwindow if it is not run through ISE
-    if ( $(Test-Path variable:global:psISE) -eq $False ) { [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0) } # This hides the Powershellwindow in the background if ISE isn't running
+    #$HidePSWindow = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' # Part of the process to hide the Powershellwindow if it is not run through ISE
+    #Add-Type -name win -member $HidePSWindow -namespace native # Part of the process to hide the Powershellwindow if it is not run through ISE
+    #if ( $(Test-Path variable:global:psISE) -eq $False ) { [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0) } # This hides the Powershellwindow in the background if ISE isn't running
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")  
     [string]$global:CurrentFileName = ''
     [bool]$global:Modified = $false
@@ -125,6 +125,7 @@ function Manage-Taskbarsettings ([bool]$Automatic) {
     if ( $menuOptTaskbar.Checked -eq $true ) {
         $TxtLMTTaskbar.Visible = $true
         $LblLMTTaskbar.Visible = $true
+        $LBxMain.BeginUpdate()
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'    <CustomTaskbarLayoutCollection PinListPlacement="Replace">')
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'      <defaultlayout:TaskbarLayout>')
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'        <taskbar:TaskbarPinList>')
@@ -132,57 +133,57 @@ function Manage-Taskbarsettings ([bool]$Automatic) {
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'      </defaultlayout:TaskbarLayout>')
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'    </CustomTaskbarLayoutCollection>')
         $LBxMain.Items[0] = "$($LBxMain.Items[0].Substring(0,$($LBxMain.Items[0].Length -1))) xmlns:taskbar=""http://schemas.microsoft.com/Start/2014/TaskbarLayout"">"
+        $LBxMain.EndUpdate()
         $global:Modified = $true
     }
     else {
         $MessageBody  = "All parts of the custom taskbar will be removed.`n`nAre you sure?"
         $MessageTitle = 'Removing custom Taskbar'
-        if ( $Automatic -eq $true ) {
-            $Choice = 'Yes'
-        }
-        else {
+        if ( $Automatic -ne $true ) {
             $Choice = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,'YesNo','Warning')
         }
-        If ( $Choice -eq 'Yes' ) {
-            $AssocRow = $Null
-            $AssocRows = 0
-            foreach ( $item in $LBxMain.Items ) {
-                if ( $Item.TrimStart() -like '<CustomTaskbarLayoutCollection*' ) {
-                    $AssocRow = $LBxMain.Items.IndexOf($Item)
+        If ( $Choice -eq 'Yes' -or $Automatic -eq $true ) {
+            if ( $LBxMain.Items[0] -like '*xmlns:taskbar*' ) {
+                $AssocRow = $Null
+                $AssocRows = 0
+                foreach ( $item in $LBxMain.Items ) {
+                    if ( $Item.TrimStart() -like '<CustomTaskbarLayoutCollection*' ) {
+                        $AssocRow = $LBxMain.Items.IndexOf($Item)
+                    }
                 }
-            }
 
-            $Counter = 0
-            $TempRow = $AssocRow
-            do {
-                if ( $LBxMain.Items.Item($TempRow) -like '*</CustomTaskbarLayoutCollection*' ) { $EndFound = $true }
-                else {
-                    $TempRow++
-                    if ( $TempRow -eq $LBxMain.Items.Count ) { $Endfound = $true }
-                }
-                $AssocRows++
-            } until ( $Endfound -eq $true )         
+                $Counter = 0
+                $TempRow = $AssocRow
+                do {
+                    if ( $LBxMain.Items.Item($TempRow) -like '*</CustomTaskbarLayoutCollection*' ) { $EndFound = $true }
+                    else {
+                        $TempRow++
+                        if ( $TempRow -eq $LBxMain.Items.Count ) { $Endfound = $true }
+                    }
+                    $AssocRows++
+                } until ( $Endfound -eq $true )         
         
-            [int]$Temp = $LblPositionRow.Text - 1
-            $LBxMain.BeginUpdate()
-            $Counter = 0
-            do {
-                $Counter++
-                try {
-                    $LBxMain.Items.RemoveAt($AssocRow)
+                [int]$Temp = $LblPositionRow.Text - 1
+                $Counter = 0
+                $LBxMain.BeginUpdate()
+                do {
+                    $Counter++
+                    try {
+                        $LBxMain.Items.RemoveAt($AssocRow)
+                    }
+                    catch {}
+                    try {
+                        $LBxMain.SelectedIndex = $Temp
+                    }
+                    catch {}
                 }
-                catch {}
-                try {
-                    $LBxMain.SelectedIndex = $Temp
-                }
-                catch {}
+                until ( $Counter -eq $AssocRows )
+                $LBxMain.Items[0] = $LBxMain.Items[0].Replace(' xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"','')
+                $LBxMain.EndUpdate()
+                $global:Modified = $true
+                $TxtLMTTaskbar.Visible = $false
+                $LblLMTTaskbar.Visible = $false
             }
-            until ( $Counter -eq $AssocRows )
-            $LBxMain.Items[0] = $LBxMain.Items[0].Replace(' xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"','')
-            $LBxMain.EndUpdate()
-            $global:Modified = $true
-            $TxtLMTTaskbar.Visible = $false
-            $LblLMTTaskbar.Visible = $false
         }
         Else {
             $menuOptTaskbar.Checked = $true
@@ -193,6 +194,7 @@ function Manage-Taskbarsettings ([bool]$Automatic) {
 }
 
 function Apply-Changes {
+    $LBxMain.BeginUpdate()
     $Whitespace = ''
     if ( $LBXMain.SelectedIndex -ne 0 ) {
         if ( $LBxMain.SelectedItem -like '*<start:Group*' -or $LBxMain.SelectedItem -like '*<start:Folder*' -or $LBxMain.SelectedItem -like '*<defaultlayout:Start*' -or $LBxMain.SelectedItem -like '*<taskbar:TaskbarPinList*' ) {
@@ -201,14 +203,14 @@ function Apply-Changes {
         1..$($LBxMain.SelectedItem.IndexOf('<')) | % {
         $Whitespace = "$Whitespace "
     }
-        $CBxDAT.Add_TextChanged({
-            if ( $this.Text -ne '' ) {
-                $BtnDesktopApplicationTileApply.Enabled = $true
-            }
-            else {
-                $BtnDesktopApplicationTileApply.Enabled = $false
-            }
-        })
+        #$CBxDAT.Add_TextChanged({
+        #    if ( $this.Text -ne '' ) {
+        #        $BtnDesktopApplicationTileApply.Enabled = $true
+        #    }
+        #    else {
+        #        $BtnDesktopApplicationTileApply.Enabled = $false
+        #    }
+        #})
     }
 
     if ( $LBxMain.Enabled -eq $true ) {
@@ -324,6 +326,7 @@ function Apply-Changes {
         Change-ListBoxRow
     }
     $global:Modified = $true
+    $LBxMain.EndUpdate()
 }
 
 function Open-NewItemPanel {
@@ -500,6 +503,7 @@ function Remove-Item {
 }
 
 function Remove-All {
+    $LBxMain.BeginUpdate()
     if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Folder*' ) { $RemoveAllType = 'folder' }
     if ( $LBxMain.SelectedItem.TrimStart() -like '<start:Group*' ) { $RemoveAllType = 'group' }
     $MessageBody  = "All parts of the selected $RemoveAllType will be removed.`n`nAre you sure?"
@@ -534,7 +538,6 @@ function Remove-All {
         }
 
         [int]$Temp = $LblPositionRow.Text - 1
-        $LBxMain.BeginUpdate()
         $Counter = 0
         do {
             $Counter++
@@ -548,12 +551,13 @@ function Remove-All {
             catch {}
         }
         until ( $Counter -eq $AssocRows )
-        $LBxMain.EndUpdate()
         $global:Modified = $true
     }
+    $LBxMain.EndUpdate()
 }
 
 function Move-SelectedItem ([string]$Direction) {
+    $LBxMain.BeginUpdate()
     $pos = $LBxMain.SelectedIndex
     if ( $Direction -eq 'Up' ) {
         $LBxMain.items.insert($pos -1,$LBxMain.Items.Item($pos))
@@ -598,6 +602,7 @@ function Move-SelectedItem ([string]$Direction) {
     }
     Change-ListBoxRow
     $global:Modified = $true
+    $LBxMain.EndUpdate()
 }
 
 function Change-ListBoxRow {
@@ -926,7 +931,11 @@ function Hide-DesignView {
     $TxtMain.Enabled = $false
     $menuOptTaskbar.Enabled = $true
     $PnlButtons.Visible = $true
-    $LBxMain.SelectedIndex = 0
+    $LBxMain.BeginUpdate()
+    if ( $LBxMain.Items.Count -gt 0 ) {
+        $LBxMain.SelectedIndex = 0
+    }
+    $LBxMain.EndUpdate()
     $LblPositionRow.Text = 1
 }
 
@@ -954,6 +963,7 @@ function Apply-TextViewResult {
     }
 
     if ( $Errors.Count -eq 0 ) {
+        $LBxMain.BeginUpdate()
         $LBxMain.Items.Clear()
         if ( $TxtMain.Text -contains '<CustomTaskbarLayoutCollection' ) {
             $menuOptTaskbar.Checked = $true
@@ -969,6 +979,7 @@ function Apply-TextViewResult {
         }
         Hide-DesignView
         $global:Modified = $true
+        $LBxMain.EndUpdate()
     }
     else {
         $LBxErrors.Items.Clear()
@@ -992,13 +1003,13 @@ function Apply-TextViewResult {
     }
     $FrmMain.add_FormClosing({
         $SaveChanges = Verify-CloseUnsavedChanges
-        If ( $SaveChanges -eq 'Yes ' ) {
+        if ( $SaveChanges -eq 'Yes ' ) {
             $SaveBeforeClosing = Save-LayoutFile
-            If ( $SaveBeforeClosing -eq 'Cancel' ) {
+            if ( $SaveBeforeClosing -eq 'Cancel' ) {
                 $_.Cancel = $true
             }
         }
-        If ( $SaveChanges -eq 'Cancel' ) {
+        if ( $SaveChanges -eq 'Cancel' ) {
             $_.Cancel = $true
         }
     })
@@ -1140,7 +1151,7 @@ function Apply-TextViewResult {
             if ( $Result -eq 'OK' ) {
                 $inputFileName = $selectOpenForm.FileName
                 $Content = Get-Content $inputFileName -Encoding UTF8
-                if ( $Content -like '*<CustomTaskbarLayoutCollection*' ) {
+                if ( $Content[0] -like '*xmlns:taskbar*' ) {
                     $menuOptTaskbar.Checked = $true
                     $TxtLMTTaskbar.Visible = $true
                     $LblLMTTaskbar.Visible = $true
@@ -1839,6 +1850,14 @@ function Apply-TextViewResult {
             Location = New-Object System.Drawing.Point(0,$YAxis)
         }
         $PnlLayoutModificationTemplate.Controls.Add($LblLMTTaskbar)
+        $LblLMTTaskbar.Add_VisibleChanged({
+            if ( $this.Visible -eq $true ) {
+                $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$BtnLayoutBtnLayoutModificationTemplateYAxisWithTaskbar)
+            }
+            else {
+                $BtnLayoutModificationTemplateApply.Location = New-Object System.Drawing.Point(0,$BtnLayoutBtnLayoutModificationTemplateYAxisWithoutTaskbar)
+            }
+        })
 
         $YAxis = $YAxis + 20
         $TxtLMTTaskbar = New-Object System.Windows.Forms.TextBox -Property @{
@@ -1854,14 +1873,6 @@ function Apply-TextViewResult {
                 $BtnLayoutModificationTemplateApply.Enabled = $false
             }
         })
-        $TxtLMTTaskbar.Add_VisibleChanged({
-            if ( $this.Visible -eq $true ) {
-                $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$BtnLayoutBtnLayoutModificationTemplateYAxisWithTaskbar)
-            }
-            else {
-                $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$BtnLayoutBtnLayoutModificationTemplateYAxisWithoutTaskbar)
-            }
-        })        
         $PnlLayoutModificationTemplate.Controls.Add($TxtLMTTaskbar)
 
         if ( $menuOptTaskbar.Checked -eq $true ) {
@@ -1872,7 +1883,6 @@ function Apply-TextViewResult {
             $LblLMTTaskbar.Visible = $false
             $TxtLMTTaskbar.Visible = $false
         }
-        Change-ListBoxRow
 
         $YAxis = $YAxis + 35
         $BtnLayoutModificationTemplateApply = New-Object System.Windows.Forms.Button -Property @{
@@ -1899,6 +1909,8 @@ function Apply-TextViewResult {
         $BtnLayoutModificationTemplateApply.Enabled = $false
         $BtnLayoutModificationTemplateApply.Add_Click({Apply-Changes})
         $PnlLayoutModificationTemplate.Controls.Add($BtnLayoutModificationTemplateApply)
+
+        Change-ListBoxRow
     #endregion
 
     #region PanelLayoutOptions
