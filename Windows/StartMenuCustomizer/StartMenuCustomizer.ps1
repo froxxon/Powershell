@@ -98,6 +98,9 @@ function Verify-CloseUnsavedChanges {
 
 function Manage-Taskbarsettings {
     if ( $menuOptTaskbar.Checked -eq $true ) {
+        $BtnLayoutModificationTemplateApply.Location = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y + 50))
+        $TxtLMTTaskbar.Visible = $true
+        $LblLMTTaskbar.Visible = $true
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'    <CustomTaskbarLayoutCollection PinListPlacement="Replace">')
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'      <defaultlayout:TaskbarLayout>')
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'        <taskbar:TaskbarPinList>')
@@ -105,9 +108,6 @@ function Manage-Taskbarsettings {
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'      </defaultlayout:TaskbarLayout>')
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'    </CustomTaskbarLayoutCollection>')
         $LBxMain.Items[0] = "$($LBxMain.Items[0].Substring(0,$($LBxMain.Items[0].Length -1))) xmlns:taskbar=""http://schemas.microsoft.com/Start/2014/TaskbarLayout"">"
-        $TxtLMTTaskbar.Visible = $true
-        $LblLMTTaskbar.Visible = $true
-        $BtnLayoutModificationTemplateApply.Location = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y + 50))
         $global:Modified = $true
     }
     else {
@@ -1831,6 +1831,9 @@ function Apply-TextViewResult {
             FlatStyle = 0
             Width     = 100
             Location  = New-Object System.Drawing.Point(0,$YAxis)
+        }
+        if ( $DefaultContent -notcontains 'xmlns:taskbar=' ) {
+            $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y - 50))
         }
         $BtnLayoutModificationTemplateApply.Add_EnabledChanged({
            if ( $this.Enabled -eq $false ) {
