@@ -1832,8 +1832,8 @@ function Apply-TextViewResult {
             Width     = 100
             Location  = New-Object System.Drawing.Point(0,$YAxis)
         }
-        if ( $DefaultContent -notcontains 'xmlns:taskbar=' ) {
-            $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y - 50))
+        if ( $DefaultContent[0] -notlike '*xmlns:taskbar*' ) {
+            $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y - 50 ))
         }
         $BtnLayoutModificationTemplateApply.Add_EnabledChanged({
            if ( $this.Enabled -eq $false ) {
