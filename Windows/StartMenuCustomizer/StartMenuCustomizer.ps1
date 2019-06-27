@@ -9,7 +9,7 @@
     [bool]$global:Modified = $false
 
 Try {
-    $DefaultContent = Get-Content "C:\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.xml"
+    $DefaultContent = Get-Cont3ent "C:\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.xml"
 }
 Catch {
     $DefaultContent = @"
@@ -84,6 +84,30 @@ Catch {
     $DefaultContent = $DefaultContent.Replace("`r","")
     $DefaultContent = $DefaultContent.Split("`n")
 }
+
+    $NewContent = @"
+<LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification" xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout">
+  <LayoutOptions StartTileGroupCellWidth="6" />
+  <DefaultLayoutOverride>
+    <StartLayoutCollection>
+      <defaultlayout:StartLayout GroupCellWidth="6">
+        <start:Group Name="" />
+          <start:Folder  Size="2x2" Column="0" Row="0">
+          </start:Folder>
+        </start:Group>
+      </defaultlayout:StartLayout>
+    </StartLayoutCollection>
+  </DefaultLayoutOverride>
+    <CustomTaskbarLayoutCollection PinListPlacement="Replace">
+      <defaultlayout:TaskbarLayout>
+        <taskbar:TaskbarPinList>
+        </taskbar:TaskbarPinList>
+      </defaultlayout:TaskbarLayout>
+    </CustomTaskbarLayoutCollection>
+</LayoutModificationTemplate>
+"@
+    $NewContent = $NewContent.Replace("`r","")
+    $NewContent = $NewContent.Split("`n")
 #endregion
 
 function Verify-CloseUnsavedChanges {
@@ -98,7 +122,6 @@ function Verify-CloseUnsavedChanges {
 
 function Manage-Taskbarsettings {
     if ( $menuOptTaskbar.Checked -eq $true ) {
-        $BtnLayoutModificationTemplateApply.Location = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y + 50))
         $TxtLMTTaskbar.Visible = $true
         $LblLMTTaskbar.Visible = $true
         $LBxMain.Items.Insert($($LBxMain.Items.Count -1),'    <CustomTaskbarLayoutCollection PinListPlacement="Replace">')
@@ -154,7 +177,6 @@ function Manage-Taskbarsettings {
             $global:Modified = $true
             $TxtLMTTaskbar.Visible = $false
             $LblLMTTaskbar.Visible = $false
-            $BtnLayoutModificationTemplateApply.Location = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y - 50))
         }
         Else {
             $menuOptTaskbar.Checked = $true
@@ -1037,13 +1059,17 @@ function Apply-TextViewResult {
         $SaveChanges = Verify-CloseUnsavedChanges
         if ( $SaveChanges -eq 'No' ) {
             $LBxMain.Items.Clear()
-            if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
+            if ( $NewContent -like '*<CustomTaskbarLayoutCollection*' ) {
                 $menuOptTaskbar.Checked = $true
+                $TxtLMTTaskbar.Visible = $true
+                $LblLMTTaskbar.Visible = $true
             }
             else {
                 $menuOptTaskbar.Checked = $false
+                $TxtLMTTaskbar.Visible = $false
+                $LblLMTTaskbar.Visible = $false
             }
-            foreach ( $Line in $DefaultContent ) {
+            foreach ( $Line in $NewContent ) {
                 [void]$LBxMain.Items.Add($Line)
             }
             $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
@@ -1059,7 +1085,7 @@ function Apply-TextViewResult {
                     Add-Content -Path $CurrentFileName -Value $Line -Encoding UTF8 -Force
                 }
                 $LBxMain.Items.Clear()
-                foreach ( $Line in $DefaultContent ) {
+                foreach ( $Line in $NewContent ) {
                     [void]$LBxMain.Items.Add($Line)
                 }
                 $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
@@ -1072,13 +1098,17 @@ function Apply-TextViewResult {
                 $Result = Save-As
                 if ( $Result -eq 'OK' ) {
                     $LBxMain.Items.Clear()
-                    if ( $DefaultContent -like '*<CustomTaskbarLayoutCollection*' ) {
+                    if ( $NewContent -like '*<CustomTaskbarLayoutCollection*' ) {
                         $menuOptTaskbar.Checked = $true
+                        $LblLMTTaskbar.Visible = $true
+                        $TxtLMTTaskbar.Visible = $true
                     }
                     else {
                         $menuOptTaskbar.Checked = $false
+                        $LblLMTTaskbar.Visible = $false
+                        $TxtLMTTaskbar.Visible = $false
                     }
-                    foreach ( $Line in $DefaultContent ) {
+                    foreach ( $Line in $NewContent ) {
                         [void]$LBxMain.Items.Add($Line)
                     }
                     $FrmMain.Text = 'Start Menu (Layout) Customizer - Untitled1.xml'
@@ -1106,9 +1136,13 @@ function Apply-TextViewResult {
                 $Content = Get-Content $inputFileName -Encoding UTF8
                 if ( $Content -like '*<CustomTaskbarLayoutCollection*' ) {
                     $menuOptTaskbar.Checked = $true
+                    $TxtLMTTaskbar.Visible = $true
+                    $LblLMTTaskbar.Visible = $true
                 }
                 else {
                     $menuOptTaskbar.Checked = $false
+                    $TxtLMTTaskbar.Visible = $false
+                    $LblLMTTaskbar.Visible = $false
                 }
                 if ( $Content[0] -like '<LayoutModificationTemplate *' ) {
                     $LBxMain.Items.Clear()
@@ -1124,6 +1158,7 @@ function Apply-TextViewResult {
                     $MessageTitle = 'Unable to open XML-file'
                     $Choice       = [System.Windows.Forms.MessageBox]::Show($MessageBody,$MessageTitle,'OK','Error')
                 }      
+                Manage-Taskbarsettings
                 Hide-DesignView
             }
         }
@@ -1813,6 +1848,14 @@ function Apply-TextViewResult {
                 $BtnLayoutModificationTemplateApply.Enabled = $false
             }
         })
+        $TxtLMTTaskbar.Add_VisibleChanged({
+            if ( $this.Visible -eq $true ) {
+                $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$BtnLayoutBtnLayoutModificationTemplateYAxisWithTaskbar)
+            }
+            else {
+                $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$BtnLayoutBtnLayoutModificationTemplateYAxisWithoutTaskbar)
+            }
+        })        
         $PnlLayoutModificationTemplate.Controls.Add($TxtLMTTaskbar)
 
         if ( $menuOptTaskbar.Checked -eq $true ) {
@@ -1835,6 +1878,8 @@ function Apply-TextViewResult {
         if ( $DefaultContent[0] -notlike '*xmlns:taskbar*' ) {
             $BtnLayoutModificationTemplateApply.Location  = New-Object System.Drawing.Point(0,$($BtnLayoutModificationTemplateApply.Location.Y - 50 ))
         }
+        $BtnLayoutBtnLayoutModificationTemplateYAxisWithoutTaskbar = 245
+        $BtnLayoutBtnLayoutModificationTemplateYAxisWithTaskbar = 295
         $BtnLayoutModificationTemplateApply.Add_EnabledChanged({
            if ( $this.Enabled -eq $false ) {
                 $this.FlatAppearance.BorderColor = 'LightGray'
