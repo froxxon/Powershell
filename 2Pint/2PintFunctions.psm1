@@ -1,4 +1,4 @@
-﻿Function Verify-ServerConnection {
+﻿Function Test-ServerConnection {
 
     param ( [String]$Server )
 
@@ -87,7 +87,7 @@ Function Get-Subnet {
         $ClassProperties = @()
         $SubnetInfo = @()
 
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
 
         # Check if the specified properties exists in the Subnet class
         if ( $Property -ne '*' ) {
@@ -98,19 +98,19 @@ Function Get-Subnet {
             if ( $MissingProps.Count -gt 0 ) { 
                 $MissingProps = $MissingProps -join ', '
                 Write-Error -Message "One or more of the following properties couldn't be found in the Class Subnets: $MissingProps"
-                Break
+                break
             }
         }
     }
 
     process {
         # Sets what default properties should be displayed
-        $defaultProperties = @(‘SubnetID’,’LocationName','TargetBandwidth','LEDBATTargetBandwidth','WellConnected','Clients')
+        $defaultProperties = @(‘SubnetID’,’LocationName','TargetBandwidth','LEDBATTargetBandwidth','WellConnected','Clients','ActiveClients','VPN')
         $defaultDisplayPropertySet = New-Object System.Management.Automation.PSPropertySet(‘DefaultDisplayPropertySet’,[string[]]$defaultProperties)
         $PSStandardMembers = [System.Management.Automation.PSMemberInfo[]]@($defaultDisplayPropertySet)
 
-        If ( $Property -eq '*' ) { $defaultProperties = '*' }
-        If ( $Property -ne $Null -and $Property -notcontains '*' ) { $defaultProperties = $Property }
+        if ( $Property -eq '*' ) { $defaultProperties = '*' }
+        if ( $Property -ne $Null -and $Property -notcontains '*' ) { $defaultProperties = $Property }
 
         # Replace Windows wildcards with WMI specific wildcards
         $LocationName = $LocationName.Replace('*','%')
@@ -122,13 +122,13 @@ Function Get-Subnet {
         $SubnetInfo = Get-CIMInstance -ComputerName $Server -Namespace 'ROOT\StifleR' -Class Subnets -Property $Property -Filter "LocationName LIKE '%$($LocationName)%' AND SubnetID LIKE '%$($SubnetID)%'"
         
         # If the switches ShowRedLeader or ShowBlueLeader is used, then add that information per subnet
-        If ( $ShowRedLeader ) {
+        if ( $ShowRedLeader ) {
             foreach ( $Subnet in $SubnetInfo ) {
                 $Subnet | Add-Member -MemberType NoteProperty -Name 'RedLeader' -Value "$($(Get-CIMInstance -ComputerName $Server -Namespace 'ROOT\StifleR' -Class 'RedLeaders' -Filter "NetworkID LIKE '%$($Subnet.subnetID)%'").ComputerName)"
             }
             $defaultProperties += 'RedLeader'
         }
-        If ( $ShowBlueLeader ) {
+        if ( $ShowBlueLeader ) {
             foreach ( $Subnet in $SubnetInfo ) {
                 $Subnet | Add-Member -MemberType NoteProperty -Name 'BlueLeader' -Value "$($(Get-CIMInstance -ComputerName $Server -Namespace 'ROOT\StifleR' -Class 'BlueLeaders' -Filter "NetworkID LIKE '%$($Subnet.subnetID)%'").ComputerName)"
             }
@@ -200,18 +200,30 @@ Function Get-Client {
     )
 
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
+
+        if ( $Property -ne '*' ) {
+            $ClassProperties = $($(Get-CIMInstance -ComputerName $Server -Namespace 'ROOT\StifleR' -Class Clients) | Get-Member).Name
+            foreach ( $Prop in $($Property) ) {
+                if ( $ClassProperties -notcontains $Prop ) { $MissingProps += "$Prop" }
+            }
+            if ( $MissingProps.Count -gt 0 ) { 
+                $MissingProps = $MissingProps -join ', '
+                Write-Error -Message "One or more of the following properties couldn't be found in the Class Clients: $MissingProps"
+                break
+            }
+        }
     
-        $defaultProperties = @(‘ComputerName’,’ClientIPAddress','Version')
+        $defaultProperties = @(‘ComputerName’,'Version','Online')
         $defaultDisplayPropertySet = New-Object System.Management.Automation.PSPropertySet(‘DefaultDisplayPropertySet’,[string[]]$defaultProperties)
         $PSStandardMembers = [System.Management.Automation.PSMemberInfo[]]@($defaultDisplayPropertySet)
 
-        If ( $Property -eq '*' ) { $defaultProperties = '*' }
-        If ( $Property -ne $Null -and $Property -notcontains '*' ) { $defaultProperties = $Property }
+        if ( $Property -eq '*' ) { $defaultProperties = '*' }
+        if ( $Property -ne $Null -and $Property -notcontains '*' ) { $defaultProperties = $Property }
 
-        If ( $SubnetID ) {
+        if ( $SubnetID ) {
             $VerifyIPaddress = $([bool]($SubnetID -as [ipaddress] -and ($SubnetID.ToCharArray() | ?{$_ -eq "."}).count -eq 3))
-            If ( $VerifyIPaddress ) {
+            if ( $VerifyIPaddress ) {
                 if ( Get-Subnet -Server $Server -SubnetID $Target ) { $SubnetIDExist = $True }
             }
         }
@@ -219,18 +231,22 @@ Function Get-Client {
 
     process {
         if ( $ExactMatch ) {
-            If ( $SubnetIDExist ) {
-                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "NetworkID = '$SubnetID'" -ComputerName $Server
+            if ( $SubnetIDExist ) {
+                #$ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "NetworkID = '$SubnetID'" -ComputerName $Server
+                $id = $(Get-CIMInstance -Namespace 'Root\StifleR' -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
+                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "LastOnNetwork = '$id'" -ComputerName $Server
             }
-            Else {
+            else {
                 $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "ComputerName = '$Client'" -ComputerName $Server
             }
         }
-        Else {
-            If ( $SubnetIDExist ) {
-                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "NetworkID LIKE '%$SubnetID%'" -ComputerName $Server
+        else {
+            if ( $SubnetIDExist ) {
+                #$ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "NetworkID LIKE '%$SubnetID%'" -ComputerName $Server
+                $id = $(Get-CIMInstance -Namespace 'Root\StifleR' -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
+                $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "LastOnNetwork = '$id'" -ComputerName $Server
             }
-            Else {
+            else {
                 $ClientInformation = Get-CIMInstance -Namespace 'Root\StifleR' -Class Clients -Filter "ComputerName LIKE '%$Client%'" -ComputerName $Server
             }
         }
@@ -298,7 +314,7 @@ Function Set-BITSJob {
     )
 
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
     }
 
     process {
@@ -310,7 +326,7 @@ Function Set-BITSJob {
                         if ($Confirm -eq 'n') { Write-Host "This command was cancelled by the user" ; break }
                         $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
                     }
-                    If ( $Confirm -eq 'y' ) {
+                    if ( $Confirm -eq 'y' ) {
                         $TriggerTarget = $Target
                         $TriggerHappy = $True
                     }
@@ -327,7 +343,7 @@ Function Set-BITSJob {
                     if ($Confirm -eq 'n') { Write-Host "This command was cancelled by the user" ; break }
                     $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
                 }
-                If ( $Confirm -eq 'y' ) {
+                if ( $Confirm -eq 'y' ) {
                     $TriggerTarget = $Target
                     $TriggerHappy = $True
                 }
@@ -343,7 +359,7 @@ Function Set-BITSJob {
                 if ($Confirm -eq 'n') { Write-Host "This command was cancelled by the user" ; break }
                 $Confirm = Read-Host "You are about to $Action ALL transfers, are you really sure? [y/n]"
             }
-            If ( $Confirm -eq 'y' ) {
+            if ( $Confirm -eq 'y' ) {
                 $TriggerTarget = 'All'
                 $TriggerHappy = $True
             }
@@ -423,7 +439,7 @@ Function Update-SubnetBandwidth {
         [ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')][string]$Server = $env:COMPUTERNAME
     )
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
     }
 
     process {
@@ -498,7 +514,7 @@ Function Add-Subnet {
     )
 
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
     }
 
     process {
@@ -514,23 +530,74 @@ Function Remove-Subnet {
 
     [CmdletBinding()]
     param (
-        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false,Mandatory=$true)]
+        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false,Mandatory=$true,ParameterSetName = "LocationName")]
         [Alias('Identity')]
-        [String]$LocationName='*',
+        [String]$LocationName,
         [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
-        [String]$SubnetID='*'
+        [Parameter(Position=2,Mandatory=$true,ParameterSetName = "SubnetID")]
+        [String]$SubnetID,
+        [switch]$DeleteChildren,
+        [switch]$SkipConfirm
     )
 
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
     }
 
     process {
+        if ( $DeleteChildren ) {
+            $Arguments = @{ DeleteChildren = $true }
+        }
+        else {
+            $Arguments = @{ DeleteChildren = $false }
+        }
+        
+        if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+            [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace 'ROOT\StifleR' -Class Subnets -Filter "LocationName LIKE '%$LocationName%'"
+        }
+        else {
+            [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace 'root\StifleR' -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'"
+        }
+
+        if ( $Subnets.Count -le 0 ) {
+            write-host "No subnets found matching the input parameters, aborting!"
+            break
+        }
+
+        if ( !$SkipConfirm ) {
+            write-host "You are about to delete $($Subnets.Count) subnet(s) listed below:"
+            write-host " "
+            foreach ( $Subnet in $Subnets ) {
+                write-host "SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+            }
+            write-host " "
+            $msg = "Are you sure? [Y/N]"
+            do {
+                $response = Read-Host -Prompt $msg
+            } until ($response -eq 'n' -or $response -eq 'y')
+            if ( $response -eq 'n' ) {
+                break
+            }
+            write-host " "
+        }
+        foreach ( $Subnet in $Subnets ) {
+            try {
+                if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+                    Invoke-CimMethod -Namespace 'root\StifleR' -Query "SELECT * FROM Subnets Where LocationName = '$($Subnet.LocationName)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
+                }
+                else {
+                    Invoke-CimMethod -Namespace 'root\StifleR' -Query "SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
+                }
+                write-host "Successfully removed SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+            }
+            catch {
+                write-host "Failed to remove SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+            }
+        }
     }
 
     end {
-        write-host "Cmdlet in development"
     }
 
 }
@@ -544,7 +611,7 @@ Function Get-SignalRHubHealth {
     )
 
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
     }
 
     process {
@@ -552,7 +619,7 @@ Function Get-SignalRHubHealth {
     }
 }
 
-Function Get-SubnetQUeues {
+Function Get-SubnetQueues {
 
     [CmdletBinding()]
     param (
@@ -561,7 +628,7 @@ Function Get-SubnetQUeues {
     )
 
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
     }
 
     process {
@@ -587,11 +654,17 @@ Function Get-ClientVersions {
     )
 
     begin {
-        Verify-ServerConnection $Server
+        Test-ServerConnection $Server
     }
 
     process {
-        Get-CimInstance -Namespace 'root\StifleR' -Query "Select * from Clients" -ComputerName $Server | Select -Unique version
+        $VersionInfo = @()
+        $Versions = $(Get-CimInstance -Namespace 'root\StifleR' -Query "Select * from Clients" -ComputerName $Server | Select -Unique version ).version
+        foreach ( $Version in $Versions ) {
+            $VersionCount = $(Get-CimInstance -Namespace 'root\StifleR' -Query "Select * from Clients Where Version = '$Version'" -ComputerName $Server ).Count
+            $VersionInfo += New-Object -TypeName psobject -Property @{Version=$Version; Clients=$VersionCount}
+        }
+        $VersionInfo
     }
 
 }
