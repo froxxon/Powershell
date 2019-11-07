@@ -1,6 +1,6 @@
 ﻿New-Variable -Name Namespace -Value 'root\StifleR' -Option AllScope
 
-Function Test-ServerConnection {
+function Test-ServerConnection {
 
     param ( [String]$Server )
 
@@ -22,7 +22,7 @@ Function Test-ServerConnection {
 
 }
 
-Function Get-Subnet {
+function Get-Subnet {
 
     <#
     .SYNOPSIS
@@ -56,8 +56,8 @@ Function Get-Subnet {
         Pull subnets with locationname like '21-' from server01
 
     .EXAMPLE
-        '21-*' | Get-StiflerSubnet -Server 'server01' | Select-Object -uUnique LocationName, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Format-Table -AutoSize
-        Pull subnets with pipeline where locationname like '21-' from server01 and show current red-/blue leader
+        '172.16' | Get-StiflerSubnet -Server 'server01' | Select-Object -uUnique LocationName, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Format-Table -AutoSize
+        Pull subnets with pipeline where subnetID like '172.16' from server01 and show current red-/blue leader
     
     .EXAMPLE
         Get-StiflerSubnet -Server 'sever01' -Property LocationName, ActiveClients, AverageBandwidth, SubnetID | Select LocationName, SubnetID, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Where ActiveClients -gt 0 | Sort AverageBandwidth, LocationName -Descending | Format-Table -AutoSize
@@ -72,13 +72,14 @@ Function Get-Subnet {
 
     [CmdletBinding()]
     param (
-        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false,HelpMessage = "This parameter is used if you want to query LocationName(s)")]
+        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage = "This parameter is used if you want to query SubnetID(s)")]
+        [String]$SubnetID='*',
+        #[Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage = "This parameter is used if you want to query LocationName(s)")]
+        [Parameter(HelpMessage = "This parameter is used if you want to query LocationName(s)")]
         [Alias('Identity')]
         [String]$LocationName='*',
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(Position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
-        [Parameter(HelpMessage = "This parameter is used if you want to query SubnetID(s)")]
-        [String]$SubnetID='*',
         [Parameter(HelpMessage = "This parameter is used if you want to query for specific properties")]
         [Array]$Property,
         [switch]$ShowRedLeader,
@@ -147,7 +148,7 @@ Function Get-Subnet {
 
 }
 
-Function Get-Client {
+function Get-Client {
     
     <#
     .SYNOPSIS
@@ -195,7 +196,7 @@ Function Get-Client {
     param (
         [Parameter(Mandatory, HelpMessage = "Specify the client you want to retrieve information about", ValueFromPipeline, ValueFromPipelineByPropertyName,ParameterSetName = "Client")][ValidateNotNullOrEmpty()]
         [string[]]$Client,
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
         [Parameter(HelpMessage = "Specify specific properties",ParameterSetName = "Subnet")]
         [string]$SubnetID,
@@ -263,7 +264,7 @@ Function Get-Client {
 
 }
 
-Function Set-BITSJob {
+function Set-BITSJob {
 
     <#
     .SYNOPSIS
@@ -287,7 +288,7 @@ Function Set-BITSJob {
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel-Target 192.168.20.2
+	Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
         Cancels all current transfers on the subnet 192.168.20.2
 
     .EXAMPLE
@@ -314,7 +315,7 @@ Function Set-BITSJob {
         [string]$TargetLevel,
         [Parameter(Mandatory, HelpMessage = 'Choose what action you want to perform: Cancel, Complete, Resume or Suspend')][ValidateSet('Cancel','Complete','Resume','Suspend')]
         [string]$Action,
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME
     )
 
@@ -371,149 +372,23 @@ Function Set-BITSJob {
         }
 
         if ( $TriggerHappy ) {
-            $WMICommand = 'test'
-            #$WMICommand = Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList "$Action", False, "*", 0, "$TriggerTarget" -ComputerName $Server
-        }
-    }
-
-    end {
-        $WMICommand
-    }
-
-}
-
-Function Update-SubnetBandwidth {
-
-    <#
-    .SYNOPSIS
-    Update StifleR subnet bandwidth
-    
-    .DESCRIPTION
-    This function'll update StifleR managed subnet bandwidth
-    
-    .PARAMETER SubnetID
-    Specify subnet you want to update
-    
-    .PARAMETER TargetBandwidth
-    Specify targeted bandwidth in MB
-
-    .PARAMETER LEDBATTargetBandwidth
-    Specify targeted LEDBAT bandwidth in MB
-    
-    .PARAMETER WellConnected
-    Specify if subnet should be tagged as well connected
-    
-    .PARAMETER Server
-    Specify StifleR server name, default is localhost
-    
-    .EXAMPLE
-    Update-StifleRSubnetBandwidth -SubnetId "192.168.2.0" -TargetBandwidth 20 -Server server01
-
-    .EXAMPLE
-    Update-StifleRSubnetBandwidth -SubnetId "192.168.2.0" -LEDBATTargetBandwidth 20 -Server server01
-
-    .EXAMPLE
-    Update-StifleRSubnetBandwidth -SubnetId "192.168.2.0" -WellConnected Yes (/No) -Server server01
-
-    .EXAMPLE
-    Get-StifleRSubnet -SubnetID '192.168' -Server server01 | Update-SrSubnetBandwidth -TargetBandwidth 20 -Server server01
-    
-    .NOTES
-    Author:         Michal Kirejczyk (original) / Fredrik Bergman (modifier)
-    Version:        1.0.2
-    Date:           2019-04-10
-    What's new:
-                    1.0.2 (2019-04-10) - Added LEDBATBandwidth modifier and some modifications of the cmdlet
-                    1.0.1 (2018-12-13) - Function now requires exact subnetId to be provided, use Get-SrSubnet | Update-SrSubnetBandwidth if you want to use wildcard 
-                    1.0.0 (2018-12-12) - Function Created
-    #>
-    
-    [CmdletBinding(DefaultParameterSetName = "Default")]
-    param (
-        [Parameter(Mandatory, HelpMessage = "Specify subnets you want to update", ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = "Default")]
-        [Parameter(Mandatory, HelpMessage = "Specify subnets you want to update", ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = "LEDBATTargetBandwidth")]
-        [Parameter(Mandatory, HelpMessage = "Specify subnets you want to update", ValueFromPipeline, ValueFromPipelineByPropertyName, Position = 0, ParameterSetName = "WellConnected")]
-        [ValidateNotNullOrEmpty()][string[]]$SubnetID,
-        [Parameter(Mandatory, HelpMessage = "Specify targeted bandwidth in MB", Position = 1, ParameterSetName = "Default")]
-        [ValidateNotNullOrEmpty()][int]$TargetBandwidth,
-        [Parameter(Mandatory, HelpMessage = "Specify LEDBAT targeted bandwidth in MB", Position = 1, ParameterSetName = "LEDBATTargetBandwidth")]
-        [ValidateNotNullOrEmpty()][int]$LEDBATTargetBandwidth,
-        [Parameter(Mandatory, HelpMessage = "Specify this switch if you want to set subnet to well connected", Position = 2, ParameterSetName = "WellConnected")]
-        [ValidateSet("Yes", "No")][ValidateNotNullOrEmpty()][string]$WellConnected,
-        [Parameter(Mandatory = $false, HelpMessage = "Specify StifleR server", Position = 3, ParameterSetName = "Default")]
-        [Parameter(Mandatory = $false, HelpMessage = "Specify StifleR server", Position = 3, ParameterSetName = "LEDBATTargetBandwidth")]
-        [Parameter(Mandatory = $false, HelpMessage = "Specify StifleR server", Position = 3, ParameterSetName = "WellConnected")]
-        [ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')][string]$Server = $env:COMPUTERNAME
-    )
-    begin {
-        Test-ServerConnection $Server
-    }
-
-    process {
-        try {
-            # Get Subnets
-            foreach ($s in $SubnetID) {              
-                $Subnet = Get-CimInstance -Namespace $Namespace -Query "SELECT * FROM Subnets WHERE SubnetID = '$s'" -ComputerName $Server
-                if ($Subnet) {
-                    try {
-                        # Update bandwidth based on TargetedBandwidth, LEDBATTargetBandwidth or WellConnected
-                        if ($TargetBandwidth) {
-                            [int]$calculateToKb = $TargetBandwidth * 1024
-                            if ($Subnet.TargetBandwidth -ne $calculateToKb) {
-                                #Set-CimInstance -InputObject $Subnet -ComputerName $Server -Property @{TargetBandwidth = $calculateToKb} -ErrorAction Stop
-                                Write-Host "$SubnetId Targetbandwidth successfully updated"
-                            }
-                            else { Write-Host "$SubnetId Targetbandwidth already has the specified value" }
-                        }
-
-                        if ($LEDBATTargetBandwidth) {
-                            [int]$calculateToKb = $LEDBATTargetBandwidth * 1024
-                            if ($subnet.LEDBATTargetBandwidth -ne $calculateToKb) {
-                                #Set-CimInstance -InputObject $subnet -ComputerName $Server -Property @{LEDBATTargetBandwidth = $calculateToKb} -ErrorAction Stop
-                                Write-Host "$SubnetId LEDTargetbandwidth successfully updated"
-                            }
-                            else { Write-Host "$SubnetId LEDTargetbandwidth already has the specified value" }
-                        }
-
-                        if ($WellConnected -eq "Yes") {
-                            if ($subnet.WellConnected -ne $true) {
-                                #Set-CimInstance -InputObject $subnet -ComputerName $Server -Property @{WellConnected = $true} -ErrorAction Stop
-                                Write-Host "$SubnetId WellConnected successfully updated"
-                            }
-                            else { Write-Host "$SubnetId Wellconnected already has the specified value" }
-                        }
-                        elseif ($WellConnected -eq "No") {
-                            if ($subnet.WellConnected -ne $false) {
-                                #Set-CimInstance -InputObject $subnet -ComputerName $Server -Property @{WellConnected = $false} -ErrorAction Stop
-                                Write-Host "$SubnetId WellConnected successfully disabled"
-                            }
-                            else { Write-Host "$SubnetId WellConnected already has the specified value" }
-                        }
-                    }
-                    catch {
-                        Write-Host "Failed to update subnet, exception: $($_.Exception.Message)"
-                        Write-Error -ErrorRecord $_
-                    }   
-                }
-                else {
-                    Write-Host "Subnet $SubnetId not found"
-                }
-                                              
+            try {
+                Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList "$Action", False, "*", 0, "$TriggerTarget" -ComputerName $Server
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9200 -Message "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Information
+            }            
+            catch {
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9201 -Message "Failed to invoke BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Error
             }
         }
-        catch {
-            Write-Host "Failed to find subnets, line: $($_.InvocationInfo.ScriptLineNumber), exception: $($_.Exception.Message)"
-            Write-Error -ErrorRecord $_
-        }
     }
 
 }
 
-Function Add-Subnet {
+function Add-Subnet {
 
     [CmdletBinding()]
     param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
         [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false,Mandatory=$true)]
         [String]$SubnetID,
@@ -532,34 +407,52 @@ Function Add-Subnet {
 
     begin {
         Test-ServerConnection $Server
+
+        $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
+        if ( $(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
+            write-host "SubnetID $SubnetID already exist, aborting!"
+            break
+        }
     }
 
     process {
-        try {
-            $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
+        try {            
             Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet  -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null
+            $NewSubnetSuccess = $true
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9202 -Message "Successfully added the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID" -EntryType Information
+        }
+        catch {
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9203 -Message "Failed to add the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID" -EntryType Error
+        }
 
+        if ( $NewSubnetSuccess = $true ) {
             if ( $LEDBATTargetBandwidth -ne 0 ) {
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{LEDBATTargetBandwidth = $LEDBATTargetBandwidth} -ComputerName $Server
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth" -EntryType Information
                 }
                 catch {
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth" -EntryType Error
                 }
             }
 
             if ( $VPN -eq $True ) {
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{VPN = $VPN } -ComputerName $Server
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property VPN on subnet $SubnetID to $VPN" -EntryType Information
                 }
                 catch {
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property VPN on subnet $SubnetID to $VPN" -EntryType Error
                 }
             }
-            
+                
             if ( $WellConnected -eq $True ) {
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{WellConnected = $VPN } -ComputerName $Server
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property WellConnected on subnet $SubnetID to $WellConnected" -EntryType Information
                 }
                 catch {
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property WellConnected on subnet $SubnetID to $WellConnected" -EntryType Error
                 }
             }
 
@@ -573,8 +466,10 @@ Function Add-Subnet {
 
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DODownloadMode = $DOType } -ComputerName $Server
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property DODownloadMode on subnet $SubnetID to $DOType" -EntryType Information
                 }
                 catch {
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property DODownloadMode on subnet $SubnetID to $DOType" -EntryType Error
                 }
             }
 
@@ -583,30 +478,25 @@ Function Add-Subnet {
 
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DOGroupID = $id } -ComputerName $Server
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property DOGroupID on subnet $SubnetID to $id" -EntryType Information
                 }
                 catch {
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property DOGroupID on subnet $SubnetID to $id" -EntryType Error
                 }
             }
-
         }
-        catch {
-        }
-    }
-
-    end {
-        write-host "Cmdlet in development"
     }
 
 }
 
-Function Remove-Subnet {
+function Remove-Subnet {
 
     [CmdletBinding()]
     param (
-        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$false,Mandatory=$true,ParameterSetName = "LocationName")]
+        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true,Mandatory=$true,ParameterSetName = "LocationName")]
         [Alias('Identity')]
         [String]$LocationName,
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
         [Parameter(Position=2,Mandatory=$true,ParameterSetName = "SubnetID")]
         [String]$SubnetID,
@@ -666,10 +556,12 @@ Function Remove-Subnet {
                 if ( !$Quiet ) {
                     write-host "Successfully removed SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
                 }
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9206 -Message "Successfully removed subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Information
             }
             catch {
                 if ( !$Quiet ) {
                     write-host "Failed to remove SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9207 -Message "Failed to remove subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Error
                 }
             }
         }
@@ -677,11 +569,11 @@ Function Remove-Subnet {
 
 }
 
-Function Get-SignalRHubHealth {
+function Get-SignalRHubHealth {
 
     [CmdletBinding()]
     param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME
     )
 
@@ -695,11 +587,11 @@ Function Get-SignalRHubHealth {
 
 }
 
-Function Get-SubnetQueues {
+function Get-SubnetQueues {
 
     [CmdletBinding()]
     param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME
     )
 
@@ -722,11 +614,11 @@ Function Get-SubnetQueues {
 
 }
 
-Function Get-ClientVersions {
+function Get-ClientVersions {
 
     [CmdletBinding()]
     param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME
     )
 
@@ -744,4 +636,54 @@ Function Get-ClientVersions {
         $VersionInfo
     }
 
+}
+
+function Update-SubnetProperty {
+
+    [cmdletbinding()]
+    param (
+        [Parameter(Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,Mandatory=$true)]
+        [string]$SubnetID,
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [Parameter(Mandatory=$true)]
+        [string]$Property,
+        [Parameter(Mandatory=$true)]
+        [string]$NewValue
+    )
+
+
+    begin {
+        Test-ServerConnection $Server
+    }
+
+    process {
+        if ( !$(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
+            write-host "SubnetID $SubnetID does not exist, aborting!"
+            break
+        }
+
+        try {
+            Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server
+            write-host "Successfully updated '$Property' with the new value '$NewValue' on subnet $SubnetID."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Successfully updated the property $Property to $NewValue on subnet $SubnetID." -EntryType Information
+        }
+        catch {
+            write-host "Failed to update $Property with the new value $NewValue on subnet $SubnetID."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Failed to update the property $Property to $NewValue on subnet $SubnetID." -EntryType Error
+        }
+    }
+
+}
+
+function Set-ServerDebugLevel {
+}
+
+function Get-Connections {
+}
+
+function Start-ServerService {
+}
+
+function Stop-ServerService {
 }
