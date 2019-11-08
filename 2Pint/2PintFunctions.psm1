@@ -1,11 +1,10 @@
 ﻿New-Variable -Name Namespace -Value 'root\StifleR' -Option AllScope
 
-# In progress
 function Add-Subnet {
 
     <#
     .SYNOPSIS
-        Use this to cancel, complete, resume or suspend the downloads in StifleR.
+        Use this to add a subnet to StifleR
 
     .DESCRIPTION
         Just another way of adding a new subnet to StifleR
@@ -13,38 +12,42 @@ function Add-Subnet {
         - If you don't automatically add your subnets when clients connect, this could be an alternative...
 
     .PARAMETER SubnetID
-        Specify the client or subnetID that will be targeted for the action, this parameter can't be used in combination with TargetLevel All
+        Specify which subnetID that need to be created
 
     .PARAMETER GatewayMAC
-        Specify what kind of target you would like, a single Client, a specific SubnetID och All
+        Specify the MAC address of the GatewayMAC, default is '00-00-00-00-00-00'
 
     .PARAMETER TargetBandwidth
+        Specify the max bandwidth allowed for the Red leader on this subnet
         
     .PARAMETER Description
+        Specify a description that should be added to this subnet
         
     .PARAMETER ParentLocationID
+        Make this subnet a child of another subnet by using the Id of the parent
         
     .PARAMETER LEDBATTargetBandwidth
+        Specify the max LEDBAT bandwidth allowed for the Red leader on this subnet
         
     .PARAMETER VPN
+        Specify if this is a VPN subnet or not, default is false
         
     .PARAMETER WellConnected
+        Specify if this is a WellConnected subnet or not
         
     .PARAMETER DOType
+        Specify the Delivery Optimization type for this subnet, default is Group (2)
         
     .PARAMETER SetDOGroupID
+        This parameter sets the Id of this new subnet as the Delivery Optimization Group ID
 
     .PARAMETER Server (ComputerName, Computer)
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
-        Cancels all current transfers on the subnet 192.168.20.2
+	Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true
+        Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
-    .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01
-        Suspends all current transfers on the client Client01
-    
     .LINK
         http://gallery.technet.microsoft.com/scriptcenter/Add-StifleRSubnet-Get-5607a465
 
@@ -155,8 +158,60 @@ function Add-Subnet {
 
 } 
 
-# In progress
 function Remove-Subnet {
+
+   <#
+    .SYNOPSIS
+        Use this to remove a subnet from StifleR
+
+    .DESCRIPTION
+        Just another way of remvoing a subnet from StifleR
+        Details:
+        - Easily remove one or more of your subnets through Powershell
+
+    .PARAMETER LocationName
+        Specify the LocationName (or part of) of the subnet(s) you want
+        to remove
+        
+    .PARAMETER SubnetID
+        Specify the SubnetID (or part of) of the subnet(s) you want to
+        remove
+        
+    .PARAMETER DeleteChildren
+        Specify this if all linked childsubnets should be removed in
+        the process as well, default is false
+        
+    .PARAMETER SkipConfirm
+        Specify this switch if you don't want to confirm the removal
+        of found subnets
+        
+    .PARAMETER Quiet
+        Specify this parameter if you don't want any status message
+        about the result
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Remove-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -SkipConfirm -Quite
+        Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
+        dialog as well as the successful result message
+
+    .EXAMPLE
+	Remove-StiflerSubnet -Server server01 -LocationName TESTNET -DeleteChildren
+        Removes the subnet with the LocationName TESTNET and deletes (if any) the
+        childobjects of this subnet
+
+    .EXAMPLE
+	Remove-StiflerSubnet -Server server01 -SubnetID 172
+        Prompts a question about removing all subnets with SubnetID like 172
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Remove-StifleRSubnet-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
 
     [CmdletBinding()]
     param (
@@ -236,8 +291,39 @@ function Remove-Subnet {
 
 }
 
-# In progress
 function Update-SubnetProperty {
+
+   <#
+    .SYNOPSIS
+        Use this to change a properties value on a specific subnet
+
+    .DESCRIPTION
+        Easily set new properties on subnets
+        Details:
+        - Easily set new properties on subnets
+
+    .PARAMETER SubnetID
+        Specify the SubnetID for which you want to change the proeprty
+        
+    .PARAMETER Property
+        Specify which property you want to change
+        
+    .PARAMETER NewValue
+        Specify the new value of the chosen property
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Update-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
+        Sets the property VPN to True on subnet 172.10.10.0
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Update-StifleRSubnetProperty-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
 
     [cmdletbinding()]
     param (
@@ -274,12 +360,125 @@ function Update-SubnetProperty {
 
 }
 
-# Feature
 function Start-ServerService {
+
+   <#
+    .SYNOPSIS
+        Use this to start the StifleRServer service if it is not running
+
+    .DESCRIPTION
+        Start the StifleRServer service
+        Details:
+        - Start the StifleRServer service
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Start-StifleRServerService -Server server01
+        Starts the StifleRServer service on server01
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Start-StifleRServerService-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Test-ServerConnection $Server
+        $Service = (get-wmiobject win32_service -ComputerName $Server | where { $_.name -eq 'StifleRServer'})
+        if ( $Service.State -eq 'Running' ) {
+            write-host 'The service StifleRService is already in the state Started, aborting!'
+            break
+        }
+    }
+
+    process {
+        try {
+            Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StartService -Computername $Server | out-null
+            (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')
+            Write-Host "Successfully started service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9214 -Message "Successfully started the service StifleRServer." -EntryType Information
+        }
+        catch {
+            Write-Host "Failed to start service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9215 -Message "Failed to start the service StifleRServer." -EntryType Error
+        }
+    }
+
 }
 
-# Feature
 function Stop-ServerService {
+
+   <#
+    .SYNOPSIS
+        Use this to stop the StifleRServer service if it is not stopped
+
+    .DESCRIPTION
+        Stop the StifleRServer service
+        Details:
+        - Stop the StifleRServer service
+
+    .PARAMETER Force
+        Specify this parameter if you need to instantly terminate the process
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Stop-StifleRServerService -Server server01
+        Stops the StifleRServer service on server01
+
+    .EXAMPLE
+	Stop-StifleRServerService -Server server01 -Force
+        Stops the StifleRServer service on server01 by killing the process of the service
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Stop-StifleRServerService-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [switch]$Force
+    )
+
+    begin {
+        Test-ServerConnection $Server
+        $Service = (get-wmiobject win32_service -ComputerName $Server | where { $_.name -eq 'StifleRServer'})
+        if ( $Service.State -eq 'Stopped' ) {
+            write-host 'The service StifleRService is already in the state Stopped, aborting!'
+            break
+        }
+    }
+
+    process {
+        try {
+            if ( !$Force ) {
+                Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StopService -Computername $Server | out-null
+            }
+            else {
+                $(Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter "name='StifleR.Service.exe'").Terminate() | out-null
+            }
+            (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')
+            Write-Host "Successfully stopped service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9212 -Message "Successfully stopped the service StifleRServer." -EntryType Information
+        }
+        catch {
+            Write-Host "Failed to stop service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9213 -Message "Failed to stop the service StifleRServer." -EntryType Error
+        }
+    }
+
 }
 
 # Draft
@@ -403,8 +602,43 @@ function Set-BITSJob {
 
 }
 
-# In progress - manifest left
 function Set-ServerDebugLevel {
+
+   <#
+    .SYNOPSIS
+        Use this to change debuglevel for StifleR Server
+
+    .DESCRIPTION
+        Easily set the debuglevel for StifleR Server
+        Details:
+        - Easily set the debuglevel for StifleR Server
+
+    .PARAMETER InstallDir
+        Specify the Installation directory for StifleR Server,
+        default is 'C$\Program Files\2Pint Software\StifleR'
+        
+    .PARAMETER DebugLevel
+        Specify what the new DebugLevel should be
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Set-StifleRServerDebugLevel -Server server01 -DebugLevel '6.Super Verbose'
+        Enable Super verbose debugging on server01
+
+    .EXAMPLE
+	Set-StifleRServerDebugLevel -Server server01 -DebugLevel '0.Disabled' -InstallDir
+    'D$\Program Files\2Pint Software\StifleR'
+        Disable debugging on server01 where the installations directory for StifleR Server is
+        'D$\Program Files\2Pint Software\StifleR' instead of the default directory
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRServerDebugLevel-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
 
     [CmdletBinding()]
     param (
@@ -611,40 +845,40 @@ function Get-ClientVersions {
 
 }
 
-# In progress
-function Get-Connections {
-    [cmdletbinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [string]$SubnetID,
-        [switch]$ActivelyTransfering,
-        [string]$ActiveBITSJobsIds,
-        [string]$ActiveDOJobIds,
-        [int]$Limit=1000
-    )
-
-    begin {
-        Test-ServerConnection $Server
-    }
-
-    process {
-        [string]$QueryAdditions = 'WHERE'
-        if ( $SubnetID -ne '' ) {
-            $QueryAdditions = "$QueryAdditions NetworkID='$SubnetID'"
-        }
-        if ( $ActivelyTransfering ) {
-            if ( $QueryAdditions -ne 'WHERE' ) { $QueryAdditions = "$QueryAdditions AND" }
-            $QueryAdditions = "$QueryAdditions ActivelyTransferring='$true'"
-        }
-        if ( $QueryAdditions -eq 'WHERE' ) { $QueryAdditions = '' }
-
-        write-host $QueryAdditions
-        Get-CimInstance -Namespace $Namespace -Query "Select * from Connections $QueryAdditions" -ComputerName $Server | Select -First $Limit
-    }
-}
-
 function Get-ServerDebugLevel {
+
+   <#
+    .SYNOPSIS
+        Same as Set-StifleRServerDebugLevel, but only gets the current value
+
+    .DESCRIPTION
+        Gets the current value of debug level for StifleR Server
+        Details:
+        - Gets the current value of debug level for StifleR Server
+
+    .PARAMETER InstallDir
+        Specify the Installation directory for StifleR Server,
+        default is 'C$\Program Files\2Pint Software\StifleR'
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	get-StifleRServerDebugLevel -Server server01
+        Get the current debug level on server01
+
+    .EXAMPLE
+	Get-StifleRServerDebugLevel -Server server01 -InstallDir
+    'D$\Program Files\2Pint Software\StifleR'
+        Get the current debug level on server01 where the installations directory for StifleR Server is
+        'D$\Program Files\2Pint Software\StifleR' instead of the default directory
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Get-StifleRServerDebugLevel-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
 
     [CmdletBinding()]
     param (
@@ -845,4 +1079,37 @@ function Get-SubnetQueues {
         Write-Host "Total Client Count: " $Clients.count
     }
 
+}
+
+# In progress
+function Get-Connections {
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$SubnetID,
+        [switch]$ActivelyTransfering,
+        [string]$ActiveBITSJobsIds,
+        [string]$ActiveDOJobIds,
+        [int]$Limit=1000
+    )
+
+    begin {
+        Test-ServerConnection $Server
+    }
+
+    process {
+        [string]$QueryAdditions = 'WHERE'
+        if ( $SubnetID -ne '' ) {
+            $QueryAdditions = "$QueryAdditions NetworkID='$SubnetID'"
+        }
+        if ( $ActivelyTransfering ) {
+            if ( $QueryAdditions -ne 'WHERE' ) { $QueryAdditions = "$QueryAdditions AND" }
+            $QueryAdditions = "$QueryAdditions ActivelyTransferring='$true'"
+        }
+        if ( $QueryAdditions -eq 'WHERE' ) { $QueryAdditions = '' }
+
+        write-host $QueryAdditions
+        Get-CimInstance -Namespace $Namespace -Query "Select * from Connections $QueryAdditions" -ComputerName $Server | Select -First $Limit
+    }
 }
