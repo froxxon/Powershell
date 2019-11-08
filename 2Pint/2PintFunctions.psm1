@@ -1,5 +1,27 @@
 ﻿New-Variable -Name Namespace -Value 'root\StifleR' -Option AllScope
 
+function Test-ServerConnection {
+
+    param ( [String]$Server )
+
+    # Check if the specified server is reachable
+    if ( Test-Connection $Server -Count 1 -Quiet -ErrorAction Stop ) {}
+    else {
+        Write-Error -Message "The specified server $Server could not be contacted"
+        break
+    }
+        
+    # Check if the specified server has the WMI namespace for StifleR
+    try {
+        Get-CIMClass -Namespace $Namespace -ComputerName $Server -ErrorAction Stop | out-null
+    }
+    catch {
+        Write-Error -Message "The specified server $Server is missing the WMI namespace for StifleR"
+        break
+    }
+
+}
+
 function Add-Subnet {
 
     <#
@@ -291,7 +313,7 @@ function Remove-Subnet {
 
 }
 
-function Update-SubnetProperty {
+function Set-SubnetProperty {
 
    <#
     .SYNOPSIS
@@ -315,11 +337,11 @@ function Update-SubnetProperty {
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
-	Update-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
+	Set-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
         Sets the property VPN to True on subnet 172.10.10.0
 
     .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Update-StifleRSubnetProperty-Get-5607a465
+        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRSubnetProperty-Get-5607a465
 
     .FUNCTIONALITY
         StifleR
@@ -670,7 +692,7 @@ function Set-ServerDebugLevel {
         }
         $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).value = $DebugLevel
         try {
-            $Content | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
+            #$Content | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
             $Content.Save("\\$Server\$InstallDir\StifleR.Service.exe.config")
             write-host "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Information
@@ -683,26 +705,93 @@ function Set-ServerDebugLevel {
         
 }
 
-function Test-ServerConnection {
+function Set-ServerSettings {
 
-    param ( [String]$Server )
+   <#
+    .SYNOPSIS
+        Use this to change properties values for StifleR Server
 
-    # Check if the specified server is reachable
-    if ( Test-Connection $Server -Count 1 -Quiet -ErrorAction Stop ) {}
-    else {
-        Write-Error -Message "The specified server $Server could not be contacted"
-        break
+    .DESCRIPTION
+        Easily set new values for properties on StifleR Server
+        Details:
+        - Easily set new values for properties on StifleR Server
+
+    .PARAMETER Property
+        Specify which property you want to change
+        
+    .PARAMETER NewValue
+        Specify the new value of the chosen property
+
+    .PARAMETER SkipConfirm
+        Specify this switch if you don't want to confirm the change
+        of the properties value
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1
+        Sets the property wsapifw to 1 in StifleR Server
+
+    .EXAMPLE
+	Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1 -SkipConfirm
+        Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRServerSettings-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$InstallDir='C$\Program Files\2Pint Software\StifleR',
+        [Parameter(Mandatory=$true)]
+        [string]$Property,
+        [Parameter(Mandatory=$true)]
+        [string]$NewValue,
+        [string]$SkipConfirm
+    )
+
+    begin {
+        Test-ServerConnection $Server
+    }
+
+    process {
+        [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
+        $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).Value
+        if ( $NewValue -eq $CurrentValue ) {
+            write-host "The property '$Property' already has the value '$NewValue', aborting!"
+            break
+        }
+        $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).value = $NewValue
+        if ( !$SkipConfirm ) {
+            write-host "You are about to change the property '$Property' from '$CurrentValue' to '$NewValue'."
+            write-host "IMPORTANT! Make sure this change is valid or things might break..."
+            write-host " "
+            $msg = "Apply change? [Y/N]"
+            do {
+                $response = Read-Host -Prompt $msg
+            } until ($response -eq 'n' -or $response -eq 'y')
+            if ( $response -eq 'n' ) {
+                break
+            }
+            write-host " "
+            try {
+                $Content.Save("\\$Server\$InstallDir\StifleR.Service.exe.config")
+                write-host "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
+            }
+            catch {
+                write-host "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue."
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Error
+            }
+        }
     }
         
-    # Check if the specified server has the WMI namespace for StifleR
-    try {
-        Get-CIMClass -Namespace $Namespace -ComputerName $Server -ErrorAction Stop | out-null
-    }
-    catch {
-        Write-Error -Message "The specified server $Server is missing the WMI namespace for StifleR"
-        break
-    }
-
 }
 
 function Get-Client {
@@ -841,6 +930,79 @@ function Get-ClientVersions {
             $VersionInfo += New-Object -TypeName psobject -Property @{Version=$Version; Clients=$VersionCount}
         }
         $VersionInfo
+    }
+
+}
+
+function Get-ServerSettings {
+
+   <#
+    .SYNOPSIS
+        Gets all settings from the Servers configuration file
+
+    .DESCRIPTION
+        Gets all values from servers configuration file
+        Details:
+        - GGets all values from servers configuration file
+
+    .PARAMETER InstallDir
+        Specify the Installation directory for StifleR Server,
+        default is 'C$\Program Files\2Pint Software\StifleR'
+
+    .PARAMETER SortByKeyName
+        Specify this if it the result should be sorted by Ascending keynames
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	get-StifleRServerSettings -Server server01
+        Get the settings from server01
+
+    .EXAMPLE
+	get-StifleRServerSettings -Server server01 -SortByKeyName
+        Get the settings from server01 with keynames sorted in alphabetical order
+
+    .EXAMPLE
+	Get-StifleRServerSettings -Server server01 -InstallDir
+    'D$\Program Files\2Pint Software\StifleR'
+        Get the settings from server01 where the installations directory for StifleR Server is
+        'D$\Program Files\2Pint Software\StifleR' instead of the default directory
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Get-StifleRServerSettings-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$InstallDir='C$\Program Files\2Pint Software\StifleR',
+        [switch]$SortByKeyName
+    )
+
+    begin {
+        Test-ServerConnection $Server
+    }
+
+    process {
+        try {
+            [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -ErrorAction 1
+            $Properties = @()
+            $Properties += $Content.configuration.appSettings.add
+            if ( $SortByKeyName ) {
+                return $Properties | sort key
+            }
+            else {
+                return $Properties
+            }
+        }
+        catch {
+            write-host "Failed to obtain properties from $Server, check InstallDir and access permissions."
+        }
     }
 
 }
