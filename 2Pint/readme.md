@@ -1,4 +1,6 @@
 A module with some functions to make the life easier to manage StifleR Server with Powershell.
+for ease of use just copy those to %ProgramFiles%\WindowsPowershell\Modules\2PintFunctions\ or use 'import-module <PATH>'.
+A recommendation at this point in time would also be to test this out in a lab environment, if such exist, first hand ;)
 
 Add-StifleRSubnet (function)
     
