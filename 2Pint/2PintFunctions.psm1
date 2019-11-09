@@ -680,7 +680,7 @@ function Set-ServerDebugLevel {
         if ( $DebugLevel -eq '1.Errors Only' ) { [string]$DebugLevel = '1' }
         if ( $DebugLevel -eq '2.Warning' ) { [string]$DebugLevel = '2' }
         if ( $DebugLevel -eq '3.OK' ) { [string]$DebugLevel = '3' }
-        if ( $DebugLevel -eq '4.Information' ) { [string]$DebugLevel = '4' }
+        if ( $DebugLevel -eq '4.Informative' ) { [string]$DebugLevel = '4' }
         if ( $DebugLevel -eq '5.Debug' ) { [string]$DebugLevel = '5' }
         if ( $DebugLevel -eq '6.Super Verbose' ) { [string]$DebugLevel = '6' }
 
@@ -692,8 +692,8 @@ function Set-ServerDebugLevel {
         }
         $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).value = $DebugLevel
         try {
-            #$Content | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
-            $Content.Save("\\$Server\$InstallDir\StifleR.Service.exe.config")
+            [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
+            $Content.Replace("<add key=""EnableDebugLog"" value=""$CurrentValue""/>","<add key=""EnableDebugLog"" value=""$DebugLevel""/>") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
             write-host "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Information
         }
@@ -725,6 +725,9 @@ function Set-ServerSettings {
     .PARAMETER SkipConfirm
         Specify this switch if you don't want to confirm the change
         of the properties value
+
+    .PARAMETER Clear
+        Specify this switch to clear the value of a property
         
     .PARAMETER Server (ComputerName, Computer)
         This will be the server hosting the StifleR Server-service.
@@ -736,6 +739,10 @@ function Set-ServerSettings {
     .EXAMPLE
 	Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1 -SkipConfirm
         Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
+
+    .EXAMPLE
+	Set-StifleRServerSettings -Server server01 -Property wsapifw -Clear
+        Sets the property wsapifw to nothing in StifleR Server
 
     .LINK
         http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRServerSettings-Get-5607a465
@@ -751,9 +758,11 @@ function Set-ServerSettings {
         [string]$InstallDir='C$\Program Files\2Pint Software\StifleR',
         [Parameter(Mandatory=$true)]
         [string]$Property,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,ParameterSetName = "NewValue")]
         [string]$NewValue,
-        [string]$SkipConfirm
+        [string]$SkipConfirm,
+        [Parameter(Mandatory=$true,ParameterSetName = "Clear")]
+        [switch]$Clear
     )
 
     begin {
@@ -762,12 +771,12 @@ function Set-ServerSettings {
 
     process {
         [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
+        $CurrentKeyName = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).key
         $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).Value
         if ( $NewValue -eq $CurrentValue ) {
             write-host "The property '$Property' already has the value '$NewValue', aborting!"
             break
         }
-        $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).value = $NewValue
         if ( !$SkipConfirm ) {
             write-host "You are about to change the property '$Property' from '$CurrentValue' to '$NewValue'."
             write-host "IMPORTANT! Make sure this change is valid or things might break..."
@@ -780,15 +789,16 @@ function Set-ServerSettings {
                 break
             }
             write-host " "
-            try {
-                $Content.Save("\\$Server\$InstallDir\StifleR.Service.exe.config")
-                write-host "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
-                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
-            }
-            catch {
-                write-host "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue."
-                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Error
-            }
+        }
+        try {
+            [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
+            $Content.Replace("<add key=""$CurrentKeyName"" value=""$CurrentValue""/>","<add key=""$CurrentKeyName"" value=""$NewValue""/>") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
+            write-host "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
+        }
+        catch {
+            write-host "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Error
         }
     }
         
