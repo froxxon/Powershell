@@ -1,4 +1,4 @@
-# An easier way to get your bootimage working with WinPE, BranchCache and the help of 2Pint Softwares tool.
+# An easier way to get your bootimage working with WinPE, BranchCache and the help of 2Pint Softwares tool WinPEGen.
 # Make sure ADK is in place and click and run with elevated permissions (to mount, will warn and abort otherwise!).
 # Dont forget to change variables to match your environment!
 
