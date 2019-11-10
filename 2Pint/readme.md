@@ -23,14 +23,9 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 #### Add-StifleRSubnet
 
-DESCRIPTION
-
-*Just another way of adding a new subnet to StifleR*
-
-EXAMPLE
+Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
 *Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true*
-*Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet*
 
 #### Set-StifleRBITSJob
 
