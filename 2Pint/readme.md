@@ -4,9 +4,9 @@ A module with some functions to make the life easier to manage StifleR Server wi
 for ease of use just copy those to %ProgramFiles%\WindowsPowershell\Modules\2PintFunctions\ or use 'import-module <PATH>'.
 A recommendation at this point in time would also be to test this out in a lab environment, if such exist, first hand ;)
 
-# CHANGE LOG
+## CHANGE LOG
 
-## version 1.0.5 (2019-11-10)
+### version 1.0.5 (2019-11-10)
 - Added '#Requires -Version 5.1' to .psm
 - Added output types on success/failure
 - Removed obsolete commented code
