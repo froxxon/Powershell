@@ -25,17 +25,17 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
-*Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true*
+    *Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true*
 
 #### Set-StifleRBITSJob
 
 Cancels all current transfers on the subnet 192.168.20.2
 
-*Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2*
+    *Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2*
 
 Suspends all current transfers on the client Client01
 
-*Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01*
+    *Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01*
 
 Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
