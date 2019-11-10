@@ -7,17 +7,17 @@ A recommendation at this point in time would also be to test this out in a lab e
 ## CHANGE LOG
 
 #### version 1.0.5 (2019-11-10)
-- Added '#Requires -Version 5.1' to .psm
+- Added *'#Requires -Version 5.1'* to *'2PintFunctions.psm'*
 - Added output types on success/failure
 - Removed obsolete commented code
-- Added CBH to Get-StifleRClientVersions
-- Added CBH to Get-StifleRSubnetQueues
-- Changed Select, Where and Sort to Select-Object, Where-Object and Sort-Object
-- Fixed $DOType bug in Add-StiflerSubnet by adding the value 'Not set' as default value
-- Added out-null to Invoke-WMIMethod in Set-StifleRBITSJob to hide WMI-output
-- Renamed Set-StifleRSubnetProperty to Set-StifleRSubnet to match Get-function
-- Re-added $SubnetQuery with value to Set-StifleRSubnet, gone for some unknown reason and broke the function...
-- Added Remove-Client with 'In progress' status
+- Added CBH to *'Get-StifleRClientVersions'*
+- Added CBH to *'Get-StifleRSubnetQueues'*
+- Changed *'Select'*, *'Where'* and *'Sort'* to *'Select-Object'*, *'Where-Object'* and *'Sort-Object'*
+- Fixed *'$DOType'* bug in *'Add-StiflerSubnet'* by adding the value *'Not set'* as default value
+- Added *'out-null'* to Invoke-WMIMethod in *'Set-StifleRBITSJob'* to hide WMI-output
+- Renamed *'Set-StifleRSubnetProperty'* to *'Set-StifleRSubnet'* to match Get-function
+- Re-added *'$SubnetQuery'* with value to *'Set-StifleRSubnet'*, gone for some unknown reason and broke the function...
+- Added *'Remove-Client'* with *'In progress'* status
 
 ## EXPLANATION OF FUNCTIONS
 
