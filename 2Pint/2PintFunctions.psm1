@@ -773,7 +773,7 @@ function Set-ServerSettings {
         [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
         $CurrentKeyName = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).key
         if ( !$CurrentKeyName ) {
-            write-host "The property you have entered does not exist, aborting!"
+            write-host "The property '$Property' does not exist, aborting!"
             break
         }
         $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).Value
