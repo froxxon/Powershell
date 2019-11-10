@@ -24,7 +24,7 @@ version 1.0.5 (2019-11-10)
 EXPLANATION OF FUNCTIONS
 -
 
-<!-- Add-StifleRSubnet (function) -->
+Add-StifleRSubnet
     
     .DESCRIPTION
 	Just another way of adding a new subnet to StifleR
@@ -33,7 +33,7 @@ EXPLANATION OF FUNCTIONS
 	Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true
 	Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
-Set-StifleRBITSJob (function)
+Set-StifleRBITSJob
     
     .DESCRIPTION
         If you need to push the big red button, go no further!
@@ -50,7 +50,7 @@ Set-StifleRBITSJob (function)
 	Set-StiflerBITSJob -Server server01 -TargetLevel All -Action Resume
         Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
-Get-StifleRClient (function)
+Get-StifleRClient
     
     .DESCRIPTION
         Pull client details from the server hosting the StifleR Server service.
@@ -67,7 +67,7 @@ Get-StifleRClient (function)
 	'Client01' | Get-StiflerClient -Server server01 -ExactMatch
         Pull client with pipeline where ComputerName equals 'Client01' from server01
 
-Get-StifleRClientVersions (function)
+Get-StifleRClientVersions
     
     .DESCRIPTION
         Get a summary of which versions of clients you have in your environment
@@ -77,7 +77,7 @@ Get-StifleRClientVersions (function)
         Get-StifleRClientVersions -Server 'server01'
         Get a list of versions and the number of clients for each one
 
-Get-StifleRServerDebugLevel (function)
+Get-StifleRServerDebugLevel
     
     .DESCRIPTION
         Gets the current value of debug level for StifleR Server
@@ -92,7 +92,7 @@ Get-StifleRServerDebugLevel (function)
         Get the current debug level on server01 where the installations directory for StifleR Server is
         'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-Get-StifleRServerSettings (function)
+Get-StifleRServerSettings
     
     .DESCRIPTION
         Gets all values from servers configuration file
@@ -111,7 +111,7 @@ Get-StifleRServerSettings (function)
         Get the settings from server01 where the installations directory for StifleR Server is
         'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-Get-StifleRSignalRHubHealth (function)
+Get-StifleRSignalRHubHealth
     
     .DESCRIPTION
         Get statistics about Signal-R
@@ -120,7 +120,7 @@ Get-StifleRSignalRHubHealth (function)
         Get-StifleRSIgnalRHubHealth -Server 'server01'
         Get statistics about Signal-R
 
-Get-StifleRSubnet (function)
+Get-StifleRSubnet
     
     .DESCRIPTION
         Pull subnet details from the server hosting the StifleR Server service.
@@ -137,7 +137,7 @@ Get-StifleRSubnet (function)
         Get-StiflerSubnet -Server 'sever01' -Property LocationName, ActiveClients, AverageBandwidth, SubnetID | Select LocationName, SubnetID, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Where ActiveClients -gt 0 | Sort AverageBandwidth, LocationName -Descending | Format-Table -AutoSize
         Pull all subnets from sever01 with specific properties and sorts them based on AverageBandwidth
 
-Get-StifleRSubnetQUeues (function)
+Get-StifleRSubnetQUeues
     
     .DESCRIPTION
         Get information about the current queues in StifleR
@@ -146,7 +146,7 @@ Get-StifleRSubnetQUeues (function)
         Get-StifleRSubnetQUeues -server 'server01'
         Get information about the current queues in StifleR
 
-Remove-StifleRSubnet (function)
+Remove-StifleRSubnet
     
     .DESCRIPTION
 	Just another way of remvoing a subnet from StifleR
@@ -165,7 +165,7 @@ Remove-StifleRSubnet (function)
 	Remove-StiflerSubnet -Server server01 -SubnetID 172
         Prompts a question about removing all subnets with SubnetID like 172
 
-Set-StifleRServerDebugLevel (function)
+Set-StifleRServerDebugLevel
     
     .DESCRIPTION
         Easily set the debuglevel for StifleR Server
@@ -180,7 +180,7 @@ Set-StifleRServerDebugLevel (function)
         Disable debugging on server01 where the installations directory for StifleR Server is
         'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-Set-StifleRServerSettings (function)
+Set-StifleRServerSettings
     
     .DESCRIPTION
 	Easily set new values for properties on StifleR Server
@@ -197,7 +197,7 @@ Set-StifleRServerSettings (function)
 	Set-StifleRServerSettings -Server server01 -Property wsapifw -Clear
 	Sets the property wsapifw to nothing in StifleR Server
 
-Set-StifleRSubnet (function)
+Set-StifleRSubnet
     
     .DESCRIPTION
         Easily set new properties on subnets
@@ -206,7 +206,7 @@ Set-StifleRSubnet (function)
 	Set-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
 	Sets the property VPN to True on subnet 172.10.10.0
 
-Start-StifleRServerService (function)
+Start-StifleRServerService
     
     .DESCRIPTION
         Start the StifleRServer service
@@ -215,7 +215,7 @@ Start-StifleRServerService (function)
 	Start-StifleRServerService -Server server01
         Starts the StifleRServer service on server01
 
-Stop-StifleRServerService (function)
+Stop-StifleRServerService
     
     .DESCRIPTION
         Stop the StifleRServer service
