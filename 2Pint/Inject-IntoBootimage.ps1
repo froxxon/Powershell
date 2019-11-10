@@ -29,16 +29,6 @@ function Verify-Path {
     }
 }
 
-# AF Specific groups
-if ( $((New-Object System.DirectoryServices.DirectorySearcher("(&(objectCategory=User)(samAccountName=$($env:username)))")).FindOne().GetDirectoryEntry().memberOf) -like '*Role-T1-Infrastructure*' -or $((New-Object System.DirectoryServices.DirectorySearcher("(&(objectCategory=User)(samAccountName=$($env:username)))")).FindOne().GetDirectoryEntry().memberOf) -like '*Role-T1-Operations*' ) {}
-else {
-    write-host " "
-    write-host "DON'T CLICK ON SOMETHING THAT DOESN'T BELONG TO YOU!" -ForegroundColor Red
-    write-host " "
-    read-host “Press ENTER to continue...”
-    exit
-}
-
 if ($psISE) { clear-host }
 
 write-host "Script to create BCENABLEDBOOTIMAGE"
