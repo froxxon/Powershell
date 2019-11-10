@@ -1,12 +1,12 @@
 2PINTFUNCTIONS POWERSHELL MODULE
---------------------------------
+-
 
 A module with some functions to make the life easier to manage StifleR Server with Powershell.
 for ease of use just copy those to %ProgramFiles%\WindowsPowershell\Modules\2PintFunctions\ or use 'import-module <PATH>'.
 A recommendation at this point in time would also be to test this out in a lab environment, if such exist, first hand ;)
 
-CHANGE LOG:
------------
+CHANGE LOG
+-
 
 version 1.0.5 (2019-11-10)
 - Added '#Requires -Version 5.1' to .psm
@@ -21,10 +21,10 @@ version 1.0.5 (2019-11-10)
 - Re-added $SubnetQuery with value to Set-StifleRSubnet, gone for some unknown reason and broke the function...
 - Added Remove-Client with 'In progress' status
 
-EXPLANATION OF FUNCTIONS:
--------------------------
+EXPLANATION OF FUNCTIONS
+-
 
-Add-StifleRSubnet (function)
+<!-- Add-StifleRSubnet (function) -->
     
     .DESCRIPTION
 	Just another way of adding a new subnet to StifleR
