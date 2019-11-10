@@ -2,6 +2,25 @@ A module with some functions to make the life easier to manage StifleR Server wi
 for ease of use just copy those to %ProgramFiles%\WindowsPowershell\Modules\2PintFunctions\ or use 'import-module <PATH>'.
 A recommendation at this point in time would also be to test this out in a lab environment, if such exist, first hand ;)
 
+Beneath you'll find a Change log followed by explanation of each function:
+
+CHANGE LOG:
+
+1.0.5 (2019-11-10)
+- Added '#Requires -Version 5.1' to .psm
+- Added output types on success/failure
+- Removed obsolete commented code
+- Added CBH to Get-StifleRClientVersions
+- Added CBH to Get-StifleRSubnetQueues
+- Changed Select, Where and Sort to Select-Object, Where-Object and Sort-Object
+- Fixed $DOType bug in Add-StiflerSubnet by adding the value 'Not set' as default value
+- Added out-null to Invoke-WMIMethod in Set-StifleRBITSJob to hide WMI-output
+- Renamed Set-StifleRSubnetProperty to Set-StifleRSubnet to match Get-function
+- Re-added $SubnetQuery with value to Set-StifleRSubnet, gone for some unknown reason and broke the function...
+- Added Remove-Client with 'In progress' status
+
+EXPLANATION OF FUNCTIONS:
+
 Add-StifleRSubnet (function)
     
     .DESCRIPTION
@@ -175,7 +194,7 @@ Set-StifleRServerSettings (function)
 	Set-StifleRServerSettings -Server server01 -Property wsapifw -Clear
 	Sets the property wsapifw to nothing in StifleR Server
 
-Set-StifleRSubnetProperty (function)
+Set-StifleRSubnet (function)
     
     .DESCRIPTION
         Easily set new properties on subnets
