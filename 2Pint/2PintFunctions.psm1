@@ -1,4 +1,5 @@
-﻿New-Variable -Name Namespace -Value 'root\StifleR' -Option AllScope
+﻿#Requires -Version 5.1
+New-Variable -Name Namespace -Value 'root\StifleR' -Option AllScope
 
 function Test-ServerConnection {
 
@@ -91,8 +92,8 @@ function Add-Subnet {
         [int]$LEDBATTargetBandwidth=0,
         [bool]$VPN=$false,
         [bool]$WellConnected=$false,
-        [ValidateSet('HTTP Only','LAN','Group','Internet','Simple','Bypass')]
-        [string]$DOType,
+        [ValidateSet('Not set','HTTP Only','LAN','Group','Internet','Simple','Bypass')]
+        [string]$DOType='Not set',
         [switch]$SetDOGroupID
     )
 
@@ -101,7 +102,7 @@ function Add-Subnet {
 
         $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
         if ( $(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
-            write-host "SubnetID $SubnetID already exist, aborting!"
+            Write-Warning "SubnetID $SubnetID already exist, aborting!"
             break
         }
     }
@@ -110,9 +111,11 @@ function Add-Subnet {
         try {            
             Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet  -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null
             $NewSubnetSuccess = $true
+            Write-Output "Successfully added the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9202 -Message "Successfully added the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID" -EntryType Information
         }
         catch {
+            Write-Warning "Failed to add the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9203 -Message "Failed to add the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID" -EntryType Error
         }
 
@@ -120,9 +123,11 @@ function Add-Subnet {
             if ( $LEDBATTargetBandwidth -ne 0 ) {
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{LEDBATTargetBandwidth = $LEDBATTargetBandwidth} -ComputerName $Server
+                    Write-Output "Successfully changed the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth" -EntryType Information
                 }
                 catch {
+                    Write-Warning "Failed to change the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth" -EntryType Error
                 }
             }
@@ -130,9 +135,11 @@ function Add-Subnet {
             if ( $VPN -eq $True ) {
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{VPN = $VPN } -ComputerName $Server
+                    Write-Output "Successfully changed the property VPN on subnet $SubnetID to $VPN"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property VPN on subnet $SubnetID to $VPN" -EntryType Information
                 }
                 catch {
+                    Write-Warning "Failed to change the property VPN on subnet $SubnetID to $VPN"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property VPN on subnet $SubnetID to $VPN" -EntryType Error
                 }
             }
@@ -140,14 +147,16 @@ function Add-Subnet {
             if ( $WellConnected -eq $True ) {
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{WellConnected = $WellConnected } -ComputerName $Server
+                    Write-Output "Successfully changed the property WellConnected on subnet $SubnetID to $WellConnected"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property WellConnected on subnet $SubnetID to $WellConnected" -EntryType Information
                 }
                 catch {
+                    Write-Warning "Failed to change the property WellConnected on subnet $SubnetID to $WellConnected"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property WellConnected on subnet $SubnetID to $WellConnected" -EntryType Error
                 }
             }
 
-            if ( $DOType -ne $null ) {
+            if ( $DOType -ne 'Not set' ) {
                 if ( $DOType -eq 'HTTP Only' ) { [int]$DOType = 0 }
                 if ( $DOType -eq 'LAN' ) { [int]$DOType = 1 }
                 if ( $DOType -eq 'Group' ) { [int]$DOType = 2 }
@@ -157,9 +166,11 @@ function Add-Subnet {
 
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DODownloadMode = $DOType } -ComputerName $Server
+                    Write-Output "Successfully changed the property DODownloadMode on subnet $SubnetID to $DOType"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property DODownloadMode on subnet $SubnetID to $DOType" -EntryType Information
                 }
                 catch {
+                    Write-Warning "Failed to change the property DODownloadMode on subnet $SubnetID to $DOType"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property DODownloadMode on subnet $SubnetID to $DOType" -EntryType Error
                 }
             }
@@ -169,9 +180,11 @@ function Add-Subnet {
 
                 try {
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DOGroupID = $id } -ComputerName $Server
+                    Write-Output "Successfully changed the property DOGroupID on subnet $SubnetID to $id"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property DOGroupID on subnet $SubnetID to $id" -EntryType Information
                 }
                 catch {
+                    Write-Warning "Failed to change the property DOGroupID on subnet $SubnetID to $id"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property DOGroupID on subnet $SubnetID to $id" -EntryType Error
                 }
             }
@@ -269,17 +282,17 @@ function Remove-Subnet {
         }
 
         if ( $Subnets.Count -le 0 ) {
-            write-host "No subnets found matching the input parameters, aborting!"
+            Write-Warning "No subnets found matching the input parameters, aborting!"
             break
         }
 
         if ( !$SkipConfirm ) {
-            write-host "You are about to delete $($Subnets.Count) subnet(s) listed below:"
-            write-host " "
+            Write-Output "You are about to delete $($Subnets.Count) subnet(s) listed below:"
+            Write-Output " "
             foreach ( $Subnet in $Subnets ) {
-                write-host "SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+                Write-Output "SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
             }
-            write-host " "
+            Write-Output " "
             $msg = "Are you sure? [Y/N]"
             do {
                 $response = Read-Host -Prompt $msg
@@ -287,7 +300,7 @@ function Remove-Subnet {
             if ( $response -eq 'n' ) {
                 break
             }
-            write-host " "
+            Write-Output " "
         }
         foreach ( $Subnet in $Subnets ) {
             try {
@@ -298,13 +311,13 @@ function Remove-Subnet {
                     Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
                 }
                 if ( !$Quiet ) {
-                    write-host "Successfully removed SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+                    Write-Output "Successfully removed SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
                 }
                 Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9206 -Message "Successfully removed subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Information
             }
             catch {
+                Write-Warning "Failed to remove SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
                 if ( !$Quiet ) {
-                    write-host "Failed to remove SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9207 -Message "Failed to remove subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Error
                 }
             }
@@ -313,7 +326,7 @@ function Remove-Subnet {
 
 }
 
-function Set-SubnetProperty {
+function Set-Subnet {
 
    <#
     .SYNOPSIS
@@ -341,7 +354,7 @@ function Set-SubnetProperty {
         Sets the property VPN to True on subnet 172.10.10.0
 
     .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRSubnetProperty-Get-5607a465
+        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRSubnet-Get-5607a465
 
     .FUNCTIONALITY
         StifleR
@@ -365,17 +378,18 @@ function Set-SubnetProperty {
 
     process {
         if ( !$(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
-            write-host "SubnetID $SubnetID does not exist, aborting!"
+            Write-Output "SubnetID $SubnetID does not exist, aborting!"
             break
         }
 
         try {
+            $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
             Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server
-            write-host "Successfully updated '$Property' with the new value '$NewValue' on subnet $SubnetID."
+            Write-Output "Successfully updated '$Property' with the new value '$NewValue' on subnet $SubnetID."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Successfully updated the property $Property to $NewValue on subnet $SubnetID." -EntryType Information
         }
         catch {
-            write-host "Failed to update $Property with the new value $NewValue on subnet $SubnetID, make sure the property exist!"
+            Write-Warning "Failed to update $Property with the new value $NewValue on subnet $SubnetID, make sure the property exist!"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Failed to update the property $Property to $NewValue on subnet $SubnetID." -EntryType Error
         }
     }
@@ -414,9 +428,9 @@ function Start-ServerService {
 
     begin {
         Test-ServerConnection $Server
-        $Service = (get-wmiobject win32_service -ComputerName $Server | where { $_.name -eq 'StifleRServer'})
+        $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
         if ( $Service.State -eq 'Running' ) {
-            write-host 'The service StifleRService is already in the state Started, aborting!'
+            Write-Warning 'The service StifleRService is already in the state Started, aborting!'
             break
         }
     }
@@ -425,11 +439,11 @@ function Start-ServerService {
         try {
             Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StartService -Computername $Server | out-null
             (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')
-            Write-Host "Successfully started service StifleRServer"
+            Write-Output "Successfully started service StifleRServer"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9214 -Message "Successfully started the service StifleRServer." -EntryType Information
         }
         catch {
-            Write-Host "Failed to start service StifleRServer"
+            Write-Warning "Failed to start service StifleRServer"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9215 -Message "Failed to start the service StifleRServer." -EntryType Error
         }
     }
@@ -476,9 +490,9 @@ function Stop-ServerService {
 
     begin {
         Test-ServerConnection $Server
-        $Service = (get-wmiobject win32_service -ComputerName $Server | where { $_.name -eq 'StifleRServer'})
+        $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
         if ( $Service.State -eq 'Stopped' ) {
-            write-host 'The service StifleRService is already in the state Stopped, aborting!'
+            Write-Warning 'The service StifleRService is already in the state Stopped, aborting!'
             break
         }
     }
@@ -492,11 +506,11 @@ function Stop-ServerService {
                 $(Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter "name='StifleR.Service.exe'").Terminate() | out-null
             }
             (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')
-            Write-Host "Successfully stopped service StifleRServer"
+            Write-Output "Successfully stopped service StifleRServer"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9212 -Message "Successfully stopped the service StifleRServer." -EntryType Information
         }
         catch {
-            Write-Host "Failed to stop service StifleRServer"
+            Write-Warning "Failed to stop service StifleRServer"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9213 -Message "Failed to stop the service StifleRServer." -EntryType Error
         }
     }
@@ -569,7 +583,7 @@ function Set-BITSJob {
                 if ( Get-Subnet -Server $Server -SubnetID $Target ) {
                     $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
                     while($Confirm -ne "y") {
-                        if ($Confirm -eq 'n') { Write-Host "This command was cancelled by the user" ; break }
+                        if ($Confirm -eq 'n') { Write-Warning "This command was cancelled by the user, aborting!" ; break }
                         $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
                     }
                     if ( $Confirm -eq 'y' ) {
@@ -586,7 +600,7 @@ function Set-BITSJob {
             if ( Get-Client -Server $Server -Client $Target -ExactMatch ) {
                 $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
                 while($Confirm -ne 'y') {
-                    if ($Confirm -eq 'n') { Write-Host "This command was cancelled by the user" ; break }
+                    if ($Confirm -eq 'n') { Write-Warning "This command was cancelled by the user, aborting!" ; break }
                     $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
                 }
                 if ( $Confirm -eq 'y' ) {
@@ -594,7 +608,7 @@ function Set-BITSJob {
                     $TriggerHappy = $True
                 }
             }
-            else { write-Error "The Client $Target couldn't be found in StifleR" }
+            else { Write-Error "The Client $Target couldn't be found in StifleR" }
         }
 
         if ( $TargetLevel -eq 'All' ) {
@@ -602,7 +616,7 @@ function Set-BITSJob {
         
             $Confirm = Read-Host "You are about to $Action ALL transfers, are you really sure? [y/n]"
             while($Confirm -ne "y") {
-                if ($Confirm -eq 'n') { Write-Host "This command was cancelled by the user" ; break }
+                if ($Confirm -eq 'n') { Write-Output "This command was cancelled by the user, aborting!" ; break }
                 $Confirm = Read-Host "You are about to $Action ALL transfers, are you really sure? [y/n]"
             }
             if ( $Confirm -eq 'y' ) {
@@ -613,10 +627,12 @@ function Set-BITSJob {
 
         if ( $TriggerHappy ) {
             try {
-                Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList "$Action", False, "*", 0, "$TriggerTarget" -ComputerName $Server
+                Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList "$Action", False, "*", 0, "$TriggerTarget" -ComputerName $Server | out-null
+                Write-Output "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget"
                 Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9200 -Message "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Information
             }            
             catch {
+                Write-Warning "Failed to invoke BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget"
                 Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9201 -Message "Failed to invoke BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Error
             }
         }
@@ -687,18 +703,18 @@ function Set-ServerDebugLevel {
         [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
         $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).Value
         if ( $DebugLevel -eq $CurrentValue ) {
-            write-host "This DebugLevel is already active, aborting!"
+            Write-Warning "This DebugLevel is already active, aborting!"
             break
         }
         $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).value = $DebugLevel
         try {
             [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
             $Content.Replace("<add key=""EnableDebugLog"" value=""$CurrentValue""/>","<add key=""EnableDebugLog"" value=""$DebugLevel""/>") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
-            write-host "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
+            Write-Output "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Information
         }
         catch {
-            write-host "Failed to update DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
+            Write-Warning "Failed to update DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Error
         }
     }
@@ -773,18 +789,18 @@ function Set-ServerSettings {
         [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
         $CurrentKeyName = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).key
         if ( !$CurrentKeyName ) {
-            write-host "The property '$Property' does not exist, aborting!"
+            Write-Warning "The property '$Property' does not exist, aborting!"
             break
         }
         $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).Value
         if ( $NewValue -eq $CurrentValue ) {
-            write-host "The property '$Property' already has the value '$NewValue', aborting!"
+            Write-Warning "The property '$Property' already has the value '$NewValue', aborting!"
             break
         }
         if ( !$SkipConfirm ) {
-            write-host "You are about to change the property '$Property' from '$CurrentValue' to '$NewValue'."
-            write-host "IMPORTANT! Make sure this change is valid or things might break..."
-            write-host " "
+            Write-Output "You are about to change the property '$Property' from '$CurrentValue' to '$NewValue'."
+            Write-Warning "Make sure this change is valid or things might break..."
+            Write-Output " "
             $msg = "Apply change? [Y/N]"
             do {
                 $response = Read-Host -Prompt $msg
@@ -792,16 +808,16 @@ function Set-ServerSettings {
             if ( $response -eq 'n' ) {
                 break
             }
-            write-host " "
+            Write-Output " "
         }
         try {
             [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
             $Content.Replace("<add key=""$CurrentKeyName"" value=""$CurrentValue""/>","<add key=""$CurrentKeyName"" value=""$NewValue""/>") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
-            write-host "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
+            Write-Output "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
         }
         catch {
-            write-host "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue."
+            Write-Warning "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Error
         }
     }
@@ -897,7 +913,6 @@ function Get-Client {
     process {
         if ( $ExactMatch ) {
             if ( $SubnetIDExist ) {
-                #$ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "NetworkID = '$SubnetID'" -ComputerName $Server
                 $id = $(Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
                 $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "LastOnNetwork = '$id'" -ComputerName $Server
             }
@@ -907,7 +922,6 @@ function Get-Client {
         }
         else {
             if ( $SubnetIDExist ) {
-                #$ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "NetworkID LIKE '%$SubnetID%'" -ComputerName $Server
                 $id = $(Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
                 $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "LastOnNetwork = '$id'" -ComputerName $Server
             }
@@ -919,12 +933,36 @@ function Get-Client {
     }
 
     end {
-        $ClientInformation | Select $defaultProperties -ExcludeProperty PSComputerName
+        $ClientInformation | Select-Object $defaultProperties -ExcludeProperty PSComputerName
     }
 
 }
 
 function Get-ClientVersions {
+
+   <#
+    .SYNOPSIS
+        Gets all settings from the Servers configuration file
+
+    .DESCRIPTION
+        Get a summary of StifleR Agent versions
+        Details:
+        - Get a summary of StifleR Agent versions on clients you have in your environment
+        and the number of clients with each version
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	get-StifleRClientVersions -Server server01
+        Get the versions for clients from server01
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Get-StifleRClientVersions-Get-5607a465
+
+    .FUNCTIONALITY
+        StifleR
+    #>
 
     [CmdletBinding()]
     param (
@@ -938,7 +976,7 @@ function Get-ClientVersions {
 
     process {
         $VersionInfo = @()
-        $Versions = $(Get-CimInstance -Namespace $Namespace -Query "Select * from Clients" -ComputerName $Server | Select -Unique version ).version
+        $Versions = $(Get-CimInstance -Namespace $Namespace -Query "Select * from Clients" -ComputerName $Server | Select-Object -Unique version ).version
         foreach ( $Version in $Versions ) {
             $VersionCount = $(Get-CimInstance -Namespace $Namespace -Query "Select * from Clients Where Version = '$Version'" -ComputerName $Server ).Count
             $VersionInfo += New-Object -TypeName psobject -Property @{Version=$Version; Clients=$VersionCount}
@@ -1008,14 +1046,14 @@ function Get-ServerSettings {
             $Properties = @()
             $Properties += $Content.configuration.appSettings.add
             if ( $SortByKeyName ) {
-                return $Properties | sort key
+                return $Properties | Sort-Object key
             }
             else {
                 return $Properties
             }
         }
         catch {
-            write-host "Failed to obtain properties from $Server, check InstallDir and access permissions."
+            Write-Error "Failed to obtain properties from $Server, check InstallDir and access permissions."
         }
     }
 
@@ -1078,9 +1116,10 @@ function Get-ServerDebugLevel {
             if ( $CurrentValue -eq '4' ) { $DebugLevel = '4 (Information)' }
             if ( $CurrentValue -eq '5' ) { $DebugLevel = '5 (Debug)' }
             if ( $CurrentValue -eq '6' ) { $DebugLevel = '6 (Super Verbose)' }
-            write-host "DebugLevel for StifleR Server is: $DebugLevel"
+            Write-Output "DebugLevel for StifleR Server is: $DebugLevel"
         }
         catch {
+            Write-Error "Failed to obtain properties from $Server, check InstallDir and access permissions."
         }
     }
         
@@ -1156,7 +1195,6 @@ function Get-Subnet {
     param (
         [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage = "This parameter is used if you want to query SubnetID(s)")]
         [String]$SubnetID='*',
-        #[Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage = "This parameter is used if you want to query LocationName(s)")]
         [Parameter(HelpMessage = "This parameter is used if you want to query LocationName(s)")]
         [Alias('Identity')]
         [String]$LocationName='*',
@@ -1225,12 +1263,33 @@ function Get-Subnet {
     end {
         # Returns the results collected
         $SubnetInfo | Add-Member MemberSet PSStandardMembers $PSStandardMembers
-        $SubnetInfo | Select $defaultProperties -ExcludeProperty PSComputerName
+        $SubnetInfo | Select-Object $defaultProperties -ExcludeProperty PSComputerName
     }
 
 }
 
 function Get-SubnetQueues {
+
+    <#
+    .SYNOPSIS
+        Get information about the subnet queues in StifleR
+
+    .DESCRIPTION
+        Get information about the subnet queues in StifleR
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+    Get-StifleRSubnetQUeues -server 'server01'
+    Get information about the current queues in StifleR
+
+    .LINK
+        http://gallery.technet.microsoft.com/scriptcenter/Get-StiflerSubnetQueues-Get-5607a465
+
+    .FUNCTIONALITY
+        Subnets
+    #>
 
     [CmdletBinding()]
     param (
@@ -1243,7 +1302,7 @@ function Get-SubnetQueues {
     }
 
     process {
-        $Clients = Get-CIMInstance -Namespace $Namespace -Query "Select * from Clients" -ComputerName $Server | Select TotalQueueSize_BITS, TotalQueueSize_DO, NetworkID
+        $Clients = Get-CIMInstance -Namespace $Namespace -Query "Select * from Clients" -ComputerName $Server | Select-Object TotalQueueSize_BITS, TotalQueueSize_DO, NetworkID
         $Clients | Group-Object NetworkID | %{
             New-Object psobject -Property @{
                 NetworkID = $_.Name
@@ -1252,7 +1311,7 @@ function Get-SubnetQueues {
                 Clients = $_.Count
             }
         } |  Sort-Object -Property Clients | FT -AutoSize
-        Write-Host "Total Client Count: " $Clients.count
+        Write-Output "Total Client Count: " $Clients.count
     }
 
 }
@@ -1285,7 +1344,25 @@ function Get-Connections {
         }
         if ( $QueryAdditions -eq 'WHERE' ) { $QueryAdditions = '' }
 
-        write-host $QueryAdditions
-        Get-CimInstance -Namespace $Namespace -Query "Select * from Connections $QueryAdditions" -ComputerName $Server | Select -First $Limit
+        write-Output $QueryAdditions
+        Get-CimInstance -Namespace $Namespace -Query "Select * from Connections $QueryAdditions" -ComputerName $Server | Select-Object -First $Limit
     }
+}
+
+# in progress
+function Remove-Client {
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [Parameter(Mandatory=$true)]
+        [string]$Client
+    )
+
+    begin {
+        Test-ServerConnection $Server
+    }
+
+    process {
+    }
+
 }
