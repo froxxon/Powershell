@@ -1,4 +1,8 @@
-﻿#region CustomVariables
+# An easier way to get your bootimage working with WinPE, BranchCache and the help of 2Pint Softwares tool.
+# Make sure ADK is in place and click and run with elevated permissions (to mount, will warn and abort otherwise!).
+# Dont forget to change variables to match your environment!
+
+#region CustomVariables
     $WinPEGenPath = 'C:\Temp\Stifler\2Pint Software OSD Toolkit 2.2.2.0\WinPE Generator\x64'
     $StifleRConfigPath = 'C:\Temp\StifleR'
     $StifleRConfigFile = 'StifleR.ClientApp.exe.config'
