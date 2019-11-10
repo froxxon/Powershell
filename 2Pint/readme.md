@@ -6,7 +6,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
-### version 1.0.5 (2019-11-10)
+##### version 1.0.5 (2019-11-10)
 - Added '#Requires -Version 5.1' to .psm
 - Added output types on success/failure
 - Removed obsolete commented code
@@ -21,7 +21,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## EXPLANATION OF FUNCTIONS
 
-### Add-StifleRSubnet
+##### Add-StifleRSubnet
     
     .DESCRIPTION
 	Just another way of adding a new subnet to StifleR
@@ -30,7 +30,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 	Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true
 	Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
-### Set-StifleRBITSJob
+##### Set-StifleRBITSJob
     
     .DESCRIPTION
         If you need to push the big red button, go no further!
