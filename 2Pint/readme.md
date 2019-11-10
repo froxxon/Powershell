@@ -5,6 +5,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 Beneath you'll find a Change log followed by explanation of each function:
 
 CHANGE LOG:
+-----------
 
 1.0.5 (2019-11-10)
 - Added '#Requires -Version 5.1' to .psm
@@ -20,6 +21,7 @@ CHANGE LOG:
 - Added Remove-Client with 'In progress' status
 
 EXPLANATION OF FUNCTIONS:
+-------------------------
 
 Add-StifleRSubnet (function)
     
