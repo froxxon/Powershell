@@ -216,7 +216,6 @@ Start-StifleRServerService (function)
         Starts the StifleRServer service on server01
 
 Stop-StifleRServerService (function)
----
     
     .DESCRIPTION
         Stop the StifleRServer service
