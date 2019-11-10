@@ -1,4 +1,4 @@
-# 2PINTFUNCTIONS POWERSHELL MODULE
+# 2PINTFUNCTIONS POWERSHELL MODULE (.psm/.psd)
 
 A module with some functions to make the life easier to manage StifleR Server with Powershell.
 for ease of use just copy those to %ProgramFiles%\WindowsPowershell\Modules\2PintFunctions\ or use 'import-module <PATH>'.
