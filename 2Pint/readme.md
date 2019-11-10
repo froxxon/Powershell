@@ -10,7 +10,7 @@ Beneath you'll find a Change log followed by explanation of each function:
 CHANGE LOG:
 -----------
 
-1.0.5 (2019-11-10)
+version 1.0.5 (2019-11-10)
 - Added '#Requires -Version 5.1' to .psm
 - Added output types on success/failure
 - Removed obsolete commented code
