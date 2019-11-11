@@ -6,6 +6,14 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.0.6 (2019-11-11)
+- Changed *'Remove-Client'* to *'Draft'* status
+- Added CBH to *'Get-SignalRHubHealth'*
+- Removed *'.LINK'* from all CBHs
+- Changed *'.FUNCITONALITY'* to *'StifleR'* in all CBHs
+- Removed status *'Draft'* from *'Set-StilfeRBITSJob'*
+- Added *'[cmdletbinding()]'* to all params (to add messages for *'Write-Verbose'* and *'Write-Debug'* later on)
+
 #### version 1.0.5 (2019-11-10)
 - Added *'#Requires -Version 5.1'* to *'2PintFunctions.psm'*
 - Added output types on success/failure
@@ -114,6 +122,21 @@ Pull all subnets from sever01 with specific properties and sorts them based on A
 Get information about the current queues in StifleR
 
     Get-StifleRSubnetQUeues -server 'server01'
+
+#### Remove-StifleRClient
+
+Removes the client with ComputerName Client1 and hides the confirmation
+dialog as well as the successful result message
+
+    Remove-StifleRClient -Server server01 -Client Client1 -SkipConfirm -Quiet
+
+Removes the client with ComputerName Client1 and makes a flush
+
+    Remove-StifleRClient -Server server01 -Client Client1 -Flush
+
+Prompts a question about removing all clients with ComputerName like MININT-
+
+    Remove-StifleRClient -Server server01 -Client MININT-
 
 #### Remove-StifleRSubnet
 
