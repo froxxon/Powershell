@@ -6,6 +6,12 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.0.7 (2019-11-11)
+- Added *'-NoNewline'* to *'out-file'* while changing config in *'Set-StifleRServerSettings'* to prevent empty rows created in end of configfile
+- Added *'-NoNewline'* to *'out-file'* while changing config in *'Set-StifleRServerDebugLevel'* to prevent empty rows created in end of configfile
+- Removed *'<'* and *'/>'* *'$Content.Replace'* in *'Set-StifleRServerSettings'*
+- Removed *'<'* and *'/>'* *'$Content.Replace'* in *'Set-StifleRServerDebugLevel'*
+
 #### version 1.0.6 (2019-11-11)
 - Changed *'Remove-Client'* to *'Draft'* status
 - Added CBH to *'Get-SignalRHubHealth'*
