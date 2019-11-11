@@ -11,7 +11,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 - Added CBH to *'Get-SignalRHubHealth'*
 - Removed *'.LINK'* from all CBHs
 - Changed *'.FUNCITONALITY'* to *'StifleR'* in all CBHs
-- Removed status *'Draft'* from *'Set-StilfeRBITSJob'*
+- Removed status *'Draft'* from *'Set-StilfeRBITSJob'* *( = working as expected at the moment and done! )*
 - Added *'[cmdletbinding()]'* to all params (to add messages for *'Write-Verbose'* and *'Write-Debug'* later on)
 
 #### version 1.0.5 (2019-11-10)
