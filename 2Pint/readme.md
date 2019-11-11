@@ -33,7 +33,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 - Re-added *'$SubnetQuery'* with value to *'Set-StifleRSubnet'*, gone for some unknown reason and broke the function...
 - Added *'Remove-Client'* with *'In progress'* status
 
-#### version -le 1.0.4
+#### version -le 1.0.4 (< 2019-11-10)
 - Build phase undocumented
 
 ## EXPLANATION OF FUNCTIONS
