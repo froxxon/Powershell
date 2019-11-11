@@ -71,9 +71,6 @@ function Add-Subnet {
 	Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true
         Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Add-StifleRSubnet-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
@@ -241,9 +238,6 @@ function Remove-Subnet {
 	Remove-StiflerSubnet -Server server01 -SubnetID 172
         Prompts a question about removing all subnets with SubnetID like 172
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Remove-StifleRSubnet-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
@@ -353,9 +347,6 @@ function Set-Subnet {
 	Set-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
         Sets the property VPN to True on subnet 172.10.10.0
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRSubnet-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
@@ -414,13 +405,11 @@ function Start-ServerService {
 	Start-StifleRServerService -Server server01
         Starts the StifleRServer service on server01
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Start-StifleRServerService-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
 
+    [cmdletbinding()]
     param (
         [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME
@@ -475,13 +464,11 @@ function Stop-ServerService {
 	Stop-StifleRServerService -Server server01 -Force
         Stops the StifleRServer service on server01 by killing the process of the service
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Stop-StifleRServerService-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
 
+    [cmdletbinding()]
     param (
         [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
@@ -517,7 +504,6 @@ function Stop-ServerService {
 
 }
 
-# Draft
 function Set-BITSJob {
 
     <#
@@ -553,11 +539,8 @@ function Set-BITSJob {
 	Set-StiflerBITSJob -Server server01 -TargetLevel All -Action Resume
         Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Set-StiflerBITSJob-Get-5607a465
-
     .FUNCTIONALITY
-        BITS
+        StifleR
     #>
     
     [CmdletBinding()]
@@ -671,9 +654,6 @@ function Set-ServerDebugLevel {
         Disable debugging on server01 where the installations directory for StifleR Server is
         'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRServerDebugLevel-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
@@ -759,9 +739,6 @@ function Set-ServerSettings {
     .EXAMPLE
 	Set-StifleRServerSettings -Server server01 -Property wsapifw -Clear
         Sets the property wsapifw to nothing in StifleR Server
-
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Set-StifleRServerSettings-Get-5607a465
 
     .FUNCTIONALITY
         StifleR
@@ -862,13 +839,11 @@ function Get-Client {
 	'Client01' | Get-StiflerClient -Server server01 -ExactMatch
         Pull client with pipeline where ComputerName equals 'Client01' from server01
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Get-StiflerClient-Get-5607a465
-
     .FUNCTIONALITY
-        Clients
+        StifleR
     #>
 
+    [cmdletbinding()]
     param (
         [Parameter(Mandatory, HelpMessage = "Specify the client you want to retrieve information about", ValueFromPipeline, ValueFromPipelineByPropertyName,ParameterSetName = "Client")][ValidateNotNullOrEmpty()]
         [string[]]$Client,
@@ -957,9 +932,6 @@ function Get-ClientVersions {
 	get-StifleRClientVersions -Server server01
         Get the versions for clients from server01
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Get-StifleRClientVersions-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
@@ -1020,9 +992,6 @@ function Get-ServerSettings {
     'D$\Program Files\2Pint Software\StifleR'
         Get the settings from server01 where the installations directory for StifleR Server is
         'D$\Program Files\2Pint Software\StifleR' instead of the default directory
-
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Get-StifleRServerSettings-Get-5607a465
 
     .FUNCTIONALITY
         StifleR
@@ -1087,9 +1056,6 @@ function Get-ServerDebugLevel {
         Get the current debug level on server01 where the installations directory for StifleR Server is
         'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Get-StifleRServerDebugLevel-Get-5607a465
-
     .FUNCTIONALITY
         StifleR
     #>
@@ -1126,6 +1092,24 @@ function Get-ServerDebugLevel {
 }
 
 function Get-SignalRHubHealth {
+
+    <#
+    .SYNOPSIS
+        Get statistics about Signal-R
+
+    .DESCRIPTION
+        Get statistics about Signal-R
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+    Get-StifleRSIgnalRHubHealth -Server 'server01'
+    Get statistics about Signal-R
+
+    .FUNCTIONALITY
+        StifleR
+    #>
 
     [CmdletBinding()]
     param (
@@ -1184,11 +1168,8 @@ function Get-Subnet {
         Get-StiflerSubnet -Server 'sever01' -Property LocationName, ActiveClients, AverageBandwidth, SubnetID | Select LocationName, SubnetID, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Where ActiveClients -gt 0 | Sort AverageBandwidth, LocationName -Descending | Format-Table -AutoSize
         Pull all subnets from sever01 with specific properties and sorts them based on AverageBandwidth
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Get-StiflerSubnet-Get-5607a465
-
     .FUNCTIONALITY
-        Subnets
+        StifleR
     #>
 
     [CmdletBinding()]
@@ -1284,11 +1265,8 @@ function Get-SubnetQueues {
     Get-StifleRSubnetQUeues -server 'server01'
     Get information about the current queues in StifleR
 
-    .LINK
-        http://gallery.technet.microsoft.com/scriptcenter/Get-StiflerSubnetQueues-Get-5607a465
-
     .FUNCTIONALITY
-        Subnets
+        StifleR
     #>
 
     [CmdletBinding()]
@@ -1316,8 +1294,9 @@ function Get-SubnetQueues {
 
 }
 
-# In progress
+# In progress - Remaining, what to actually show?
 function Get-Connections {
+
     [cmdletbinding()]
     param (
         [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
@@ -1349,13 +1328,62 @@ function Get-Connections {
     }
 }
 
-# in progress
+# Draft
 function Remove-Client {
+
+   <#
+    .SYNOPSIS
+        Use this to remove client(s) from StifleR
+
+    .DESCRIPTION
+        Just another way of remvoing client(s) from StifleR
+        Details:
+        - Easily remove one or more of your clients through Powershell
+
+    .PARAMETER Client
+        Specify the ComputerName (or part of) of the client(s) you want to
+        remove
+        
+    .PARAMETER Flush
+        Specify this if a flush of the object should be performed, default is false
+        
+    .PARAMETER SkipConfirm
+        Specify this switch if you don't want to confirm the removal
+        of found clients
+        
+    .PARAMETER Quiet
+        Specify this parameter if you don't want any status message
+        about the result
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Remove-StiflerClient -Server server01 -Client Client1 -SkipConfirm -Quite
+        Removes the client Client1 and hides the confirmation
+        dialog as well as the successful result message
+
+    .EXAMPLE
+	Remove-StiflerClient -Server server01 -Client Client1 -Flush
+        Removes the client 'Client1' and flushes something...
+
+    .EXAMPLE
+	Remove-StiflerClient -Server server01 -Client MININT-
+        Removes all clients containing 'MININT-' as ComputerName
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
     param (
         [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
         [string]$Server = $env:COMPUTERNAME,
         [Parameter(Mandatory=$true)]
-        [string]$Client
+        [string]$Client,
+        [switch]$Flush,
+        [switch]$Quiet,
+        [switch]$SkipConfirm
     )
 
     begin {
@@ -1363,6 +1391,51 @@ function Remove-Client {
     }
 
     process {
+        if ( $Flush ) {
+            $Arguments = @{ flush = $true }
+        }
+        else {
+            $Arguments = @{ flush = $false }
+        }
+
+        [array]$Clients = $(Get-CimInstance -Namespace $Namespace -Query "Select ComputerName from Clients WHERE ComputerName LIKE '%$Client%'" -ComputerName $Server).ComputerName
+
+        if ( $Clients.Count -le 0 ) {
+            Write-Warning "No clients found matching the input parameters, aborting!"
+            break
+        }
+
+        if ( !$SkipConfirm ) {
+            Write-Output "You are about to delete $($Clients.Count) client(s) listed below:"
+            Write-Output " "
+            foreach ( $Client in $Clients ) {
+                Write-Output "Client: $Client"
+            }
+            Write-Output " "
+            $msg = "Are you sure? [Y/N]"
+            do {
+                $response = Read-Host -Prompt $msg
+            } until ($response -eq 'n' -or $response -eq 'y')
+            if ( $response -eq 'n' ) {
+                break
+            }
+            Write-Output " "
+        }
+        foreach ( $Client in $Clients ) {
+            try {
+                Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Clients Where ComputerName = '$Client'" -MethodName RemoveFromDB -ComputerName $Server -Arguments $Arguments | out-null
+                if ( !$Quiet ) {
+                    Write-Output "Successfully removed client: $Client"
+                }
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9216 -Message "Successfully removed client $Client" -EntryType Information
+            }
+            catch {
+                Write-Warning "Failed to remove client: $Client"
+                if ( !$Quiet ) {
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9217 -Message "Failed to remove client $Client" -EntryType Error
+                }
+            }
+        }
     }
 
 }
