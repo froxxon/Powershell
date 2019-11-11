@@ -689,7 +689,7 @@ function Set-ServerDebugLevel {
         $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).value = $DebugLevel
         try {
             [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
-            $Content.Replace("<add key=""EnableDebugLog"" value=""$CurrentValue""/>","<add key=""EnableDebugLog"" value=""$DebugLevel""/>") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
+            $Content.Replace("add key=""EnableDebugLog"" value=""$CurrentValue""","add key=""EnableDebugLog"" value=""$DebugLevel""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
             Write-Output "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Information
         }
@@ -789,7 +789,7 @@ function Set-ServerSettings {
         }
         try {
             [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
-            $Content.Replace("<add key=""$CurrentKeyName"" value=""$CurrentValue""/>","<add key=""$CurrentKeyName"" value=""$NewValue""/>") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force
+            $Content.Replace("add key=""$CurrentKeyName"" value=""$CurrentValue""","add key=""$CurrentKeyName"" value=""$NewValue""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
             Write-Output "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
         }
