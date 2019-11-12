@@ -98,6 +98,8 @@ function Add-Subnet {
         Test-ServerConnection $Server
 
         $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
+        Write-Verbose "Variable SubnetQuery = $SubnetQuery"
+        Write-Verbose "Verify if subnet exist: Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID = '$SubnetID'"""
         if ( $(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
             Write-Warning "SubnetID $SubnetID already exist, aborting!"
             break
@@ -106,8 +108,11 @@ function Add-Subnet {
 
     process {
         try {            
-            Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet  -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null
+            Write-Debug "Adding subnet: Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null"
+            Write-Verbose "Adding subnet: Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null"
+            Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null
             $NewSubnetSuccess = $true
+            Write-Verbose 'Variable NewSubnetSuccess = $true'
             Write-Output "Successfully added the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9202 -Message "Successfully added the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID" -EntryType Information
         }
@@ -116,9 +121,12 @@ function Add-Subnet {
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9203 -Message "Failed to add the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID" -EntryType Error
         }
 
-        if ( $NewSubnetSuccess = $true ) {
+        if ( $NewSubnetSuccess -eq $true ) {
+            Write-Debug "Next step - Modify properties: if NewSubnetSuccess -eq True (NewSubnetSuccess value is $NewSubnetSuccess)"
             if ( $LEDBATTargetBandwidth -ne 0 ) {
+                Write-Debug "Next step - Modify property: if LEDBATTargetBandwidth -ne 0 (value of LEDBATTargetBandwidth is $LEDBATTargetBandwidth)"
                 try {
+                    Write-Verbose "Modifying subnet: Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{LEDBATTargetBandwidth = $LEDBATTargetBandwidth} -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{LEDBATTargetBandwidth = $LEDBATTargetBandwidth} -ComputerName $Server
                     Write-Output "Successfully changed the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property LEDBATTargetBandwidth on subnet $SubnetID to $LEDBATTargetBandwidth" -EntryType Information
@@ -130,7 +138,9 @@ function Add-Subnet {
             }
 
             if ( $VPN -eq $True ) {
+                Write-Debug "Next step - Modify property: if VPN -eq True (value of VPN is $VPN)"
                 try {
+                    Write-Verbose "Modifying subnet: Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{VPN = $VPN } -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{VPN = $VPN } -ComputerName $Server
                     Write-Output "Successfully changed the property VPN on subnet $SubnetID to $VPN"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property VPN on subnet $SubnetID to $VPN" -EntryType Information
@@ -140,9 +150,11 @@ function Add-Subnet {
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9205 -Message "Failed to change the property VPN on subnet $SubnetID to $VPN" -EntryType Error
                 }
             }
-                
+            
             if ( $WellConnected -eq $True ) {
+                Write-Debug "Next step - Modify property: if WellConnected -eq True (value of WellConnected is $WellConnected)"
                 try {
+                    Write-Verbose "Modifying subnet: Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{WellConnected = $WellConnected } -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{WellConnected = $WellConnected } -ComputerName $Server
                     Write-Output "Successfully changed the property WellConnected on subnet $SubnetID to $WellConnected"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property WellConnected on subnet $SubnetID to $WellConnected" -EntryType Information
@@ -154,14 +166,17 @@ function Add-Subnet {
             }
 
             if ( $DOType -ne 'Not set' ) {
+                Write-Debug "Next step - Modify property: if DOType -ne 'Not set' (value of DOType is $DOType)"
                 if ( $DOType -eq 'HTTP Only' ) { [int]$DOType = 0 }
                 if ( $DOType -eq 'LAN' ) { [int]$DOType = 1 }
                 if ( $DOType -eq 'Group' ) { [int]$DOType = 2 }
                 if ( $DOType -eq 'Internet' ) { [int]$DOType = 3 }
                 if ( $DOType -eq 'Simple' ) { [int]$DOType = 99 }
                 if ( $DOType -eq 'Bypass' ) { [int]$DOType = 100 }
+                Write-Verbose "Modified variable: DOType has now the value of $DOType"
 
                 try {
+                    Write-Verbose "Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DODownloadMode = $DOType } -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DODownloadMode = $DOType } -ComputerName $Server
                     Write-Output "Successfully changed the property DODownloadMode on subnet $SubnetID to $DOType"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property DODownloadMode on subnet $SubnetID to $DOType" -EntryType Information
@@ -173,9 +188,13 @@ function Add-Subnet {
             }
 
             if ( $SetDOGroupID ) {
+                Write-Debug "Next step - Modify property: if SetDOGroupID -eq True (value of SetDOGroupID is $SetDOGroupID)"
+                Write-Verbose "Get Subnets ID (not SubnetID): Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter ""SubnetID LIKE '%$SubnetID%'"" -ComputerName $Server"
                 $id = $(Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
+                Write-Verbose "Subnets ID is = $id"
 
                 try {
+                    Write-Verbose "Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DOGroupID = $id } -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{DOGroupID = $id } -ComputerName $Server
                     Write-Output "Successfully changed the property DOGroupID on subnet $SubnetID to $id"
                     Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9204 -Message "Successfully changed the property DOGroupID on subnet $SubnetID to $id" -EntryType Information
