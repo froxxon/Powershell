@@ -55,6 +55,7 @@ For everything to work as expected the following requirements should be met:
 - Remote WMI from source to the server running '*StifleR Server'*
 - *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
 - For *'Get-/Set-StifleRServerSettings'* and *'Get-/Set-StifleRServerDebugLevel'* *'C$'* (default, or the parameter INSTALLDIR) must be reachable by SMB from source and permissions to read/write in the specified location
+- 'Get-StifleRLicenseInformation' requires above access to License.nfo in InstallDir
 - Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
 - *'Start-/Stop-StilfeRServerService'* requires Administrator rights (if not explicitly provided for the service *StifleRServer'* otherwise)
 
@@ -64,21 +65,21 @@ For everything to work as expected the following requirements should be met:
 
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
-    Add-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -VPN $true*
+    Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
     
 #### Set-StifleRBITSJob
 
 Cancels all current transfers on the subnet 192.168.20.2
 
-    Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
+    Set-StiflerBITSJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
 
 Suspends all current transfers on the client Client01
 
-    Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01
+    Set-StiflerBITSJob -Server 'server01' -TargetLevel Client -Action Suspend -Target Client01
 
 Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
-    Set-StiflerBITSJob -Server server01 -TargetLevel All -Action Resume
+    Set-StiflerBITSJob -Server 'server01' -TargetLevel All -Action Resume
 
 #### Get-StifleRClient
 
@@ -88,11 +89,11 @@ Pull information about the client Client01 from server01
 
 Pull clients with pipeline where ComputerName like 'Clien' from server01
 
-    'Clien' | Get-StiflerClient -Server server01
+    'Clien' | Get-StiflerClient -Server 'server01'
 
 Pull client with pipeline where ComputerName equals 'Client01' from server01
 
-    'Client01' | Get-StiflerClient -Server server01 -ExactMatch
+    'Client01' | Get-StiflerClient -Server 'server01' -ExactMatch
 
 #### Get-StifleRClientVersions
 
@@ -100,32 +101,38 @@ Get a list of versions and the number of clients for each one
 
     Get-StifleRClientVersions -Server 'server01'
 
+#### Get-StifleRLicenseInformation
+
+Get information about your licensing from server01
+
+    Get-StifleRLicenseInformation -Server 'server01'
+
 #### Get-StifleRServerDebugLevel
 
 Get the current debug level on server01
 
-    Get-StifleRServerDebugLevel -Server server01
+    Get-StifleRServerDebugLevel -Server 'server01'
 
 Get the current debug level on server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-    Get-StifleRServerDebugLevel -Server server01 -InstallDir
+    Get-StifleRServerDebugLevel -Server 'server01' -InstallDir
     'D$\Program Files\2Pint Software\StifleR'
 
 #### Get-StifleRServerSettings
 
 Get the settings from server01
 
-    Get-StifleRServerSettings -Server server01
+    Get-StifleRServerSettings -Server 'server01'
 
 Get the settings from server01 with keynames sorted in alphabetical order
 
-    Get-StifleRServerSettings -Server server01 -SortByKeyName
+    Get-StifleRServerSettings -Server 'server01' -SortByKeyName
 
 Get the settings from server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-    Get-StifleRServerSettings -Server server01 -InstallDir
+    Get-StifleRServerSettings -Server 'server01' -InstallDir
     'D$\Program Files\2Pint Software\StifleR'
 
 #### Get-StifleRSignalRHubHealth
@@ -159,76 +166,76 @@ Get information about the current queues in StifleR
 Removes the client with ComputerName Client1 and hides the confirmation
 dialog as well as the successful result message
 
-    Remove-StifleRClient -Server server01 -Client Client1 -SkipConfirm -Quiet
+    Remove-StifleRClient -Server 'server01' -Client Client1 -SkipConfirm -Quiet
 
 Removes the client with ComputerName Client1 and makes a flush
 
-    Remove-StifleRClient -Server server01 -Client Client1 -Flush
+    Remove-StifleRClient -Server 'server01' -Client Client1 -Flush
 
 Prompts a question about removing all clients with ComputerName like MININT-
 
-    Remove-StifleRClient -Server server01 -Client MININT-
+    Remove-StifleRClient -Server 'server01' -Client MININT-
 
 #### Remove-StifleRSubnet
 
 Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
 dialog as well as the successful result message
 
-    Remove-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -SkipConfirm -Quiet
+    Remove-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -SkipConfirm -Quiet
 
 Removes the subnet with the LocationName TESTNET and deletes (if any) the
 childobjects of this subnet
 
-    Remove-StiflerSubnet -Server server01 -LocationName TESTNET -DeleteChildren
+    Remove-StiflerSubnet -Server 'server01' -LocationName TESTNET -DeleteChildren
 
 Prompts a question about removing all subnets with SubnetID like 172
 
-    Remove-StiflerSubnet -Server server01 -SubnetID 172
+    Remove-StiflerSubnet -Server 'server01' -SubnetID 172
 
 #### Set-StifleRServerDebugLevel
 
 Enable Super verbose debugging on server01
 
-    Set-StifleRServerDebugLevel -Server server01 -DebugLevel '6.Super Verbose'
+    Set-StifleRServerDebugLevel -Server 'server01' -DebugLevel '6.Super Verbose'
 
 Disable debugging on server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
-    Set-StifleRServerDebugLevel -Server server01 -DebugLevel '0.Disabled' -InstallDir
+    Set-StifleRServerDebugLevel -Server 'server01' -DebugLevel '0.Disabled' -InstallDir
     'D$\Program Files\2Pint Software\StifleR'
 
 #### Set-StifleRServerSettings
 
 Sets the property wsapifw to 1 in StifleR Server
 
-    Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1
+    Set-StifleRServerSettings -Server 'server01' -Property wsapifw -NewValue 1
 
 Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
 
-    Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1 -SkipConfirm
+    Set-StifleRServerSettings -Server 'server01' -Property wsapifw -NewValue 1 -SkipConfirm
 
 Sets the property wsapifw to nothing in StifleR Server
 
-    Set-StifleRServerSettings -Server server01 -Property wsapifw -Clear
+    Set-StifleRServerSettings -Server 'server01' -Property wsapifw -Clear
 
 #### Set-StifleRSubnet
 
 Sets the property VPN to True on subnet 172.10.10.0
 
-    Set-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
+    Set-StifleRSubnetProperty -Server 'server01' -SubnetID 172.10.10.0 -Property VPN -NewValue True
 
 #### Start-StifleRServerService
 
 Starts the StifleRServer service on server01
 
-    Start-StifleRServerService -Server server01
+    Start-StifleRServerService -Server 'server01'
 
 #### Stop-StifleRServerService
 
 Stops the StifleRServer service on server01
 
-    Stop-StifleRServerService -Server server01
+    Stop-StifleRServerService -Server 'server01'
 
 Stops the StifleRServer service on server01 by killing the process of the service
 
-    Stop-StifleRServerService -Server server01 -Force
+    Stop-StifleRServerService -Server 'server01' -Force
