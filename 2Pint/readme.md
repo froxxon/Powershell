@@ -43,12 +43,12 @@ A recommendation at this point in time would also be to test this out in a lab e
 ## REQUIREMENTS
 
 For everything to work as expected the following requirements should be met:
-- Powershell version 5.1
-- Remote WMI from source to the server running '*StifleR Server'*
-- *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
-- For *'Get-/Set-StifleRServerSettings'* and *'Get-/Set-StifleRServerDebugLevel'* *'C$'* (default, or the parameter INSTALLDIR) must be reachable by SMB from source and permissions to read/write in the specified location
-- Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
-- *'Start-/Stop-StilfeRServerService'* requires Administrator rights (if not explicitly provided for the service *StifleRServer'* otherwise)
+. Powershell version 5.1
+. Remote WMI from source to the server running '*StifleR Server'*
+. *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
+. For *'Get-/Set-StifleRServerSettings'* and *'Get-/Set-StifleRServerDebugLevel'* *'C$'* (default, or the parameter INSTALLDIR) must be reachable by SMB from source and permissions to read/write in the specified location
+. Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
+. *'Start-/Stop-StilfeRServerService'* requires Administrator rights (if not explicitly provided for the service *StifleRServer'* otherwise)
 
 ## EXPLANATION OF FUNCTIONS
 
