@@ -6,6 +6,9 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.0.9 (2019-11-12)
+- All functions that sets data in some way have *'Write-Debug'* and *'Write-Verbose'* messages now
+
 #### version 1.0.8 (2019-11-12)
 - Started to add *'Write-Debug'* and *'Write-Verbose'* where applicable, to be continued...
 - Corrected the mistake *'if ( $NewSubnetSuccess = $true )'* to *'if ( $NewSubnetSuccess -eq $true ) {'* in *'Add-StifleRSubnet'*
