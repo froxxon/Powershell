@@ -40,6 +40,14 @@ A recommendation at this point in time would also be to test this out in a lab e
 #### version -le 1.0.4 (< 2019-11-10)
 - Build phase undocumented
 
+## REQUIREMENTS
+
+For everything to work as expected the following requirements should be met:
+- Powershell version 5.1
+- Remote WMI from source to the server running '*StifleR Server'*
+- For *'Get-/Set-StifleRServerSettings'* and *'Get-/Set-StifleRServerDebugLevel'* *'C$'* (default, or the parameter INSTALLDIR) must be reachable by SMB from source and permissions to read/write in the specified location
+- Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
+
 ## EXPLANATION OF FUNCTIONS
 
 #### Add-StifleRSubnet
