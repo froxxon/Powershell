@@ -8,7 +8,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 #### version 1.1.0 (2019-11-13)
 - Added functions *'Get-StifleREventLogs'*, *'Get-StifleRLeaders'* and *'Set-StifleRLeaders'* as *'In progress'*
-- Added function *'Get-StifleRLicenseInformation'*
+- Added function **'Get-StifleRLicenseInformation'**
 - Added parameter InstallDir to CBH for *'Set-StifleRServerSettings'*
 
 #### version 1.0.9 (2019-11-12)
