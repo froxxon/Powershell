@@ -95,10 +95,12 @@ function Add-Subnet {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
 
         $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
-        Write-Verbose "Variable SubnetQuery = $SubnetQuery"
+        Write-Verbose "Variable - SubnetQuery : $SubnetQuery"
         Write-Verbose "Verify if subnet exist: Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID = '$SubnetID'"""
         if ( $(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
             Write-Warning "SubnetID $SubnetID already exist, aborting!"
@@ -107,12 +109,12 @@ function Add-Subnet {
     }
 
     process {
+        Write-Debug "Next step - Adding subnet"
         try {            
-            Write-Debug "Adding subnet: Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null"
             Write-Verbose "Adding subnet: Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null"
             Invoke-CimMethod -Namespace $Namespace -ClassName Subnets -MethodName AddSubnet -ComputerName $Server -Arguments @{ subnet=$SubnetID ; TargetBandwidth=$TargetBandwidth ; locationName=$LocationName ; description=$Description ; GatewayMAC=$GatewayMAC ; ParentLocationId=$ParentLocationID } | out-null
             $NewSubnetSuccess = $true
-            Write-Verbose 'Variable NewSubnetSuccess = $true'
+            Write-Verbose 'Variable - NewSubnetSuccess : $true'
             Write-Output "Successfully added the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9202 -Message "Successfully added the subnet $SubnetID with the following parameters: TargetBanwidth: $TargetBandwidth   locationName=$LocationName   description=$Description   GatewayMAC=$GatewayMAC   ParentLocationId=$ParentLocationID" -EntryType Information
         }
@@ -122,9 +124,9 @@ function Add-Subnet {
         }
 
         if ( $NewSubnetSuccess -eq $true ) {
-            Write-Debug "Next step - Modify properties: if NewSubnetSuccess -eq True (NewSubnetSuccess value is $NewSubnetSuccess)"
+            Write-Debug "Next step - Modify properties"
             if ( $LEDBATTargetBandwidth -ne 0 ) {
-                Write-Debug "Next step - Modify property: if LEDBATTargetBandwidth -ne 0 (value of LEDBATTargetBandwidth is $LEDBATTargetBandwidth)"
+                Write-Debug "Next step - Modify property LEDBATTargetBandwidth"
                 try {
                     Write-Verbose "Modifying subnet: Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{LEDBATTargetBandwidth = $LEDBATTargetBandwidth} -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{LEDBATTargetBandwidth = $LEDBATTargetBandwidth} -ComputerName $Server
@@ -138,7 +140,7 @@ function Add-Subnet {
             }
 
             if ( $VPN -eq $True ) {
-                Write-Debug "Next step - Modify property: if VPN -eq True (value of VPN is $VPN)"
+                Write-Debug "Next step - Modify property VPN"
                 try {
                     Write-Verbose "Modifying subnet: Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{VPN = $VPN } -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{VPN = $VPN } -ComputerName $Server
@@ -152,7 +154,7 @@ function Add-Subnet {
             }
             
             if ( $WellConnected -eq $True ) {
-                Write-Debug "Next step - Modify property: if WellConnected -eq True (value of WellConnected is $WellConnected)"
+                Write-Debug "Next step - Modify property WellConnected"
                 try {
                     Write-Verbose "Modifying subnet: Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{WellConnected = $WellConnected } -ComputerName $Server"
                     Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{WellConnected = $WellConnected } -ComputerName $Server
@@ -166,7 +168,7 @@ function Add-Subnet {
             }
 
             if ( $DOType -ne 'Not set' ) {
-                Write-Debug "Next step - Modify property: if DOType -ne 'Not set' (value of DOType is $DOType)"
+                Write-Debug "Next step - Modify property DOType"
                 if ( $DOType -eq 'HTTP Only' ) { [int]$DOType = 0 }
                 if ( $DOType -eq 'LAN' ) { [int]$DOType = 1 }
                 if ( $DOType -eq 'Group' ) { [int]$DOType = 2 }
@@ -188,7 +190,7 @@ function Add-Subnet {
             }
 
             if ( $SetDOGroupID ) {
-                Write-Debug "Next step - Modify property: if SetDOGroupID -eq True (value of SetDOGroupID is $SetDOGroupID)"
+                Write-Debug "Next step - Modify property DOGroupID"
                 Write-Verbose "Get Subnets ID (not SubnetID): Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter ""SubnetID LIKE '%$SubnetID%'"" -ComputerName $Server"
                 $id = $(Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
                 Write-Verbose "Subnets ID is = $id"
@@ -276,10 +278,13 @@ function Remove-Subnet {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
     process {
+        Write-Verbose "Variable - DeleteChildren : $DeleteChildren"
         if ( $DeleteChildren ) {
             $Arguments = @{ DeleteChildren = $true }
         }
@@ -287,10 +292,13 @@ function Remove-Subnet {
             $Arguments = @{ DeleteChildren = $false }
         }
         
+        Write-Debug "Next step - Get subnets to verify existence" 
         if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+            Write-Verbose "Getting subnet(s) by LocationName - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""LocationName LIKE '%$LocationName%'"""
             [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "LocationName LIKE '%$LocationName%'"
         }
         else {
+            Write-Verbose "Getting subnet(s) by SubnetID - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID LIKE '%$SubnetID%'"""
             [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'"
         }
 
@@ -299,6 +307,7 @@ function Remove-Subnet {
             break
         }
 
+        Write-Verbose "Variable - SkipConfirm : $SkipCOnfirm"
         if ( !$SkipConfirm ) {
             Write-Output "You are about to delete $($Subnets.Count) subnet(s) listed below:"
             Write-Output " "
@@ -315,12 +324,22 @@ function Remove-Subnet {
             }
             Write-Output " "
         }
+        
         foreach ( $Subnet in $Subnets ) {
+            if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+                Write-Debug "Next step - Removing subnet based on LocationName"
+            }
+            else {
+                Write-Debug "Next step - Removing subnet based on SubnetID"
+            }
+
             try {
                 if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+                    Write-Verbose "Removing subnet: Invoke-CimMethod -Namespace $Namespace -Query ""SELECT * FROM Subnets Where LocationName = '$($Subnet.LocationName)'"" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null"
                     Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Subnets Where LocationName = '$($Subnet.LocationName)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
                 }
                 else {
+                    Write-Verbose "Removing subnet: Invoke-CimMethod -Namespace $Namespace -Query ""SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'"" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null"
                     Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
                 }
                 if ( !$Quiet ) {
@@ -383,17 +402,22 @@ function Set-Subnet {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
     process {
+        Write-Verbose "Getting subnet(s) by SubnetID - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID = '$SubnetID'"""
         if ( !$(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
             Write-Output "SubnetID $SubnetID does not exist, aborting!"
             break
         }
 
+        Write-Debug "Next step - Set subnet property"
         try {
             $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
+            Write-Verbose "Set subnet property : Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server"
             Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server
             Write-Output "Successfully updated '$Property' with the new value '$NewValue' on subnet $SubnetID."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Successfully updated the property $Property to $NewValue on subnet $SubnetID." -EntryType Information
@@ -435,8 +459,13 @@ function Start-ServerService {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
+        
+        Write-Verbose "Get status of StifleRServer : get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'}"
         $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
+        Write-verbose "Status: $Service"
         if ( $Service.State -eq 'Running' ) {
             Write-Warning 'The service StifleRService is already in the state Started, aborting!'
             break
@@ -444,8 +473,11 @@ function Start-ServerService {
     }
 
     process {
+        Write-Debug "Next step - Start Service"
         try {
+            Write-Verbose "StifleR Service : Invoke-WmiMethod -Path ""Win32_Service.Name='StifleRServer'"" -Name StartService -Computername $Server | out-null"
             Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StartService -Computername $Server | out-null
+            Write-Verbose "Get service state : (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')"
             (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')
             Write-Output "Successfully started service StifleRServer"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9214 -Message "Successfully started the service StifleRServer." -EntryType Information
@@ -495,8 +527,13 @@ function Stop-ServerService {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
+
+        Write-Verbose "Get service state : get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'}"
         $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
+        Write-verbose "Status: $Service"
         if ( $Service.State -eq 'Stopped' ) {
             Write-Warning 'The service StifleRService is already in the state Stopped, aborting!'
             break
@@ -504,13 +541,18 @@ function Stop-ServerService {
     }
 
     process {
+
+        Write-Debug "Next step - Stop Service"
         try {
             if ( !$Force ) {
+                Write-Verbose "StifleR Service : Invoke-WmiMethod -Path ""Win32_Service.Name='StifleRServer'"" -Name StopService -Computername $Server | out-null"
                 Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StopService -Computername $Server | out-null
             }
             else {
+                Write-Verbose "StifleR Service : (Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter ""name='StifleR.Service.exe'"").Terminate() | out-null"
                 $(Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter "name='StifleR.Service.exe'").Terminate() | out-null
             }
+            Write-Verbose "Get status of service : (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')"
             (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')
             Write-Output "Successfully stopped service StifleRServer"
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9212 -Message "Successfully stopped the service StifleRServer." -EntryType Information
@@ -576,6 +618,8 @@ function Set-BITSJob {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
@@ -628,6 +672,8 @@ function Set-BITSJob {
         }
 
         if ( $TriggerHappy ) {
+            Write-Debug "Next step : $Action BITSJob for $TriggerTarget"
+            Write-Verbose "Trigger BITSJob Action : Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList ""$Action"", False, ""*"", 0, ""$TriggerTarget"" -ComputerName $Server | out-null"
             try {
                 Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList "$Action", False, "*", 0, "$TriggerTarget" -ComputerName $Server | out-null
                 Write-Output "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget"
@@ -687,10 +733,13 @@ function Set-ServerDebugLevel {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
     process {
+        Write-Verbose "Variable - DebugLevel : $DebugLevel"
         if ( $DebugLevel -eq '0.Disabled' ) { [string]$DebugLevel = '0' }
         if ( $DebugLevel -eq '1.Errors Only' ) { [string]$DebugLevel = '1' }
         if ( $DebugLevel -eq '2.Warning' ) { [string]$DebugLevel = '2' }
@@ -698,16 +747,23 @@ function Set-ServerDebugLevel {
         if ( $DebugLevel -eq '4.Informative' ) { [string]$DebugLevel = '4' }
         if ( $DebugLevel -eq '5.Debug' ) { [string]$DebugLevel = '5' }
         if ( $DebugLevel -eq '6.Super Verbose' ) { [string]$DebugLevel = '6' }
+        Write-Verbose "Variable - DebugLevel (corresponding number): $DebugLevel"
 
+        Write-Verbose "Get content from config: Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"""
         [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
         $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).Value
+        Write-Verbose "Variable - CurrentValue : $CurrentValue"
         if ( $DebugLevel -eq $CurrentValue ) {
             Write-Warning "This DebugLevel is already active, aborting!"
             break
         }
         $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).value = $DebugLevel
+
+        Write-Debug "Next step - Set debug level"
         try {
+            Write-Verbose "Get config file : [string]$Content = Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Raw"
             [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
+            Write-Verbose "Replacing and saving content : $Content.Replace(""add key=""EnableDebugLog"" value=""$CurrentValue"",""add key=""EnableDebugLog"" value=""$DebugLevel"") | out-file ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Encoding utf8 -Force -NoNewline"
             $Content.Replace("add key=""EnableDebugLog"" value=""$CurrentValue""","add key=""EnableDebugLog"" value=""$DebugLevel""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
             Write-Output "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Information
@@ -778,17 +834,22 @@ function Set-ServerSettings {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
     process {
+        Write-Verbose "Get content from config: Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"""
         [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
         $CurrentKeyName = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).key
+        Write-Verbose "Variable - CurrentKeyName : $CurrentKeyName"
         if ( !$CurrentKeyName ) {
             Write-Warning "The property '$Property' does not exist, aborting!"
             break
         }
         $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).Value
+        Write-Verbose "Variable - CurrentValue : $CurrentValue"
         if ( $NewValue -eq $CurrentValue ) {
             Write-Warning "The property '$Property' already has the value '$NewValue', aborting!"
             break
@@ -806,8 +867,12 @@ function Set-ServerSettings {
             }
             Write-Output " "
         }
+
+        Write-Debug "Next step - Set server settings"
         try {
+            Write-Verbose "Get config file : [string]$Content = Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Raw"
             [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
+            Write-Verbose "Replacing and saving content : $Content.Replace(""add key=""$CurrentKeyName"" value=""$CurrentValue""","add key=""$CurrentKeyName"" value=""$NewValue"""") | out-file ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Encoding utf8 -Force -NoNewline"
             $Content.Replace("add key=""$CurrentKeyName"" value=""$CurrentValue""","add key=""$CurrentKeyName"" value=""$NewValue""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
             Write-Output "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
             Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
@@ -875,6 +940,8 @@ function Get-Client {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
 
         if ( $Property -ne '*' ) {
@@ -962,6 +1029,8 @@ function Get-ClientVersions {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
@@ -1025,6 +1094,8 @@ function Get-ServerSettings {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
@@ -1087,6 +1158,8 @@ function Get-ServerDebugLevel {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
@@ -1137,6 +1210,8 @@ function Get-SignalRHubHealth {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
@@ -1211,6 +1286,8 @@ function Get-Subnet {
         $ClassProperties = @()
         $SubnetInfo = @()
 
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
 
         # Check if the specified properties exists in the Subnet class
@@ -1295,6 +1372,8 @@ function Get-SubnetQueues {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
@@ -1328,6 +1407,8 @@ function Get-Connections {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
@@ -1406,10 +1487,13 @@ function Remove-Client {
     )
 
     begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
     }
 
     process {
+        Write-Verbose "Variable - Flush : $Flush"
         if ( $Flush ) {
             $Arguments = @{ flush = $true }
         }
@@ -1440,8 +1524,11 @@ function Remove-Client {
             }
             Write-Output " "
         }
+
+        Write-Debug "Next step - Removing clients"
         foreach ( $Client in $Clients ) {
             try {
+                Write-Verbose "Invoke-CimMethod -Namespace $Namespace -Query ""SELECT * FROM Clients Where ComputerName = '$Client'"" -MethodName RemoveFromDB -ComputerName $Server -Arguments $Arguments | out-null"
                 Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Clients Where ComputerName = '$Client'" -MethodName RemoveFromDB -ComputerName $Server -Arguments $Arguments | out-null
                 if ( !$Quiet ) {
                     Write-Output "Successfully removed client: $Client"
