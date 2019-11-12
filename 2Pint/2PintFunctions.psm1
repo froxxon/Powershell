@@ -799,6 +799,10 @@ function Set-ServerSettings {
 
     .PARAMETER Clear
         Specify this switch to clear the value of a property
+
+    .PARAMETER InstallDir
+        Specify the Installation directory for StifleR Server,
+        default is 'C$\Program Files\2Pint Software\StifleR'
         
     .PARAMETER Server (ComputerName, Computer)
         This will be the server hosting the StifleR Server-service.
@@ -1545,3 +1549,121 @@ function Remove-Client {
     }
 
 }
+
+function Get-LicenseInformation {
+
+   <#
+    .SYNOPSIS
+        Use this to get information about your StifleR license
+
+    .DESCRIPTION
+        Information about your StifleR License
+        Details:
+        - Information about your StifleR License
+
+    .PARAMETER InstallDir
+        Specify the Installation directory for StifleR Server,
+        default is 'C$\Program Files\2Pint Software\StifleR'
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Get-StiflerLicenseInformation -Server server01
+        Get information from License.nfo file on server01
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$InstallDir='C$\Program Files\2Pint Software\StifleR'
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        try {
+            Write-Verbose "Get content from license file : (Get-Content ""\\$Server\$InstallDir\License.nfo"").Where({ $_ -eq '[Licensing]'},'SkipUntil')"
+            $Content = (Get-Content "\\$Server\$InstallDir\License.nfo").Where({ $_ -eq '[Licensing]'},'SkipUntil')
+            $LicenseProperties = [PSCustomObject]@{}
+            foreach ( $LicProp in $Content ) {
+                if ( $LicProp -ne '[Licensing]' ) {
+                    $Attrib = $LicProp.Split('=')
+                    $LicenseProperties | Add-Member -Name $Attrib[0] -Value $Attrib[1] -MemberType NoteProperty
+                }
+            }
+            $LicenseProperties | Add-Member -Name 'DaysLeft' -Value $(New-TimeSpan -Start (get-date) -End $LicenseProperties.ExpiryDate).Days -MemberType NoteProperty
+            $LicenseProperties
+        }
+        catch {
+            Write-Warning "Failed to get information from the license file on server $Server"
+        }
+    }
+
+}
+
+function Set-Leaders {
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+    }
+
+}
+
+function Get-Leaders {
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+    }
+
+}
+
+function Get-EventLogs {
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+    }
+
+}
+
