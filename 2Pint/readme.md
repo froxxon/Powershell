@@ -6,6 +6,10 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.0.8 (2019-11-12)
+- Started to add *'Write-Debug'* and *'Write-Verbose'* where applicable, to be continued...
+- Corrected the mistake *'if ( $NewSubnetSuccess = $true )'* to *'if ( $NewSubnetSuccess -eq $true ) {'* in *'Add-StifleRSubnet'*
+
 #### version 1.0.7 (2019-11-11)
 - Added *'-NoNewline'* to *'out-file'* while changing config in *'Set-StifleRServerSettings'* to prevent empty rows created in end of configfile
 - Added *'-NoNewline'* to *'out-file'* while changing config in *'Set-StifleRServerDebugLevel'* to prevent empty rows created in end of configfile
