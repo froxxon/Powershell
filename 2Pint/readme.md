@@ -53,8 +53,9 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## REQUIREMENTS
 
+<details><summary>Show</summary>
+
 For everything to work as expected the following requirements should be met:
-<details><summary>View all</summary>
 
 - Powershell version 5.1
 - Remote WMI from source to the server running '*StifleR Server'*
@@ -68,7 +69,7 @@ For everything to work as expected the following requirements should be met:
 ## EXPLANATION OF FUNCTIONS
 
 #### Add-StifleRSubnet
-**Add-StifleRSubnet** <details><summary>Show</summary><p>
+<details><summary>Add-StifleRSubnet</summary><p>
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
     Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
