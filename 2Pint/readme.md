@@ -61,12 +61,12 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 For everything to work as expected the following requirements should be met:
 
-**TL;DR:**
+**TL;DR**
 - Local Administrator membership on StifleR Server recommended
 - Membership in Stiflers 'Global Administrators' group recommended
 - PS 5.1 (required) and Remote WMI (required if run remotely)
 
-**Specifics:**
+**Specifics**
 - Powershell version 5.1
 - Remote WMI from source to the server running '*StifleR Server'*
 - *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
