@@ -79,25 +79,6 @@ For everything to work as expected the following requirements should be met:
     Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
 </details>
 
-**<details><summary>Set-StifleRBITSJob</summary>**
-
-**Syntax**
-
-```Set-StiflerBITSJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]```
-
-**Example** - Cancels all current transfers on the subnet 192.168.20.2
-
-    Set-StiflerBITSJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
-
-**Example 2** - Suspends all current transfers on the client Client01
-
-    Set-StiflerBITSJob -Server 'server01' -TargetLevel Client -Action Suspend -Target Client01
-
-**Example 3** - Resumes all the transfers known to StifleR as suspended earlier on all subnets
-
-    Set-StiflerBITSJob -Server 'server01' -TargetLevel All -Action Resume
-</details>
-
 **<details><summary>Get-StifleRClient</summary>**
 
 **Syntax**
@@ -261,6 +242,25 @@ childobjects of this subnet
 **Example 3** - Prompts a question about removing all subnets with SubnetID like 172
 
     Remove-StiflerSubnet -Server 'server01' -SubnetID 172
+</details>
+
+**<details><summary>Set-StifleRBITSJob</summary>**
+
+**Syntax**
+
+```Set-StiflerBITSJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]```
+
+**Example** - Cancels all current transfers on the subnet 192.168.20.2
+
+    Set-StiflerBITSJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
+
+**Example 2** - Suspends all current transfers on the client Client01
+
+    Set-StiflerBITSJob -Server 'server01' -TargetLevel Client -Action Suspend -Target Client01
+
+**Example 3** - Resumes all the transfers known to StifleR as suspended earlier on all subnets
+
+    Set-StiflerBITSJob -Server 'server01' -TargetLevel All -Action Resume
 </details>
 
 **<details><summary>Set-StifleRServerDebugLevel</summary>**
