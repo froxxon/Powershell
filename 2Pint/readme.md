@@ -160,6 +160,7 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Get-StifleRServerSettings</summary>**
 
 **Syntax**
+
 ```Get-StiflerServerSettings [[-Server] <String>] [[-InstallDir] <String>] [-SortByKeyName] [<CommonParameters>]```
 
 **Example** - Get the settings from server01
@@ -180,6 +181,7 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Get-StifleRSignalRHubHealth</summary>**
 
 **Syntax**
+
 ```Get-StiflerSignalRHubHealth [[-Server] <String>] [<CommonParameters>]```
 
 **Example** - Get statistics about Signal-R
@@ -190,8 +192,9 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Get-StifleRSubnet</summary>**
 
 **Syntax**
+
 ```Get-StiflerSubnet [[-SubnetID] <String>] [-LocationName <String>] [[-Server] <String>] [-Property <Array>] [-ShowRedLeader] [-ShowB
-lueLeader] [<CommonParameters>]```
+lueLeader] [<CommonParameters]```
 
 **Example** - Pull subnets with locationname like '21-' from server01
 
