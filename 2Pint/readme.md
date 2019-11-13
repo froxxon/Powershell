@@ -58,7 +58,7 @@ For everything to work as expected the following requirements should be met:
 - Remote WMI from source to the server running '*StifleR Server'*
 - *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
 - For *'Get-/Set-StifleRServerSettings'* and *'Get-/Set-StifleRServerDebugLevel'* *'C$'* (default, or the parameter INSTALLDIR) must be reachable by SMB from source and permissions to read/write in the specified location
-- 'Get-StifleRLicenseInformation' requires above access to License.nfo in InstallDir
+- 'Get-StifleRLicenseInformation' requires permission to read License.nfo in InstallDir by fileshare
 - Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
 - *'Start-/Stop-StilfeRServerService'* requires Administrator rights (if not explicitly provided for the service *StifleRServer'* otherwise)
 
