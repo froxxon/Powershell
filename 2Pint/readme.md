@@ -159,15 +159,18 @@ For everything to work as expected the following requirements should be met:
 
 **<details><summary>Get-StifleRServerSettings</summary>**
 
-Get the settings from server01
+**Syntax**
+``` ```
+
+**Example** - Get the settings from server01
 
     Get-StifleRServerSettings -Server 'server01'
 
-Get the settings from server01 with keynames sorted in alphabetical order
+**Example 2** - Get the settings from server01 with keynames sorted in alphabetical order
 
     Get-StifleRServerSettings -Server 'server01' -SortByKeyName
 
-Get the settings from server01 where the installations directory for StifleR Server is
+**Example 3** - Get the settings from server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
     Get-StifleRServerSettings -Server 'server01' -InstallDir
@@ -176,73 +179,91 @@ Get the settings from server01 where the installations directory for StifleR Ser
 
 **<details><summary>Get-StifleRSignalRHubHealth</summary>**
 
-Get statistics about Signal-R
+**Syntax**
+``` ```
+
+**Example** - Get statistics about Signal-R
 
     Get-StifleRSIgnalRHubHealth -Server 'server01'
 </details>
 
 **<details><summary>Get-StifleRSubnet</summary>**
 
-Pull subnets with locationname like '21-' from server01
+**Syntax**
+``` ```
+
+**Example** - Pull subnets with locationname like '21-' from server01
 
     Get-StiflerSubnet -Identity '21-*' -Server 'server01' | Format-Table -AutoSize
 
-Pull subnets with pipeline where subnetID like '172.16' from server01 and show current red-/blue leader
+**Example 2** - Pull subnets with pipeline where subnetID like '172.16' from server01 and show current red-/blue leader
 
     '172.16' | Get-StiflerSubnet -Server 'server01' | Select-Object -uUnique LocationName, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Format-Table -AutoSize
 
-Pull all subnets from sever01 with specific properties and sorts them based on AverageBandwidth
+**Example 3** - Pull all subnets from sever01 with specific properties and sorts them based on AverageBandwidth
 
     Get-StiflerSubnet -Server 'sever01' -Property LocationName, ActiveClients, AverageBandwidth, SubnetID | Select LocationName, SubnetID, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Where ActiveClients -gt 0 | Sort AverageBandwidth, LocationName -Descending | Format-Table -AutoSize
 </details>
 
 **<details><summary>Get-StifleRSubnetQUeues</summary>**
 
-Get information about the current queues in StifleR
+**Syntax**
+``` ```
+
+**Example** - Get information about the current queues in StifleR
 
     Get-StifleRSubnetQUeues -server 'server01'
 </details>
 
 **<details><summary>Remove-StifleRClient</summary>**
 
-Removes the client with ComputerName Client1 and hides the confirmation
+**Syntax**
+``` ```
+
+**Example** - Removes the client with ComputerName Client1 and hides the confirmation
 dialog as well as the successful result message
 
     Remove-StifleRClient -Server 'server01' -Client Client1 -SkipConfirm -Quiet
 
-Removes the client with ComputerName Client1 and makes a flush
+**Example 2** - Removes the client with ComputerName Client1 and makes a flush
 
     Remove-StifleRClient -Server 'server01' -Client Client1 -Flush
 
-Prompts a question about removing all clients with ComputerName like MININT-
+**Example 3** - Prompts a question about removing all clients with ComputerName like MININT-
 
     Remove-StifleRClient -Server 'server01' -Client MININT-
 </details>
 
 **<details><summary>Remove-StifleRSubnet</summary>**
 
-Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
+**Syntax**
+``` ```
+
+**Example** - Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
 dialog as well as the successful result message
 
     Remove-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -SkipConfirm -Quiet
 
-Removes the subnet with the LocationName TESTNET and deletes (if any) the
+**Example 2** - Removes the subnet with the LocationName TESTNET and deletes (if any) the
 childobjects of this subnet
 
     Remove-StiflerSubnet -Server 'server01' -LocationName TESTNET -DeleteChildren
 
-Prompts a question about removing all subnets with SubnetID like 172
+**Example 3** - Prompts a question about removing all subnets with SubnetID like 172
 
     Remove-StiflerSubnet -Server 'server01' -SubnetID 172
 </details>
 
 **<details><summary>Set-StifleRServerDebugLevel</summary>**
 
-Enable Super verbose debugging on server01
+**Syntax**
+``` ```
+
+**Example** - Enable Super verbose debugging on server01
 
     Set-StifleRServerDebugLevel -Server 'server01' -DebugLevel '6.Super Verbose'
 
-Disable debugging on server01 where the installations directory for StifleR Server is
+**Example 2** - Disable debugging on server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
     Set-StifleRServerDebugLevel -Server 'server01' -DebugLevel '0.Disabled' -InstallDir
@@ -251,40 +272,49 @@ Disable debugging on server01 where the installations directory for StifleR Serv
 
 **<details><summary>Set-StifleRServerSettings</summary>**
 
-Sets the property wsapifw to 1 in StifleR Server
+**Syntax**
+``` ```
+
+**Example** - Sets the property wsapifw to 1 in StifleR Server
 
     Set-StifleRServerSettings -Server 'server01' -Property wsapifw -NewValue 1
 
-Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
+**Example 2** - Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
 
     Set-StifleRServerSettings -Server 'server01' -Property wsapifw -NewValue 1 -SkipConfirm
 
-Sets the property wsapifw to nothing in StifleR Server
+**Example 3** - Sets the property wsapifw to nothing in StifleR Server
 
     Set-StifleRServerSettings -Server 'server01' -Property wsapifw -Clear
 </details>
 
 **<details><summary>Set-StifleRSubnet</summary>**
 
-Sets the property VPN to True on subnet 172.10.10.0
+**Syntax**
+``` ```
+
+**Example** - Sets the property VPN to True on subnet 172.10.10.0
 
     Set-StifleRSubnetProperty -Server 'server01' -SubnetID 172.10.10.0 -Property VPN -NewValue True
 </details>
 
 **<details><summary>Start-StifleRServerService</summary>**
 
-Starts the StifleRServer service on server01
+**Example 2** - Starts the StifleRServer service on server01
 
     Start-StifleRServerService -Server 'server01'
 </details>
 
 **<details><summary>Stop-StifleRServerService</summary>**
 
-Stops the StifleRServer service on server01
+**Syntax**
+``` ```
+
+**Example** - Stops the StifleRServer service on server01
 
     Stop-StifleRServerService -Server 'server01'
 
-Stops the StifleRServer service on server01 by killing the process of the service
+**Example 2** - Stops the StifleRServer service on server01 by killing the process of the service
 
     Stop-StifleRServerService -Server 'server01' -Force
 </details>
