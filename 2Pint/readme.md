@@ -85,21 +85,15 @@ For everything to work as expected the following requirements should be met:
 
 ```Set-StiflerBITSJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]```
 
-**Example**
-
-Cancels all current transfers on the subnet 192.168.20.2
+**Example** - Cancels all current transfers on the subnet 192.168.20.2
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
 
-**Example 2**
-
-Suspends all current transfers on the client Client01
+**Example 2** - Suspends all current transfers on the client Client01
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel Client -Action Suspend -Target Client01
 
-**Example 3**
-
-Resumes all the transfers known to StifleR as suspended earlier on all subnets
+**Example 3** - Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel All -Action Resume
 </details>
@@ -111,21 +105,15 @@ Resumes all the transfers known to StifleR as suspended earlier on all subnets
 ```Get-StiflerClient -Client <String[]> [-Server <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
 ```Get-StiflerClient [-Server <String>] [-SubnetID <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
 
-**Example**
-
-Pull information about the client Client01 from server01
+**Example** - Pull information about the client Client01 from server01
 
     Get-StiflerClient -Client Client01 -Server 'server01'
 
-**Example 2**
-
-Pull clients with pipeline where ComputerName like 'Clien' from server01
+**Example 2** - Pull clients with pipeline where ComputerName like 'Clien' from server01
 
     'Clien' | Get-StiflerClient -Server 'server01'
 
-**Example 3**
-
-Pull client with pipeline where ComputerName equals 'Client01' from server01
+**Example 3** - Pull client with pipeline where ComputerName equals 'Client01' from server01
 
     'Client01' | Get-StiflerClient -Server 'server01' -ExactMatch
 </details>
@@ -136,9 +124,7 @@ Pull client with pipeline where ComputerName equals 'Client01' from server01
 
 ```Get-StiflerClientVersions [[-Server] <String>] [<CommonParameters>]```
 
-**Example**
-
-Get a list of versions and the number of clients for each one
+**Example** - Get a list of versions and the number of clients for each one
 
     Get-StifleRClientVersions -Server 'server01'
 </details>
@@ -149,9 +135,7 @@ Get a list of versions and the number of clients for each one
 
 ```Get-StiflerLicenseInformation [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]```
 
-**Example**
-
-Get information about your licensing from server01
+**Example** - Get information about your licensing from server01
 
     Get-StifleRLicenseInformation -Server 'server01'
 </details>
@@ -162,15 +146,11 @@ Get information about your licensing from server01
 
 ```Get-StiflerServerDebugLevel [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]```
 
-**Example**
-
-Get the current debug level on server01
+**Example** - Get the current debug level on server01
 
     Get-StifleRServerDebugLevel -Server 'server01'
 
-**Example 2**
-
-Get the current debug level on server01 where the installations directory for StifleR Server is
+**Example 2** - Get the current debug level on server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
     Get-StifleRServerDebugLevel -Server 'server01' -InstallDir
