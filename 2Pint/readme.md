@@ -54,7 +54,6 @@ A recommendation at this point in time would also be to test this out in a lab e
 ## REQUIREMENTS
 
 For everything to work as expected the following requirements should be met:
-
 <details><summary>View all</summary>
 
 - Powershell version 5.1
