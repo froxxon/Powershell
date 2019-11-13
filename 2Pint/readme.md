@@ -4,7 +4,7 @@ A module with some functions to make the life easier to manage StifleR Server wi
 for ease of use just copy those to %ProgramFiles%\WindowsPowershell\Modules\2PintFunctions\ or use 'import-module <PATH>'.
 A recommendation at this point in time would also be to test this out in a lab environment, if such exist, first hand ;)
 
-## CHANGE LOG
+<details><summary>## CHANGE LOG</summary>
 
 #### version 1.1.0 (2019-11-13)
 - Added functions *'Get-StifleREventLogs'*, *'Get-StifleRLeaders'* and *'Set-StifleRLeaders'* as *'In progress'*
@@ -47,6 +47,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 #### version -le 1.0.4 (< 2019-11-10)
 - Build phase undocumented
+</details>
 
 ## REQUIREMENTS
 
