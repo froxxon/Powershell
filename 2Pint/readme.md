@@ -54,6 +54,9 @@ A recommendation at this point in time would also be to test this out in a lab e
 ## REQUIREMENTS
 
 For everything to work as expected the following requirements should be met:
+
+<details><summary>View all</summary>
+
 - Powershell version 5.1
 - Remote WMI from source to the server running '*StifleR Server'*
 - *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
@@ -61,15 +64,17 @@ For everything to work as expected the following requirements should be met:
 - 'Get-StifleRLicenseInformation' requires permission to read License.nfo in InstallDir by fileshare
 - Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
 - *'Start-/Stop-StilfeRServerService'* requires Administrator rights (if not explicitly provided for the service *StifleRServer'* otherwise)
+</details>
 
 ## EXPLANATION OF FUNCTIONS
 
-#### Add-StifleRSubnet
+#### Add-StifleRSubnet <details><summary>Show</summary>
 
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
     Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
-    
+</details>
+
 #### Set-StifleRBITSJob
 
 Cancels all current transfers on the subnet 192.168.20.2
