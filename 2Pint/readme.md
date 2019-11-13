@@ -103,6 +103,7 @@ For everything to work as expected the following requirements should be met:
 **Syntax**
 
 ```Get-StiflerClient -Client <String[]> [-Server <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
+
 ```Get-StiflerClient [-Server <String>] [-SubnetID <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
 
 **Example** - Pull information about the client Client01 from server01
@@ -244,6 +245,7 @@ dialog as well as the successful result message
 **Syntax**
 
 ```Remove-StiflerSubnet [-LocationName] <String> [-Server <String>] [-DeleteChildren] [-SkipConfirm] [-Quiet] [<CommonParameters>]```
+
 ```Remove-StiflerSubnet [-SubnetID] <String> [-Server <String>] [-DeleteChildren] [-SkipConfirm] [-Quiet] [<CommonParameters>]```
 
 **Example** - Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
@@ -283,6 +285,7 @@ childobjects of this subnet
 **Syntax**
 
 ```Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> -NewValue <String> [-SkipConfirm <String>] [<CommonParameters>]```
+
 ```Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> [-SkipConfirm <String>] -Clear [<CommonParameters>]```
 
 **Example** - Sets the property wsapifw to 1 in StifleR Server
