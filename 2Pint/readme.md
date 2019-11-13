@@ -12,6 +12,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 - Added parameter InstallDir to CBH for *'Set-StifleRServerSettings'*
 
 <details><summary>View all</summary>
+    
 #### version 1.0.9 (2019-11-12)
 - All functions that sets data in some way have *'Write-Debug'* and *'Write-Verbose'* messages now
 
