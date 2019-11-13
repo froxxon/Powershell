@@ -67,7 +67,8 @@ For everything to work as expected the following requirements should be met:
 
 ## EXPLANATION OF FUNCTIONS
 
-#### Add-StifleRSubnet <details><summary>Show</summary><p>
+#### Add-StifleRSubnet
+**Add-StifleRSubnet** <details><summary>Show</summary><p>
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
     Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
