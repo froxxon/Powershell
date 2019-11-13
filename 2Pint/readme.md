@@ -74,9 +74,7 @@ For everything to work as expected the following requirements should be met:
 
 ```Add-StiflerSubnet [-Server <String>] [-SubnetID] <String> [-GatewayMAC <String>] [-LocationName <String>] [-TargetBandwidth <UInt32>] [-Description <String>] [-ParentLocationID <String>] [-LEDBATTargetBandwidth <Int32>] [-VPN <Boolean>] [-WellConnected <Boolean>] [-DOType <String>] [-SetDOGroupID] [<CommonParameters>]```
 
-**Example**
-
-Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
+**Example** - Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
     Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
 </details>
