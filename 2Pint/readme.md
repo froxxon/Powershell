@@ -160,7 +160,7 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Get-StifleRServerSettings</summary>**
 
 **Syntax**
-``` ```
+```Get-StiflerServerSettings [[-Server] <String>] [[-InstallDir] <String>] [-SortByKeyName] [<CommonParameters>]```
 
 **Example** - Get the settings from server01
 
@@ -180,7 +180,7 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Get-StifleRSignalRHubHealth</summary>**
 
 **Syntax**
-``` ```
+```Get-StiflerSignalRHubHealth [[-Server] <String>] [<CommonParameters>]```
 
 **Example** - Get statistics about Signal-R
 
@@ -190,7 +190,8 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Get-StifleRSubnet</summary>**
 
 **Syntax**
-``` ```
+```Get-StiflerSubnet [[-SubnetID] <String>] [-LocationName <String>] [[-Server] <String>] [-Property <Array>] [-ShowRedLeader] [-ShowB
+lueLeader] [<CommonParameters>]```
 
 **Example** - Pull subnets with locationname like '21-' from server01
 
@@ -208,7 +209,7 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Get-StifleRSubnetQUeues</summary>**
 
 **Syntax**
-``` ```
+```Get-StiflerSubnetQueues [[-Server] <String>] [<CommonParameters>]```
 
 **Example** - Get information about the current queues in StifleR
 
@@ -218,7 +219,7 @@ For everything to work as expected the following requirements should be met:
 **<details><summary>Remove-StifleRClient</summary>**
 
 **Syntax**
-``` ```
+```Remove-StiflerClient [[-Server] <String>] [-Client] <String> [-Flush] [-Quiet] [-SkipConfirm] [<CommonParameters>]```
 
 **Example** - Removes the client with ComputerName Client1 and hides the confirmation
 dialog as well as the successful result message
@@ -237,7 +238,8 @@ dialog as well as the successful result message
 **<details><summary>Remove-StifleRSubnet</summary>**
 
 **Syntax**
-``` ```
+```Remove-StiflerSubnet [-LocationName] <String> [-Server <String>] [-DeleteChildren] [-SkipConfirm] [-Quiet] [<CommonParameters>]```
+```Remove-StiflerSubnet [-SubnetID] <String> [-Server <String>] [-DeleteChildren] [-SkipConfirm] [-Quiet] [<CommonParameters>]```
 
 **Example** - Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
 dialog as well as the successful result message
@@ -257,7 +259,7 @@ childobjects of this subnet
 **<details><summary>Set-StifleRServerDebugLevel</summary>**
 
 **Syntax**
-``` ```
+```Get-StiflerServerDebugLevel [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]```
 
 **Example** - Enable Super verbose debugging on server01
 
@@ -273,7 +275,10 @@ childobjects of this subnet
 **<details><summary>Set-StifleRServerSettings</summary>**
 
 **Syntax**
-``` ```
+```Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> -NewValue <String> [-SkipConfirm <String>] [
+<CommonParameters>]```
+```Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> [-SkipConfirm <String>] -Clear [<CommonParam
+eters>]```
 
 **Example** - Sets the property wsapifw to 1 in StifleR Server
 
@@ -291,7 +296,7 @@ childobjects of this subnet
 **<details><summary>Set-StifleRSubnet</summary>**
 
 **Syntax**
-``` ```
+```Set-StiflerSubnet [-SubnetID] <String> [-Server <String>] -Property <String> -NewValue <String> [<CommonParameters>]```
 
 **Example** - Sets the property VPN to True on subnet 172.10.10.0
 
@@ -299,6 +304,9 @@ childobjects of this subnet
 </details>
 
 **<details><summary>Start-StifleRServerService</summary>**
+
+**Syntax**
+```Start-StiflerServerService [[-Server] <String>] [<CommonParameters>]```
 
 **Example 2** - Starts the StifleRServer service on server01
 
@@ -308,7 +316,7 @@ childobjects of this subnet
 **<details><summary>Stop-StifleRServerService</summary>**
 
 **Syntax**
-``` ```
+```Stop-StiflerServerService [[-Server] <String>] [-Force] [<CommonParameters>]```
 
 **Example** - Stops the StifleRServer service on server01
 
