@@ -193,9 +193,7 @@ For everything to work as expected the following requirements should be met:
 
 **Syntax**
 
-```Get-StiflerSubnet [[-SubnetID] <String>] [-LocationName <String>] [[-Server] <String>] [-Property <Array>] [-ShowRedLeader] [-ShowB
-lueLeader] [<CommonParameters]
-```
+```Get-StiflerSubnet [[-SubnetID] <String>] [-LocationName <String>] [[-Server] <String>] [-Property <Array>] [-ShowRedLeader] [-ShowBlueLeader] [<CommonParameters]```
 
 **Example** - Pull subnets with locationname like '21-' from server01
 
@@ -284,11 +282,8 @@ childobjects of this subnet
 
 **Syntax**
 
-```Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> -NewValue <String> [-SkipConfirm <String>] [
-<CommonParameters>]
-Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> [-SkipConfirm <String>] -Clear [<CommonParam
-eters>]
-```
+```Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> -NewValue <String> [-SkipConfirm <String>] [<CommonParameters>]```
+```Set-StiflerServerSettings [-Server <String>] [-InstallDir <String>] -Property <String> [-SkipConfirm <String>] -Clear [<CommonParameters>]```
 
 **Example** - Sets the property wsapifw to 1 in StifleR Server
 
