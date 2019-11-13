@@ -80,6 +80,8 @@ Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN su
 
 **<details><summary>Set-StifleRBITSJob</summary>**
 
+*Set-StiflerBITSJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]*
+
 Cancels all current transfers on the subnet 192.168.20.2
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
@@ -94,6 +96,9 @@ Resumes all the transfers known to StifleR as suspended earlier on all subnets
 </details>
 
 **<details><summary>Get-StifleRClient</summary>**
+
+*Get-StiflerClient -Client <String[]> [-Server <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]*
+*Get-StiflerClient [-Server <String>] [-SubnetID <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]*
 
 Pull information about the client Client01 from server01
 
@@ -110,6 +115,8 @@ Pull client with pipeline where ComputerName equals 'Client01' from server01
 
 **<details><summary>Get-StifleRClientVersions</summary>**
 
+*Get-StiflerClientVersions [[-Server] <String>] [<CommonParameters>]*
+
 Get a list of versions and the number of clients for each one
 
     Get-StifleRClientVersions -Server 'server01'
@@ -117,12 +124,16 @@ Get a list of versions and the number of clients for each one
 
 **<details><summary>Get-StifleRLicenseInformation</summary>**
 
+*Get-StiflerLicenseInformation [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]*
+
 Get information about your licensing from server01
 
     Get-StifleRLicenseInformation -Server 'server01'
 </details>
 
 **<details><summary>Get-StifleRServerDebugLevel</summary>**
+
+*Get-StiflerServerDebugLevel [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]*
 
 Get the current debug level on server01
 
