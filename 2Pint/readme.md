@@ -5,12 +5,13 @@ for ease of use just copy those to %ProgramFiles%\WindowsPowershell\Modules\2Pin
 A recommendation at this point in time would also be to test this out in a lab environment, if such exist, first hand ;)
 
 ## CHANGE LOG
-<details><summary>
+
 #### version 1.1.0 (2019-11-13)
 - Added functions *'Get-StifleREventLogs'*, *'Get-StifleRLeaders'* and *'Set-StifleRLeaders'* as *'In progress'*
 - Added function **'Get-StifleRLicenseInformation'**
 - Added parameter InstallDir to CBH for *'Set-StifleRServerSettings'*
-</summary>
+
+<details><summary>View all</summary>
 #### version 1.0.9 (2019-11-12)
 - All functions that sets data in some way have *'Write-Debug'* and *'Write-Verbose'* messages now
 
