@@ -251,6 +251,7 @@ Sets the property VPN to True on subnet 172.10.10.0
 Starts the StifleRServer service on server01
 
     Start-StifleRServerService -Server 'server01'
+</details>
 
 **<details><summary>Stop-StifleRServerService</summary>**
 
