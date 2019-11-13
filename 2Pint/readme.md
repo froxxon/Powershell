@@ -176,6 +176,7 @@ Pull all subnets from sever01 with specific properties and sorts them based on A
 Get information about the current queues in StifleR
 
     Get-StifleRSubnetQUeues -server 'server01'
+</details>
 
 **<details><summary>Remove-StifleRClient</summary>**
 
@@ -193,7 +194,7 @@ Prompts a question about removing all clients with ComputerName like MININT-
     Remove-StifleRClient -Server 'server01' -Client MININT-
 </details>
 
-#### Remove-StifleRSubnet
+**<details><summary>Remove-StifleRSubnet</summary>**
 
 Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
 dialog as well as the successful result message
@@ -208,8 +209,9 @@ childobjects of this subnet
 Prompts a question about removing all subnets with SubnetID like 172
 
     Remove-StiflerSubnet -Server 'server01' -SubnetID 172
+</details>
 
-#### Set-StifleRServerDebugLevel
+**<details><summary>Set-StifleRServerDebugLevel</summary>**
 
 Enable Super verbose debugging on server01
 
@@ -220,8 +222,9 @@ Disable debugging on server01 where the installations directory for StifleR Serv
 
     Set-StifleRServerDebugLevel -Server 'server01' -DebugLevel '0.Disabled' -InstallDir
     'D$\Program Files\2Pint Software\StifleR'
+</details>
 
-#### Set-StifleRServerSettings
+**<details><summary>Set-StifleRServerSettings</summary>**
 
 Sets the property wsapifw to 1 in StifleR Server
 
@@ -234,20 +237,22 @@ Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
 Sets the property wsapifw to nothing in StifleR Server
 
     Set-StifleRServerSettings -Server 'server01' -Property wsapifw -Clear
+</details>
 
-#### Set-StifleRSubnet
+**<details><summary>Set-StifleRSubnet</summary>**
 
 Sets the property VPN to True on subnet 172.10.10.0
 
     Set-StifleRSubnetProperty -Server 'server01' -SubnetID 172.10.10.0 -Property VPN -NewValue True
+</details>
 
-#### Start-StifleRServerService
+**<details><summary>Start-StifleRServerService</summary>**
 
 Starts the StifleRServer service on server01
 
     Start-StifleRServerService -Server 'server01'
 
-#### Stop-StifleRServerService
+**<details><summary>Stop-StifleRServerService</summary>**
 
 Stops the StifleRServer service on server01
 
@@ -256,3 +261,4 @@ Stops the StifleRServer service on server01
 Stops the StifleRServer service on server01 by killing the process of the service
 
     Stop-StifleRServerService -Server 'server01' -Force
+</details>
