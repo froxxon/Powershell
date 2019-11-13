@@ -1,3 +1,19 @@
+## CHANGE LOG
+
+#### version 1.1.0 (2019-11-13)
+- Added functions *'Get-StifleREventLogs'*, *'Get-StifleRLeaders'* and *'Set-StifleRLeaders'* as *'In progress'*
+- Added function **'Get-StifleRLicenseInformation'**
+- Added parameter InstallDir to CBH for *'Set-StifleRServerSettings'*
+
+#### version 1.0.9 (2019-11-12)
+- All functions that sets data in some way have *'Write-Debug'* and *'Write-Verbose'* messages now
+
+#### version 1.0.8 (2019-11-12)
+- Started to add *'Write-Debug'* and *'Write-Verbose'* where applicable, to be continued...
+- Corrected the mistake *'if ( $NewSubnetSuccess = $true )'* to *'if ( $NewSubnetSuccess -eq $true ) {'* in *'Add-StifleRSubnet'*
+
+#### version 1.0.7 (2019-11-11)
+- Added *'-NoNewline'* to *'out-file'* while changing config in *'Set-StifleRServerSettings'* to prevent empty rows created in end of configfile
 - Added *'-NoNewline'* to *'out-file'* while changing config in *'Set-StifleRServerDebugLevel'* to prevent empty rows created in end of configfile
 - Removed *'<'* and *'/>'* from *'$Content.Replace'* in *'Set-StifleRServerSettings'*
 - Removed *'<'* and *'/>'* from *'$Content.Replace'* in *'Set-StifleRServerDebugLevel'*
