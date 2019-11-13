@@ -79,9 +79,6 @@ For everything to work as expected the following requirements should be met:
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
     Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
-
-
-
 </details>
 
 **<details><summary>Set-StifleRBITSJob</summary>**
@@ -111,16 +108,24 @@ Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
 **<details><summary>Get-StifleRClient</summary>**
 
-*Get-StiflerClient -Client <String[]> [-Server <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]*
-*Get-StiflerClient [-Server <String>] [-SubnetID <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]*
+**Syntax**
+
+```Get-StiflerClient -Client <String[]> [-Server <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
+```Get-StiflerClient [-Server <String>] [-SubnetID <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
+
+**Example**
 
 Pull information about the client Client01 from server01
 
     Get-StiflerClient -Client Client01 -Server 'server01'
 
+**Example 2**
+
 Pull clients with pipeline where ComputerName like 'Clien' from server01
 
     'Clien' | Get-StiflerClient -Server 'server01'
+
+**Example 3**
 
 Pull client with pipeline where ComputerName equals 'Client01' from server01
 
@@ -129,7 +134,11 @@ Pull client with pipeline where ComputerName equals 'Client01' from server01
 
 **<details><summary>Get-StifleRClientVersions</summary>**
 
-*Get-StiflerClientVersions [[-Server] <String>] [<CommonParameters>]*
+**Syntax**
+
+```Get-StiflerClientVersions [[-Server] <String>] [<CommonParameters>]```
+
+**Example**
 
 Get a list of versions and the number of clients for each one
 
@@ -138,7 +147,11 @@ Get a list of versions and the number of clients for each one
 
 **<details><summary>Get-StifleRLicenseInformation</summary>**
 
-*Get-StiflerLicenseInformation [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]*
+**Syntax**
+
+```Get-StiflerLicenseInformation [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]```
+
+**Example**
 
 Get information about your licensing from server01
 
@@ -147,11 +160,17 @@ Get information about your licensing from server01
 
 **<details><summary>Get-StifleRServerDebugLevel</summary>**
 
-*Get-StiflerServerDebugLevel [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]*
+**Syntax**
+
+```Get-StiflerServerDebugLevel [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]```
+
+**Example**
 
 Get the current debug level on server01
 
     Get-StifleRServerDebugLevel -Server 'server01'
+
+**Example 2**
 
 Get the current debug level on server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
