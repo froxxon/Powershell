@@ -79,17 +79,17 @@ Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN su
 
 **<details><summary>Set-StifleRBITSJob</summary>**
 
-*Set-StiflerBITSJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]*
+```*Set-StiflerBITSJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]*```
 
-Cancels all current transfers on the subnet 192.168.20.2
+    Cancels all current transfers on the subnet 192.168.20.2
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
 
-Suspends all current transfers on the client Client01
+    Suspends all current transfers on the client Client01
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel Client -Action Suspend -Target Client01
 
-Resumes all the transfers known to StifleR as suspended earlier on all subnets
+    Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel All -Action Resume
 </details>
