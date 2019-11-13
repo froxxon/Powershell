@@ -6,13 +6,17 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.1.1 (2019-11-14)
+- The function *'Get-StifleREventLogs'* is now completed and up and running
+- Changed *'Remove-StifleRClient'* from *'In progress'* to *done!*
+
+<details><summary>View all</summary>
+
 #### version 1.1.0 (2019-11-13)
 - Added functions *'Get-StifleREventLogs'*, *'Get-StifleRLeaders'* and *'Set-StifleRLeaders'* as *'In progress'*
 - Added function **'Get-StifleRLicenseInformation'**
 - Added parameter InstallDir to CBH for *'Set-StifleRServerSettings'*
-
-<details><summary>View all</summary>
-    
+   
 #### version 1.0.9 (2019-11-12)
 - All functions that sets data in some way have *'Write-Debug'* and *'Write-Verbose'* messages now
 
@@ -109,6 +113,25 @@ For everything to work as expected the following requirements should be met:
 **Example** - Get a list of versions and the number of clients for each one
 
     Get-StifleRClientVersions -Server 'server01'
+</details>
+
+**<details><summary>Get-StifleREventLogs</summary>**
+    
+**Syntax**
+
+```Get-StiflerEventLogs [[-Server] <String>] [[-MaxEvents] <Int32>] [[-EventID] <Array>] [[-Message] <String>] [[-LevelDisplayName]<String>] [[-ProviderName] <String>] [[-StartDate] <DateTime>] [[-EndDate] <DateTime>] [-ListLog] [<CommonParameters>]```
+
+**Example** - Get the 10 latest events from server01 and sort them by Id, default is by ascending TimeCreated
+
+    Get-StiflerEventLog -Server 'server01' -MaxEvents 10 | sort-object Id
+
+**Example 2** - Get all events tagged as Information, EventIDs 4821 or 1506, Message contains 'Saving' created within the last 60 minutes
+
+    Get-StiflerEventLogs -Server 'server01' -LevelDisplayName Information -EventID 4821,1506 -Message Saving -StartDate (Get-Date).AddMinutes(-60)
+    
+**Example 3** - Get all events that happened from 60 to 120 minutes ago
+
+    Get-StiflerEventLogs -Server 'server01' -StartDate (Get-Date).AddMinutes(-120) -EndDate (Get-Date).AddMinutes(-60)
 </details>
 
 **<details><summary>Get-StifleRLicenseInformation</summary>**
