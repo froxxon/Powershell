@@ -70,8 +70,7 @@ For everything to work as expected the following requirements should be met:
 
 **<details><summary>Add-StifleRSubnet</summary>**
     
-> *Add-StiflerSubnet [-Server <String>] [-SubnetID] <String> [-GatewayMAC <String>] [-LocationName <String>] [-TargetBandwidth <UInt32>] [-Description <String>] [-ParentLocationID <String>] [-LEDBATTargetBandwidth <Int32>] [-VPN <Boolean>] [-WellConnected <Boolean>
-] [-DOType <String>] [-SetDOGroupID] [<CommonParameters>]*
+<p>*Add-StiflerSubnet [-Server <String>] [-SubnetID] <String> [-GatewayMAC <String>] [-LocationName <String>] [-TargetBandwidth <UInt32>] [-Description <String>] [-ParentLocationID <String>] [-LEDBATTargetBandwidth <Int32>] [-VPN <Boolean>] [-WellConnected <Boolean>] [-DOType <String>] [-SetDOGroupID] [<CommonParameters>]*</p>
 
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
 
