@@ -75,7 +75,7 @@ Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN su
     Add-StiflerSubnet -Server 'server01' -SubnetID 172.10.10.0 -VPN $true*
 </details>
 
-#### Set-StifleRBITSJob
+**<details><summary>Set-StifleRBITSJob</summary>**
 
 Cancels all current transfers on the subnet 192.168.20.2
 
@@ -89,7 +89,7 @@ Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
     Set-StiflerBITSJob -Server 'server01' -TargetLevel All -Action Resume
 
-#### Get-StifleRClient
+**<details><summary>Get-StifleRClient</summary>**
 
 Pull information about the client Client01 from server01
 
@@ -103,19 +103,19 @@ Pull client with pipeline where ComputerName equals 'Client01' from server01
 
     'Client01' | Get-StiflerClient -Server 'server01' -ExactMatch
 
-#### Get-StifleRClientVersions
+**<details><summary>Get-StifleRClientVersions</summary>**
 
 Get a list of versions and the number of clients for each one
 
     Get-StifleRClientVersions -Server 'server01'
 
-#### Get-StifleRLicenseInformation
+**<details><summary>Get-StifleRLicenseInformation</summary>**
 
 Get information about your licensing from server01
 
     Get-StifleRLicenseInformation -Server 'server01'
 
-#### Get-StifleRServerDebugLevel
+**<details><summary>Get-StifleRServerDebugLevel</summary>**
 
 Get the current debug level on server01
 
@@ -127,7 +127,7 @@ Get the current debug level on server01 where the installations directory for St
     Get-StifleRServerDebugLevel -Server 'server01' -InstallDir
     'D$\Program Files\2Pint Software\StifleR'
 
-#### Get-StifleRServerSettings
+**<details><summary>Get-StifleRServerSettings</summary>**
 
 Get the settings from server01
 
@@ -143,13 +143,13 @@ Get the settings from server01 where the installations directory for StifleR Ser
     Get-StifleRServerSettings -Server 'server01' -InstallDir
     'D$\Program Files\2Pint Software\StifleR'
 
-#### Get-StifleRSignalRHubHealth
+**<details><summary>Get-StifleRSignalRHubHealth</summary>**
 
 Get statistics about Signal-R
 
     Get-StifleRSIgnalRHubHealth -Server 'server01'
 
-#### Get-StifleRSubnet
+**<details><summary>Get-StifleRSubnet</summary>**
 
 Pull subnets with locationname like '21-' from server01
 
@@ -163,13 +163,13 @@ Pull all subnets from sever01 with specific properties and sorts them based on A
 
     Get-StiflerSubnet -Server 'sever01' -Property LocationName, ActiveClients, AverageBandwidth, SubnetID | Select LocationName, SubnetID, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Where ActiveClients -gt 0 | Sort AverageBandwidth, LocationName -Descending | Format-Table -AutoSize
 
-#### Get-StifleRSubnetQUeues
+**<details><summary>Get-StifleRSubnetQUeues</summary>**
 
 Get information about the current queues in StifleR
 
     Get-StifleRSubnetQUeues -server 'server01'
 
-#### Remove-StifleRClient
+**<details><summary>Remove-StifleRClient</summary>**
 
 Removes the client with ComputerName Client1 and hides the confirmation
 dialog as well as the successful result message
