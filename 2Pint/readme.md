@@ -61,11 +61,18 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 For everything to work as expected the following requirements should be met:
 
+**TL;DR:**
+- Local Administrator membership on StifleR Server recommended
+- Membership in Stiflers 'Global Administrators' group recommended
+- PS 5.1 (required) and Remote WMI (required if run remotely)
+
+**Specifics:**
 - Powershell version 5.1
 - Remote WMI from source to the server running '*StifleR Server'*
 - *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
 - For *'Get-/Set-StifleRServerSettings'* and *'Get-/Set-StifleRServerDebugLevel'* *'C$'* (default, or the parameter INSTALLDIR) must be reachable by SMB from source and permissions to read/write in the specified location
 - 'Get-StifleRLicenseInformation' requires permission to read License.nfo in InstallDir by fileshare
+- 'Get-StifleREventLogs' requires permissions to read from event log
 - Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
 - *'Start-/Stop-StilfeRServerService'* requires Administrator rights (if not explicitly provided for the service *StifleRServer'* otherwise)
 </details>
