@@ -53,7 +53,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## REQUIREMENTS
 
-<details><summary>Show</summary><br><br>
+<details><summary>Show</summary><br>
 
 For everything to work as expected the following requirements should be met:
 
@@ -68,7 +68,6 @@ For everything to work as expected the following requirements should be met:
 
 ## EXPLANATION OF FUNCTIONS
 
-#### Add-StifleRSubnet
 **<details><summary>Add-StifleRSubnet</summary>**
     
 Creates a new subnet with the SubnetID of 172.10.10.0 and classes it as a VPN subnet
