@@ -1,28 +1,6 @@
 ﻿#Requires -Version 5.1
 New-Variable -Name Namespace -Value 'root\StifleR' -Option AllScope
 
-function Test-ServerConnection {
-
-    param ( [String]$Server )
-
-    # Check if the specified server is reachable
-    if ( Test-Connection $Server -Count 1 -Quiet -ErrorAction Stop ) {}
-    else {
-        Write-Error -Message "The specified server $Server could not be contacted"
-        break
-    }
-        
-    # Check if the specified server has the WMI namespace for StifleR
-    try {
-        Get-CIMClass -Namespace $Namespace -ComputerName $Server -ErrorAction Stop | out-null
-    }
-    catch {
-        Write-Error -Message "The specified server $Server is missing the WMI namespace for StifleR"
-        break
-    }
-
-}
-
 function Add-Subnet {
 
     <#
@@ -211,684 +189,6 @@ function Add-Subnet {
 
 } 
 
-function Remove-Subnet {
-
-   <#
-    .SYNOPSIS
-        Use this to remove a subnet from StifleR
-
-    .DESCRIPTION
-        Just another way of remvoing a subnet from StifleR
-        Details:
-        - Easily remove one or more of your subnets through Powershell
-
-    .PARAMETER LocationName
-        Specify the LocationName (or part of) of the subnet(s) you want
-        to remove
-        
-    .PARAMETER SubnetID
-        Specify the SubnetID (or part of) of the subnet(s) you want to
-        remove
-        
-    .PARAMETER DeleteChildren
-        Specify this if all linked childsubnets should be removed in
-        the process as well, default is false
-        
-    .PARAMETER SkipConfirm
-        Specify this switch if you don't want to confirm the removal
-        of found subnets
-        
-    .PARAMETER Quiet
-        Specify this parameter if you don't want any status message
-        about the result
-
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Remove-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -SkipConfirm -Quite
-        Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
-        dialog as well as the successful result message
-
-    .EXAMPLE
-	Remove-StiflerSubnet -Server server01 -LocationName TESTNET -DeleteChildren
-        Removes the subnet with the LocationName TESTNET and deletes (if any) the
-        childobjects of this subnet
-
-    .EXAMPLE
-	Remove-StiflerSubnet -Server server01 -SubnetID 172
-        Prompts a question about removing all subnets with SubnetID like 172
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-
-    [CmdletBinding()]
-    param (
-        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true,Mandatory=$true,ParameterSetName = "LocationName")]
-        [Alias('Identity')]
-        [String]$LocationName,
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [Parameter(Position=2,Mandatory=$true,ParameterSetName = "SubnetID")]
-        [String]$SubnetID,
-        [switch]$DeleteChildren,
-        [switch]$SkipConfirm,
-        [switch]$Quiet
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        Write-Verbose "Variable - DeleteChildren : $DeleteChildren"
-        if ( $DeleteChildren ) {
-            $Arguments = @{ DeleteChildren = $true }
-        }
-        else {
-            $Arguments = @{ DeleteChildren = $false }
-        }
-        
-        Write-Debug "Next step - Get subnets to verify existence" 
-        if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
-            Write-Verbose "Getting subnet(s) by LocationName - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""LocationName LIKE '%$LocationName%'"""
-            [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "LocationName LIKE '%$LocationName%'"
-        }
-        else {
-            Write-Verbose "Getting subnet(s) by SubnetID - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID LIKE '%$SubnetID%'"""
-            [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'"
-        }
-
-        if ( $Subnets.Count -le 0 ) {
-            Write-Warning "No subnets found matching the input parameters, aborting!"
-            break
-        }
-
-        Write-Verbose "Variable - SkipConfirm : $SkipCOnfirm"
-        if ( !$SkipConfirm ) {
-            Write-Output "You are about to delete $($Subnets.Count) subnet(s) listed below:"
-            Write-Output " "
-            foreach ( $Subnet in $Subnets ) {
-                Write-Output "SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
-            }
-            Write-Output " "
-            $msg = "Are you sure? [Y/N]"
-            do {
-                $response = Read-Host -Prompt $msg
-            } until ($response -eq 'n' -or $response -eq 'y')
-            if ( $response -eq 'n' ) {
-                break
-            }
-            Write-Output " "
-        }
-        
-        foreach ( $Subnet in $Subnets ) {
-            if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
-                Write-Debug "Next step - Removing subnet based on LocationName"
-            }
-            else {
-                Write-Debug "Next step - Removing subnet based on SubnetID"
-            }
-
-            try {
-                if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
-                    Write-Verbose "Removing subnet: Invoke-CimMethod -Namespace $Namespace -Query ""SELECT * FROM Subnets Where LocationName = '$($Subnet.LocationName)'"" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null"
-                    Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Subnets Where LocationName = '$($Subnet.LocationName)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
-                }
-                else {
-                    Write-Verbose "Removing subnet: Invoke-CimMethod -Namespace $Namespace -Query ""SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'"" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null"
-                    Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
-                }
-                if ( !$Quiet ) {
-                    Write-Output "Successfully removed SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
-                }
-                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9206 -Message "Successfully removed subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Information
-            }
-            catch {
-                Write-Warning "Failed to remove SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
-                if ( !$Quiet ) {
-                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9207 -Message "Failed to remove subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Error
-                }
-            }
-        }
-    }
-
-}
-
-function Set-Subnet {
-
-   <#
-    .SYNOPSIS
-        Use this to change a properties value on a specific subnet
-
-    .DESCRIPTION
-        Easily set new properties on subnets
-        Details:
-        - Easily set new properties on subnets
-
-    .PARAMETER SubnetID
-        Specify the SubnetID for which you want to change the proeprty
-        
-    .PARAMETER Property
-        Specify which property you want to change
-        
-    .PARAMETER NewValue
-        Specify the new value of the chosen property
-        
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Set-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
-        Sets the property VPN to True on subnet 172.10.10.0
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-
-    [cmdletbinding()]
-    param (
-        [Parameter(Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,Mandatory=$true)]
-        [string]$SubnetID,
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [Parameter(Mandatory=$true)]
-        [string]$Property,
-        [Parameter(Mandatory=$true)]
-        [string]$NewValue
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        Write-Verbose "Getting subnet(s) by SubnetID - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID = '$SubnetID'"""
-        if ( !$(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
-            Write-Output "SubnetID $SubnetID does not exist, aborting!"
-            break
-        }
-
-        Write-Debug "Next step - Set subnet property"
-        try {
-            $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
-            Write-Verbose "Set subnet property : Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server"
-            Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server
-            Write-Output "Successfully updated '$Property' with the new value '$NewValue' on subnet $SubnetID."
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Successfully updated the property $Property to $NewValue on subnet $SubnetID." -EntryType Information
-        }
-        catch {
-            Write-Warning "Failed to update $Property with the new value $NewValue on subnet $SubnetID, make sure the property exist!"
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Failed to update the property $Property to $NewValue on subnet $SubnetID." -EntryType Error
-        }
-    }
-
-}
-
-function Start-ServerService {
-
-   <#
-    .SYNOPSIS
-        Use this to start the StifleRServer service if it is not running
-
-    .DESCRIPTION
-        Start the StifleRServer service
-        Details:
-        - Start the StifleRServer service
-
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Start-StifleRServerService -Server server01
-        Starts the StifleRServer service on server01
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-
-    [cmdletbinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-        
-        Write-Verbose "Get status of StifleRServer : get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'}"
-        $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
-        Write-verbose "Status: $Service"
-        if ( $Service.State -eq 'Running' ) {
-            Write-Warning 'The service StifleRService is already in the state Started, aborting!'
-            break
-        }
-    }
-
-    process {
-        Write-Debug "Next step - Start Service"
-        try {
-            Write-Verbose "StifleR Service : Invoke-WmiMethod -Path ""Win32_Service.Name='StifleRServer'"" -Name StartService -Computername $Server | out-null"
-            Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StartService -Computername $Server | out-null
-            Write-Verbose "Get service state : (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')"
-            (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')
-            Write-Output "Successfully started service StifleRServer"
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9214 -Message "Successfully started the service StifleRServer." -EntryType Information
-        }
-        catch {
-            Write-Warning "Failed to start service StifleRServer"
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9215 -Message "Failed to start the service StifleRServer." -EntryType Error
-        }
-    }
-
-}
-
-function Stop-ServerService {
-
-   <#
-    .SYNOPSIS
-        Use this to stop the StifleRServer service if it is not stopped
-
-    .DESCRIPTION
-        Stop the StifleRServer service
-        Details:
-        - Stop the StifleRServer service
-
-    .PARAMETER Force
-        Specify this parameter if you need to instantly terminate the process
-
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Stop-StifleRServerService -Server server01
-        Stops the StifleRServer service on server01
-
-    .EXAMPLE
-	Stop-StifleRServerService -Server server01 -Force
-        Stops the StifleRServer service on server01 by killing the process of the service
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-
-    [cmdletbinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [switch]$Force
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-
-        Write-Verbose "Get service state : get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'}"
-        $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
-        Write-verbose "Status: $Service"
-        if ( $Service.State -eq 'Stopped' ) {
-            Write-Warning 'The service StifleRService is already in the state Stopped, aborting!'
-            break
-        }
-    }
-
-    process {
-
-        Write-Debug "Next step - Stop Service"
-        try {
-            if ( !$Force ) {
-                Write-Verbose "StifleR Service : Invoke-WmiMethod -Path ""Win32_Service.Name='StifleRServer'"" -Name StopService -Computername $Server | out-null"
-                Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StopService -Computername $Server | out-null
-            }
-            else {
-                Write-Verbose "StifleR Service : (Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter ""name='StifleR.Service.exe'"").Terminate() | out-null"
-                $(Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter "name='StifleR.Service.exe'").Terminate() | out-null
-            }
-            Write-Verbose "Get status of service : (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')"
-            (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')
-            Write-Output "Successfully stopped service StifleRServer"
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9212 -Message "Successfully stopped the service StifleRServer." -EntryType Information
-        }
-        catch {
-            Write-Warning "Failed to stop service StifleRServer"
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9213 -Message "Failed to stop the service StifleRServer." -EntryType Error
-        }
-    }
-
-}
-
-function Set-BITSJob {
-
-    <#
-    .SYNOPSIS
-        Use this to cancel, complete, resume or suspend the downloads in StifleR.
-
-    .DESCRIPTION
-        If you need to push the big red button, go no further!
-        Details:
-        - This skips the necessity of using WBEMTest or similiar tools to WMIExplorer to get the same functionality...
-
-    .PARAMETER Target (Identity)
-        Specify the client or subnetID that will be targeted for the action, this parameter can't be used in combination with TargetLevel All
-
-    .PARAMETER TargetLevel
-        Specify what kind of target you would like, a single Client, a specific SubnetID och All
-
-    .PARAMETER Action
-        Specify if you want to Cancel, Complete, Resume or Suspend all jobs
-
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
-        Cancels all current transfers on the subnet 192.168.20.2
-
-    .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01
-        Suspends all current transfers on the client Client01
-    
-    .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel All -Action Resume
-        Resumes all the transfers known to StifleR as suspended earlier on all subnets
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-    
-    [CmdletBinding()]
-    param (
-        [Parameter(HelpMessage = 'Choose what action you want to perform: Cancel, Complete, Resume or Suspend')]
-        [Alias('Identity')]
-        [string]$Target,
-        [Parameter(Mandatory, HelpMessage = 'Choose what level you want to target: Client, Subnet or All')][ValidateSet('Client','Subnet','All')]
-        [string]$TargetLevel,
-        [Parameter(Mandatory, HelpMessage = 'Choose what action you want to perform: Cancel, Complete, Resume or Suspend')][ValidateSet('Cancel','Complete','Resume','Suspend')]
-        [string]$Action,
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        if ( $TargetLevel -eq 'Subnet' ) {
-            if ( $([bool]($Target -as [ipaddress] -and ($Target.ToCharArray() | ?{$_ -eq "."}).count -eq 3)) ) {
-                if ( Get-Subnet -Server $Server -SubnetID $Target ) {
-                    $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
-                    while($Confirm -ne "y") {
-                        if ($Confirm -eq 'n') { Write-Warning "This command was cancelled by the user, aborting!" ; break }
-                        $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
-                    }
-                    if ( $Confirm -eq 'y' ) {
-                        $TriggerTarget = $Target
-                        $TriggerHappy = $True
-                    }
-                }
-                else { Write-Error "The SubnetID $Target couldn't be found in StifleR" }
-            }
-            else { Write-Error "The property Target ($Target) is not a correct IP address" }
-        }
-
-        if ( $TargetLevel -eq 'Client' ) {
-            if ( Get-Client -Server $Server -Client $Target -ExactMatch ) {
-                $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
-                while($Confirm -ne 'y') {
-                    if ($Confirm -eq 'n') { Write-Warning "This command was cancelled by the user, aborting!" ; break }
-                    $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
-                }
-                if ( $Confirm -eq 'y' ) {
-                    $TriggerTarget = $Target
-                    $TriggerHappy = $True
-                }
-            }
-            else { Write-Error "The Client $Target couldn't be found in StifleR" }
-        }
-
-        if ( $TargetLevel -eq 'All' ) {
-            if ( $Target -ne "" ) { Write-Error "The parameter Target can't be used when All is selected as TargetLevel" ; break }
-        
-            $Confirm = Read-Host "You are about to $Action ALL transfers, are you really sure? [y/n]"
-            while($Confirm -ne "y") {
-                if ($Confirm -eq 'n') { Write-Output "This command was cancelled by the user, aborting!" ; break }
-                $Confirm = Read-Host "You are about to $Action ALL transfers, are you really sure? [y/n]"
-            }
-            if ( $Confirm -eq 'y' ) {
-                $TriggerTarget = 'All'
-                $TriggerHappy = $True
-            }
-        }
-
-        if ( $TriggerHappy ) {
-            Write-Debug "Next step : $Action BITSJob for $TriggerTarget"
-            Write-Verbose "Trigger BITSJob Action : Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList ""$Action"", False, ""*"", 0, ""$TriggerTarget"" -ComputerName $Server | out-null"
-            try {
-                Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList "$Action", False, "*", 0, "$TriggerTarget" -ComputerName $Server | out-null
-                Write-Output "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget"
-                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9200 -Message "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Information
-            }            
-            catch {
-                Write-Warning "Failed to invoke BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget"
-                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9201 -Message "Failed to invoke BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Error
-            }
-        }
-    }
-
-}
-
-function Set-ServerDebugLevel {
-
-   <#
-    .SYNOPSIS
-        Use this to change debuglevel for StifleR Server
-
-    .DESCRIPTION
-        Easily set the debuglevel for StifleR Server
-        Details:
-        - Easily set the debuglevel for StifleR Server
-
-    .PARAMETER InstallDir
-        Specify the Installation directory for StifleR Server,
-        default is 'C$\Program Files\2Pint Software\StifleR'
-        
-    .PARAMETER DebugLevel
-        Specify what the new DebugLevel should be
-        
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Set-StifleRServerDebugLevel -Server server01 -DebugLevel '6.Super Verbose'
-        Enable Super verbose debugging on server01
-
-    .EXAMPLE
-	Set-StifleRServerDebugLevel -Server server01 -DebugLevel '0.Disabled' -InstallDir
-    'D$\Program Files\2Pint Software\StifleR'
-        Disable debugging on server01 where the installations directory for StifleR Server is
-        'D$\Program Files\2Pint Software\StifleR' instead of the default directory
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-
-    [CmdletBinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [string]$InstallDir='C$\Program Files\2Pint Software\StifleR',
-        [Parameter(Mandatory=$true)][ValidateSet('0.Disabled','1.Errors Only','2.Warning','3.OK','4.Informative','5.Debug','6.Super Verbose')]
-        [string]$DebugLevel
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        Write-Verbose "Variable - DebugLevel : $DebugLevel"
-        if ( $DebugLevel -eq '0.Disabled' ) { [string]$DebugLevel = '0' }
-        if ( $DebugLevel -eq '1.Errors Only' ) { [string]$DebugLevel = '1' }
-        if ( $DebugLevel -eq '2.Warning' ) { [string]$DebugLevel = '2' }
-        if ( $DebugLevel -eq '3.OK' ) { [string]$DebugLevel = '3' }
-        if ( $DebugLevel -eq '4.Informative' ) { [string]$DebugLevel = '4' }
-        if ( $DebugLevel -eq '5.Debug' ) { [string]$DebugLevel = '5' }
-        if ( $DebugLevel -eq '6.Super Verbose' ) { [string]$DebugLevel = '6' }
-        Write-Verbose "Variable - DebugLevel (corresponding number): $DebugLevel"
-
-        Write-Verbose "Get content from config: Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"""
-        [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
-        $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).Value
-        Write-Verbose "Variable - CurrentValue : $CurrentValue"
-        if ( $DebugLevel -eq $CurrentValue ) {
-            Write-Warning "This DebugLevel is already active, aborting!"
-            break
-        }
-        $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).value = $DebugLevel
-
-        Write-Debug "Next step - Set debug level"
-        try {
-            Write-Verbose "Get config file : [string]$Content = Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Raw"
-            [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
-            Write-Verbose "Replacing and saving content : $Content.Replace(""add key=""EnableDebugLog"" value=""$CurrentValue"",""add key=""EnableDebugLog"" value=""$DebugLevel"") | out-file ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Encoding utf8 -Force -NoNewline"
-            $Content.Replace("add key=""EnableDebugLog"" value=""$CurrentValue""","add key=""EnableDebugLog"" value=""$DebugLevel""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
-            Write-Output "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Information
-        }
-        catch {
-            Write-Warning "Failed to update DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Error
-        }
-    }
-        
-}
-
-function Set-ServerSettings {
-
-   <#
-    .SYNOPSIS
-        Use this to change properties values for StifleR Server
-
-    .DESCRIPTION
-        Easily set new values for properties on StifleR Server
-        Details:
-        - Easily set new values for properties on StifleR Server
-
-    .PARAMETER Property
-        Specify which property you want to change
-        
-    .PARAMETER NewValue
-        Specify the new value of the chosen property
-
-    .PARAMETER SkipConfirm
-        Specify this switch if you don't want to confirm the change
-        of the properties value
-
-    .PARAMETER Clear
-        Specify this switch to clear the value of a property
-
-    .PARAMETER InstallDir
-        Specify the Installation directory for StifleR Server,
-        default is 'C$\Program Files\2Pint Software\StifleR'
-        
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1
-        Sets the property wsapifw to 1 in StifleR Server
-
-    .EXAMPLE
-	Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1 -SkipConfirm
-        Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
-
-    .EXAMPLE
-	Set-StifleRServerSettings -Server server01 -Property wsapifw -Clear
-        Sets the property wsapifw to nothing in StifleR Server
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-
-    [CmdletBinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [string]$InstallDir='C$\Program Files\2Pint Software\StifleR',
-        [Parameter(Mandatory=$true)]
-        [string]$Property,
-        [Parameter(Mandatory=$true,ParameterSetName = "NewValue")]
-        [string]$NewValue,
-        [string]$SkipConfirm,
-        [Parameter(Mandatory=$true,ParameterSetName = "Clear")]
-        [switch]$Clear
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        Write-Verbose "Get content from config: Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"""
-        [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
-        $CurrentKeyName = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).key
-        Write-Verbose "Variable - CurrentKeyName : $CurrentKeyName"
-        if ( !$CurrentKeyName ) {
-            Write-Warning "The property '$Property' does not exist, aborting!"
-            break
-        }
-        $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).Value
-        Write-Verbose "Variable - CurrentValue : $CurrentValue"
-        if ( $NewValue -eq $CurrentValue ) {
-            Write-Warning "The property '$Property' already has the value '$NewValue', aborting!"
-            break
-        }
-        if ( !$SkipConfirm ) {
-            Write-Output "You are about to change the property '$Property' from '$CurrentValue' to '$NewValue'."
-            Write-Warning "Make sure this change is valid or things might break..."
-            Write-Output " "
-            $msg = "Apply change? [Y/N]"
-            do {
-                $response = Read-Host -Prompt $msg
-            } until ($response -eq 'n' -or $response -eq 'y')
-            if ( $response -eq 'n' ) {
-                break
-            }
-            Write-Output " "
-        }
-
-        Write-Debug "Next step - Set server settings"
-        try {
-            Write-Verbose "Get config file : [string]$Content = Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Raw"
-            [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
-            Write-Verbose "Replacing and saving content : $Content.Replace(""add key=""$CurrentKeyName"" value=""$CurrentValue""","add key=""$CurrentKeyName"" value=""$NewValue"""") | out-file ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Encoding utf8 -Force -NoNewline"
-            $Content.Replace("add key=""$CurrentKeyName"" value=""$CurrentValue""","add key=""$CurrentKeyName"" value=""$NewValue""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
-            Write-Output "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
-        }
-        catch {
-            Write-Warning "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue."
-            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Error
-        }
-    }
-        
-}
-
 function Get-Client {
     
     <#
@@ -1046,6 +346,181 @@ function Get-ClientVersions {
             $VersionInfo += New-Object -TypeName psobject -Property @{Version=$Version; Clients=$VersionCount}
         }
         $VersionInfo
+    }
+
+}
+
+function Get-EventLogs {
+
+   <#
+    .SYNOPSIS
+        Get event logs from StifleR
+
+    .DESCRIPTION
+        Get event logs from StifleR
+        Details:
+        - Get event logs from StifleR
+
+    .PARAMETER MaxEvents
+        Specify how many items that this function will try to get, it is not
+        the maximum returned results from it!
+        Default is 1000
+
+    .PARAMETER EventID
+        Specify one or multiple Event IDs to look for
+
+    .PARAMETER Message
+        Specify a string to search for in the Data field (a.k.a. Message)
+
+    .PARAMETER LevelDisplayName
+        Specify the type of events you want, default is 'All'
+        Available options are 'Trace','Debug','Information','Warning','Error','Critical'
+
+    .PARAMETER ProviderName
+        Specify the Provider you want to look into for events, default is 'StifleRServer'
+        Available options are 'All','StifleR','StifleRBeacon','StifleRClient' and 'StifleRServer'
+        
+    .PARAMETER StartDate
+        Specify a datetime from when you want to search for events
+        
+    .PARAMETER EndDate
+        Specify a datetime until you want to search for events
+        
+    .PARAMETER ListLog
+        Specify this parameter if you want information about the event log
+        for StifleR (FileSize, RecordCount etc.).
+        When using this parameter all other input will be ignored!
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Get-StiflerEventLog -Server 'server01' -MaxEvents 10 | sort-object Id
+        Get the 10 latest events from server01 and sort them by Id, default is
+        by ascending TimeCreated
+
+    .EXAMPLE
+	Get-StiflerEventLogs -Server 'server01' -LevelDisplayName Information -EventID 4821,1506
+	-Message Saving -StartDate (Get-Date).AddMinutes(-60)
+        Get all events tagged as Information, EventIDs 4821 or 1506, Message contains 'Saving'
+        created within the last 60 minutes
+
+    .EXAMPLE
+	Get-StiflerEventLogs -Server 'server01' -StartDate (Get-Date).AddMinutes(-120) -EndDate (Get-Date).AddMinutes(-60)
+        Get all events that happened from 60 to 120 minutes ago
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [int]$MaxEvents = 1000,
+        [array]$EventID,
+        [string]$Message,
+        [ValidateSet('Trace','Debug','Information','Warning','Error','Critical')]
+        [string]$LevelDisplayName,
+        [ValidateSet('All','StifleR','StifleRBeacon','StifleRClient','StifleRServer')]
+        [string]$ProviderName='StifleRServer',
+        [datetime]$StartDate,
+        [datetime]$EndDate,
+        [switch]$ListLog
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        if ( $ListLog ) {
+            Write-Verbose "When you used the parameter -ListLog all other inputs will be ignored!"
+            Get-WinEvent -ComputerName $Server -ListLog StifleR | Select-Object *
+        }
+        else {
+            if ( $LevelDisplayName -eq 'Trace' ) { $Level = 0 }
+            if ( $LevelDisplayName -eq 'Debug' ) { $Level = 1 }
+            if ( $LevelDisplayName -eq 'Error' ) { $Level = 2 }
+            if ( $LevelDisplayName -eq 'Warning' ) { $Level = 3 }
+            if ( $LevelDisplayName -eq 'Information' ) { $Level = 4 }
+            if ( $LevelDisplayName -eq 'Critical' ) { $Level = 5 }
+
+            if ( $ProviderName -eq 'All' ) {
+                $FilterXML = "<QueryList><Query><Select Path='StifleR'>*[System[Provider]["
+            }
+            else {
+                $FilterXML = "<QueryList><Query><Select Path='StifleR'>*[System[Provider[@Name='$ProviderName']]["
+            }
+                        
+            If ( $LevelDisplayName ) {
+                $FilterXML = "$FilterXML(Level=$Level)"
+                $And = $true
+            }
+            else {
+                $FilterXML = "$FilterXML(Level=0 or Level=1 or Level=2 or Level=3 or Level=4 or Level=5)"
+                $And = $true            
+            }
+
+            if ( $EventID.Count -ge 1 ) {
+                [int]$Counter = 0
+                foreach ( $Id in $EventID ) {
+                    if ( $Counter -eq 0 ) {
+                        if ( $And -eq $true ) {
+                            $FilterXML = "$FilterXML and (EventID=$Id"
+                        }
+                        else {
+                            $FilterXML = "$FilterXML(EventID=$Id"
+                            $And -eq $true
+                        }
+                    }
+                    else {
+                        $FilterXML = "$FilterXML or EventID=$Id"
+                    }
+                    $Counter++
+                }
+                $FilterXML = "$FilterXML)"
+                $And = $true
+            }
+
+            $FilterXML = "$FilterXML]]</Select></Query></QueryList>"
+            Write-Verbose "FilterXML string : $FilterXML"
+
+            try {
+                [array]$Events = Get-WinEvent -ComputerName $Server -MaxEvents $MaxEvents -FilterXML $FilterXML -ErrorAction Stop #| out-null
+
+                if ( $StartDate -or $EndDate ) {
+                    if ( $StartDate -and !$EndDate) {
+                        $Events = $Events | Where-Object TimeCreated -ge $StartDate
+                    }
+
+                    if ( !$StartDate -and $EndDate) {
+                        $Events = $Events | Where-Object TimeCreated -le $EndDate
+                    }
+
+                    if ( $StartDate -and $EndDate ) {
+                        $Events = $Events | Where-Object { $_.TimeCreated -le $EndDate -and $_.TimeCreated -ge $StartDate }
+                    }
+                }
+
+                if ( $Message ) {
+                    $Events = $Events | Where-Object Message -like "*$Message*" | Sort-Object TimeCreated
+                }
+                if ( $Events.Count -eq 0 ) {
+                    Write-Warning "No events found with the matching criterias, aborting!"
+                }
+                else {
+                    $Events | Sort-Object TimeCreated
+                }
+            }
+            catch {
+                if ( $Events.Count -eq 0 ) {
+                    Write-Warning "No events found with the matching criterias, aborting!"
+                }
+            }
+        }
     }
 
 }
@@ -1456,43 +931,6 @@ function Get-SubnetQueues {
 
 }
 
-# In progress - Remaining, what to actually show?
-function Get-Connections {
-
-    [cmdletbinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [string]$SubnetID,
-        [switch]$ActivelyTransfering,
-        [string]$ActiveBITSJobsIds,
-        [string]$ActiveDOJobIds,
-        [int]$Limit=1000
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        [string]$QueryAdditions = 'WHERE'
-        if ( $SubnetID -ne '' ) {
-            $QueryAdditions = "$QueryAdditions NetworkID='$SubnetID'"
-        }
-        if ( $ActivelyTransfering ) {
-            if ( $QueryAdditions -ne 'WHERE' ) { $QueryAdditions = "$QueryAdditions AND" }
-            $QueryAdditions = "$QueryAdditions ActivelyTransferring='$true'"
-        }
-        if ( $QueryAdditions -eq 'WHERE' ) { $QueryAdditions = '' }
-
-        write-Output $QueryAdditions
-        Get-CimInstance -Namespace $Namespace -Query "Select * from Connections $QueryAdditions" -ComputerName $Server | Select-Object -First $Limit
-    }
-}
-
-# Draft
 function Remove-Client {
 
    <#
@@ -1610,6 +1048,742 @@ function Remove-Client {
 
 }
 
+function Remove-Subnet {
+
+   <#
+    .SYNOPSIS
+        Use this to remove a subnet from StifleR
+
+    .DESCRIPTION
+        Just another way of remvoing a subnet from StifleR
+        Details:
+        - Easily remove one or more of your subnets through Powershell
+
+    .PARAMETER LocationName
+        Specify the LocationName (or part of) of the subnet(s) you want
+        to remove
+        
+    .PARAMETER SubnetID
+        Specify the SubnetID (or part of) of the subnet(s) you want to
+        remove
+        
+    .PARAMETER DeleteChildren
+        Specify this if all linked childsubnets should be removed in
+        the process as well, default is false
+        
+    .PARAMETER SkipConfirm
+        Specify this switch if you don't want to confirm the removal
+        of found subnets
+        
+    .PARAMETER Quiet
+        Specify this parameter if you don't want any status message
+        about the result
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Remove-StiflerSubnet -Server server01 -SubnetID 172.10.10.0 -SkipConfirm -Quite
+        Removes the subnet with SubnetID 172.10.10.0 and hides the confirmation
+        dialog as well as the successful result message
+
+    .EXAMPLE
+	Remove-StiflerSubnet -Server server01 -LocationName TESTNET -DeleteChildren
+        Removes the subnet with the LocationName TESTNET and deletes (if any) the
+        childobjects of this subnet
+
+    .EXAMPLE
+	Remove-StiflerSubnet -Server server01 -SubnetID 172
+        Prompts a question about removing all subnets with SubnetID like 172
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true,Mandatory=$true,ParameterSetName = "LocationName")]
+        [Alias('Identity')]
+        [String]$LocationName,
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [Parameter(Position=2,Mandatory=$true,ParameterSetName = "SubnetID")]
+        [String]$SubnetID,
+        [switch]$DeleteChildren,
+        [switch]$SkipConfirm,
+        [switch]$Quiet
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        Write-Verbose "Variable - DeleteChildren : $DeleteChildren"
+        if ( $DeleteChildren ) {
+            $Arguments = @{ DeleteChildren = $true }
+        }
+        else {
+            $Arguments = @{ DeleteChildren = $false }
+        }
+        
+        Write-Debug "Next step - Get subnets to verify existence" 
+        if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+            Write-Verbose "Getting subnet(s) by LocationName - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""LocationName LIKE '%$LocationName%'"""
+            [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "LocationName LIKE '%$LocationName%'"
+        }
+        else {
+            Write-Verbose "Getting subnet(s) by SubnetID - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID LIKE '%$SubnetID%'"""
+            [array]$Subnets = Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'"
+        }
+
+        if ( $Subnets.Count -le 0 ) {
+            Write-Warning "No subnets found matching the input parameters, aborting!"
+            break
+        }
+
+        Write-Verbose "Variable - SkipConfirm : $SkipCOnfirm"
+        if ( !$SkipConfirm ) {
+            Write-Output "You are about to delete $($Subnets.Count) subnet(s) listed below:"
+            Write-Output " "
+            foreach ( $Subnet in $Subnets ) {
+                Write-Output "SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+            }
+            Write-Output " "
+            $msg = "Are you sure? [Y/N]"
+            do {
+                $response = Read-Host -Prompt $msg
+            } until ($response -eq 'n' -or $response -eq 'y')
+            if ( $response -eq 'n' ) {
+                break
+            }
+            Write-Output " "
+        }
+        
+        foreach ( $Subnet in $Subnets ) {
+            if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+                Write-Debug "Next step - Removing subnet based on LocationName"
+            }
+            else {
+                Write-Debug "Next step - Removing subnet based on SubnetID"
+            }
+
+            try {
+                if ( $PsCmdlet.ParameterSetName -eq 'LocationName' ) {
+                    Write-Verbose "Removing subnet: Invoke-CimMethod -Namespace $Namespace -Query ""SELECT * FROM Subnets Where LocationName = '$($Subnet.LocationName)'"" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null"
+                    Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Subnets Where LocationName = '$($Subnet.LocationName)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
+                }
+                else {
+                    Write-Verbose "Removing subnet: Invoke-CimMethod -Namespace $Namespace -Query ""SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'"" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null"
+                    Invoke-CimMethod -Namespace $Namespace -Query "SELECT * FROM Subnets Where SubnetID = '$($Subnet.SubnetID)'" -MethodName RemoveSubnet -ComputerName $Server -Arguments $Arguments | out-null
+                }
+                if ( !$Quiet ) {
+                    Write-Output "Successfully removed SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+                }
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9206 -Message "Successfully removed subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Information
+            }
+            catch {
+                Write-Warning "Failed to remove SubnetID: $($Subnet.SubnetID) LocationName: $($Subnet.LocationName)"
+                if ( !$Quiet ) {
+                    Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9207 -Message "Failed to remove subnet $($Subnet.SubnetID) (LocationName: $($Subnet.LocationName)) with the argument DeleteChildren = $DeleteChildren" -EntryType Error
+                }
+            }
+        }
+    }
+
+}
+
+function Set-BITSJob {
+
+    <#
+    .SYNOPSIS
+        Use this to cancel, complete, resume or suspend the downloads in StifleR.
+
+    .DESCRIPTION
+        If you need to push the big red button, go no further!
+        Details:
+        - This skips the necessity of using WBEMTest or similiar tools to WMIExplorer to get the same functionality...
+
+    .PARAMETER Target (Identity)
+        Specify the client or subnetID that will be targeted for the action, this parameter can't be used in combination with TargetLevel All
+
+    .PARAMETER TargetLevel
+        Specify what kind of target you would like, a single Client, a specific SubnetID och All
+
+    .PARAMETER Action
+        Specify if you want to Cancel, Complete, Resume or Suspend all jobs
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
+        Cancels all current transfers on the subnet 192.168.20.2
+
+    .EXAMPLE
+	Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01
+        Suspends all current transfers on the client Client01
+    
+    .EXAMPLE
+	Set-StiflerBITSJob -Server server01 -TargetLevel All -Action Resume
+        Resumes all the transfers known to StifleR as suspended earlier on all subnets
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+    
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = 'Choose what action you want to perform: Cancel, Complete, Resume or Suspend')]
+        [Alias('Identity')]
+        [string]$Target,
+        [Parameter(Mandatory, HelpMessage = 'Choose what level you want to target: Client, Subnet or All')][ValidateSet('Client','Subnet','All')]
+        [string]$TargetLevel,
+        [Parameter(Mandatory, HelpMessage = 'Choose what action you want to perform: Cancel, Complete, Resume or Suspend')][ValidateSet('Cancel','Complete','Resume','Suspend')]
+        [string]$Action,
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        if ( $TargetLevel -eq 'Subnet' ) {
+            if ( $([bool]($Target -as [ipaddress] -and ($Target.ToCharArray() | ?{$_ -eq "."}).count -eq 3)) ) {
+                if ( Get-Subnet -Server $Server -SubnetID $Target ) {
+                    $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
+                    while($Confirm -ne "y") {
+                        if ($Confirm -eq 'n') { Write-Warning "This command was cancelled by the user, aborting!" ; break }
+                        $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
+                    }
+                    if ( $Confirm -eq 'y' ) {
+                        $TriggerTarget = $Target
+                        $TriggerHappy = $True
+                    }
+                }
+                else { Write-Error "The SubnetID $Target couldn't be found in StifleR" }
+            }
+            else { Write-Error "The property Target ($Target) is not a correct IP address" }
+        }
+
+        if ( $TargetLevel -eq 'Client' ) {
+            if ( Get-Client -Server $Server -Client $Target -ExactMatch ) {
+                $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
+                while($Confirm -ne 'y') {
+                    if ($Confirm -eq 'n') { Write-Warning "This command was cancelled by the user, aborting!" ; break }
+                    $Confirm = Read-Host "You are about to $Action all transfers for $Target, are you really sure? [y/n]"
+                }
+                if ( $Confirm -eq 'y' ) {
+                    $TriggerTarget = $Target
+                    $TriggerHappy = $True
+                }
+            }
+            else { Write-Error "The Client $Target couldn't be found in StifleR" }
+        }
+
+        if ( $TargetLevel -eq 'All' ) {
+            if ( $Target -ne "" ) { Write-Error "The parameter Target can't be used when All is selected as TargetLevel" ; break }
+        
+            $Confirm = Read-Host "You are about to $Action ALL transfers, are you really sure? [y/n]"
+            while($Confirm -ne "y") {
+                if ($Confirm -eq 'n') { Write-Output "This command was cancelled by the user, aborting!" ; break }
+                $Confirm = Read-Host "You are about to $Action ALL transfers, are you really sure? [y/n]"
+            }
+            if ( $Confirm -eq 'y' ) {
+                $TriggerTarget = 'All'
+                $TriggerHappy = $True
+            }
+        }
+
+        if ( $TriggerHappy ) {
+            Write-Debug "Next step : $Action BITSJob for $TriggerTarget"
+            Write-Verbose "Trigger BITSJob Action : Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList ""$Action"", False, ""*"", 0, ""$TriggerTarget"" -ComputerName $Server | out-null"
+            try {
+                Invoke-WMIMethod -Namespace $Namespace -Path StifleREngine.Id=1 -Name ModifyJobs -ArgumentList "$Action", False, "*", 0, "$TriggerTarget" -ComputerName $Server | out-null
+                Write-Output "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget"
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9200 -Message "Successfully invoked BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Information
+            }            
+            catch {
+                Write-Warning "Failed to invoke BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget"
+                Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9201 -Message "Failed to invoke BITSJob change with the following parameters: Action: $Action   Triggertarget: $TriggerTarget" -EntryType Error
+            }
+        }
+    }
+
+}
+
+function Set-ServerDebugLevel {
+
+   <#
+    .SYNOPSIS
+        Use this to change debuglevel for StifleR Server
+
+    .DESCRIPTION
+        Easily set the debuglevel for StifleR Server
+        Details:
+        - Easily set the debuglevel for StifleR Server
+
+    .PARAMETER InstallDir
+        Specify the Installation directory for StifleR Server,
+        default is 'C$\Program Files\2Pint Software\StifleR'
+        
+    .PARAMETER DebugLevel
+        Specify what the new DebugLevel should be
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Set-StifleRServerDebugLevel -Server server01 -DebugLevel '6.Super Verbose'
+        Enable Super verbose debugging on server01
+
+    .EXAMPLE
+	Set-StifleRServerDebugLevel -Server server01 -DebugLevel '0.Disabled' -InstallDir
+    'D$\Program Files\2Pint Software\StifleR'
+        Disable debugging on server01 where the installations directory for StifleR Server is
+        'D$\Program Files\2Pint Software\StifleR' instead of the default directory
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$InstallDir='C$\Program Files\2Pint Software\StifleR',
+        [Parameter(Mandatory=$true)][ValidateSet('0.Disabled','1.Errors Only','2.Warning','3.OK','4.Informative','5.Debug','6.Super Verbose')]
+        [string]$DebugLevel
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        Write-Verbose "Variable - DebugLevel : $DebugLevel"
+        if ( $DebugLevel -eq '0.Disabled' ) { [string]$DebugLevel = '0' }
+        if ( $DebugLevel -eq '1.Errors Only' ) { [string]$DebugLevel = '1' }
+        if ( $DebugLevel -eq '2.Warning' ) { [string]$DebugLevel = '2' }
+        if ( $DebugLevel -eq '3.OK' ) { [string]$DebugLevel = '3' }
+        if ( $DebugLevel -eq '4.Informative' ) { [string]$DebugLevel = '4' }
+        if ( $DebugLevel -eq '5.Debug' ) { [string]$DebugLevel = '5' }
+        if ( $DebugLevel -eq '6.Super Verbose' ) { [string]$DebugLevel = '6' }
+        Write-Verbose "Variable - DebugLevel (corresponding number): $DebugLevel"
+
+        Write-Verbose "Get content from config: Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"""
+        [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
+        $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).Value
+        Write-Verbose "Variable - CurrentValue : $CurrentValue"
+        if ( $DebugLevel -eq $CurrentValue ) {
+            Write-Warning "This DebugLevel is already active, aborting!"
+            break
+        }
+        $($Content.configuration.appSettings.add | Where-Object { $_.Key -eq 'EnableDebugLog' }).value = $DebugLevel
+
+        Write-Debug "Next step - Set debug level"
+        try {
+            Write-Verbose "Get config file : [string]$Content = Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Raw"
+            [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
+            Write-Verbose "Replacing and saving content : $Content.Replace(""add key=""EnableDebugLog"" value=""$CurrentValue"",""add key=""EnableDebugLog"" value=""$DebugLevel"") | out-file ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Encoding utf8 -Force -NoNewline"
+            $Content.Replace("add key=""EnableDebugLog"" value=""$CurrentValue""","add key=""EnableDebugLog"" value=""$DebugLevel""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
+            Write-Output "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Information
+        }
+        catch {
+            Write-Warning "Failed to update DebugLevel in StifleR Server from $CurrentValue to $DebugLevel."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update DebugLevel in StifleR Server from $CurrentValue to $DebugLevel." -EntryType Error
+        }
+    }
+        
+}
+
+function Set-ServerSettings {
+
+   <#
+    .SYNOPSIS
+        Use this to change properties values for StifleR Server
+
+    .DESCRIPTION
+        Easily set new values for properties on StifleR Server
+        Details:
+        - Easily set new values for properties on StifleR Server
+
+    .PARAMETER Property
+        Specify which property you want to change
+        
+    .PARAMETER NewValue
+        Specify the new value of the chosen property
+
+    .PARAMETER SkipConfirm
+        Specify this switch if you don't want to confirm the change
+        of the properties value
+
+    .PARAMETER Clear
+        Specify this switch to clear the value of a property
+
+    .PARAMETER InstallDir
+        Specify the Installation directory for StifleR Server,
+        default is 'C$\Program Files\2Pint Software\StifleR'
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1
+        Sets the property wsapifw to 1 in StifleR Server
+
+    .EXAMPLE
+	Set-StifleRServerSettings -Server server01 -Property wsapifw -NewValue 1 -SkipConfirm
+        Sets the property wsapifw to 1 in StifleR Server without asking for confirmation
+
+    .EXAMPLE
+	Set-StifleRServerSettings -Server server01 -Property wsapifw -Clear
+        Sets the property wsapifw to nothing in StifleR Server
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$InstallDir='C$\Program Files\2Pint Software\StifleR',
+        [Parameter(Mandatory=$true)]
+        [string]$Property,
+        [Parameter(Mandatory=$true,ParameterSetName = "NewValue")]
+        [string]$NewValue,
+        [string]$SkipConfirm,
+        [Parameter(Mandatory=$true,ParameterSetName = "Clear")]
+        [switch]$Clear
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        Write-Verbose "Get content from config: Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"""
+        [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config"
+        $CurrentKeyName = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).key
+        Write-Verbose "Variable - CurrentKeyName : $CurrentKeyName"
+        if ( !$CurrentKeyName ) {
+            Write-Warning "The property '$Property' does not exist, aborting!"
+            break
+        }
+        $CurrentValue = ($Content.configuration.appSettings.add | Where-Object { $_.Key -eq $Property }).Value
+        Write-Verbose "Variable - CurrentValue : $CurrentValue"
+        if ( $NewValue -eq $CurrentValue ) {
+            Write-Warning "The property '$Property' already has the value '$NewValue', aborting!"
+            break
+        }
+        if ( !$SkipConfirm ) {
+            Write-Output "You are about to change the property '$Property' from '$CurrentValue' to '$NewValue'."
+            Write-Warning "Make sure this change is valid or things might break..."
+            Write-Output " "
+            $msg = "Apply change? [Y/N]"
+            do {
+                $response = Read-Host -Prompt $msg
+            } until ($response -eq 'n' -or $response -eq 'y')
+            if ( $response -eq 'n' ) {
+                break
+            }
+            Write-Output " "
+        }
+
+        Write-Debug "Next step - Set server settings"
+        try {
+            Write-Verbose "Get config file : [string]$Content = Get-Content ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Raw"
+            [string]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -Raw
+            Write-Verbose "Replacing and saving content : $Content.Replace(""add key=""$CurrentKeyName"" value=""$CurrentValue""","add key=""$CurrentKeyName"" value=""$NewValue"""") | out-file ""\\$Server\$InstallDir\StifleR.Service.exe.config"" -Encoding utf8 -Force -NoNewline"
+            $Content.Replace("add key=""$CurrentKeyName"" value=""$CurrentValue""","add key=""$CurrentKeyName"" value=""$NewValue""") | out-file "\\$Server\$InstallDir\StifleR.Service.exe.config" -Encoding utf8 -Force -NoNewline
+            Write-Output "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9210 -Message "Successfully updated the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Information
+        }
+        catch {
+            Write-Warning "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9211 -Message "Failed to update the property $Property in StifleR Server from $CurrentValue to $NewValue." -EntryType Error
+        }
+    }
+        
+}
+
+function Set-Subnet {
+
+   <#
+    .SYNOPSIS
+        Use this to change a properties value on a specific subnet
+
+    .DESCRIPTION
+        Easily set new properties on subnets
+        Details:
+        - Easily set new properties on subnets
+
+    .PARAMETER SubnetID
+        Specify the SubnetID for which you want to change the proeprty
+        
+    .PARAMETER Property
+        Specify which property you want to change
+        
+    .PARAMETER NewValue
+        Specify the new value of the chosen property
+        
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Set-StifleRSubnetProperty -Server server01 -SubnetID 172.10.10.0 -Property VPN -NewValue True
+        Sets the property VPN to True on subnet 172.10.10.0
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
+    param (
+        [Parameter(Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,Mandatory=$true)]
+        [string]$SubnetID,
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [Parameter(Mandatory=$true)]
+        [string]$Property,
+        [Parameter(Mandatory=$true)]
+        [string]$NewValue
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        Write-Verbose "Getting subnet(s) by SubnetID - Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter ""SubnetID = '$SubnetID'"""
+        if ( !$(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets -Filter "SubnetID = '$SubnetID'") ) {
+            Write-Output "SubnetID $SubnetID does not exist, aborting!"
+            break
+        }
+
+        Write-Debug "Next step - Set subnet property"
+        try {
+            $SubnetQuery = "SELECT * FROM Subnets WHERE SubnetID = '$SubnetID'"
+            Write-Verbose "Set subnet property : Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server"
+            Set-CimInstance -Namespace $Namespace -Query $SubnetQuery -Property @{$Property = $NewValue} -ComputerName $Server
+            Write-Output "Successfully updated '$Property' with the new value '$NewValue' on subnet $SubnetID."
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Successfully updated the property $Property to $NewValue on subnet $SubnetID." -EntryType Information
+        }
+        catch {
+            Write-Warning "Failed to update $Property with the new value $NewValue on subnet $SubnetID, make sure the property exist!"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9208 -Message "Failed to update the property $Property to $NewValue on subnet $SubnetID." -EntryType Error
+        }
+    }
+
+}
+
+function Start-ServerService {
+
+   <#
+    .SYNOPSIS
+        Use this to start the StifleRServer service if it is not running
+
+    .DESCRIPTION
+        Start the StifleRServer service
+        Details:
+        - Start the StifleRServer service
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Start-StifleRServerService -Server server01
+        Starts the StifleRServer service on server01
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+        
+        Write-Verbose "Get status of StifleRServer : get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'}"
+        $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
+        Write-verbose "Status: $Service"
+        if ( $Service.State -eq 'Running' ) {
+            Write-Warning 'The service StifleRService is already in the state Started, aborting!'
+            break
+        }
+    }
+
+    process {
+        Write-Debug "Next step - Start Service"
+        try {
+            Write-Verbose "StifleR Service : Invoke-WmiMethod -Path ""Win32_Service.Name='StifleRServer'"" -Name StartService -Computername $Server | out-null"
+            Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StartService -Computername $Server | out-null
+            Write-Verbose "Get service state : (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')"
+            (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Running')
+            Write-Output "Successfully started service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9214 -Message "Successfully started the service StifleRServer." -EntryType Information
+        }
+        catch {
+            Write-Warning "Failed to start service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9215 -Message "Failed to start the service StifleRServer." -EntryType Error
+        }
+    }
+
+}
+
+function Stop-ServerService {
+
+   <#
+    .SYNOPSIS
+        Use this to stop the StifleRServer service if it is not stopped
+
+    .DESCRIPTION
+        Stop the StifleRServer service
+        Details:
+        - Stop the StifleRServer service
+
+    .PARAMETER Force
+        Specify this parameter if you need to instantly terminate the process
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Stop-StifleRServerService -Server server01
+        Stops the StifleRServer service on server01
+
+    .EXAMPLE
+	Stop-StifleRServerService -Server server01 -Force
+        Stops the StifleRServer service on server01 by killing the process of the service
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [switch]$Force
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+
+        Write-Verbose "Get service state : get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'}"
+        $Service = (get-wmiobject win32_service -ComputerName $Server | Where-Object { $_.name -eq 'StifleRServer'})
+        Write-verbose "Status: $Service"
+        if ( $Service.State -eq 'Stopped' ) {
+            Write-Warning 'The service StifleRService is already in the state Stopped, aborting!'
+            break
+        }
+    }
+
+    process {
+
+        Write-Debug "Next step - Stop Service"
+        try {
+            if ( !$Force ) {
+                Write-Verbose "StifleR Service : Invoke-WmiMethod -Path ""Win32_Service.Name='StifleRServer'"" -Name StopService -Computername $Server | out-null"
+                Invoke-WmiMethod -Path "Win32_Service.Name='StifleRServer'" -Name StopService -Computername $Server | out-null
+            }
+            else {
+                Write-Verbose "StifleR Service : (Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter ""name='StifleR.Service.exe'"").Terminate() | out-null"
+                $(Get-WmiObject -Class Win32_Process -ComputerName $Server -Filter "name='StifleR.Service.exe'").Terminate() | out-null
+            }
+            Write-Verbose "Get status of service : (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')"
+            (Get-Service StifleRServer -ComputerName $Server).WaitForStatus('Stopped')
+            Write-Output "Successfully stopped service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9212 -Message "Successfully stopped the service StifleRServer." -EntryType Information
+        }
+        catch {
+            Write-Warning "Failed to stop service StifleRServer"
+            Write-EventLog -ComputerName $Server -LogName StifleR -Source "StifleR" -EventID 9213 -Message "Failed to stop the service StifleRServer." -EntryType Error
+        }
+    }
+
+}
+
+function Test-ServerConnection {
+
+    param ( [String]$Server )
+
+    # Check if the specified server is reachable
+    if ( Test-Connection $Server -Count 1 -Quiet -ErrorAction Stop ) {}
+    else {
+        Write-Error -Message "The specified server $Server could not be contacted"
+        break
+    }
+        
+    # Check if the specified server has the WMI namespace for StifleR
+    try {
+        Get-CIMClass -Namespace $Namespace -ComputerName $Server -ErrorAction Stop | out-null
+    }
+    catch {
+        Write-Error -Message "The specified server $Server is missing the WMI namespace for StifleR"
+        break
+    }
+
+}
+
+# In progress - Remaining, what to actually show?
+function Get-Connections {
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$SubnetID,
+        [switch]$ActivelyTransfering,
+        [string]$ActiveBITSJobsIds,
+        [string]$ActiveDOJobIds,
+        [int]$Limit=1000
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        [string]$QueryAdditions = 'WHERE'
+        if ( $SubnetID -ne '' ) {
+            $QueryAdditions = "$QueryAdditions NetworkID='$SubnetID'"
+        }
+        if ( $ActivelyTransfering ) {
+            if ( $QueryAdditions -ne 'WHERE' ) { $QueryAdditions = "$QueryAdditions AND" }
+            $QueryAdditions = "$QueryAdditions ActivelyTransferring='$true'"
+        }
+        if ( $QueryAdditions -eq 'WHERE' ) { $QueryAdditions = '' }
+
+        write-Output $QueryAdditions
+        Get-CimInstance -Namespace $Namespace -Query "Select * from Connections $QueryAdditions" -ComputerName $Server | Select-Object -First $Limit
+    }
+}
+
 # In progress
 function Set-Leaders {
 
@@ -1632,26 +1806,6 @@ function Set-Leaders {
 
 # In progress
 function Get-Leaders {
-
-    [cmdletbinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-    }
-
-}
-
-# In progress
-function Get-EventLogs {
 
     [cmdletbinding()]
     param (
