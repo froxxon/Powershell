@@ -525,6 +525,65 @@ function Get-EventLogs {
 
 }
 
+function Get-Leaders {
+
+   <#
+    .SYNOPSIS
+        Use this to get a list of leaders (Red\Blue)
+
+    .DESCRIPTION
+        Use this to get a list of leaders (Red\Blue)
+        Details:
+        - Use this to get a list of leaders (Red\Blue)
+
+    .PARAMETER SubnetID (Alias NetworkID)
+        Specify this parameter if you need to instantly terminate the process
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Get-StifleRLeaders -Server 'sserver01'
+        Stops the StifleRServer service on server01
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [Alias('NetworkID')]
+        [string]$SubnetID
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        if ( $SubnetID ) {
+            $QueryAddition = "WHERE NetworkID Like '%$SubnetID%'"
+        }
+        $Leaders = @()
+        [array]$RedLeaders = Get-CimInstance -Namespace $Namespace -Query "Select * from RedLeaders $QueryAddition" -ComputerName $Server | Select-Object * -ExcludeProperty PSComputerName,PSShowComputerName,CimClass,CimInstanceProperties,CimSystemProperties
+        if ( $RedLeaders.Count -gt 0 ) {
+            $RedLeaders | Add-Member -Name 'LeaderType' -Value 'Red' -MemberType NoteProperty | out-null
+            $Leaders += $RedLeaders
+        }                
+        [array]$BlueLeaders = Get-CimInstance -Namespace $Namespace -Query "Select * from BlueLeaders $QueryAddition" -ComputerName $Server | Select-Object * -ExcludeProperty PSComputerName,PSShowComputerName,CimClass,CimInstanceProperties,CimSystemProperties
+        if ( $BlueLeaders.Count -gt 0 ) {
+            $BlueLeaders | Add-Member -Name 'LeaderType' -Value 'Blue' -MemberType NoteProperty | out-null
+            $Leaders += $BlueLeaders
+        }
+        $Leaders | Sort-Object NetworkID
+    }
+
+}
+
 function Get-LicenseInformation {
 
    <#
@@ -1800,65 +1859,6 @@ function Set-Leaders {
     }
 
     process {
-    }
-
-}
-
-function Get-Leaders {
-
-   <#
-    .SYNOPSIS
-        Use this to get a list of leaders (Red\Blue)
-
-    .DESCRIPTION
-        Use this to get a list of leaders (Red\Blue)
-        Details:
-        - Use this to get a list of leaders (Red\Blue)
-
-    .PARAMETER SubnetID (Alias NetworkID)
-        Specify this parameter if you need to instantly terminate the process
-
-    .PARAMETER Server (ComputerName, Computer)
-        This will be the server hosting the StifleR Server-service.
-
-    .EXAMPLE
-	Get-StifleRLeaders -Server 'sserver01'
-        Stops the StifleRServer service on server01
-
-    .FUNCTIONALITY
-        StifleR
-    #>
-
-    [cmdletbinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [Alias('NetworkID')]
-        [string]$SubnetID
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        if ( $SubnetID ) {
-            $QueryAddition = "WHERE NetworkID Like '%$SubnetID%'"
-        }
-        $Leaders = @()
-        [array]$RedLeaders = Get-CimInstance -Namespace $Namespace -Query "Select * from RedLeaders $QueryAddition" -ComputerName $Server | Select-Object * -ExcludeProperty PSComputerName,PSShowComputerName,CimClass,CimInstanceProperties,CimSystemProperties
-        if ( $RedLeaders.Count -gt 0 ) {
-            $RedLeaders | Add-Member -Name 'LeaderType' -Value 'Red' -MemberType NoteProperty | out-null
-            $Leaders += $RedLeaders
-        }                
-        [array]$BlueLeaders = Get-CimInstance -Namespace $Namespace -Query "Select * from BlueLeaders $QueryAddition" -ComputerName $Server | Select-Object * -ExcludeProperty PSComputerName,PSShowComputerName,CimClass,CimInstanceProperties,CimSystemProperties
-        if ( $BlueLeaders.Count -gt 0 ) {
-            $BlueLeaders | Add-Member -Name 'LeaderType' -Value 'Blue' -MemberType NoteProperty | out-null
-            $Leaders += $BlueLeaders
-        }
-        $Leaders | Sort-Object NetworkID
     }
 
 }
