@@ -1810,7 +1810,9 @@ function Get-Leaders {
     [cmdletbinding()]
     param (
         [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME
+        [string]$Server = $env:COMPUTERNAME,
+        [Alias('NetworkID')]
+        [string]$SubnetID
     )
 
     begin {
@@ -1820,7 +1822,21 @@ function Get-Leaders {
     }
 
     process {
+        if ( $SubnetID ) {
+            $QueryAddition = "WHERE NetworkID Like '%$SubnetID%'"
+        }
+        $Leaders = @()
+        [array]$RedLeaders = Get-CimInstance -Namespace $Namespace -Query "Select * from RedLeaders $QueryAddition" -ComputerName $Server | Select-Object * -ExcludeProperty PSComputerName,PSShowComputerName,CimClass,CimInstanceProperties,CimSystemProperties
+        if ( $RedLeaders.Count -gt 0 ) {
+            $RedLeaders | Add-Member -Name 'LeaderType' -Value 'Red' -MemberType NoteProperty | out-null
+            $Leaders += $RedLeaders
+        }                
+        [array]$BlueLeaders = Get-CimInstance -Namespace $Namespace -Query "Select * from BlueLeaders $QueryAddition" -ComputerName $Server | Select-Object * -ExcludeProperty PSComputerName,PSShowComputerName,CimClass,CimInstanceProperties,CimSystemProperties
+        if ( $BlueLeaders.Count -gt 0 ) {
+            $BlueLeaders | Add-Member -Name 'LeaderType' -Value 'Blue' -MemberType NoteProperty | out-null
+            $Leaders += $BlueLeaders
+        }
+        $Leaders | Sort-Object NetworkID
     }
 
 }
-
