@@ -144,6 +144,17 @@ For everything to work as expected the following requirements should be met:
     Get-StiflerEventLogs -Server 'server01' -StartDate (Get-Date).AddMinutes(-120) -EndDate (Get-Date).AddMinutes(-60)
 </details>
 
+**<details><summary>Get-StifleRLeaders</summary>**
+   
+**Syntax**
+
+```Get-StiflerLeaders [[-Server] <String>] [[-SubnetID] <String>] [<CommonParameters>]```
+
+**Example** - Stops the StifleRServer service on server01
+
+    Get-StifleRLeaders -Server 'sserver01'
+</details>
+
 **<details><summary>Get-StifleRLicenseInformation</summary>**
 
 **Syntax**
