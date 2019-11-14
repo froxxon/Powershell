@@ -1804,8 +1804,30 @@ function Set-Leaders {
 
 }
 
-# In progress
 function Get-Leaders {
+
+   <#
+    .SYNOPSIS
+        Use this to get a list of leaders (Red\Blue)
+
+    .DESCRIPTION
+        Use this to get a list of leaders (Red\Blue)
+        Details:
+        - Use this to get a list of leaders (Red\Blue)
+
+    .PARAMETER SubnetID (Alias NetworkID)
+        Specify this parameter if you need to instantly terminate the process
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Get-StifleRLeaders -Server 'sserver01'
+        Stops the StifleRServer service on server01
+
+    .FUNCTIONALITY
+        StifleR
+    #>
 
     [cmdletbinding()]
     param (
