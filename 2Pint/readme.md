@@ -6,11 +6,14 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
-#### version 1.1.1 (2019-11-14)
-- The function **'Get-StifleREventLogs'** is now completed and up and running
-- Changed **'Remove-StifleRClient'** from *'In progress'* to *done!*
+#### version 1.1.2 (2019-11-14)
+- Changed *'Get-StifleRLeaders'* from *'In progress'* to *done!*
 
 <details><summary>View all</summary>
+
+#### version 1.1.1 (2019-11-14)
+- The function *'Get-StifleREventLogs'* is now completed and up and running
+- Changed *'Remove-StifleRClient'* from *'In progress'* to *done!
 
 #### version 1.1.0 (2019-11-13)
 - Added functions *'Get-StifleREventLogs'*, *'Get-StifleRLeaders'* and *'Set-StifleRLeaders'* as *'In progress'*
