@@ -84,7 +84,7 @@ For everything to work as expected the following requirements should be met:
 - *'Test-ServerConnection'* (only available inside the module) uses *'ICMPv4 Echo request'* (also called *'ping'*) as one parameter to check availability of the provided parameter *'Server'*
 - For *'Get-/Set-StifleRServerSettings'* and *'Get-/Set-StifleRServerDebugLevel'* *'C$'* (default, or the parameter INSTALLDIR) must be reachable by SMB from source and permissions to read/write in the specified location
 - 'Get-StifleRLicenseInformation' requires permission to read License.nfo in InstallDir by fileshare
-- 'Get-StifleREventLogs' requires permissions to read from event log
+- 'Get-StifleREventLog' requires permissions to read from event log
 - Correct access in StifleR is of course a requirement as well with rights to read or edit depending on what your needs are
 - *'Start-/Stop-StilfeRServerService'* requires Administrator rights (if not explicitly provided for the service *StifleRServer'* otherwise)
 </details>
@@ -123,22 +123,22 @@ For everything to work as expected the following requirements should be met:
     'Client01' | Get-StiflerClient -Server 'server01' -ExactMatch
 </details>
 
-**<details><summary>Get-StifleRClientVersions</summary>**
+**<details><summary>Get-StifleRClientVersion</summary>**
 
 **Syntax**
 
-```Get-StiflerClientVersions [[-Server] <String>] [<CommonParameters>]```
+```Get-StiflerClientVersion [[-Server] <String>] [<CommonParameters>]```
 
 **Example** - Get a list of versions and the number of clients for each one
 
-    Get-StifleRClientVersions -Server 'server01'
+    Get-StifleRClientVersion -Server 'server01'
 </details>
 
-**<details><summary>Get-StifleREventLogs</summary>**
+**<details><summary>Get-StifleREventLog</summary>**
     
 **Syntax**
 
-```Get-StiflerEventLogs [[-Server] <String>] [[-MaxEvents] <Int32>] [[-EventID] <Array>] [[-Message] <String>] [[-LevelDisplayName]<String>] [[-ProviderName] <String>] [[-StartDate] <DateTime>] [[-EndDate] <DateTime>] [-ListLog] [<CommonParameters>]```
+```Get-StiflerEventLog [[-Server] <String>] [[-MaxEvents] <Int32>] [[-EventID] <Array>] [[-Message] <String>] [[-LevelDisplayName]<String>] [[-ProviderName] <String>] [[-StartDate] <DateTime>] [[-EndDate] <DateTime>] [-ListLog] [<CommonParameters>]```
 
 **Example** - Get the 10 latest events from server01 and sort them by Id, default is by ascending TimeCreated
 
@@ -146,22 +146,22 @@ For everything to work as expected the following requirements should be met:
 
 **Example 2** - Get all events tagged as Information, EventIDs 4821 or 1506, Message contains 'Saving' created within the last 60 minutes
 
-    Get-StiflerEventLogs -Server 'server01' -LevelDisplayName Information -EventID 4821,1506 -Message Saving -StartDate (Get-Date).AddMinutes(-60)
+    Get-StiflerEventLog -Server 'server01' -LevelDisplayName Information -EventID 4821,1506 -Message Saving -StartDate (Get-Date).AddMinutes(-60)
     
 **Example 3** - Get all events that happened from 60 to 120 minutes ago
 
-    Get-StiflerEventLogs -Server 'server01' -StartDate (Get-Date).AddMinutes(-120) -EndDate (Get-Date).AddMinutes(-60)
+    Get-StiflerEventLog -Server 'server01' -StartDate (Get-Date).AddMinutes(-120) -EndDate (Get-Date).AddMinutes(-60)
 </details>
 
-**<details><summary>Get-StifleRLeaders</summary>**
+**<details><summary>Get-StifleRLeader</summary>**
    
 **Syntax**
 
-```Get-StiflerLeaders [[-Server] <String>] [[-SubnetID] <String>] [<CommonParameters>]```
+```Get-StiflerLeader [[-Server] <String>] [[-SubnetID] <String>] [<CommonParameters>]```
 
 **Example** - Stops the StifleRServer service on server01
 
-    Get-StifleRLeaders -Server 'sserver01'
+    Get-StifleRLeader -Server 'sserver01'
 </details>
 
 **<details><summary>Get-StifleRLicenseInformation</summary>**
@@ -243,15 +243,15 @@ For everything to work as expected the following requirements should be met:
     Get-StiflerSubnet -Server 'sever01' -Property LocationName, ActiveClients, AverageBandwidth, SubnetID | Select LocationName, SubnetID, ActiveClients, AverageBandwidth, RedLeader, BlueLeader | Where ActiveClients -gt 0 | Sort AverageBandwidth, LocationName -Descending | Format-Table -AutoSize
 </details>
 
-**<details><summary>Get-StifleRSubnetQUeues</summary>**
+**<details><summary>Get-StifleRSubnetQueue</summary>**
 
 **Syntax**
 
-```Get-StiflerSubnetQueues [[-Server] <String>] [<CommonParameters>]```
+```Get-StiflerSubnetQueue [[-Server] <String>] [<CommonParameters>]```
 
 **Example** - Get information about the current queues in StifleR
 
-    Get-StifleRSubnetQUeues -server 'server01'
+    Get-StifleRSubnetQUeue -server 'server01'
 </details>
 
 **<details><summary>Remove-StifleRClient</summary>**
@@ -297,23 +297,23 @@ childobjects of this subnet
     Remove-StiflerSubnet -Server 'server01' -SubnetID 172
 </details>
 
-**<details><summary>Set-StifleRBITSJob</summary>**
+**<details><summary>Set-StifleRJob</summary>**
 
 **Syntax**
 
-```Set-StiflerBITSJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]```
+```Set-StiflerJob [[-Target] <String>] [-TargetLevel] <String> [-Action] <String> [[-Server] <String>] [<CommonParameters>]```
 
 **Example** - Cancels all current transfers on the subnet 192.168.20.2
 
-    Set-StiflerBITSJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
+    Set-StiflerJob -Server 'server01' -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
 
 **Example 2** - Suspends all current transfers on the client Client01
 
-    Set-StiflerBITSJob -Server 'server01' -TargetLevel Client -Action Suspend -Target Client01
+    Set-StiflerJob -Server 'server01' -TargetLevel Client -Action Suspend -Target Client01
 
 **Example 3** - Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
-    Set-StiflerBITSJob -Server 'server01' -TargetLevel All -Action Resume
+    Set-StiflerJob -Server 'server01' -TargetLevel All -Action Resume
 </details>
 
 **<details><summary>Set-StifleRServerDebugLevel</summary>**
