@@ -276,6 +276,7 @@ function Get-Client {
     }
 
     process {
+        $ClientInformation = @()
         if ( $ExactMatch ) {
             if ( $SubnetIDExist ) {
                 $id = $(Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
@@ -303,7 +304,7 @@ function Get-Client {
 
 }
 
-function Get-ClientVersions {
+function Get-ClientVersion {
 
    <#
     .SYNOPSIS
@@ -319,7 +320,7 @@ function Get-ClientVersions {
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
-	get-StifleRClientVersions -Server server01
+	get-StifleRClientVersion -Server server01
         Get the versions for clients from server01
 
     .FUNCTIONALITY
@@ -350,7 +351,7 @@ function Get-ClientVersions {
 
 }
 
-function Get-EventLogs {
+function Get-EventLog {
 
    <#
     .SYNOPSIS
@@ -400,13 +401,13 @@ function Get-EventLogs {
         by ascending TimeCreated
 
     .EXAMPLE
-	Get-StiflerEventLogs -Server 'server01' -LevelDisplayName Information -EventID 4821,1506
+	Get-StiflerEventLog -Server 'server01' -LevelDisplayName Information -EventID 4821,1506
 	-Message Saving -StartDate (Get-Date).AddMinutes(-60)
         Get all events tagged as Information, EventIDs 4821 or 1506, Message contains 'Saving'
         created within the last 60 minutes
 
     .EXAMPLE
-	Get-StiflerEventLogs -Server 'server01' -StartDate (Get-Date).AddMinutes(-120) -EndDate (Get-Date).AddMinutes(-60)
+	Get-StiflerEventLog -Server 'server01' -StartDate (Get-Date).AddMinutes(-120) -EndDate (Get-Date).AddMinutes(-60)
         Get all events that happened from 60 to 120 minutes ago
 
     .FUNCTIONALITY
@@ -525,7 +526,7 @@ function Get-EventLogs {
 
 }
 
-function Get-Leaders {
+function Get-Leader {
 
    <#
     .SYNOPSIS
@@ -543,7 +544,7 @@ function Get-Leaders {
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
-	Get-StifleRLeaders -Server 'sserver01'
+	Get-StifleRLeader -Server 'sserver01'
         Stops the StifleRServer service on server01
 
     .FUNCTIONALITY
@@ -943,7 +944,7 @@ function Get-Subnet {
 
 }
 
-function Get-SubnetQueues {
+function Get-SubnetQueue {
 
     <#
     .SYNOPSIS
@@ -956,7 +957,7 @@ function Get-SubnetQueues {
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
-    Get-StifleRSubnetQUeues -server 'server01'
+    Get-StifleRSubnetQUeue -server 'server01'
     Get information about the current queues in StifleR
 
     .FUNCTIONALITY
@@ -1254,7 +1255,7 @@ function Remove-Subnet {
 
 }
 
-function Set-BITSJob {
+function Set-Job {
 
     <#
     .SYNOPSIS
@@ -1278,15 +1279,15 @@ function Set-BITSJob {
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
+	Set-StiflerJob -Server server01 -TargetLevel Subnet -Action Cancel -Target 192.168.20.2
         Cancels all current transfers on the subnet 192.168.20.2
 
     .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01
+	Set-StiflerJob -Server server01 -TargetLevel Client -Action Suspend -Target Client01
         Suspends all current transfers on the client Client01
     
     .EXAMPLE
-	Set-StiflerBITSJob -Server server01 -TargetLevel All -Action Resume
+	Set-StiflerJob -Server server01 -TargetLevel All -Action Resume
         Resumes all the transfers known to StifleR as suspended earlier on all subnets
 
     .FUNCTIONALITY
@@ -1808,7 +1809,7 @@ function Test-ServerConnection {
 }
 
 # In progress - Remaining, what to actually show?
-function Get-Connections {
+function Get-Connection {
 
     [cmdletbinding()]
     param (
@@ -1844,7 +1845,7 @@ function Get-Connections {
 }
 
 # In progress
-function Set-Leaders {
+function Set-Leader {
 
     [cmdletbinding()]
     param (
