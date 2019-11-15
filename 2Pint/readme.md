@@ -6,10 +6,19 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
-#### version 1.1.2 (2019-11-14)
-- Changed *'Get-StifleRLeaders'* from *'In progress'* to *done!*
+#### version 1.1.3 (2019-11-15)
+- Changed *'Set-StifleRBITSJobs'* to **'Set-StifleRJob'**
+- Changed *'Get-StifleRSubnetQueues'* to **'Get-StifleRSubnetQueue'**
+- Changed *'Get-StifleRClientVersions'* to **'Get-StifleRClientVersion'**
+- Changed *'Get-StifleRLeaders'* to **'Get-StifleRLeader'**
+- Changed *'Set-StifleRLeaders'* to **'Set-StifleRLeader'**
+- Changed *'Get-StifleREventLogs'* to **'Get-StifleREventLog'**
+- Changed *'Get-StifleRConnections'* to **'Get-StifleRConnection'**
 
 <details><summary>View all</summary>
+
+#### version 1.1.2 (2019-11-14)
+- Changed *'Get-StifleRLeaders'* from *'In progress'* to *done!*
 
 #### version 1.1.1 (2019-11-14)
 - The function *'Get-StifleREventLogs'* is now completed and up and running
