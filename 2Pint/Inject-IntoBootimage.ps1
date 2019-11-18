@@ -1,11 +1,12 @@
 # An easier way to get your bootimage working with WinPE, BranchCache and the help of 2Pint Softwares tool WinPEGen.
 # Make sure ADK is in place and run with elevated permissions (needed to moutn ISO for example, will warn and abort otherwise!).
 # Dont forget to change variables to suite your environment!
+# 
+# Requires OSD Toolkit 2.2.2.1 or later
 
 #region CustomVariables
-    $WinPEGenPath = 'C:\Temp\Stifler\2Pint Software OSD Toolkit 2.2.2.0\WinPE Generator\x64'
-    $StifleRConfigPath = 'C:\Temp\StifleR'
-    $StifleRConfigFile = 'StifleR.ClientApp.exe.config'
+    $WinPEGenPath = 'C:\Temp\Stifler\2Pint Software OSD Toolkit 2.2.2.1\WinPE Generator\x64'
+    $StifleRClientSource = "C:\Temp\StifleR\StifleR Client 2.3.0.0"
     $ADKPath = 'C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\DISM'
     $PackagePath = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs"
     $WIMPath = 'C:\WinPE_x64'
@@ -33,6 +34,16 @@ function Verify-Path {
     }
 }
 
+# AF Specific groups
+if ( $((New-Object System.DirectoryServices.DirectorySearcher("(&(objectCategory=User)(samAccountName=$($env:username)))")).FindOne().GetDirectoryEntry().memberOf) -like '*Role-T1-Infrastructure*' -or $((New-Object System.DirectoryServices.DirectorySearcher("(&(objectCategory=User)(samAccountName=$($env:username)))")).FindOne().GetDirectoryEntry().memberOf) -like '*Role-T1-Operations*' ) {}
+else {
+    write-host " "
+    write-host "DON'T CLICK ON SOMETHING THAT DOESN'T BELONG TO YOU!" -ForegroundColor Red
+    write-host " "
+    read-host “Press ENTER to continue...”
+    exit
+}
+
 if ($psISE) { clear-host }
 
 write-host "Script to create BCENABLEDBOOTIMAGE"
@@ -40,8 +51,7 @@ write-host "(make sure the correct version of ADK is installed on this computer)
 write-host " "
 write-host "Listing values of variables (change in top of script if needed)" -ForegroundColor DarkGray
 write-host "Path to WINPEGen       : " -NoNewline ; write-host $WinPEGenPath -ForegroundColor Yellow
-write-host "Path to StifleR Path   : " -NoNewline ; write-host $StifleRConfigPath -ForegroundColor Yellow
-write-host "Path to StifleR config : " -NoNewline ; write-host $StifleRConfigFile -ForegroundColor Yellow
+Write-host "Path to StifleR Client : " -NoNewline ; write-host $StifleRClientSource -ForegroundColor Yellow
 write-host "Path to ADK            : " -NoNewline ; write-host $ADKPath -ForegroundColor Yellow
 write-host "Path to ADK packages   : " -NoNewline ; write-host $PackagePath -ForegroundColor Yellow
 write-host "Path to WIM files      : " -NoNewline ; write-host $WIMPath -ForegroundColor Yellow
@@ -63,7 +73,7 @@ If (! ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity
 
 # Verifying paths in variables, aborting script if not found
 Verify-Path $WinPEGenPath
-Verify-Path $StifleRConfigPath
+Verify-Path $StifleRClientSource
 Verify-Path $ADKPath
 Verify-Path $PackagePath
 Verify-Path $WIMPath
@@ -81,7 +91,7 @@ if ( $BootWIM.Build -eq $InstallWIM.Build -and $BootWIM.Languages -eq $InstallWI
 
 if ( $MatchingProperties -eq $true ) {
     write-host "Injecting 2Pints functions to image    - " -NoNewline
-    $OSDToolkit = & “$WinPEGenPath\WinPEGen.exe” “$WIMPath\$InstallWIMFile” 1 “$WIMPath\$BootWIMFile” 1 /Add-BITS /Copy-BITSPolicy /Add-StifleR /StifleRConfig:$StifleRConfigPath\$StifleRConfigFile
+    $OSDToolkit = & “$WinPEGenPath\WinPEGen.exe” “$WIMPath\$InstallWIMFile” 1 “$WIMPath\$BootWIMFile” 1 /Add-BITS /Copy-BITSPolicy /Add-StifleR /StifleRSource:$StifleRClientSource #/StifleRConfig:$StifleRConfigPath\$StifleRConfigFile
     if ( $OSDToolkit -like '*Successfully created a WinPE image with BranchCache!' ) {
         write-host "Success" -ForegroundColor Green
         write-host "Mounting image                         - " -NoNewline
