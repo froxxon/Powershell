@@ -212,6 +212,9 @@ function Get-Client {
     .PARAMETER ExactMatch
         Use this switch if you want to look for the exact match of the specified value of the Client parameter
 
+    .PARAMETER Roaming
+        Use this switch if you want to look for roaming clients instead
+
     .PARAMETER SubnetID
         Use this parameter if you want to display all clients on a specific subnet
 
@@ -240,16 +243,29 @@ function Get-Client {
         [Parameter(HelpMessage = "Specify specific properties",ParameterSetName = "Subnet")]
         [string]$SubnetID,
         [array]$Property,
-        [switch]$ExactMatch
+        [switch]$ExactMatch,
+        [switch]$Roaming
     )
 
     begin {
+
+        $MissingProps = @()
+        $ClassProperties = @()
+
         Write-Verbose "Check server availability with Test-Connection"
         Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
 
         if ( $Property -ne '*' ) {
-            $ClassProperties = $($(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Clients) | Get-Member).Name
+
+            if ( $Roaming ) {
+                $Class = 'ClientsRoaming'
+            }
+            else {
+                $Class = 'Clients'
+            }
+            
+            $ClassProperties = (Get-CimClass -ComputerName $Server -ClassName $Class -Namespace $Namespace ).CimClassProperties.Name
             foreach ( $Prop in $($Property) ) {
                 if ( $ClassProperties -notcontains $Prop ) { $MissingProps += "$Prop" }
             }
@@ -280,26 +296,31 @@ function Get-Client {
         if ( $ExactMatch ) {
             if ( $SubnetIDExist ) {
                 $id = $(Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
-                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "LastOnNetwork = '$id'" -ComputerName $Server
+                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class $Class -Filter "LastOnNetwork = '$id'" -ComputerName $Server
             }
             else {
-                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "ComputerName = '$Client'" -ComputerName $Server
+                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class $Class -Filter "ComputerName = '$Client'" -ComputerName $Server
             }
         }
         else {
             if ( $SubnetIDExist ) {
                 $id = $(Get-CIMInstance -Namespace $Namespace -Class Subnets -Filter "SubnetID LIKE '%$SubnetID%'" -ComputerName $Server).id
-                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "LastOnNetwork = '$id'" -ComputerName $Server
+                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class $Class -Filter "LastOnNetwork = '$id'" -ComputerName $Server
             }
             else {
-                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class Clients -Filter "ComputerName LIKE '%$Client%'" -ComputerName $Server
+                $ClientInformation = Get-CIMInstance -Namespace $Namespace -Class $Class -Filter "ComputerName LIKE '%$Client%'" -ComputerName $Server
             }
         }
         $ClientInformation | Add-Member MemberSet PSStandardMembers $PSStandardMembers
     }
 
     end {
-        $ClientInformation | Select-Object $defaultProperties -ExcludeProperty PSComputerName,Cim*
+        if ( $ClientInformation.Count -eq 0 ) {
+            Write-Warning "No events found with the matching criterias, aborting!"
+        }
+        else {
+            $ClientInformation | Select-Object $defaultProperties -ExcludeProperty PSComputerName,Cim*
+        }
     }
 
 }
@@ -403,6 +424,10 @@ function Get-Download {
     )
 
     begin {
+
+        $MissingProps = @()
+        $ClassProperties = @()
+
         Write-Verbose "Check server availability with Test-Connection"
         Write-Verbose "Check if server has the StifleR WMI-Namespace"
         Test-ServerConnection $Server
@@ -412,7 +437,7 @@ function Get-Download {
         $PSStandardMembers = [System.Management.Automation.PSMemberInfo[]]@($defaultDisplayPropertySet)
 
         if ( $Property -ne '*' ) {
-            $ClassProperties = $($(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Downloads ) | Get-Member).Name
+            $ClassProperties = (Get-CimClass -ComputerName $Server -ClassName Downloads -Namespace $Namespace ).CimClassProperties.Name
             foreach ( $Prop in $($Property) ) {
                 if ( $ClassProperties -notcontains $Prop ) { $MissingProps += "$Prop" }
             }
@@ -972,7 +997,7 @@ function Get-Subnet {
 
         # Check if the specified properties exists in the Subnet class
         if ( $Property -ne '*' ) {
-            $ClassProperties = $($(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Subnets) | Get-Member).Name
+            $ClassProperties = (Get-CimClass -ComputerName $Server -ClassName Subnets -Namespace $Namespace ).CimClassProperties.Name
             foreach ( $Prop in $($Property) ) {
                 if ( $ClassProperties -notcontains $Prop ) { $MissingProps += "$Prop" }
             }
