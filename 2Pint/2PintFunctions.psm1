@@ -697,7 +697,7 @@ function Get-ServerSettings {
             $Properties = @()
             $Properties += $Content.configuration.appSettings.add
             $obj = new-object PSObject
-            foreach ( $Prop in $Properties ) {
+            foreach ( $Prop in $Properties | Sort Key ) {
                 $obj | add-member -MemberType NoteProperty -Name $Prop.key -Value $Prop.value
             }            
             return $obj
