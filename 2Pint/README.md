@@ -6,12 +6,16 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.1.5 (2019-11-18)
+- Changed *'Get-StifleRDownload'* to *'done!'*
+- Added Cim* to ExcludedProperties from output of *'Get-StifleRClient'* and *'Get-StifleRSubnet'*
+
+<details><summary>View all</summary>
+
 #### version 1.1.4 (2019-11-18)
 - Added function *'Get-Download'* as *'In progress'*
 - Changd output of '*Get-StifleRServerSettings'* to a PSObject instead of a hashtable
 - Removed parameter *'SortByKeyName'* from *'Get-StifleRServerSettings'*
-
-<details><summary>View all</summary>
 
 #### version 1.1.3 (2019-11-15)
 - Changed *'Set-StifleRBITSJobs'* to **'Set-StifleRJob'**
@@ -19,7 +23,7 @@ A recommendation at this point in time would also be to test this out in a lab e
 - Changed *'Get-StifleRClientVersions'* to **'Get-StifleRClientVersion'**
 - Changed *'Get-StifleRLeaders'* to **'Get-StifleRLeader'**
 - Changed *'Set-StifleRLeaders'* to **'Set-StifleRLeader'**
-- Changed *'Get-StifleREventLogs'* to **'Get-StifleREventLog'**
+- Changed *'ntLogs'* to **'Get-StifleREventLog'**
 - Changed *'Get-StifleRConnections'* to **'Get-StifleRConnection'**
 
 #### version 1.1.2 (2019-11-14)
@@ -137,6 +141,26 @@ For everything to work as expected the following requirements should be met:
 **Example** - Get a list of versions and the number of clients for each one
 
     Get-StifleRClientVersion -Server 'server01'
+</details>
+
+**<details><summary>Get-StifleRDownload</summary>**
+
+**Syntax**
+
+```Get-StiflerDownload [[-Server] <String>] [[-Client] <String>] [[-Property] <Array>] [[-State] <String>] [<CommonParameters>]```
+
+**Example** - Get all downloads for all clients from 'server01'
+
+    Get-StifleRDownload -Server server01
+
+**Example 2** - Get all downloads for 'client01'
+
+    Get-StifleRDownload -Server server01 -Client client01
+
+**Example 3** - Get all downloads for all clients that matches the state 'Error' and only returns the properties
+        ComputerName, State and ID
+        
+    Get-StifleRDownload -Server server01 -State Error -Property ComputerName, State, ID
 </details>
 
 **<details><summary>Get-StifleREventLog</summary>**
