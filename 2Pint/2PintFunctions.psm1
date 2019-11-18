@@ -299,7 +299,7 @@ function Get-Client {
     }
 
     end {
-        $ClientInformation | Select-Object $defaultProperties -ExcludeProperty PSComputerName
+        $ClientInformation | Select-Object $defaultProperties -ExcludeProperty PSComputerName,Cim*
     }
 
 }
@@ -347,6 +347,95 @@ function Get-ClientVersion {
             $VersionInfo += New-Object -TypeName psobject -Property @{Version=$Version; Clients=$VersionCount}
         }
         $VersionInfo
+    }
+
+}
+
+function Get-Download {
+
+   <#
+    .SYNOPSIS
+        Use this get information about the downloads in StifleR
+
+    .DESCRIPTION
+        Get information about downloads
+        Details:
+        - Get information about downloads
+
+    .PARAMETER Client
+        Specify this parameter if you need to instantly terminate the process
+
+    .PARAMETER Property
+        Specify which properties to return from the function
+
+    .PARAMETER State
+        Specify what state (of the download) to look, available options if used are
+        'Caching','Canceled','Connecting','Error','Suspended','Transferring','TransientError' and 'Queued'
+
+    .PARAMETER Server (ComputerName, Computer)
+        This will be the server hosting the StifleR Server-service.
+
+    .EXAMPLE
+	Get-StifleRDownload -Server server01
+        Get all downloads for all clients from 'server01'
+
+    .EXAMPLE
+	Get-StifleRDownload -Server server01 -Client client01
+        Get all downloads for 'client01'
+
+    .EXAMPLE
+	Get-StifleRDownload -Server server01 -State Error -Property ComputerName, State, ID
+        Get all downloads for all clients that matches the state 'Error' and only returns the properties
+        ComputerName, State and ID
+
+    .FUNCTIONALITY
+        StifleR
+    #>
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$Client,
+        [array]$Property,
+        [ValidateSet('Caching','Canceled','Connecting','Error','Suspended','Transferring','TransientError','Queued')]
+        [string]$State
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+
+        $defaultProperties = @(‘ComputerName’,'Created','ID','State','StifleRID')
+        $defaultDisplayPropertySet = New-Object System.Management.Automation.PSPropertySet(‘DefaultDisplayPropertySet’,[string[]]$defaultProperties)
+        $PSStandardMembers = [System.Management.Automation.PSMemberInfo[]]@($defaultDisplayPropertySet)
+
+        if ( $Property -ne '*' ) {
+            $ClassProperties = $($(Get-CIMInstance -ComputerName $Server -Namespace $Namespace -Class Downloads ) | Get-Member).Name
+            foreach ( $Prop in $($Property) ) {
+                if ( $ClassProperties -notcontains $Prop ) { $MissingProps += "$Prop" }
+            }
+            if ( $MissingProps.Count -gt 0 ) { 
+                $MissingProps = $MissingProps -join ', '
+                Write-Error -Message "One or more of the following properties couldn't be found in the Class Downloads: $MissingProps"
+                break
+            }
+        }
+
+        if ( $Property -eq '*' ) { $defaultProperties = '*' }
+        if ( $Property -ne $Null -and $Property -notcontains '*' ) { $defaultProperties = $Property }
+
+    }
+
+    process {
+        $Downloads = @()
+        $Downloads = Get-CimInstance -Namespace $Namespace -Query "Select * from Downloads Where ComputerName Like '%$Client%' And State Like '$State%'" -ComputerName $Server | Sort-Object Created
+        $Downloads | Add-Member MemberSet PSStandardMembers $PSStandardMembers
+    }
+
+    end {
+        $Downloads | Select-Object $defaultProperties -ExcludeProperty PSComputerName,Cim*
     }
 
 }
@@ -697,8 +786,8 @@ function Get-ServerSettings {
             $Properties = @()
             $Properties += $Content.configuration.appSettings.add
             $obj = new-object PSObject
-            foreach ( $Prop in $Properties | Sort Key ) {
-                $obj | add-member -MemberType NoteProperty -Name $Prop.key -Value $Prop.value
+            foreach ( $Prop in $Properties | Sort-Object Key ) {
+                $obj | Add-Member -MemberType NoteProperty -Name $Prop.key -Value $Prop.value
             }            
             return $obj
         }
@@ -931,7 +1020,7 @@ function Get-Subnet {
     end {
         # Returns the results collected
         $SubnetInfo | Add-Member MemberSet PSStandardMembers $PSStandardMembers
-        $SubnetInfo | Select-Object $defaultProperties -ExcludeProperty PSComputerName
+        $SubnetInfo | Select-Object $defaultProperties -ExcludeProperty PSComputerName,Cim*
     }
 
 }
@@ -1852,33 +1941,6 @@ function Set-Leader {
     }
 
     process {
-    }
-
-}
-
-# In progress
-function Get-Download {
-
-    [cmdletbinding()]
-    param (
-        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
-        [string]$Server = $env:COMPUTERNAME,
-        [string]$Client
-    )
-
-    begin {
-        Write-Verbose "Check server availability with Test-Connection"
-        Write-Verbose "Check if server has the StifleR WMI-Namespace"
-        Test-ServerConnection $Server
-    }
-
-    process {
-        if ( $Client ) {
-            Get-CimInstance -Namespace $Namespace -Query "Select * from Downloads Where ComputerName='$Client'" -ComputerName $Server | Sort-Object Created
-        }
-        else {
-            Get-CimInstance -Namespace $Namespace -Query "Select * from Downloads" -ComputerName $Server | Sort-Object Created
-        }
     }
 
 }
