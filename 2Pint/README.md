@@ -6,6 +6,13 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.1.4 (2019-11-18)
+- Added function *'Get-Download'* as *'In progress'*
+- Changd output of '*Get-StifleRServerSettings'* to a PSObject instead of a hashtable
+- Removed parameter *'SortByKeyName'* from *'Get-StifleRServerSettings'*
+
+<details><summary>View all</summary>
+
 #### version 1.1.3 (2019-11-15)
 - Changed *'Set-StifleRBITSJobs'* to **'Set-StifleRJob'**
 - Changed *'Get-StifleRSubnetQueues'* to **'Get-StifleRSubnetQueue'**
@@ -14,8 +21,6 @@ A recommendation at this point in time would also be to test this out in a lab e
 - Changed *'Set-StifleRLeaders'* to **'Set-StifleRLeader'**
 - Changed *'Get-StifleREventLogs'* to **'Get-StifleREventLog'**
 - Changed *'Get-StifleRConnections'* to **'Get-StifleRConnection'**
-
-<details><summary>View all</summary>
 
 #### version 1.1.2 (2019-11-14)
 - Changed *'Get-StifleRLeaders'* from *'In progress'* to *done!*
@@ -196,17 +201,13 @@ For everything to work as expected the following requirements should be met:
 
 **Syntax**
 
-```Get-StiflerServerSettings [[-Server] <String>] [[-InstallDir] <String>] [-SortByKeyName] [<CommonParameters>]```
+```Get-StiflerServerSettings [[-Server] <String>] [[-InstallDir] <String>] [<CommonParameters>]```
 
 **Example** - Get the settings from server01
 
     Get-StifleRServerSettings -Server 'server01'
 
-**Example 2** - Get the settings from server01 with keynames sorted in alphabetical order
-
-    Get-StifleRServerSettings -Server 'server01' -SortByKeyName
-
-**Example 3** - Get the settings from server01 where the installations directory for StifleR Server is
+**Example 2** - Get the settings from server01 where the installations directory for StifleR Server is
 'D$\Program Files\2Pint Software\StifleR' instead of the default directory
 
     Get-StifleRServerSettings -Server 'server01' -InstallDir
