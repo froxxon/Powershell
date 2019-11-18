@@ -6,11 +6,16 @@ A recommendation at this point in time would also be to test this out in a lab e
 
 ## CHANGE LOG
 
+#### version 1.1.6 (2019-11-18)
+- Added parameter *'Roaming'* to *'Get-StifleRClient'*
+- Changed from *'Get-CimInstance*' to *'Get-CimClass'* to obtian properties of class in *'Get-StifleRClient'*,*'Get-StifleRDownload'* and *'Get-StifleRSubnet'*
+- Declared variables MissingProps and ClassProperties as arrays in *'Get-StifleRClient'* and *'Get-StifleRDownload'*
+
+<details><summary>View all</summary>
+
 #### version 1.1.5 (2019-11-18)
 - Changed *'Get-StifleRDownload'* to *'done!'*
 - Added Cim* to ExcludedProperties from output of *'Get-StifleRClient'* and *'Get-StifleRSubnet'*
-
-<details><summary>View all</summary>
 
 #### version 1.1.4 (2019-11-18)
 - Added function *'Get-Download'* as *'In progress'*
@@ -115,9 +120,9 @@ For everything to work as expected the following requirements should be met:
 
 **Syntax**
 
-```Get-StiflerClient -Client <String[]> [-Server <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
+```Get-StiflerClient -Client <String[]> [-Server <String>] [-Property <Array>] [-ExactMatch] [-Roaming] [<CommonParameters>]```
 
-```Get-StiflerClient [-Server <String>] [-SubnetID <String>] [-Property <Array>] [-ExactMatch] [<CommonParameters>]```
+```Get-StiflerClient [-Server <String>] [-SubnetID <String>] [-Property <Array>] [-ExactMatch] [-Roaming] [<CommonParameters>]```
 
 **Example** - Pull information about the client Client01 from server01
 
