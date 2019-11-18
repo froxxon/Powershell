@@ -659,20 +659,13 @@ function Get-ServerSettings {
     .PARAMETER InstallDir
         Specify the Installation directory for StifleR Server,
         default is 'C$\Program Files\2Pint Software\StifleR'
-
-    .PARAMETER SortByKeyName
-        Specify this if it the result should be sorted by Ascending keynames
-        
+      
     .PARAMETER Server (ComputerName, Computer)
         This will be the server hosting the StifleR Server-service.
 
     .EXAMPLE
 	get-StifleRServerSettings -Server server01
         Get the settings from server01
-
-    .EXAMPLE
-	get-StifleRServerSettings -Server server01 -SortByKeyName
-        Get the settings from server01 with keynames sorted in alphabetical order
 
     .EXAMPLE
 	Get-StifleRServerSettings -Server server01 -InstallDir
@@ -703,12 +696,11 @@ function Get-ServerSettings {
             [xml]$Content = Get-Content "\\$Server\$InstallDir\StifleR.Service.exe.config" -ErrorAction 1
             $Properties = @()
             $Properties += $Content.configuration.appSettings.add
-            if ( $SortByKeyName ) {
-                return $Properties | Sort-Object key
-            }
-            else {
-                return $Properties
-            }
+            $obj = new-object PSObject
+            foreach ( $Prop in $Properties ) {
+                $obj | add-member -MemberType NoteProperty -Name $Prop.key -Value $Prop.value
+            }            
+            return $obj
         }
         catch {
             Write-Error "Failed to obtain properties from $Server, check InstallDir and access permissions."
@@ -1860,6 +1852,33 @@ function Set-Leader {
     }
 
     process {
+    }
+
+}
+
+# In progress
+function Get-Download {
+
+    [cmdletbinding()]
+    param (
+        [Parameter(HelpMessage = "Specify StifleR server")][ValidateNotNullOrEmpty()][Alias('ComputerName','Computer','__SERVER')]
+        [string]$Server = $env:COMPUTERNAME,
+        [string]$Client
+    )
+
+    begin {
+        Write-Verbose "Check server availability with Test-Connection"
+        Write-Verbose "Check if server has the StifleR WMI-Namespace"
+        Test-ServerConnection $Server
+    }
+
+    process {
+        if ( $Client ) {
+            Get-CimInstance -Namespace $Namespace -Query "Select * from Downloads Where ComputerName='$Client'" -ComputerName $Server | Sort-Object Created
+        }
+        else {
+            Get-CimInstance -Namespace $Namespace -Query "Select * from Downloads" -ComputerName $Server | Sort-Object Created
+        }
     }
 
 }
