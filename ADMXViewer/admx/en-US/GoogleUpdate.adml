@@ -1,0 +1,1918 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>
+  </displayName>
+  <description>
+  </description>
+
+  <resources>
+    <stringTable>
+      <string id="Sup_GoogleUpdate1_2_145_5">At least Google Update 1.2.145.5</string>
+      <string id="Sup_GoogleUpdate1_3_21_81">At least Google Update 1.3.21.81</string>
+      <string id="Sup_GoogleUpdate1_3_26_0">At least Google Update 1.3.26.0</string>
+      <string id="Sup_GoogleUpdate1_3_33_5">At least Google Update 1.3.33.5</string>
+      <string id="Sup_GoogleUpdate1_3_34_3">At least Google Update 1.3.34.3</string>
+      <string id="Cat_GoogleUpdate">Google Update</string>
+      <string id="Cat_Preferences">Preferences</string>
+      <string id="Cat_ProxyServer">Proxy Server</string>
+      <string id="Cat_Applications">Applications</string>
+      <string id="Pol_AutoUpdateCheckPeriod">Auto-update check period override</string>
+      <string id="Pol_UpdateCheckSuppressedPeriod">Time period in each day to suppress auto-update check</string>
+      <string id="Pol_DownloadPreference">Download URL class override</string>
+      <string id="DownloadPreference_DropDown">Cacheable download URLs</string>
+      <string id="Pol_ProxyMode">Choose how to specify proxy server settings</string>
+      <string id="Pol_ProxyServer">Address or URL of proxy server</string>
+      <string id="Pol_ProxyPacUrl">URL to a proxy .pac file</string>
+      <string id="Pol_DefaultAllowInstallation">Allow installation default</string>
+      <string id="Pol_AllowInstallation">Allow installation</string>
+      <string id="Pol_DefaultUpdatePolicy">Update policy override default</string>
+      <string id="Pol_UpdatePolicy">Update policy override</string>
+      <string id="Pol_TargetVersionPrefix">Target version prefix override</string>
+      <string id="Pol_RollbackToTargetVersion">Rollback to Target version</string>
+      <string id="Part_AutoUpdateCheckPeriod">Minutes between update checks</string>
+      <string id="Part_UpdateCheckSuppressedStartHour">Hour in a day that start to suppress update check</string>
+      <string id="Part_UpdateCheckSuppressedStartMin">Minute in hour that starts to suppress update check</string>
+      <string id="Part_UpdateCheckSuppressedDurationMin">Number of minutes to suppress update check each day</string>
+      <string id="Part_ProxyMode">Choose how to specify proxy server settings</string>
+      <string id="Part_ProxyServer">Address or URL of proxy server</string>
+      <string id="Part_ProxyPacUrl">URL to a proxy .pac file</string>
+      <string id="Part_UpdatePolicy">Policy</string>
+      <string id="Part_TargetVersionPrefix">Target version prefix</string>
+      <string id="Name_UpdatesEnabled">Always allow updates (recommended)</string>
+      <string id="Name_ManualUpdatesOnly">Manual updates only</string>
+      <string id="Name_AutomaticUpdatesOnly">Automatic silent updates only</string>
+      <string id="Name_UpdatesDisabled">Updates disabled</string>
+      <string id="ProxyDisabled_DropDown">Never use a proxy</string>
+      <string id="ProxyAutoDetect_DropDown">Auto detect proxy settings</string>
+      <string id="ProxyPacScript_DropDown">Use a .pac proxy script</string>
+      <string id="ProxyFixedServers_DropDown">Use fixed proxy servers</string>
+      <string id="ProxyUseSystem_DropDown">Use system proxy settings</string>
+      <string id="Explain_GoogleUpdate">Policies to control the installation and updating of Google applications that use Google Update/Google Installer.</string>
+      <string id="Explain_Preferences">General policies for Google Update.</string>
+      <string id="Explain_AutoUpdateCheckPeriod">Minimum number of minutes between automatic update checks.
+
+Set the value to 0 if you want to disable all auto-update checks (not recommended).</string>
+      <string id="Explain_DownloadPreference">If enabled, the Google Update server will attempt to provide cache-friendly URLs for update payloads in its responses.</string>
+      <string id="Explain_UpdateCheckSuppressedPeriod">If this setting is enabled, update checks will be suppressed during each day starting from Hour:Minute for a period of Duration (in minutes). Duration does not account for daylight savings time. So for instance, if the start time is 22:00, and with a duration of 480 minutes, the updates will be suppressed for 8 hours regardless of whether daylight savings time changes happen in between.</string>
+      <string id="Explain_ProxyMode">Allows you to specify the proxy server used by Google Update.
+
+If you choose to never use a proxy server and always connect directly, all other options are ignored.
+
+If you choose to use system proxy settings or auto detect the proxy server, all other options are ignored.
+
+If you choose fixed server proxy mode, you can specify further options in 'Address or URL of proxy server'.
+
+If you choose to use a .pac proxy script, you must specify the URL to the script in 'URL to a proxy .pac file'.</string>
+      <string id="Explain_ProxyServer">You can specify the URL of the proxy server here.
+
+This policy only takes effect if you have selected manual proxy settings at 'Choose how to specify proxy server settings'.</string>
+      <string id="Explain_ProxyPacUrl">You can specify a URL to a proxy .pac file here.
+
+This policy only takes effect if you have selected manual proxy settings at 'Choose how to specify proxy server settings'.</string>
+      <string id="Explain_Applications">Policies for individual applications.
+
+An updated ADMX/ADML template will be required to support Google applications released in the future.</string>
+      <string id="Explain_DefaultAllowInstallation">Specifies the default behavior for whether Google software can be installed using Google Update/Google Installer.
+
+Can be overridden by the "Allow installation" for individual applications.
+
+Only affects installation of Google software using Google Update/Google Installer. Cannot prevent running the application installer directly or installation of Google software that does not use Google Update/Google Installer for installation.</string>
+      <string id="Explain_DefaultUpdatePolicy">Specifies the default policy for software updates from Google.
+
+Can be overridden by the "Update policy override" for individual applications.
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using each application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users.
+
+Only affects updates for Google software that uses Google Update for updates. Does not prevent auto-updates of Google software that does not use Google Update for updates.
+
+Updates for Google Update are not affected by this setting; Google Update will continue to update itself while it is installed.
+
+WARNING: Disabing updates will also prevent updates of any new Google applications released in the future, possibly including dependencies for future versions of installed applications.</string>
+      <string id="Cat_Gears">Gears</string>
+      <string id="Explain_InstallGears">Specifies whether Gears can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Gears can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGears">Specifies how Google Update handles available Gears updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://gears.google.com/.</string>
+      <string id="Explain_TargetVersionPrefixGears">Specifies which version Gears should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGears">Specifies that Google Update should roll installations of Gears back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleAdvertisingCookieOptoutPlugin">Google Advertising Cookie Opt-out Plugin</string>
+      <string id="Explain_InstallGoogleAdvertisingCookieOptoutPlugin">Specifies whether Google Advertising Cookie Opt-out Plugin can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Advertising Cookie Opt-out Plugin can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleAdvertisingCookieOptoutPlugin">Specifies how Google Update handles available Google Advertising Cookie Opt-out Plugin updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ads/preferences/plugin/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleAdvertisingCookieOptoutPlugin">Specifies which version Google Advertising Cookie Opt-out Plugin should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleAdvertisingCookieOptoutPlugin">Specifies that Google Update should roll installations of Google Advertising Cookie Opt-out Plugin back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleAnalyticsOptoutBrowserAddonforInternetExplorer">Google Analytics Opt-out Browser Add-on (for Internet Explorer)</string>
+      <string id="Explain_InstallGoogleAnalyticsOptoutBrowserAddonforInternetExplorer">Specifies whether Google Analytics Opt-out Browser Add-on (for Internet Explorer) can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Analytics Opt-out Browser Add-on (for Internet Explorer) can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleAnalyticsOptoutBrowserAddonforInternetExplorer">Specifies how Google Update handles available Google Analytics Opt-out Browser Add-on (for Internet Explorer) updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://tools.google.com/dlpage/gaoptout/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleAnalyticsOptoutBrowserAddonforInternetExplorer">Specifies which version Google Analytics Opt-out Browser Add-on (for Internet Explorer) should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleAnalyticsOptoutBrowserAddonforInternetExplorer">Specifies that Google Update should roll installations of Google Analytics Opt-out Browser Add-on (for Internet Explorer) back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GSuite">G Suite</string>
+      <string id="Explain_InstallGSuite">Specifies whether G Suite can be installed using Google Update/Google Installer.
+
+If this policy is not configured, G Suite can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGSuite">Specifies how Google Update handles available G Suite updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users.</string>
+      <string id="Explain_TargetVersionPrefixGSuite">Specifies which version G Suite should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGSuite">Specifies that Google Update should roll installations of G Suite back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GSuiteMigrationforMicrosoftOutlook">G Suite Migration for Microsoft Outlook®</string>
+      <string id="Explain_InstallGSuiteMigrationforMicrosoftOutlook">Specifies whether G Suite Migration for Microsoft Outlook® can be installed using Google Update/Google Installer.
+
+If this policy is not configured, G Suite Migration for Microsoft Outlook® can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGSuiteMigrationforMicrosoftOutlook">Specifies how Google Update handles available G Suite Migration for Microsoft Outlook® updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://tools.google.com/dlpage/outlookmigration/.</string>
+      <string id="Explain_TargetVersionPrefixGSuiteMigrationforMicrosoftOutlook">Specifies which version G Suite Migration for Microsoft Outlook® should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGSuiteMigrationforMicrosoftOutlook">Specifies that Google Update should roll installations of G Suite Migration for Microsoft Outlook® back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GSuiteSyncforMicrosoftOutlook">G Suite Sync for Microsoft Outlook®</string>
+      <string id="Explain_InstallGSuiteSyncforMicrosoftOutlook">Specifies whether G Suite Sync for Microsoft Outlook® can be installed using Google Update/Google Installer.
+
+If this policy is not configured, G Suite Sync for Microsoft Outlook® can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGSuiteSyncforMicrosoftOutlook">Specifies how Google Update handles available G Suite Sync for Microsoft Outlook® updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://tools.google.com/dlpage/gappssync/.</string>
+      <string id="Explain_TargetVersionPrefixGSuiteSyncforMicrosoftOutlook">Specifies which version G Suite Sync for Microsoft Outlook® should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGSuiteSyncforMicrosoftOutlook">Specifies that Google Update should roll installations of G Suite Sync for Microsoft Outlook® back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleChrome">Google Chrome</string>
+      <string id="Explain_InstallGoogleChrome">Specifies whether Google Chrome can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Chrome can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleChrome">Specifies how Google Update handles available Google Chrome updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/chrome/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleChrome">Specifies which version Google Chrome should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleChrome">Specifies that Google Update should roll installations of Google Chrome back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleChromeBeta">Google Chrome Beta</string>
+      <string id="Explain_InstallGoogleChromeBeta">Specifies whether Google Chrome Beta can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Chrome Beta can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleChromeBeta">Specifies how Google Update handles available Google Chrome Beta updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/chrome/browser/beta.html.</string>
+      <string id="Explain_TargetVersionPrefixGoogleChromeBeta">Specifies which version Google Chrome Beta should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleChromeBeta">Specifies that Google Update should roll installations of Google Chrome Beta back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleChromeBinaries">Google Chrome Binaries</string>
+      <string id="Explain_InstallGoogleChromeBinaries">Specifies whether Google Chrome Binaries can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Chrome Binaries can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleChromeBinaries">Specifies how Google Update handles available Google Chrome Binaries updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://chromereleases.googleblog.com/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleChromeBinaries">Specifies which version Google Chrome Binaries should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleChromeBinaries">Specifies that Google Update should roll installations of Google Chrome Binaries back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleChromeCanaryBuild">Google Chrome Canary Build</string>
+      <string id="Explain_InstallGoogleChromeCanaryBuild">Specifies whether Google Chrome Canary Build can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Chrome Canary Build can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleChromeCanaryBuild">Specifies how Google Update handles available Google Chrome Canary Build updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/chrome/browser/canary.html.</string>
+      <string id="Explain_TargetVersionPrefixGoogleChromeCanaryBuild">Specifies which version Google Chrome Canary Build should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleChromeCanaryBuild">Specifies that Google Update should roll installations of Google Chrome Canary Build back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleChromeDev">Google Chrome Dev</string>
+      <string id="Explain_InstallGoogleChromeDev">Specifies whether Google Chrome Dev can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Chrome Dev can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleChromeDev">Specifies how Google Update handles available Google Chrome Dev updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/chrome/browser/index.html?extra=devchannel.</string>
+      <string id="Explain_TargetVersionPrefixGoogleChromeDev">Specifies which version Google Chrome Dev should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleChromeDev">Specifies that Google Update should roll installations of Google Chrome Dev back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleChromeFrame">Google Chrome Frame</string>
+      <string id="Explain_InstallGoogleChromeFrame">Specifies whether Google Chrome Frame can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Chrome Frame can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleChromeFrame">Specifies how Google Update handles available Google Chrome Frame updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/chromeframe/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleChromeFrame">Specifies which version Google Chrome Frame should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleChromeFrame">Specifies that Google Update should roll installations of Google Chrome Frame back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_LegacyBrowserSupport">Legacy Browser Support</string>
+      <string id="Explain_InstallLegacyBrowserSupport">Specifies whether Legacy Browser Support can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Legacy Browser Support can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateLegacyBrowserSupport">Specifies how Google Update handles available Legacy Browser Support updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users.</string>
+      <string id="Explain_TargetVersionPrefixLegacyBrowserSupport">Specifies which version Legacy Browser Support should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionLegacyBrowserSupport">Specifies that Google Update should roll installations of Legacy Browser Support back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleDriveFileStream">Google Drive File Stream</string>
+      <string id="Explain_InstallGoogleDriveFileStream">Specifies whether Google Drive File Stream can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Drive File Stream can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleDriveFileStream">Specifies how Google Update handles available Google Drive File Stream updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/drive/download/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleDriveFileStream">Specifies which version Google Drive File Stream should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleDriveFileStream">Specifies that Google Update should roll installations of Google Drive File Stream back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleDrivepluginforMicrosoftOffice">Google Drive plug-in for Microsoft Office</string>
+      <string id="Explain_InstallGoogleDrivepluginforMicrosoftOffice">Specifies whether Google Drive plug-in for Microsoft Office can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Drive plug-in for Microsoft Office can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleDrivepluginforMicrosoftOffice">Specifies how Google Update handles available Google Drive plug-in for Microsoft Office updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://tools.google.com/dlpage/driveforoffice.</string>
+      <string id="Explain_TargetVersionPrefixGoogleDrivepluginforMicrosoftOffice">Specifies which version Google Drive plug-in for Microsoft Office should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleDrivepluginforMicrosoftOffice">Specifies that Google Update should roll installations of Google Drive plug-in for Microsoft Office back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleDrivepluginforMicrosoftOfficePerMachine">Google Drive plug-in for Microsoft Office Per Machine</string>
+      <string id="Explain_InstallGoogleDrivepluginforMicrosoftOfficePerMachine">Specifies whether Google Drive plug-in for Microsoft Office Per Machine can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Drive plug-in for Microsoft Office Per Machine can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleDrivepluginforMicrosoftOfficePerMachine">Specifies how Google Update handles available Google Drive plug-in for Microsoft Office Per Machine updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://support.google.com/a/answer/6165960.</string>
+      <string id="Explain_TargetVersionPrefixGoogleDrivepluginforMicrosoftOfficePerMachine">Specifies which version Google Drive plug-in for Microsoft Office Per Machine should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleDrivepluginforMicrosoftOfficePerMachine">Specifies that Google Update should roll installations of Google Drive plug-in for Microsoft Office Per Machine back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleEarth">Google Earth</string>
+      <string id="Explain_InstallGoogleEarth">Specifies whether Google Earth can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Earth can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleEarth">Specifies how Google Update handles available Google Earth updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://earth.google.com/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleEarth">Specifies which version Google Earth should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleEarth">Specifies that Google Update should roll installations of Google Earth back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleEarthperuserinstall">Google Earth (per-user install)</string>
+      <string id="Explain_InstallGoogleEarthperuserinstall">Specifies whether Google Earth (per-user install) can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Earth (per-user install) can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleEarthperuserinstall">Specifies how Google Update handles available Google Earth (per-user install) updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://earth.google.com/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleEarthperuserinstall">Specifies which version Google Earth (per-user install) should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleEarthperuserinstall">Specifies that Google Update should roll installations of Google Earth (per-user install) back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleEarthPlugin">Google Earth Plugin</string>
+      <string id="Explain_InstallGoogleEarthPlugin">Specifies whether Google Earth Plugin can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Earth Plugin can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleEarthPlugin">Specifies how Google Update handles available Google Earth Plugin updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://code.google.com/apis/earth/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleEarthPlugin">Specifies which version Google Earth Plugin should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleEarthPlugin">Specifies that Google Update should roll installations of Google Earth Plugin back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleEarthPro">Google Earth Pro</string>
+      <string id="Explain_InstallGoogleEarthPro">Specifies whether Google Earth Pro can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Earth Pro can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleEarthPro">Specifies how Google Update handles available Google Earth Pro updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://earth.google.com/enterprise/earth_pro.html.</string>
+      <string id="Explain_TargetVersionPrefixGoogleEarthPro">Specifies which version Google Earth Pro should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleEarthPro">Specifies that Google Update should roll installations of Google Earth Pro back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleHangoutsPluginforMicrosoftOutlook">Google Hangouts Plugin for Microsoft Outlook®</string>
+      <string id="Explain_InstallGoogleHangoutsPluginforMicrosoftOutlook">Specifies whether Google Hangouts Plugin for Microsoft Outlook® can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Hangouts Plugin for Microsoft Outlook® can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleHangoutsPluginforMicrosoftOutlook">Specifies how Google Update handles available Google Hangouts Plugin for Microsoft Outlook® updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://tools.google.com/dlpage/hangouts_outlookplugin.</string>
+      <string id="Explain_TargetVersionPrefixGoogleHangoutsPluginforMicrosoftOutlook">Specifies which version Google Hangouts Plugin for Microsoft Outlook® should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleHangoutsPluginforMicrosoftOutlook">Specifies that Google Update should roll installations of Google Hangouts Plugin for Microsoft Outlook® back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleEmailUploader">Google Email Uploader</string>
+      <string id="Explain_InstallGoogleEmailUploader">Specifies whether Google Email Uploader can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Email Uploader can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleEmailUploader">Specifies how Google Update handles available Google Email Uploader updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://mail.google.com/mail/help/email_uploader.html.</string>
+      <string id="Explain_TargetVersionPrefixGoogleEmailUploader">Specifies which version Google Email Uploader should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleEmailUploader">Specifies that Google Update should roll installations of Google Email Uploader back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleTalkLabsEdition">Google Talk Labs Edition</string>
+      <string id="Explain_InstallGoogleTalkLabsEdition">Specifies whether Google Talk Labs Edition can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Talk Labs Edition can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleTalkLabsEdition">Specifies how Google Update handles available Google Talk Labs Edition updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/talk/labsedition/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleTalkLabsEdition">Specifies which version Google Talk Labs Edition should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleTalkLabsEdition">Specifies that Google Update should roll installations of Google Talk Labs Edition back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleTalkPluginVoiceandVideoChat">Google Talk Plugin (Voice and Video Chat)</string>
+      <string id="Explain_InstallGoogleTalkPluginVoiceandVideoChat">Specifies whether Google Talk Plugin (Voice and Video Chat) can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Talk Plugin (Voice and Video Chat) can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleTalkPluginVoiceandVideoChat">Specifies how Google Update handles available Google Talk Plugin (Voice and Video Chat) updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://mail.google.com/videochat/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleTalkPluginVoiceandVideoChat">Specifies which version Google Talk Plugin (Voice and Video Chat) should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleTalkPluginVoiceandVideoChat">Specifies that Google Update should roll installations of Google Talk Plugin (Voice and Video Chat) back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleToolbarforFirefox">Google Toolbar (for Firefox)</string>
+      <string id="Explain_InstallGoogleToolbarforFirefox">Specifies whether Google Toolbar (for Firefox) can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Toolbar (for Firefox) can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleToolbarforFirefox">Specifies how Google Update handles available Google Toolbar (for Firefox) updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://toolbar.google.com/ in Firefox.</string>
+      <string id="Explain_TargetVersionPrefixGoogleToolbarforFirefox">Specifies which version Google Toolbar (for Firefox) should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleToolbarforFirefox">Specifies that Google Update should roll installations of Google Toolbar (for Firefox) back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleToolbarforInternetExplorer">Google Toolbar (for Internet Explorer)</string>
+      <string id="Explain_InstallGoogleToolbarforInternetExplorer">Specifies whether Google Toolbar (for Internet Explorer) can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Toolbar (for Internet Explorer) can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleToolbarforInternetExplorer">Specifies how Google Update handles available Google Toolbar (for Internet Explorer) updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://toolbar.google.com/ in Internet Explorer.</string>
+      <string id="Explain_TargetVersionPrefixGoogleToolbarforInternetExplorer">Specifies which version Google Toolbar (for Internet Explorer) should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleToolbarforInternetExplorer">Specifies that Google Update should roll installations of Google Toolbar (for Internet Explorer) back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GWTDeveloperPluginForInternetExplorer">GWT Developer Plugin For Internet Explorer</string>
+      <string id="Explain_InstallGWTDeveloperPluginForInternetExplorer">Specifies whether GWT Developer Plugin For Internet Explorer can be installed using Google Update/Google Installer.
+
+If this policy is not configured, GWT Developer Plugin For Internet Explorer can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGWTDeveloperPluginForInternetExplorer">Specifies how Google Update handles available GWT Developer Plugin For Internet Explorer updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://gwt.google.com/missing-plugin/MissingPlugin.html.</string>
+      <string id="Explain_TargetVersionPrefixGWTDeveloperPluginForInternetExplorer">Specifies which version GWT Developer Plugin For Internet Explorer should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGWTDeveloperPluginForInternetExplorer">Specifies that Google Update should roll installations of GWT Developer Plugin For Internet Explorer back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_O3D">O3D</string>
+      <string id="Explain_InstallO3D">Specifies whether O3D can be installed using Google Update/Google Installer.
+
+If this policy is not configured, O3D can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateO3D">Specifies how Google Update handles available O3D updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://code.google.com/apis/o3d/.</string>
+      <string id="Explain_TargetVersionPrefixO3D">Specifies which version O3D should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionO3D">Specifies that Google Update should roll installations of O3D back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_O3DExtras">O3D Extras</string>
+      <string id="Explain_InstallO3DExtras">Specifies whether O3D Extras can be installed using Google Update/Google Installer.
+
+If this policy is not configured, O3D Extras can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateO3DExtras">Specifies how Google Update handles available O3D Extras updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users.</string>
+      <string id="Explain_TargetVersionPrefixO3DExtras">Specifies which version O3D Extras should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionO3DExtras">Specifies that Google Update should roll installations of O3D Extras back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleAmharicInput">Google Amharic Input</string>
+      <string id="Explain_InstallGoogleAmharicInput">Specifies whether Google Amharic Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Amharic Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleAmharicInput">Specifies how Google Update handles available Google Amharic Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleAmharicInput">Specifies which version Google Amharic Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleAmharicInput">Specifies that Google Update should roll installations of Google Amharic Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleArabicInput">Google Arabic Input</string>
+      <string id="Explain_InstallGoogleArabicInput">Specifies whether Google Arabic Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Arabic Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleArabicInput">Specifies how Google Update handles available Google Arabic Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleArabicInput">Specifies which version Google Arabic Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleArabicInput">Specifies that Google Update should roll installations of Google Arabic Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleBengaliInput">Google Bengali Input</string>
+      <string id="Explain_InstallGoogleBengaliInput">Specifies whether Google Bengali Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Bengali Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleBengaliInput">Specifies how Google Update handles available Google Bengali Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleBengaliInput">Specifies which version Google Bengali Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleBengaliInput">Specifies that Google Update should roll installations of Google Bengali Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleFarsiInput">Google Farsi Input</string>
+      <string id="Explain_InstallGoogleFarsiInput">Specifies whether Google Farsi Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Farsi Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleFarsiInput">Specifies how Google Update handles available Google Farsi Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleFarsiInput">Specifies which version Google Farsi Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleFarsiInput">Specifies that Google Update should roll installations of Google Farsi Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleGreekInput">Google Greek Input</string>
+      <string id="Explain_InstallGoogleGreekInput">Specifies whether Google Greek Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Greek Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleGreekInput">Specifies how Google Update handles available Google Greek Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleGreekInput">Specifies which version Google Greek Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleGreekInput">Specifies that Google Update should roll installations of Google Greek Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleGujaratiInput">Google Gujarati Input</string>
+      <string id="Explain_InstallGoogleGujaratiInput">Specifies whether Google Gujarati Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Gujarati Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleGujaratiInput">Specifies how Google Update handles available Google Gujarati Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleGujaratiInput">Specifies which version Google Gujarati Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleGujaratiInput">Specifies that Google Update should roll installations of Google Gujarati Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleHebrewInput">Google Hebrew Input</string>
+      <string id="Explain_InstallGoogleHebrewInput">Specifies whether Google Hebrew Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Hebrew Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleHebrewInput">Specifies how Google Update handles available Google Hebrew Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleHebrewInput">Specifies which version Google Hebrew Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleHebrewInput">Specifies that Google Update should roll installations of Google Hebrew Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleHindiInput">Google Hindi Input</string>
+      <string id="Explain_InstallGoogleHindiInput">Specifies whether Google Hindi Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Hindi Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleHindiInput">Specifies how Google Update handles available Google Hindi Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleHindiInput">Specifies which version Google Hindi Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleHindiInput">Specifies that Google Update should roll installations of Google Hindi Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleJapaneseInput">Google Japanese Input</string>
+      <string id="Explain_InstallGoogleJapaneseInput">Specifies whether Google Japanese Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Japanese Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleJapaneseInput">Specifies how Google Update handles available Google Japanese Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/intl/ja/ime/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleJapaneseInput">Specifies which version Google Japanese Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleJapaneseInput">Specifies that Google Update should roll installations of Google Japanese Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleKannadaInput">Google Kannada Input</string>
+      <string id="Explain_InstallGoogleKannadaInput">Specifies whether Google Kannada Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Kannada Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleKannadaInput">Specifies how Google Update handles available Google Kannada Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleKannadaInput">Specifies which version Google Kannada Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleKannadaInput">Specifies that Google Update should roll installations of Google Kannada Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleMalayalamInput">Google Malayalam Input</string>
+      <string id="Explain_InstallGoogleMalayalamInput">Specifies whether Google Malayalam Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Malayalam Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleMalayalamInput">Specifies how Google Update handles available Google Malayalam Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleMalayalamInput">Specifies which version Google Malayalam Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleMalayalamInput">Specifies that Google Update should roll installations of Google Malayalam Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleMarathiInput">Google Marathi Input</string>
+      <string id="Explain_InstallGoogleMarathiInput">Specifies whether Google Marathi Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Marathi Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleMarathiInput">Specifies how Google Update handles available Google Marathi Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleMarathiInput">Specifies which version Google Marathi Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleMarathiInput">Specifies that Google Update should roll installations of Google Marathi Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleNepaliInput">Google Nepali Input</string>
+      <string id="Explain_InstallGoogleNepaliInput">Specifies whether Google Nepali Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Nepali Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleNepaliInput">Specifies how Google Update handles available Google Nepali Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleNepaliInput">Specifies which version Google Nepali Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleNepaliInput">Specifies that Google Update should roll installations of Google Nepali Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleOriyaInput">Google Oriya Input</string>
+      <string id="Explain_InstallGoogleOriyaInput">Specifies whether Google Oriya Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Oriya Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleOriyaInput">Specifies how Google Update handles available Google Oriya Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleOriyaInput">Specifies which version Google Oriya Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleOriyaInput">Specifies that Google Update should roll installations of Google Oriya Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GooglePunjabiInput">Google Punjabi Input</string>
+      <string id="Explain_InstallGooglePunjabiInput">Specifies whether Google Punjabi Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Punjabi Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGooglePunjabiInput">Specifies how Google Update handles available Google Punjabi Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGooglePunjabiInput">Specifies which version Google Punjabi Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGooglePunjabiInput">Specifies that Google Update should roll installations of Google Punjabi Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleRussianInput">Google Russian Input</string>
+      <string id="Explain_InstallGoogleRussianInput">Specifies whether Google Russian Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Russian Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleRussianInput">Specifies how Google Update handles available Google Russian Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleRussianInput">Specifies which version Google Russian Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleRussianInput">Specifies that Google Update should roll installations of Google Russian Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleSanskritInput">Google Sanskrit Input</string>
+      <string id="Explain_InstallGoogleSanskritInput">Specifies whether Google Sanskrit Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Sanskrit Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleSanskritInput">Specifies how Google Update handles available Google Sanskrit Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleSanskritInput">Specifies which version Google Sanskrit Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleSanskritInput">Specifies that Google Update should roll installations of Google Sanskrit Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleSerbianInput">Google Serbian Input</string>
+      <string id="Explain_InstallGoogleSerbianInput">Specifies whether Google Serbian Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Serbian Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleSerbianInput">Specifies how Google Update handles available Google Serbian Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleSerbianInput">Specifies which version Google Serbian Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleSerbianInput">Specifies that Google Update should roll installations of Google Serbian Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleSinhaleseInput">Google Sinhalese Input</string>
+      <string id="Explain_InstallGoogleSinhaleseInput">Specifies whether Google Sinhalese Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Sinhalese Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleSinhaleseInput">Specifies how Google Update handles available Google Sinhalese Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleSinhaleseInput">Specifies which version Google Sinhalese Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleSinhaleseInput">Specifies that Google Update should roll installations of Google Sinhalese Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleTamilInput">Google Tamil Input</string>
+      <string id="Explain_InstallGoogleTamilInput">Specifies whether Google Tamil Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Tamil Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleTamilInput">Specifies how Google Update handles available Google Tamil Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleTamilInput">Specifies which version Google Tamil Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleTamilInput">Specifies that Google Update should roll installations of Google Tamil Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleTeluguInput">Google Telugu Input</string>
+      <string id="Explain_InstallGoogleTeluguInput">Specifies whether Google Telugu Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Telugu Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleTeluguInput">Specifies how Google Update handles available Google Telugu Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleTeluguInput">Specifies which version Google Telugu Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleTeluguInput">Specifies that Google Update should roll installations of Google Telugu Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleTigrinyaInput">Google Tigrinya Input</string>
+      <string id="Explain_InstallGoogleTigrinyaInput">Specifies whether Google Tigrinya Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Tigrinya Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleTigrinyaInput">Specifies how Google Update handles available Google Tigrinya Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleTigrinyaInput">Specifies which version Google Tigrinya Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleTigrinyaInput">Specifies that Google Update should roll installations of Google Tigrinya Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+      <string id="Cat_GoogleUrduInput">Google Urdu Input</string>
+      <string id="Explain_InstallGoogleUrduInput">Specifies whether Google Urdu Input can be installed using Google Update/Google Installer.
+
+If this policy is not configured, Google Urdu Input can be installed as specified by "Allow installation default".</string>
+      <string id="Explain_AutoUpdateGoogleUrduInput">Specifies how Google Update handles available Google Urdu Input updates from Google.
+
+If this policy is not configured, Google Update handles available updates as specified by "Update policy override default".
+
+Options:
+ - Always allow updates: Updates are always applied when found, either by periodic update check or by a manual update check.
+ - Manual updates only: Updates are only applied when the user does a manual update check. (Not all apps provide an interface  for this.)
+ - Automatic silent updates only: Updates are only applied when they are found via the periodic update check.
+ - Updates disabled: Never apply updates.
+
+If you select manual updates, you should periodically check for updates using the application's manual update mechanism if available. If you disable updates, you should periodically check for updates and distribute them to users. Check https://www.google.com/ime/transliteration/.</string>
+      <string id="Explain_TargetVersionPrefixGoogleUrduInput">Specifies which version Google Urdu Input should be updated to.
+
+When this policy is enabled, the app will be updated to the version prefixed with this policy value.
+
+Some examples:
+1) Not configured: app will be updated to the latest version available.
+2) Policy value is set to "55.": the app will be updated to any minor version of 55 (e.g., 55.24.34 or 55.60.2).
+3) Policy value is "55.2.": the app will be updated to any minor version of 55.2 (e.g., 55.2.34 or 55.2.2).
+4) Policy value is "55.24.34": the app will be updated to this specific version only.</string>
+      <string id="Explain_RollbackToTargetVersionGoogleUrduInput">Specifies that Google Update should roll installations of Google Urdu Input back to the version indicated by "Target version prefix override".
+
+This policy setting has no effect unless "Target version prefix override" is set.
+
+If this policy is not configured or is disabled, installs that have a version higher than that specified by "Target version prefix override" will be left as-is.
+
+If this policy is enabled, installs that have a version higher than that specified by "Target version prefix override" will be downgraded to the highest available version that matches the target version.
+
+This policy is meant to serve as temporary measure when Enterprise Administrators need to downgrade for business reasons. To ensure users are protected by the latest security updates, the most recent version should be used. When versions are downgraded to older versions, there could be incompatibilities.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_AutoUpdateCheckPeriod">
+        <decimalTextBox refId="Part_AutoUpdateCheckPeriod" defaultValue="1400"
+            spinStep="60">Minutes between update checks</decimalTextBox>
+      </presentation>
+      <presentation id="Pol_UpdateCheckSuppressedPeriod">
+        <decimalTextBox refId="Part_UpdateCheckSuppressedStartHour"
+            defaultValue="0" spinStep="1">Hour</decimalTextBox>
+        <decimalTextBox refId="Part_UpdateCheckSuppressedStartMin"
+            defaultValue="0" spinStep="1">Minute</decimalTextBox>
+        <decimalTextBox refId="Part_UpdateCheckSuppressedDurationMin"
+            defaultValue="60">Duration</decimalTextBox>
+      </presentation>
+      <presentation id="Pol_DownloadPreference">
+        <dropdownList refId="Part_DownloadPreference"
+            defaultItem="0">Type of download URL to request</dropdownList>
+      </presentation>
+      <presentation id="Pol_ProxyMode">
+        <dropdownList refId="Part_ProxyMode"
+            defaultItem="0">Choose how to specify proxy server settings
+        </dropdownList>
+      </presentation>
+      <presentation id="Pol_ProxyServer">
+        <textBox refId="Part_ProxyServer">
+          <label>Address or URL of proxy server</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="Pol_ProxyPacUrl">
+        <textBox refId="Part_ProxyPacUrl">
+          <label>URL to a proxy .pac file</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="Pol_DefaultAllowInstallation" />
+      <presentation id="Pol_DefaultUpdatePolicy">
+        <dropdownList refId="Part_UpdatePolicy"
+            defaultItem="0">Policy</dropdownList>
+      </presentation>
+      <presentation id="Pol_AllowInstallation" />
+      <presentation id="Pol_UpdatePolicy">
+        <dropdownList refId="Part_UpdatePolicy"
+            defaultItem="0">Policy</dropdownList>
+      </presentation>      <presentation id="Pol_TargetVersionPrefix">
+        <textBox refId="Part_TargetVersionPrefix">
+          <label>Target version prefix</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="Pol_RollbackToTargetVersion" />
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

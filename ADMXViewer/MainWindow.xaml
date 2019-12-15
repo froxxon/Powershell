@@ -1,0 +1,100 @@
+<Window x:Name="Form" x:Class="ADMXViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADMXViewer"
+        mc:Ignorable="d"
+        Title="ADMX Viewer" Height="670" Width="1005" MinWidth="1005" MinHeight="670" UseLayoutRounding="True">
+    <Grid x:Name="grdMain" Margin="0,0,0 ,0" Background="White" MinWidth="990" MinHeight="610">
+        <Grid x:Name="grdTree" Margin="10,0,0,10" MinHeight="630" MinWidth="490" MaxWidth="490" HorizontalAlignment="Left" Background="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="490" ClipToBounds="True">
+            <TreeView x:Name="trvPolicies" Margin="0,45,0,5" BorderThickness="0,1,1,0" MinHeight="500" Padding="1" MinWidth="485" MaxWidth="485" Width="485" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <HierarchicalDataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image x:Name="img" Width="20" Height="20" Source= "x:/images/file.png" />
+                                        <TextBlock Text="{Binding}" Margin="5,0" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TreeView.Resources>
+                <TreeView.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0.677"/>
+                        <GradientStop Color="#FF76B9EE"/>
+                    </LinearGradientBrush>
+                </TreeView.BorderBrush>
+                <TreeView.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0.047"/>
+                        <GradientStop Color="#FFEDF6FD"/>
+                    </LinearGradientBrush>
+                </TreeView.Background>
+            </TreeView>
+            <StackPanel Margin="0,10" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="btnFile" Content="Choose file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="23" Margin="0,0,10,0" UseLayoutRounding="True"/>
+                <TextBox x:Name="txtFile" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" VerticalContentAlignment="Center" Width="199" IsEnabled="False" Margin="0,0,10,0" VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" HorizontalScrollBarVisibility="Disabled"/>
+                <ComboBox x:Name="cmbLanguage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="23" VerticalContentAlignment="Center" IsEnabled="False" HorizontalContentAlignment="Center" Margin="0,0,10,0" UseLayoutRounding="True" ScrollViewer.CanContentScroll="False">
+                    <ComboBoxItem Content="en-us" HorizontalAlignment="Left" Width="98" IsSelected="True"/>
+                </ComboBox>
+                <Button x:Name="BtnView" Content="View" VerticalAlignment="Top" Width="76" Height="23" IsEnabled="False" Margin="0,0,10,0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" UseLayoutRounding="True"/>
+            </StackPanel>
+            <Button x:Name="btnExpand" Content="Expand top" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="393,80,0,0" Click="Button_Click" Background="White" BorderThickness="1" BorderBrush="#FFABADB3"/>
+            <Button x:Name="btnCollapse" Content="Collapse top" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="393,55,0,0" Background="White" BorderThickness="1" BorderBrush="#FFABADB3"/>
+            <Label x:Name="lblNoCategories" Content="No categories could be found, information will not display correctly!" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,20" Width="470" Foreground="Red" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+        </Grid>
+        <Grid x:Name="grdInfo" Margin="510,10,10,10" MinHeight="630" MinWidth="480" Background="White" ScrollViewer.VerticalScrollBarVisibility="Auto" ClipToBounds="True" >
+            <Label Content="Class" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,333,0,0" Background="{x:Null}" Height="25" FontWeight="Bold"/>
+            <Label Content="Description" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="0"/>
+            <Label Content="Key" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,272,0,0" Height="25" FontWeight="Bold"/>
+            <Label Content="Value name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,302,0,0" Height="26" FontWeight="Bold"/>
+            <TextBox x:Name="txtExplainText" Height="235" TextWrapping="Wrap" Margin="0,30,15,50" IsReadOnly="True" VerticalScrollBarVisibility="Auto" TextChanged="txtExplainText_TextChanged" BorderThickness="1,0,0,1" IsTabStop="False" AllowDrop="False" VerticalAlignment="Top" IsUndoEnabled="False" Padding="0">
+                <TextBox.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF76B9EE" Offset="1"/>
+                        <GradientStop Color="White" Offset="0.063"/>
+                    </LinearGradientBrush>
+                </TextBox.BorderBrush>
+                <TextBox.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFEDF6FD" Offset="1"/>
+                        <GradientStop Color="White" Offset="0.94"/>
+                    </LinearGradientBrush>
+                </TextBox.Background>
+            </TextBox>
+            <TextBox x:Name="txtKey" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Margin="108,278,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" VerticalContentAlignment="Center" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True"/>
+            <TextBox x:Name="txtValueName" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="108,305,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" Height="23" VerticalContentAlignment="Center" AllowDrop="False" IsTabStop="False" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True"/>
+            <TextBox x:Name="txtClass" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Margin="108,333,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalContentAlignment="Center" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled"/>
+            <TextBox x:Name="txtElements" HorizontalAlignment="Left" Height="65" VerticalAlignment="Top" Margin="108,361,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalContentAlignment="Center" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled"/>
+            <Label Content="Elements" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,363,0,0" Background="{x:Null}" Height="25" FontWeight="Bold"/>
+            <Rectangle HorizontalAlignment="Right" Height="1" VerticalAlignment="Bottom" Width="458" Margin="0,0,0,50">
+                <Rectangle.Stroke>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="270" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF76B9EE" Offset="1"/>
+                        <GradientStop Color="White" Offset="0.233"/>
+                    </LinearGradientBrush>
+                </Rectangle.Stroke>
+            </Rectangle>
+            <StackPanel Margin="0,0,10,15" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Label Content="Categories:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+                <Label x:Name="lblCatCount" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" FlowDirection="RightToLeft" Width="43"/>
+                <Label Content="Policies:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="lblPolCount" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="43"/>
+            </StackPanel>
+        </Grid>
+        <Label x:Name="lblNoLang" Content="No languages available, choose another file!" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500,9,0,0" Foreground="Red" Visibility="Hidden" />
+    </Grid>
+</Window>
