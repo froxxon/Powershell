@@ -15,6 +15,7 @@ else {
     $XamlFile =  "$($PSScriptRoot)\MainWindow.xaml"
     $ImgSource =  "$($PSScriptRoot)\images\icon.png"
 }
+
 #region XAML
     $inputXML = Get-Content $xamlFile -Raw
     $inputXML = $inputXML -replace '\s{1}[\w\d_-]+="{x:Null}"',''
@@ -76,12 +77,28 @@ Function Open-Dialog {
     }
 }
 
-Function Open-TestFile {
-    $txtFile.Text = "msedgeupdate.admx"
+Function Open-ByFileAssociation {
+    param (
+        [string]$argument
+    )
+
+    $txtFile.Text = $argument.split('\')[-1]
     $cmbLanguage.Items.Clear()
-    $global:FileDir = "C:\Windows\PolicyDefinitions\"
-    $cmbLanguage.Items.Add('en-us') | out-null
+    $global:FileDir = $argument.replace($argument.split('\')[-1],'')
+    foreach ( $lang in (get-childitem -Path $FileDir -Include $txtFile.Text.Replace('admx','adml') -Recurse).Directory.Name ) {
+        $cmbLanguage.Items.Add($lang)
+    }
     $cmbLanguage.SelectedIndex = 0
+    if ( $cmbLanguage.Items.Count -gt 0 ) {
+        $cmbLanguage.IsEnabled = $true
+        $btnView.isEnabled = $true
+        $lblNoLang.Visibility = 'Hidden'
+    }
+    else {
+        $cmbLanguage.IsEnabled = $false
+        $btnView.isEnabled = $false
+        $lblNoLang.Visibility = 'Visible'
+    }
     
     [xml]$data = Get-Content "$FileDir\$($txtFile.Text)" -Encoding UTF8
     [xml]$lang = Get-Content "$FileDir$($cmbLanguage.SelectedValue)\$($txtFile.Text.Replace(".admx",".adml"))" -Encoding UTF8
@@ -254,7 +271,6 @@ function Get-NextLevel {
     }
     else {
         if ( ($trvPolicies.Items.Header -notcontains $($DisplayName) -or $trvPolicies.Items.Header -notcontains $($Tag)) -and (($trvPolicies.Items.Tag -notcontains $($Tag) -or $trvPolicies.Items.Tag -notcontains $trvPolicies.Items[0].Tag ))) {
-            write-host $DisplayName
             $CurrentNode = Add-Node -Node $Node -DisplayName $DisplayName -Tag $Tag
             $Node = $CurrentNode
             foreach ( $pol in $policies | where ParentCategoryId -eq $CurrentNode.Tag | sort DisplayName ) {
@@ -383,7 +399,6 @@ $trvPolicies.Add_SelectedItemChanged({
     if ( $txtElements.Text ) {
         $lblInfoElements.Visibility = 'Visible'
         $txtElements.Visibility = 'Visible'
-        write-host $txtElements.is
         if ( $txtElements.LineCount -ge 6 ) {
             $txtElements.BorderThickness = 1
         }
@@ -428,5 +443,9 @@ $btnCollapse.Visibility = 'Hidden'
 $trvPolicies.Visibility = 'Hidden'
 $grdInfo.Visibility = 'Hidden'
 
-#open-testfile
+if ( $args[0] ) {
+    $argument = $args[0]
+    open-byfileassociation $argument
+}
+
 $Form.ShowDialog() | out-null
