@@ -77,7 +77,7 @@ Function Open-Dialog {
 }
 
 Function Open-TestFile {
-    $txtFile.Text = "appv.admx"
+    $txtFile.Text = "msedgeupdate.admx"
     $cmbLanguage.Items.Clear()
     $global:FileDir = "C:\Windows\PolicyDefinitions\"
     $cmbLanguage.Items.Add('en-us') | out-null
@@ -166,16 +166,15 @@ function Get-Policies {
 
                 [string]$Elements = ''
                 foreach ( $node in $policy.elements.ChildNodes ) {
-                    $text = "Type: $($node.Name)"
+                    $text = "Type: $($node.Name)`n"
                     foreach ( $attrib in $node.Attributes ) {
-                        $text = "$text $($attrib.Name): $($attrib.value)"
+                        $text = "$text$($attrib.Name): $($attrib.value)`n"
                     }
                     if ( $text -notmatch "#comment" ) {
                         $text = "$text`n"
                         $Elements = "$Elements$text"
                     }
                 }
-                $Elements
 
                 $polobj = New-Object System.Object
                 $polobj | Add-Member -type NoteProperty -name ADMX -Value $file
@@ -187,10 +186,16 @@ function Get-Policies {
                 $polobj | Add-Member -type NoteProperty -name ExplainText -Value $explainText
                 $polobj | Add-Member -type NoteProperty -name SupportedOn -Value $SupportedOn
                 $polobj | Add-Member -type NoteProperty -name Key -Value $Policy.key
-                $polobj | Add-Member -type NoteProperty -name ValueName -Value $Policy.ValueName
-                $polobj | Add-Member -type NoteProperty -name Elements -Value $Elements
-                $polobj | Add-Member -type NoteProperty -name EnabledValue -Value $Policy.EnabledValue.ChildNodes.value
-                $polobj | Add-Member -type NoteProperty -name DisabledValue -Value $Policy.DisabledValue.ChildNodes.value
+                if ( $Policy.ValueName ) {
+                    $polobj | Add-Member -type NoteProperty -name ValueName -Value $Policy.ValueName
+                }
+                $polobj | Add-Member -type NoteProperty -name Elements -Value $Elements.TrimEnd()
+                if ( $Policy.EnabledValue.ChildNodes.value ) {
+                    $polobj | Add-Member -type NoteProperty -name EnabledValue -Value $Policy.EnabledValue.ChildNodes.value
+                }
+                if ( $Policy.DisabledValue.ChildNodes.value ) {
+                    $polobj | Add-Member -type NoteProperty -name DisabledValue -Value $Policy.DisabledValue.ChildNodes.value
+                }
                 $policies += $polobj
             }
         }
@@ -249,7 +254,9 @@ function Get-NextLevel {
     }
     else {
         if ( ($trvPolicies.Items.Header -notcontains $($DisplayName) -or $trvPolicies.Items.Header -notcontains $($Tag)) -and (($trvPolicies.Items.Tag -notcontains $($Tag) -or $trvPolicies.Items.Tag -notcontains $trvPolicies.Items[0].Tag ))) {
+            write-host $DisplayName
             $CurrentNode = Add-Node -Node $Node -DisplayName $DisplayName -Tag $Tag
+            $Node = $CurrentNode
             foreach ( $pol in $policies | where ParentCategoryId -eq $CurrentNode.Tag | sort DisplayName ) {
                 Add-Node -Node $CurrentNode -DisplayName $pol.DisplayName -Tag $pol.ParentCategoryID -policy
             }
@@ -376,6 +383,13 @@ $trvPolicies.Add_SelectedItemChanged({
     if ( $txtElements.Text ) {
         $lblInfoElements.Visibility = 'Visible'
         $txtElements.Visibility = 'Visible'
+        write-host $txtElements.is
+        if ( $txtElements.LineCount -ge 6 ) {
+            $txtElements.BorderThickness = 1
+        }
+        else {
+            $txtElements.BorderThickness = 0
+        }
     }
     else {
         $lblInfoElements.Visibility = 'Collapsed'

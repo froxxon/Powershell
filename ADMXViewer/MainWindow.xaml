@@ -50,7 +50,7 @@
         </Grid>
         <Grid x:Name="grdInfo" Margin="510,10,10,10" MinHeight="630" MinWidth="480" Background="White" ScrollViewer.VerticalScrollBarVisibility="Auto" ClipToBounds="True" >
             <Label x:Name="lblInfoExplainText" Content="Description" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="0"/>
-            <StackPanel Margin="0,272,0,0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Height="348" Width="103">
+            <StackPanel Margin="0,280,0,0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Height="348" Width="103">
                 <Label x:Name="lblInfoKey" Content="Key" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
                 <Label x:Name="lblInfoValueName" Content="Value name" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
                 <Label x:Name="lblInfoClass" Content="Class" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
@@ -72,13 +72,28 @@
                     </LinearGradientBrush>
                 </TextBox.Background>
             </TextBox>
-            <StackPanel Margin="110,272,15,56" Orientation="Vertical">
+            <StackPanel Margin="110,280,15,60" Orientation="Vertical" Background="White" VerticalAlignment="Top">
                 <TextBox x:Name="txtKey" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True" Margin="0,0,0,10"/>
                 <TextBox x:Name="txtValueName" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" Height="25" AllowDrop="False" IsTabStop="False" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True" Margin="0,0,0,10"/>
                 <TextBox x:Name="txtClass" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,10"/>
                 <TextBox x:Name="txtDisabledValue" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,10"/>
                 <TextBox x:Name="txtEnabledValue" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,10"/>
-                <TextBox x:Name="txtElements" IsReadOnly="True" VerticalScrollBarVisibility="Auto" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
+                <TextBox x:Name="txtElements" BorderThickness="0" AllowDrop="False" IsTabStop="False" HorizontalScrollBarVisibility="Auto" Margin="0,0,10,10" Background="White" VerticalScrollBarVisibility="Auto" IsUndoEnabled="False" MinHeight="100" Grid.IsSharedSizeScope="True" IsReadOnly="True" VerticalAlignment="Top" MaxHeight="100" Height="100">
+                    <TextBox.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FF76B9EE" Offset="0.867"/>
+                            <GradientStop Color="White"/>
+                        </LinearGradientBrush>
+                    </TextBox.BorderBrush>
+                </TextBox>
             </StackPanel>
             <Rectangle HorizontalAlignment="Right" Height="1" VerticalAlignment="Bottom" Width="458" Margin="0,0,0,50">
                 <Rectangle.Stroke>
