@@ -59,7 +59,7 @@ Function Open-Dialog {
                 $cmbLanguage.Items.Add($lang)
             }
             $cmbLanguage.SelectedIndex = 0
-            if ( $cmbLanguage.Items.Count -gt 1 ) {
+            if ( $cmbLanguage.Items.Count -gt 0 ) {
                 $cmbLanguage.IsEnabled = $true
                 $btnView.isEnabled = $true
                 $lblNoLang.Visibility = 'Hidden'
@@ -303,7 +303,7 @@ $btnView.Add_Click({
 
 $btnCollapse.Add_Click({
     foreach ( $item in $trvPolicies.Items ) {
-        write-host $item.header
+        #write-host $item.header
         $item.isexpanded = $false
     }
 })
