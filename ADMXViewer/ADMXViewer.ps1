@@ -76,6 +76,25 @@ Function Open-Dialog {
     }
 }
 
+Function Open-TestFile {
+    $txtFile.Text = "appv.admx"
+    $cmbLanguage.Items.Clear()
+    $global:FileDir = "C:\Windows\PolicyDefinitions\"
+    $cmbLanguage.Items.Add('en-us') | out-null
+    $cmbLanguage.SelectedIndex = 0
+    
+    [xml]$data = Get-Content "$FileDir\$($txtFile.Text)" -Encoding UTF8
+    [xml]$lang = Get-Content "$FileDir$($cmbLanguage.SelectedValue)\$($txtFile.Text.Replace(".admx",".adml"))" -Encoding UTF8
+    $policyText = $lang.policyDefinitionResources.resources.stringTable.ChildNodes
+    $Categories = Get-Categories
+    $global:Policies = Get-Policies
+    Build-TreeView
+    $btnExpand.Visibility = 'Visible'
+    $btnCollapse.Visibility = 'Visible'
+    $trvPolicies.Visibility = 'Visible'
+    $grdInfo.Visibility = 'Visible'
+}
+
 function Get-Categories {
     $categories = @()
     foreach ( $cat in $data.PolicyDefinitions.Categories.ChildNodes ) {
@@ -144,11 +163,23 @@ function Get-Policies {
                     $parentCategoryID =  ($data.policyDefinitions.categories.ChildNodes | Where-Object { $_.Name -eq $policy.parentCategory.ref } -ErrorAction SilentlyContinue ).Name
                     $parentCategory =  ($policyText | Where-Object { $_.id -eq $parentCategoryID } -ErrorAction SilentlyContinue ).'#text'
                 }
-        
+
+                [string]$Elements = ''
+                foreach ( $node in $policy.elements.ChildNodes ) {
+                    $text = "Type: $($node.Name)"
+                    foreach ( $attrib in $node.Attributes ) {
+                        $text = "$text $($attrib.Name): $($attrib.value)"
+                    }
+                    if ( $text -notmatch "#comment" ) {
+                        $text = "$text`n"
+                        $Elements = "$Elements$text"
+                    }
+                }
+                $Elements
+
                 $polobj = New-Object System.Object
                 $polobj | Add-Member -type NoteProperty -name ADMX -Value $file
                 $polobj | Add-Member -type NoteProperty -name ParentCategoryName -Value $parentCategory
-                #$polobj | Add-Member -type NoteProperty -name ParentCategoryID -Value $parentCategoryID
                 $polobj | Add-Member -type NoteProperty -name ParentCategoryID -Value $policy.parentCategory.ref
                 $polobj | Add-Member -type NoteProperty -name Name -Value $Policy.name
                 $polobj | Add-Member -type NoteProperty -name DisplayName -Value $displayname
@@ -157,7 +188,9 @@ function Get-Policies {
                 $polobj | Add-Member -type NoteProperty -name SupportedOn -Value $SupportedOn
                 $polobj | Add-Member -type NoteProperty -name Key -Value $Policy.key
                 $polobj | Add-Member -type NoteProperty -name ValueName -Value $Policy.ValueName
-                $polobj | Add-Member -type NoteProperty -name Elements -Value $Policy.Elements
+                $polobj | Add-Member -type NoteProperty -name Elements -Value $Elements
+                $polobj | Add-Member -type NoteProperty -name EnabledValue -Value $Policy.EnabledValue.ChildNodes.value
+                $polobj | Add-Member -type NoteProperty -name DisabledValue -Value $Policy.DisabledValue.ChildNodes.value
                 $policies += $polobj
             }
         }
@@ -252,7 +285,6 @@ function Build-TreeView {
                 $treeNodes = New-Object System.Windows.Controls.TreeViewItem 
                 $treeNodes.Header = $cat.category
                 $treeNodes.Tag = $cat.categoryid
-                #$treeNodes.Tooltip = $cat.categoryid
                 $trvPolicies.Items.Add($treeNodes) | out-null
                 $lblCatCount.Content = $lblCatCount.Content + 1
                 $subcats = Get-NextLevel -Node $treeNodes -DisplayName $cat.category -Tag $cat.categoryid
@@ -283,17 +315,78 @@ $trvPolicies.Add_SelectedItemChanged({
     $txtKey.Text = $item.Key
     $txtValueName.Text = $item.ValueName
     $txtClass.Text = $item.Class
-    $txtElements.Text = ''
-    #clear-host
-    #write-host $item.Elements.InnerXml
-    #write-host " "
+    $txtElements.Text = $($item.Elements)
+    $txtDisabledValue.Text = $item.DisabledValue
+    $txtEnabledValue.Text = $item.EnabledValue
+
+    if ( $txtExplainText.Text ) {
+        $lblInfoExplainText.Visibility = 'Visible'
+        $txtExplainText.Visibility = 'Visible'
+    }
+    else {
+        $lblInfoExplainText.Visibility = 'Collapsed'
+        $txtExplainText.Visibility = 'Collapsed'
+    }
+
+    if ( $txtKey.Text ) {
+        $lblInfoKey.Visibility = 'Visible'
+        $txtKey.Visibility = 'Visible'
+    }
+    else {
+        $lblInfoKey.Visibility = 'Collapsed'
+        $txtKey.Visibility = 'Collapsed'
+    }
+
+    if ( $txtValueName.Text ) {
+        $lblInfoValueName.Visibility = 'Visible'
+        $txtValueName.Visibility = 'Visible'
+    }
+    else {
+        $lblInfoValueName.Visibility = 'Collapsed'
+        $txtValueName.Visibility = 'Collapsed'
+    }
+
+    if ( $txtClass.Text ) {
+        $lblInfoClass.Visibility = 'Visible'
+        $txtClass.Visibility = 'Visible'
+    }
+    else {
+        $lblInfoClass.Visibility = 'Collapsed'
+        $txtClass.Visibility = 'Collapsed'
+    }
+
+    if ( $txtDisabledValue.Text ) {
+        $lblInfoDisabledValue.Visibility = 'Visible'
+        $txtDisabledValue.Visibility = 'Visible'
+    }
+    else {
+        $lblInfoDisabledValue.Visibility = 'Collapsed'
+        $txtDisabledValue.Visibility = 'Collapsed'
+    }
+
+    if ( $txtEnabledValue.Text ) {
+        $lblInfoEnabledValue.Visibility = 'Visible'
+        $txtEnabledValue.Visibility = 'Visible'
+    }
+    else {
+        $lblInfoEnabledValue.Visibility = 'Collapsed'
+        $txtEnabledValue.Visibility = 'Collapsed'
+    }
+
+    if ( $txtElements.Text ) {
+        $lblInfoElements.Visibility = 'Visible'
+        $txtElements.Visibility = 'Visible'
+    }
+    else {
+        $lblInfoElements.Visibility = 'Collapsed'
+        $txtElements.Visibility = 'Collapsed'
+    }
+
 })
 $btnFile.Add_Click({ Open-Dialog })
 $btnView.Add_Click({
     [xml]$data = Get-Content "$FileDir\$($txtFile.Text)" -Encoding UTF8
     [xml]$lang = Get-Content "$FileDir$($cmbLanguage.SelectedValue)\$($txtFile.Text.Replace(".admx",".adml"))" -Encoding UTF8
-    #[xml]$data = Get-Content "C:\temp\ADMXViewer\admx\msedgeupdate.admx" -Encoding UTF8
-    #[xml]$lang = Get-Content "C:\temp\ADMXViewer\admx\en-us\msedgeupdate.adml" -Encoding UTF8
     $policyText = $lang.policyDefinitionResources.resources.stringTable.ChildNodes
     $Categories = Get-Categories
     $global:Policies = Get-Policies
@@ -306,7 +399,6 @@ $btnView.Add_Click({
 
 $btnCollapse.Add_Click({
     foreach ( $item in $trvPolicies.Items ) {
-        #write-host $item.header
         $item.isexpanded = $false
     }
 })
@@ -321,10 +413,6 @@ $btnExpand.Visibility = 'Hidden'
 $btnCollapse.Visibility = 'Hidden'
 $trvPolicies.Visibility = 'Hidden'
 $grdInfo.Visibility = 'Hidden'
-$Form.Add_SizeChanged({
-    #Write-host $Form.width
-    #$txtExplainText.Width = 
-    #write-host $grdinfo.
-    #$grdInfo.height = $form.height
-})
+
+#open-testfile
 $Form.ShowDialog() | out-null

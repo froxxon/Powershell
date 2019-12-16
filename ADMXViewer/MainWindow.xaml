@@ -15,7 +15,7 @@
                             <Setter.Value>
                                 <HierarchicalDataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Image x:Name="img" Width="20" Height="20" Source= "x:/images/file.png" />
+                                        <Image x:Name="img" Width="20" Height="20" Source= "C:/temp/ADMXViewer/images/file.png" />
                                         <TextBlock Text="{Binding}" Margin="5,0" />
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
@@ -49,11 +49,16 @@
             <Label x:Name="lblNoCategories" Content="No categories could be found, information will not display correctly!" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,20" Width="470" Foreground="Red" HorizontalContentAlignment="Center" Visibility="Hidden"/>
         </Grid>
         <Grid x:Name="grdInfo" Margin="510,10,10,10" MinHeight="630" MinWidth="480" Background="White" ScrollViewer.VerticalScrollBarVisibility="Auto" ClipToBounds="True" >
-            <Label Content="Class" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,333,0,0" Background="{x:Null}" Height="25" FontWeight="Bold"/>
-            <Label Content="Description" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="0"/>
-            <Label Content="Key" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,272,0,0" Height="25" FontWeight="Bold"/>
-            <Label Content="Value name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,302,0,0" Height="26" FontWeight="Bold"/>
-            <TextBox x:Name="txtExplainText" Height="235" TextWrapping="Wrap" Margin="0,30,15,50" IsReadOnly="True" VerticalScrollBarVisibility="Auto" TextChanged="txtExplainText_TextChanged" BorderThickness="1,0,0,1" IsTabStop="False" AllowDrop="False" VerticalAlignment="Top" IsUndoEnabled="False" Padding="0">
+            <Label x:Name="lblInfoExplainText" Content="Description" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="0"/>
+            <StackPanel Margin="0,272,0,0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Height="348" Width="103">
+                <Label x:Name="lblInfoKey" Content="Key" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
+                <Label x:Name="lblInfoValueName" Content="Value name" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
+                <Label x:Name="lblInfoClass" Content="Class" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
+                <Label x:Name="lblInfoDisabledValue" Content="Disabled value" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
+                <Label x:Name="lblInfoEnabledValue" Content="Enabled value" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="25" FontWeight="Bold" Margin="0,0,0,10" Padding="0"/>
+                <Label x:Name="lblInfoElements" Content="Elements" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="25" FontWeight="Bold" Padding="0"/>
+            </StackPanel>
+            <TextBox x:Name="txtExplainText" Height="235" TextWrapping="Wrap" Margin="0,30,15,10" IsReadOnly="True" VerticalScrollBarVisibility="Auto" TextChanged="txtExplainText_TextChanged" BorderThickness="1,0,0,1" IsTabStop="False" AllowDrop="False" VerticalAlignment="Top" IsUndoEnabled="False" Padding="0">
                 <TextBox.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF76B9EE" Offset="1"/>
@@ -67,11 +72,14 @@
                     </LinearGradientBrush>
                 </TextBox.Background>
             </TextBox>
-            <TextBox x:Name="txtKey" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Margin="108,278,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" VerticalContentAlignment="Center" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True"/>
-            <TextBox x:Name="txtValueName" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="108,305,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" Height="23" VerticalContentAlignment="Center" AllowDrop="False" IsTabStop="False" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True"/>
-            <TextBox x:Name="txtClass" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Margin="108,333,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalContentAlignment="Center" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled"/>
-            <TextBox x:Name="txtElements" HorizontalAlignment="Left" Height="65" VerticalAlignment="Top" Margin="108,361,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalContentAlignment="Center" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled"/>
-            <Label Content="Elements" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,363,0,0" Background="{x:Null}" Height="25" FontWeight="Bold"/>
+            <StackPanel Margin="110,272,15,56" Orientation="Vertical">
+                <TextBox x:Name="txtKey" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True" Margin="0,0,0,10"/>
+                <TextBox x:Name="txtValueName" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" Height="25" AllowDrop="False" IsTabStop="False" HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True" Margin="0,0,0,10"/>
+                <TextBox x:Name="txtClass" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,10"/>
+                <TextBox x:Name="txtDisabledValue" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,10"/>
+                <TextBox x:Name="txtEnabledValue" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,10"/>
+                <TextBox x:Name="txtElements" IsReadOnly="True" VerticalScrollBarVisibility="Auto" BorderThickness="0" AllowDrop="False" IsTabStop="False" Grid.IsSharedSizeScope="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
+            </StackPanel>
             <Rectangle HorizontalAlignment="Right" Height="1" VerticalAlignment="Bottom" Width="458" Margin="0,0,0,50">
                 <Rectangle.Stroke>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
