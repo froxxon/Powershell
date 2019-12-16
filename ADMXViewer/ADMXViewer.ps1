@@ -9,6 +9,9 @@ if ($psise) {
 else {
     Add-Type -AssemblyName PresentationFramework
     Add-Type -AssemblyName System.Windows.Forms
+    $t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' # Part of the process to hide the Powershellwindow if it is not run through ISE
+    Add-Type -name win -member $t -namespace native # Part of the process to hide the Powershellwindow if it is not run through ISE
+    [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0) # This hides the Powershellwindow in the background if ISE isn't running
     $XamlFile =  "$($PSScriptRoot)\MainWindow.xaml"
     $ImgSource =  "$($PSScriptRoot)\images\icon.png"
 }
