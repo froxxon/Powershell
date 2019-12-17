@@ -1,6 +1,6 @@
 ## Description
 
-Want to view the settings available in an ADMX file without importing it into the local or central store and open ''Group Policy Management Console'' or ''gpdit.msc'', then this PSGUI could come in handy.
+Want to view the settings available in an ADMX file without importing it into the local or central store and open *'Group Policy Management Console'* or *'gpdit.msc'*, then this PSGUI could come in handy.
 
 Or if you want to know the specific registry values that each setting applies this simplifies the view of that setting....
 
