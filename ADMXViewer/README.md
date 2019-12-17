@@ -7,3 +7,5 @@ HKEY_CURRENT_USER\Software\Classes\.admx_auto_file\shell\open\command
 powershell.exe -file "[PATH TO FILE]\ADMXViewer.ps1" "%1"
 
 (if you open an ADMX file with many settings it might take a while to open, no progress bar at this point showing anything until the window pops up)
+
+![An example of how msedgeupdate.admx would look like while opened with this tool](images/ExampleView.jpg)
