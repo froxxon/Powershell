@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="ADMX Viewer" Height="670" Width="1005" MinWidth="1005" MinHeight="670" UseLayoutRounding="True">
     <Grid x:Name="grdMain" Margin="0,0,0 ,0" Background="White" MinWidth="990" MinHeight="610">
+        <Rectangle HorizontalAlignment="Left" Height="307" VerticalAlignment="Bottom" Width="335" StrokeThickness="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="45" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF76B9EE" Offset="1"/>
+                    <GradientStop Color="White" Offset="0.517"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
         <Grid x:Name="grdTree" Margin="10,0,0,10" MinHeight="630" MinWidth="490" MaxWidth="490" HorizontalAlignment="Left" Background="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="490" ClipToBounds="True">
             <TreeView x:Name="trvPolicies" Margin="0,45,0,5" BorderThickness="0,1,1,0" MinHeight="500" Padding="1" MinWidth="485" MaxWidth="485" Width="485" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <TreeView.Resources>
@@ -15,7 +31,7 @@
                             <Setter.Value>
                                 <HierarchicalDataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Image x:Name="img" Width="20" Height="20" Source= "C:/temp/ADMXViewer/images/file.png" />
+                                        <Image x:Name="img" Width="20" Height="20" Source= "C:/temp/ADMXViewer/images/icon1.png" />
                                         <TextBlock Text="{Binding}" Margin="5,0" />
                                     </StackPanel>
                                 </HierarchicalDataTemplate>

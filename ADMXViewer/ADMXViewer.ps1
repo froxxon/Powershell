@@ -1,4 +1,4 @@
-$global:FileDir = ''
+﻿$global:FileDir = ''
 $global:policies = @()
 
 if ($psise) {
@@ -86,34 +86,30 @@ Function Open-ByFileAssociation {
     $cmbLanguage.Items.Clear()
     $global:FileDir = $argument.replace($argument.split('\')[-1],'')
     foreach ( $lang in (get-childitem -Path $FileDir -Include $txtFile.Text.Replace('admx','adml') -Recurse).Directory.Name ) {
-        $cmbLanguage.Items.Add($lang)
+        $cmbLanguage.Items.Add($lang) | out-null
     }
-
+    $cmbLanguage.SelectedIndex = 0
     if ( $cmbLanguage.Items.Count -gt 0 ) {
-        $cmbLanguage.SelectedIndex = 0
-        [xml]$data = Get-Content "$FileDir\$($txtFile.Text)" -Encoding UTF8
-        [xml]$lang = Get-Content "$FileDir$($cmbLanguage.SelectedValue)\$($txtFile.Text.Replace(".admx",".adml"))" -Encoding UTF8
-        $policyText = $lang.policyDefinitionResources.resources.stringTable.ChildNodes
-        $Categories = Get-Categories
-        $global:Policies = Get-Policies
-        Build-TreeView
         $cmbLanguage.IsEnabled = $true
         $btnView.isEnabled = $true
         $lblNoLang.Visibility = 'Hidden'
-        $btnExpand.Visibility = 'Visible'
-        $btnCollapse.Visibility = 'Visible'
-        $trvPolicies.Visibility = 'Visible'
-        $grdInfo.Visibility = 'Visible'
     }
     else {
         $cmbLanguage.IsEnabled = $false
         $btnView.isEnabled = $false
         $lblNoLang.Visibility = 'Visible'
-        $btnExpand.Visibility = 'Hidden'
-        $btnCollapse.Visibility = 'Hidden'
-        $trvPolicies.Visibility = 'Hidden'
-        $grdInfo.Visibility = 'Hidden'
     }
+    
+    [xml]$data = Get-Content "$FileDir\$($txtFile.Text)" -Encoding UTF8
+    [xml]$lang = Get-Content "$FileDir$($cmbLanguage.SelectedValue)\$($txtFile.Text.Replace(".admx",".adml"))" -Encoding UTF8
+    $policyText = $lang.policyDefinitionResources.resources.stringTable.ChildNodes
+    $Categories = Get-Categories
+    $global:Policies = Get-Policies
+    Build-TreeView
+    $btnExpand.Visibility = 'Visible'
+    $btnCollapse.Visibility = 'Visible'
+    $trvPolicies.Visibility = 'Visible'
+    $grdInfo.Visibility = 'Visible'
 }
 
 function Get-Categories {
@@ -452,4 +448,5 @@ if ( $args[0] ) {
     open-byfileassociation $argument
 }
 
+#Open-ByFileAssociation "C:\Windows\PolicyDefinitions\appv.admx"
 $Form.ShowDialog() | out-null
