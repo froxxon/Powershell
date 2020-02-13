@@ -1,5 +1,7 @@
 ﻿$global:FileDir = ''
 $global:policies = @()
+Write-host ""
+write-host " Loading " -NoNewline
 
 if ($psise) {
     $XamlFile = "$(Split-Path $psise.CurrentFile.FullPath)\MainWindow.xaml"
@@ -11,7 +13,6 @@ else {
     Add-Type -AssemblyName System.Windows.Forms
     $t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' # Part of the process to hide the Powershellwindow if it is not run through ISE
     Add-Type -name win -member $t -namespace native # Part of the process to hide the Powershellwindow if it is not run through ISE
-    [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0) # This hides the Powershellwindow in the background if ISE isn't running
     $XamlFile =  "$($PSScriptRoot)\MainWindow.xaml"
     $ImgSource =  "$($PSScriptRoot)\images\icon.png"
 }
@@ -81,7 +82,7 @@ Function Open-ByFileAssociation {
     param (
         [string]$argument
     )
-
+    Write-Host $argument -ForegroundColor Yellow
     $txtFile.Text = $argument.split('\')[-1]
     $cmbLanguage.Items.Clear()
     $global:FileDir = $argument.replace($argument.split('\')[-1],'')
@@ -113,6 +114,7 @@ Function Open-ByFileAssociation {
 }
 
 function Get-Categories {
+    Write-Host " Gather Categories"
     $categories = @()
     foreach ( $cat in $data.PolicyDefinitions.Categories.ChildNodes ) {
         if ( $cat.Name -ne "#comment" -or $cat -ne $null ) {
@@ -144,10 +146,14 @@ function Get-Categories {
             $categories += $catobj
         }
     }
+    Write-Host " Found " -NoNewLine
+    Write-Host $($categories.count) -NoNewLine -ForegroundColor Yellow
+    Write-Host " categories"
     return $categories
 }
 
 function Get-Policies {
+    Write-Host " Gather policies"
     $policies = @()
     $data.PolicyDefinitions.Policies.ChildNodes | ForEach-Object {
     $policy = $_
@@ -159,7 +165,6 @@ function Get-Policies {
                 if ($policy.SupportedOn.ref.Contains(":")) {        
                     $source=$policy.SupportedOn.ref.Split(":")[0]
                     $valueName=$policy.SupportedOn.ref.Split(":")[1]
-                    [xml]$adml = Get-Content "$FileDir$($cmbLanguage.SelectedValue)\$($txtFile.Text.Replace(".admx",".adml"))"
                     $resourceText= $adml.policyDefinitionResources.resources.stringTable.ChildNodes
                     $supportedOn=($resourceText | Where-Object { $_.id -eq $valueName }).'#text'
                 }
@@ -167,7 +172,7 @@ function Get-Policies {
                     $supportedOnID = ($data.policyDefinitions.supportedOn.definitions.ChildNodes | Where-Object { $_.Name -eq $policy.supportedOn.ref }).DisplayName
                     $supportedOn = ($policyText | Where-Object { $_.id -eq $supportedOnID.Substring(9).TrimEnd(')') }).'#text'
                 }
-        
+                
                 if ($policy.parentCategory.ref.Contains(":")) {
                     $source=$policy.SupportedOn.ref.Split(":")[0]
                     $valueName=$policy.SupportedOn.ref.Split(":")[1]
@@ -180,7 +185,7 @@ function Get-Policies {
                     $parentCategoryID =  ($data.policyDefinitions.categories.ChildNodes | Where-Object { $_.Name -eq $policy.parentCategory.ref } -ErrorAction SilentlyContinue ).Name
                     $parentCategory =  ($policyText | Where-Object { $_.id -eq $parentCategoryID } -ErrorAction SilentlyContinue ).'#text'
                 }
-
+                
                 [string]$Elements = ''
                 foreach ( $node in $policy.elements.ChildNodes ) {
                     $text = "Type: $($node.Name)`n"
@@ -192,7 +197,7 @@ function Get-Policies {
                         $Elements = "$Elements$text"
                     }
                 }
-
+                
                 $polobj = New-Object System.Object
                 $polobj | Add-Member -type NoteProperty -name ADMX -Value $file
                 $polobj | Add-Member -type NoteProperty -name ParentCategoryName -Value $parentCategory
@@ -217,6 +222,9 @@ function Get-Policies {
             }
         }
     }
+    Write-Host " Found " -NoNewline
+    Write-Host "$($policies.count)" -NoNewline -ForegroundColor Yellow
+    Write-Host " policies"
     return $policies
 }
 
@@ -448,5 +456,8 @@ if ( $args[0] ) {
     open-byfileassociation $argument
 }
 
-#Open-ByFileAssociation "C:\Windows\PolicyDefinitions\appv.admx"
+#Open-ByFileAssociation "C:\Windows\PolicyDefinitions\msedge.admx"
+if (!$psise) {
+    [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0) # This hides the Powershellwindow in the background if ISE isn't running
+}
 $Form.ShowDialog() | out-null
