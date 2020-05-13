@@ -1,5 +1,11 @@
 # INSTALLSERVER
 
+A home made GUI in Powershell, made with Visual Studio 2019 as a '*WPF App (.Net Core)*' and put output of the XAML in a variable (*$InputXML*) in the Powershell script (*some tweaking of the variable is made after this variable is set*).
+
+Then it is loaded in a MECM Task sequence and used to populate attributes for a new computer object in Active Directory, works as follows:
+
+*!! RestPS is not included at this time in this short documentation, used for populating 'Organizational units' and 'Maintenance Windows' in the GUI !!*
+
 ## Task Sequence step 1 - Start InstallServer
 
 ![TS step 1](img/TS_step_1_-_Start_InstallServer_script.jpg)
