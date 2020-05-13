@@ -1,4 +1,4 @@
-$DefaultSubnetPrefix = 24
+﻿$DefaultSubnetPrefix = 24
 $DefaultGateway      = '192.168.1.1'
 $DefaultDNSPrimary   = '192.168.1.2'
 $DefaultDNSSecondary = '192.168.1.3'
@@ -116,7 +116,7 @@ $InputXML = @"
         <RadioButton x:Name="rbnDHCPOn" Content="Ja" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RadioButton_Checked" FontWeight="Bold" Foreground="White" IsChecked="True" Width="56" TabIndex="3" Margin="304,92,0,0"/>
         <RadioButton x:Name="rbnDHCPOff" Content="Nej" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RadioButton_Checked" FontWeight="Bold" Foreground="White" TabIndex="4" Margin="360,92,0,0"/>
         <Label Content="IP-address" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,112,0,0" FontWeight="Bold" Foreground="White"/>
-        <Label Content="Subnätsprefix" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,139,0,0" FontWeight="Bold" Foreground="White"/>
+        <Label Content="SubnÃ¤tsprefix" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,139,0,0" FontWeight="Bold" Foreground="White"/>
         <Label Content="Gateway" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,165,0,0" FontWeight="Bold" Foreground="White"/>
         <Label Content="DNS-server 1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,191,0,0" FontWeight="Bold" Foreground="White"/>
         <Label Content="DNS-server 2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,217,0,0" FontWeight="Bold" Foreground="White"/>
@@ -126,8 +126,8 @@ $InputXML = @"
         <TextBox x:Name="txtDNSPrimary" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="226" Margin="175,194,0,0" HorizontalContentAlignment="Right" TabIndex="8" IsEnabled="False"/>
         <TextBox x:Name="txtDNSSecondary" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="226" Margin="175,220,0,0" HorizontalContentAlignment="Right" TabIndex="9" IsEnabled="False"/>
         <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="226" Margin="175,51,0,0" HorizontalContentAlignment="Right" TabIndex="2" MaxLines="1"/>
-        <Button x:Name="btnReset" Content="�terst�ll" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="16,362,0,0" FontWeight="Bold" TabIndex="17"/>
-        <Button x:Name="btnContinue" Content="Forts�tt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="326,362,0,0" FontWeight="Bold" TabIndex="16"/>
+        <Button x:Name="btnReset" Content="Återställ" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="16,362,0,0" FontWeight="Bold" TabIndex="17"/>
+        <Button x:Name="btnContinue" Content="Fortsätt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="326,362,0,0" FontWeight="Bold" TabIndex="16"/>
         <Label Content="Typ av installation" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,324,0,0" FontWeight="Bold" Foreground="White"/>
         <Label Content="OU" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,259,0,0" FontWeight="Bold" Foreground="White"/>
         <ComboBox x:Name="cmbOUs" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Margin="175,263,0,0" IsReadOnly="True" HorizontalContentAlignment="Right" TabIndex="10" MaxDropDownHeight="110"/>
@@ -140,8 +140,8 @@ $InputXML = @"
             <RadioButton x:Name="rbnCore" Content="Core" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" TabIndex="15"/>
         </StackPanel>
         <Label Content="Servicefönster" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,293,0,0" FontWeight="Bold" Foreground="White"/>
-        <Button x:Name="btnReloadMWs" Content="↻" HorizontalAlignment="Left" VerticalAlignment="Top" Width="31" Margin="370,297,0,0" Height="20" FontWeight="Bold" TabIndex="13" ToolTip="Uppdatera servicefönster"/>
-        <Button x:Name="btnSelectMWs" Content="V�lj..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Margin="175,297,0,0" FontWeight="Bold" TabIndex="17"/>
+        <Button x:Name="btnReloadMWs" Content="↻" HorizontalAlignment="Left" VerticalAlignment="Top" Width="31" Margin="370,297,0,0" Height="20" FontWeight="Bold" TabIndex="13" ToolTip="Uppdatera servicefÃ¶nster"/>
+        <Button x:Name="btnSelectMWs" Content="Välj..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Margin="175,297,0,0" FontWeight="Bold" TabIndex="17"/>
         <ListBox x:Name="lsbMws" HorizontalAlignment="Left" Height="265" VerticalAlignment="Top" Width="385" Margin="16,20,0,0" Visibility="Hidden" SelectionMode="Extended"/>
     </Grid>
 </Window>
@@ -209,7 +209,7 @@ $btnReset.Add_Click({
     $rbnDE.IsChecked = $true
     $cmbOUs.SelectedIndex = 0
     $lsbMws.Visibility = "Hidden"
-    $btnSelectMWs.Content = "V�lj..."
+    $btnSelectMWs.Content = "Välj..."
     $btnContinue.IsEnabled = $true
     Get-OUs
     Get-MWs
@@ -337,10 +337,10 @@ $btnSelectMWs.Add_Click({
     else {
         $lsbMws.Visibility = "Hidden"
         if ( $lsbMws.SelectedItems.Count -gt 0 ) {
-            $btnSelectMWs.Content = "$($lsbMws.SelectedItems.Count) valda f�nster"
+            $btnSelectMWs.Content = "$($lsbMws.SelectedItems.Count) valda fönster"
         }
         else {
-            $btnSelectMWs.Content = "V�lj..."
+            $btnSelectMWs.Content = "Välj..."
         }
         $btnContinue.IsEnabled = $true
         Verify-IPv4
@@ -353,7 +353,7 @@ $btnReloadOUs.Add_Click({
 
 $btnReloadMWs.Add_Click({
     if ( $lsbMws.Visibility -eq "Hidden" ) {
-        $btnSelectMWs.Content = "V�lj..."
+        $btnSelectMWs.Content = "Välj..."
     }
     Get-MWs
 })
