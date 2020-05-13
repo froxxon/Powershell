@@ -10,9 +10,9 @@ The TS variable %FRXOU% is set through the main script and used to place the com
 
 ![TS step 3](img/TS_step_3_-_Satt_lokal_datorbeskrivning.jpg)
 
-```$tsenv = New-Object -ComObject Microsoft.SMS.TSEnvironment -ErrorAction Continue
+```$tsenv = New-Object -ComObject Microsoft.SMS.TSEnvironment -ErrorAction Continue```
 
-Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\LanManServer\Parameters -Name srvcomment -Value $tsenv.Value("FRXDescription") -ErrorAction SilentlyContinue```
+```Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\services\LanManServer\Parameters -Name srvcomment -Value $tsenv.Value("FRXDescription") -ErrorAction SilentlyContinue```
 
 ![TS step 4](img/TS_step_4_-_Satt_beskrivning_på_AD-objekt.jpg)
 
