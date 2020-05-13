@@ -1,4 +1,4 @@
-![InstallServer GUI](img/InstallServer_GUI.jpg)
+<center>![InstallServer GUI](img/InstallServer_GUI.jpg)</center>
 ![TS step 1](img/TS_step_1_-_Start_InstallServer_script.jpg)
 ![TS step 2](img/TS_step_2_-_Konfigurera_natverksinstallningar.jpg)
 ![TS step 3](img/TS_step_3_-_Satt_lokal_datorbeskrivning.jpg)
