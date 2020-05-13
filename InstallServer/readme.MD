@@ -24,7 +24,7 @@ The TS variable %FRXOU% is set through the main script and used to place the com
 
 ## Task Sequence step 4 - Set computer description in AD
 
-   This step requires that you've set (preferably) two hidden TS variables with username and password with delegated rights to perform current task
+**This step requires that you've set (preferably) two hidden TS variables with username and password with delegated rights to perform current task**
 
 ![TS step 4](img/TS_step_4_-_Satt_beskrivning_på_AD-objekt.jpg)
 
@@ -37,7 +37,7 @@ The TS variable %FRXOU% is set through the main script and used to place the com
 
 ## Task Sequence step 2 - Add service window groups
 
-   This step requires that you've set (preferably) two hidden TS variables with username and password with delegated rights to perform current task
+**This step requires that you've set (preferably) two hidden TS variables with username and password with delegated rights to perform current task**
 
 ![TS step 5](img/TS_step_5_-_Lagger_till_servicefonstergrupper.jpg)
 
