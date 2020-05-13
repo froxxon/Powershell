@@ -1,5 +1,5 @@
 ![InstallServer GUI](img/InstallServer_GUI.jpg)
-![TS step 1](img/TS_step_1_-_Start_InstallServer_script.jpg|width=100)
+![TS step 1](img/TS_step_1_-_Start_InstallServer_script.jpg || width=100)
 ![TS step 2](img/TS_step_2_-_Konfigurera_natverksinstallningar.jpg | width=100)
 ![TS step 3](img/TS_step_3_-_Satt_lokal_datorbeskrivning.jpg | width=100)
 ![TS step 4](img/TS_step_4_-_Satt_beskrivning_på_AD-objekt.jpg)
