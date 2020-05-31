@@ -7,3 +7,5 @@ This is a quick and dirty solution to get syslogs to your computer through Power
 **Get-PSSyslog.ps1** gets the data from alla the log-files in the script directory, using Out-gridview to display result, should be modified for miscellanious values. Another alternative could be to use Notepad++ or CMTrace for example.
 
 **Send-TCPUDP.ps1** is used to send a test message by TCP or UDP to a receiving syslog server, the on started with '*Start-PSSyslog*' for example. ;)
+
+![PSSyslog](img/PSSyslog.jpg)
