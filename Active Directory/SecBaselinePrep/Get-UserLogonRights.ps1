@@ -1,5 +1,6 @@
-﻿$ServerOU = "<OU where servers belongs>"
-[array]$servers = get-adcomputer -ldapfilter '(name=*)' -Properties Name, distinguishedName, Description -SearchBase $ServerOU -SearchScope Subtree | where { $_.operatingSystem -like '*Windows*'}
+﻿$ServerOU = "<SERVER OU>"
+[array]$servers = get-adcomputer -ldapfilter '(name=*)' -Properties Name, distinguishedName, Description, OperatingSystem -SearchBase $ServerOU -SearchScope Subtree | where { $_.operatingSystem -like '*Windows*'}
+$OutFile = "C:\Temp\MemberServers-URASummary.csv"
 $failedsessions = 0
 $successessions = 0
 $counter = 1
@@ -199,5 +200,4 @@ foreach( $Server in $Servers ) {
     }
 }
 #$objects | sort Hostname, DisplayName | ft * -AutoSize
-$OutFile = "C:\Temp\MemberServers-URASummary.csv"
 $objects | select HostName, DisplayName, Status, @{Name='SIDs';Expression={$_.SIDs -join ','}} | convertto-csv -Delimiter ';' | % {$_ -replace '"',''} | out-file $outFile -Encoding utf8

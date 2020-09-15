@@ -1,5 +1,5 @@
 ﻿$content = get-content C:\temp\SecBaselinesToCompare.csv | convertfrom-csv -Delimiter ';' | where RegPath -ne $null
-$ServerOU = "<OU where servers belongs>"
+$ServerOU = "<SERVER OU>"
 [array]$servers = get-adcomputer -ldapfilter '(name=*)' -Properties Name, distinguishedName, Description, OperatingSystem -SearchBase $ServerOU -SearchScope Subtree | where { $_.operatingSystem -like '*Windows*'}
 $OutFile = "C:\Temp\MemberServers-RegistrySummary.csv"
 $failedsessions = 0

@@ -1,0 +1,959 @@
+﻿#TYPE Selected.System.Management.Automation.PSCustomObject
+Hostname;DisplayName;Status;RegData;RegValue;RegPath
+W008005;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008005;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008005;Windows Firewall Policy Version;Different;541;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008005;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008005;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008005;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008005;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008005;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008005;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008005;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008005;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008005;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008005;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008005;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008005;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008005;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008005;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008005;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008005;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008005;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008005;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008005;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008005;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008005;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008005;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008005;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008005;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008005;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008005;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008005;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008005;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008005;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008005;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008005;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008005;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008005;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008005;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008005;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008005;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008005;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008005;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008005;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008005;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008005;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008005;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008005;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008005;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008005;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008005;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008005;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008005;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008005;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008005;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008005;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008005;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008005;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008005;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008005;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008005;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008005;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008005;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008005;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008005;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008005;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008005;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008005;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008005;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008005;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008005;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008005;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008005;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008005;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008005;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008005;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008005;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008005;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008005;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008005;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008005;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008005;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008006;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008006;Windows Firewall Policy Version;Different;541;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008006;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008006;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008006;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008006;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008006;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008006;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008006;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008006;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008006;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008006;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008006;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008006;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008006;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008006;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008006;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008006;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008006;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008006;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008006;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008006;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008006;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008006;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008006;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008006;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008006;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008006;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008006;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008006;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008006;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008006;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008006;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008006;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008006;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008006;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008006;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008006;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008006;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008006;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008006;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008006;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008006;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008006;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008006;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008006;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008006;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008006;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008006;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008006;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008006;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008006;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008006;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008006;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008006;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008006;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008006;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008006;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008006;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008006;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008006;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008006;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008006;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008006;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008006;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008006;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008006;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008006;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008006;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008006;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008006;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008006;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008006;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008006;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008006;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008006;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008006;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008006;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008006;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008011;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008011;Windows Firewall Policy Version;Match;538;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008011;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008011;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008011;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008011;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008011;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008011;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008011;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008011;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008011;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008011;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008011;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008011;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008011;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008011;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008011;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008011;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008011;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008011;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008011;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008011;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008011;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008011;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008011;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008011;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008011;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008011;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008011;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008011;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008011;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008011;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008011;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008011;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008011;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008011;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008011;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008011;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008011;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008011;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008011;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008011;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008011;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008011;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008011;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008011;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008011;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008011;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008011;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008011;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008011;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008011;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008011;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008011;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008011;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008011;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008011;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008011;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008011;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008011;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008011;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008011;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008011;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008011;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008011;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008011;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008011;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008011;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008011;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008011;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008011;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008011;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008011;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008011;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008011;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008011;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008011;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008011;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008011;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008012;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008012;Windows Firewall Policy Version;Match;538;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008012;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008012;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008012;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008012;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008012;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008012;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008012;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008012;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008012;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008012;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008012;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008012;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008012;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008012;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008012;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008012;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008012;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008012;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008012;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008012;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008012;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008012;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008012;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008012;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008012;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008012;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008012;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008012;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008012;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008012;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008012;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008012;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008012;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008012;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008012;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008012;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008012;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008012;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008012;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008012;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008012;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008012;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008012;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008012;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008012;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008012;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008012;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008012;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008012;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008012;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008012;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008012;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008012;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008012;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008012;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008012;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008012;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008012;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008012;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008012;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008012;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008012;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008012;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008012;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008012;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008012;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008012;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008012;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008012;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008012;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008012;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008012;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008012;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008012;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008012;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008012;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008012;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008014;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008014;Windows Firewall Policy Version;Match;538;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008014;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008014;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008014;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008014;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008014;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008014;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008014;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008014;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008014;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008014;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008014;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008014;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008014;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008014;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008014;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008014;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008014;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008014;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008014;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008014;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008014;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008014;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008014;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008014;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008014;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008014;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008014;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008014;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008014;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008014;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008014;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008014;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008014;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008014;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008014;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008014;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008014;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008014;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008014;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008014;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008014;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008014;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008014;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008014;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008014;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008014;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008014;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008014;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008014;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008014;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008014;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008014;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008014;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008014;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008014;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008014;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008014;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008014;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008014;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008014;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008014;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008014;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008014;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008014;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008014;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008014;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008014;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008014;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008014;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008014;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008014;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008014;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008014;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008014;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008014;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008014;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008014;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008015;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008015;Windows Firewall Policy Version;Match;538;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008015;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008015;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008015;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008015;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008015;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008015;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008015;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008015;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008015;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008015;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008015;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008015;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008015;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008015;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008015;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008015;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008015;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008015;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008015;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008015;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008015;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008015;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008015;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008015;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008015;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008015;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008015;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008015;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008015;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008015;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008015;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008015;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008015;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008015;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008015;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008015;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008015;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008015;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008015;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008015;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008015;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008015;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008015;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008015;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008015;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008015;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008015;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008015;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008015;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008015;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008015;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008015;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008015;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008015;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008015;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008015;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008015;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008015;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008015;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008015;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008015;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008015;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008015;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008015;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008015;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008015;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008015;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008015;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008015;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008015;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008015;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008015;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008015;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008015;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008015;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008015;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008015;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008009;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008009;Windows Firewall Policy Version;Different;541;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008009;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008009;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008009;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008009;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008009;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008009;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008009;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008009;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008009;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008009;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008009;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008009;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008009;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008009;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008009;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008009;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008009;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008009;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008009;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008009;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008009;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008009;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008009;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008009;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008009;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008009;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008009;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008009;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008009;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008009;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008009;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008009;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008009;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008009;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008009;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008009;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008009;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008009;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008009;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008009;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008009;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008009;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008009;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008009;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008009;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008009;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008009;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008009;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008009;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008009;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008009;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008009;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008009;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008009;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008009;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008009;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008009;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008009;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008009;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008009;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008009;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008009;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008009;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008009;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008009;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008009;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008009;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008009;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008009;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008009;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008009;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008009;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008009;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008009;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008009;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008009;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008009;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008017;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008017;Windows Firewall Policy Version;Different;541;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008017;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008017;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008017;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008017;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008017;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008017;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008017;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008017;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008017;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008017;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008017;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008017;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008017;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008017;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008017;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008017;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008017;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008017;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008017;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008017;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008017;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008017;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008017;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008017;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008017;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008017;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008017;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008017;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008017;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008017;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008017;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008017;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008017;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008017;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008017;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008017;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008017;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008017;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008017;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008017;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008017;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008017;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008017;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008017;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008017;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008017;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008017;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008017;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008017;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008017;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008017;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008017;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008017;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008017;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008017;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008017;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008017;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008017;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008017;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008017;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008017;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008017;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008017;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008017;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008017;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008017;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008017;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008017;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008017;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008017;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008017;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008017;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008017;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008017;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008017;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008017;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008017;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008018;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008018;Windows Firewall Policy Version;Different;541;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008018;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008018;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008018;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008018;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008018;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008018;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008018;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008018;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008018;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008018;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008018;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008018;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008018;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008018;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008018;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008018;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008018;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008018;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008018;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008018;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008018;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008018;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008018;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008018;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008018;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008018;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008018;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008018;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008018;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008018;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008018;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008018;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008018;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008018;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008018;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008018;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008018;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008018;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008018;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008018;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008018;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008018;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008018;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008018;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008018;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008018;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008018;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008018;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008018;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008018;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008018;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008018;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008018;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008018;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008018;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008018;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008018;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008018;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008018;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008018;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008018;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008018;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008018;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008018;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008018;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008018;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008018;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008018;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008018;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008018;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008018;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008018;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008018;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008018;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008018;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008018;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008018;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008019;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008019;Windows Firewall Policy Version;Different;541;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008019;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008019;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008019;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008019;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008019;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008019;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008019;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008019;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008019;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008019;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008019;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008019;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008019;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008019;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008019;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008019;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008019;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008019;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008019;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008019;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008019;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008019;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008019;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008019;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008019;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008019;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008019;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008019;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008019;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008019;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008019;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008019;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008019;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008019;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008019;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008019;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008019;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008019;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008019;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008019;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008019;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008019;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008019;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008019;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008019;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008019;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008019;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008019;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008019;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008019;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008019;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008019;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008019;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008019;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008019;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008019;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008019;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008019;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008019;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008019;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008019;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008019;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008019;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008019;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008019;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008019;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008019;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008019;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008019;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008019;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008019;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008019;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008019;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008019;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008019;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008019;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008019;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;Shell Smart Screen Level;Match;Block;ShellSmartScreenLevel;HKLM:\Software\Policies\Microsoft\Windows\System
+W008020;Allow indexing of encrypted Store or Items;Match;0;AllowIndexingEncryptedStoresOrItems;HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+W008020;Windows Firewall Policy Version;Different;541;PolicyVersion;HKLM:\Software\Policies\Microsoft\WindowsFirewall
+W008020;Disable Windows Ink Workspace;Match;1;AllowWindowsInkWorkspace;HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
+W008020;Restrict Remote SAM;Match;O:BAG:BAD:(A;;RC;;;BA);RestrictRemoteSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008020;Disable WDigest Authentication;Match;0;UseLogonCredential;HKLM:\System\CurrentControlSet\Control\SecurityProviders\WDigest
+W008020;Disable Exception Chain Validation;Match;0;DisableExceptionChainValidation;HKLM:\System\CurrentControlSet\Control\Session Manager\kernel
+W008020;Disable SMB v1 Server;Match;0;SMB1;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008020;SMB v1 Service status;Match;4;Start;HKLM:\System\CurrentControlSet\Services\MrxSmb10
+W008020;NetBT Node Type;Match;2;NodeType;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008020;No Name Release On Demand;Match;1;NoNameReleaseOnDemand;HKLM:\System\CurrentControlSet\Services\Netbt\Parameters
+W008020;Disable IPv4 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters
+W008020;Disable IPv6 Source Routing;Match;2;DisableIPSourceRouting;HKLM:\System\CurrentControlSet\Services\Tcpip6\Parameters
+W008020;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008020;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008020;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\DomainProfile
+W008020;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008020;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008020;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile
+W008020;Firewall state;Match;1;EnableFirewall;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008020;Inbound connections;Match;1;DefaultInboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008020;Outbound connections;Match;0;DefaultOutboundAction;HKLM:\Software\Policies\Microsoft\WindowsFirewall\PublicProfile
+W008020;Prevent enabling lock screen camera;Match;1;NoLockScreenCamera;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008020;Prevent enabling lock screen slide show;Match;1;NoLockScreenSlideshow;HKLM:\Software\Policies\Microsoft\Windows\Personalization
+W008020;Enable local admin password management;Match;1;AdmPwdEnabled;HKLM:\Software\Policies\Microsoft Services\AdmPwd
+W008020;Turn off multicast name resolution;Match;0;EnableMulticast;HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+W008020;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\NETLOGON;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008020;Hardened UNC Paths;Different;RequireMutualAuthentication=1,RequireIntegrity=1;\\*\SYSVOL;HKLM:\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths
+W008020;Encryption Oracle Remediation --> Protection Level:;Match;0;AllowEncryptionOracle;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
+W008020;Boot-Start Driver Initialization Policy;Match;3;DriverLoadPolicy;HKLM:\System\CurrentControlSet\Policies\EarlyLaunch
+W008020;Configure registry policy processing --> Do not apply during periodic background processing;Match;0;NoBackgroundPolicy;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008020;Configure registry policy processing --> Process even if the Group Policy objects have not changed;Match;0;NoGPOListChanges;HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+W008020;Enumerate local users on domain-joined computers;Match;0;EnumerateLocalUsers;HKLM:\Software\Policies\Microsoft\Windows\System
+W008020;Restrict Unauthenticated RPC clients --> RPC Runtime Unauthenticated Client Restriction to Apply:;Match;1;RestrictRemoteClients;HKLM:\Software\Policies\Microsoft\Windows NT\Rpc
+W008020;Disallow Autoplay for non-volume devices;Match;1;NoAutoplayfornonVolume;HKLM:\Software\Policies\Microsoft\Windows\Explorer
+W008020;Set the default behavior for AutoRun --> Default AutoRun Behavior;Match;1;NoAutorun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008020;Turn off Autoplay --> Turn off Autoplay on:;Match;255;NoDriveTypeAutoRun;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+W008020;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
+W008020;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;196608;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\Security
+W008020;Specify the maximum log file size (KB) --> Maximum Log Size (KB);Match;32768;MaxSize;HKLM:\Software\Policies\Microsoft\Windows\EventLog\System
+W008020;Configure Windows SmartScreen;Match;1;EnableSmartScreen;HKLM:\Software\Policies\Microsoft\Windows\System
+W008020;Do not allow passwords to be saved;Match;1;DisablePasswordSaving;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008020;Do not allow drive redirection;Different;0;fDisableCdm;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008020;Always prompt for password upon connection;Match;1;fPromptForPassword;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008020;Require secure RPC communication;Match;1;fEncryptRPCTraffic;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008020;Set client connection encryption level --> Encryption Level;Match;3;MinEncryptionLevel;HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services
+W008020;Prevent downloading of enclosures;Match;1;DisableEnclosureDownload;HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
+W008020;Allow user control over installs;Match;0;EnableUserControl;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008020;Always install with elevated privileges;Match;0;AlwaysInstallElevated;HKLM:\Software\Policies\Microsoft\Windows\Installer
+W008020;Sign-in last interactive user automatically after a system-initiated restart;Match;1;DisableAutomaticRestartSignOn;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;Turn on PowerShell Script Block Logging;Match;1;EnableScriptBlockLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008020;Turn on PowerShell Script Block Logging --> Log script block invocation start / stop events:;Match;;EnableScriptBlockInvocationLogging;HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+W008020;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008020;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008020;Disallow Digest authentication;Match;0;AllowDigest;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Client
+W008020;Allow Basic authentication;Match;0;AllowBasic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008020;Allow unencrypted traffic;Match;0;AllowUnencryptedTraffic;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008020;Disallow WinRM from storing RunAs credentials;Match;1;DisableRunAs;HKLM:\Software\Policies\Microsoft\Windows\WinRM\Service
+W008020;Deny delegating saved credentials;Match;1;AllowProtectedCreds;HKLM:\Software\Policies\Microsoft\Windows\CredentialsDelegation
+W008020;Accounts: Limit local account use of blank passwords to console logon only;Match;1;LimitBlankPasswordUse;HKLM:\System\CurrentControlSet\Control\Lsa
+W008020;Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings;Match;1;SCENoApplyLegacyAuditPolicy;HKLM:\System\CurrentControlSet\Control\Lsa
+W008020;Domain member: Digitally encrypt or sign secure channel data (always);Match;1;requiresignorseal;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008020;Domain member: Digitally encrypt secure channel data (when possible);Match;1;sealsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008020;Domain member: Digitally sign secure channel data (when possible);Match;1;signsecurechannel;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008020;Domain member: Require strong (Windows 2000 or later) session key;Match;1;requirestrongkey;HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+W008020;Interactive logon: Machine inactivity limit;Match;900;InactivityTimeoutSecs;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;Interactive logon: Smart card removal behavior;Match;1;ScRemoveOption;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+W008020;Microsoft network client: Digitally sign communications (always);Match;1;RequireSecuritySignature;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008020;Microsoft network client: Send unencrypted password to third-party SMB servers;Match;0;EnablePlainTextPassword;HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+W008020;Microsoft network server: Digitally sign communications (always);Match;1;requiresecuritysignature;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008020;Network access: Do not allow anonymous enumeration of SAM accounts;Match;1;RestrictAnonymousSAM;HKLM:\System\CurrentControlSet\Control\Lsa
+W008020;Network access: Do not allow anonymous enumeration of SAM accounts and shares;Match;1;RestrictAnonymous;HKLM:\System\CurrentControlSet\Control\Lsa
+W008020;Network access: Restrict anonymous access to Named Pipes and Shares;Match;1;RestrictNullSessAccess;HKLM:\System\CurrentControlSet\Services\LanmanServer\Parameters
+W008020;Network security: Allow LocalSystem NULL session fallback;Match;0;allownullsessionfallback;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008020;Network security: Do not store LAN Manager hash value on next password change;Match;1;NoLMHash;HKLM:\System\CurrentControlSet\Control\Lsa
+W008020;Network security: LAN Manager authentication level;Match;5;LmCompatibilityLevel;HKLM:\System\CurrentControlSet\Control\Lsa
+W008020;Network security: LDAP client signing requirements;Match;1;LDAPClientIntegrity;HKLM:\System\CurrentControlSet\Services\LDAP
+W008020;Network security: Minimum session security for NTLM SSP based (including secure RPC) clients;Match;537395200;NTLMMinClientSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008020;Network security: Minimum session security for NTLM SSP based (including secure RPC) servers;Match;537395200;NTLMMinServerSec;HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0
+W008020;System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links);Match;1;ProtectionMode;HKLM:\System\CurrentControlSet\Control\Session Manager
+W008020;User Account Control: Admin Approval Mode for the Built-in Administrator account;Match;1;FilterAdministratorToken;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode;Match;2;ConsentPromptBehaviorAdmin;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;User Account Control: Behavior of the elevation prompt for standard users;Match;0;ConsentPromptBehaviorUser;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;User Account Control: Detect application installations and prompt for elevation;Match;1;EnableInstallerDetection;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;User Account Control: Only elevate UIAccess applications that are installed in secure locations;Match;1;EnableSecureUIAPaths;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;User Account Control: Run all administrators in Admin Approval Mode;Match;1;EnableLUA;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System
+W008020;User Account Control: Virtualize file and registry write failures to per-user locations;Match;1;EnableVirtualization;HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System

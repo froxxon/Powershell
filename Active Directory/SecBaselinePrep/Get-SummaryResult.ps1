@@ -18,5 +18,5 @@ function Get-URASummary {
             @{Name="Percentage";Expression={ "$((($_.Group | Where {$_.Status -match "Match"}).Count / ($_.Group).Count)*100)%" }} | sort Percentage | ft -AutoSize
 }
 
-get-regsummary C:\temp\MemberServers-RegistrySummary.csv
-#get-urasummary C:\temp\MemberServers-URASummary.csv
+get-regsummary "C:\Users\t1fredrik\Desktop\SecBaselinePrep\MemberServers-RegSummary.csv"
+#get-urasummary "C:\Users\t1fredrik\Desktop\SecBaselinePrep\MemberServers-URASummary.csv"

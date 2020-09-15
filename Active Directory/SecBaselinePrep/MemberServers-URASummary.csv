@@ -1,0 +1,506 @@
+﻿#TYPE Selected.System.Management.Automation.PSCustomObject
+Hostname;DisplayName;Status;SIDs
+W008005;;N/A;BUILTIN\Administrators
+W008005;Access Credential Manager as a trusted caller;Match;Empty
+W008005;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008005;Act as part of the operating system;Match;Empty
+W008005;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008005;Allow log on locally;Match;BUILTIN\Administrators
+W008005;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008005;Back up files and directories;Match;BUILTIN\Administrators
+W008005;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008005;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008005;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008005;Create a pagefile;Match;BUILTIN\Administrators
+W008005;Create a token object;Match;Empty
+W008005;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008005;Create permanent shared objects;Match;Empty
+W008005;Create symbolic links;N/A;BUILTIN\Administrators
+W008005;Debug programs;Match;BUILTIN\Administrators
+W008005;Deny access to this computer from the network;Different;BUILTIN\Guests
+W008005;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008005;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008005;Deny log on locally;N/A;BUILTIN\Guests
+W008005;Deny log on through Remote Desktop Services;Different;BUILTIN\Guests
+W008005;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008005;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008005;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008005;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008005;Increase a process working set;N/A;BUILTIN\Users
+W008005;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008005;Load and unload device drivers;Match;BUILTIN\Administrators
+W008005;Lock pages in memory;Match;Empty
+W008005;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users,BUILTIN\IIS_IUSRS
+W008005;Log on as a service;N/A;NT SERVICE\ALL SERVICES,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008005;Manage auditing and security log;Match;BUILTIN\Administrators
+W008005;Modify firmware environment values;Match;BUILTIN\Administrators
+W008005;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008005;Profile single process;Match;BUILTIN\Administrators
+W008005;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008005;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008005;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008005;Restore files and directories;Match;BUILTIN\Administrators
+W008005;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008005;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008006;;N/A;BUILTIN\Administrators
+W008006;Access Credential Manager as a trusted caller;Match;Empty
+W008006;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008006;Act as part of the operating system;Match;Empty
+W008006;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators
+W008006;Allow log on locally;Match;BUILTIN\Administrators
+W008006;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008006;Back up files and directories;Match;BUILTIN\Administrators
+W008006;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008006;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008006;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008006;Create a pagefile;Match;BUILTIN\Administrators
+W008006;Create a token object;Match;Empty
+W008006;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008006;Create permanent shared objects;Match;Empty
+W008006;Create symbolic links;N/A;BUILTIN\Administrators
+W008006;Debug programs;Match;BUILTIN\Administrators
+W008006;Deny access to this computer from the network;Different;BUILTIN\Guests
+W008006;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008006;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008006;Deny log on locally;N/A;BUILTIN\Guests
+W008006;Deny log on through Remote Desktop Services;Different;BUILTIN\Guests
+W008006;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008006;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008006;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008006;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008006;Increase a process working set;N/A;BUILTIN\Users
+W008006;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008006;Load and unload device drivers;Match;BUILTIN\Administrators
+W008006;Lock pages in memory;Match;Empty
+W008006;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users
+W008006;Log on as a service;N/A;FROXXEN\aadconnect,NT SERVICE\ALL SERVICES,NT SERVICE\ADSync
+W008006;Manage auditing and security log;Match;BUILTIN\Administrators
+W008006;Modify firmware environment values;Match;BUILTIN\Administrators
+W008006;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008006;Profile single process;Match;BUILTIN\Administrators
+W008006;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008006;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008006;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008006;Restore files and directories;Match;BUILTIN\Administrators
+W008006;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008006;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008011;;N/A;BUILTIN\Administrators
+W008011;Access Credential Manager as a trusted caller;Match;Empty
+W008011;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008011;Act as part of the operating system;Match;Empty
+W008011;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008011;Allow log on locally;Match;BUILTIN\Administrators
+W008011;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008011;Back up files and directories;Match;BUILTIN\Administrators
+W008011;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008011;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008011;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008011;Create a pagefile;Match;BUILTIN\Administrators
+W008011;Create a token object;Match;Empty
+W008011;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008011;Create permanent shared objects;Match;Empty
+W008011;Create symbolic links;N/A;BUILTIN\Administrators
+W008011;Debug programs;Match;BUILTIN\Administrators
+W008011;Deny access to this computer from the network;Different;BUILTIN\Guests
+W008011;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008011;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008011;Deny log on locally;N/A;BUILTIN\Guests
+W008011;Deny log on through Remote Desktop Services;Different;BUILTIN\Guests
+W008011;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008011;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008011;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008011;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008011;Increase a process working set;N/A;BUILTIN\Users
+W008011;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008011;Load and unload device drivers;Match;BUILTIN\Administrators
+W008011;Lock pages in memory;Match;Empty
+W008011;Log on as a batch job;N/A;FROXXEN\Task-User-Logon_As_A_Batch_Job-SCCM
+W008011;Log on as a service;N/A;NT SERVICE\ALL SERVICES,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008011;Manage auditing and security log;Match;BUILTIN\Administrators
+W008011;Modify firmware environment values;Match;BUILTIN\Administrators
+W008011;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008011;Profile single process;Match;BUILTIN\Administrators
+W008011;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008011;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008011;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008011;Restore files and directories;Match;BUILTIN\Administrators
+W008011;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008011;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008012;;N/A;BUILTIN\Administrators
+W008012;Access Credential Manager as a trusted caller;Match;Empty
+W008012;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008012;Act as part of the operating system;Match;Empty
+W008012;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT SERVICE\SQLAgent$CM,NT SERVICE\MSSQL$CM,NT SERVICE\SQLSERVERAGENT,NT SERVICE\MSSQLSERVER
+W008012;Allow log on locally;Match;BUILTIN\Administrators
+W008012;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008012;Back up files and directories;Match;BUILTIN\Administrators
+W008012;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators,NT SERVICE\SQLAgent$CM,NT SERVICE\MSSQL$CM,NT SERVICE\SQLSERVERAGENT,NT SERVICE\MSSQLSERVER
+W008012;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008012;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008012;Create a pagefile;Match;BUILTIN\Administrators
+W008012;Create a token object;Match;Empty
+W008012;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008012;Create permanent shared objects;Match;Empty
+W008012;Create symbolic links;N/A;BUILTIN\Administrators
+W008012;Debug programs;Match;BUILTIN\Administrators
+W008012;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008012;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008012;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008012;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008012;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008012;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008012;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008012;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,FROXXEN\SQLService,FROXXEN\SCCMSQLService
+W008012;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008012;Increase a process working set;N/A;BUILTIN\Users
+W008012;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008012;Load and unload device drivers;Match;BUILTIN\Administrators
+W008012;Lock pages in memory;Match;Empty
+W008012;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users,BUILTIN\IIS_IUSRS
+W008012;Log on as a service;N/A;FROXXEN\t1fredrik,FROXXEN\SQLService,FROXXEN\SCCMSQLService,FROXXEN\sccm_reports,FROXXEN\sccm_sql_rs,FROXXEN\reportpbi,SQLServer2005SQLBrowserUser$W008012,NT SERVICE\ALL SERVICES,NT SERVICE\PowerBIReportServer,NT SERVICE\SQLTELEMETRY,NT SERVICE\SQLAgent$CM,NT SERVICE\MSSQL$CM,NT SERVICE\MSSQLFDLauncher,NT SERVICE\SQLSERVERAGENT,NT SERVICE\SQLTELEMETRY$CM,NT SERVICE\MSSQLSERVER
+W008012;Manage auditing and security log;Match;BUILTIN\Administrators
+W008012;Modify firmware environment values;Match;BUILTIN\Administrators
+W008012;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008012;Profile single process;Match;BUILTIN\Administrators
+W008012;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008012;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008012;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,NT SERVICE\SQLAgent$CM,NT SERVICE\MSSQL$CM,NT SERVICE\SQLSERVERAGENT,NT SERVICE\MSSQLSERVER
+W008012;Restore files and directories;Match;BUILTIN\Administrators
+W008012;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008012;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008014;;N/A;BUILTIN\Administrators
+W008014;Access Credential Manager as a trusted caller;Match;Empty
+W008014;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008014;Act as part of the operating system;Match;Empty
+W008014;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008014;Allow log on locally;Match;BUILTIN\Administrators
+W008014;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008014;Back up files and directories;Match;BUILTIN\Administrators
+W008014;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008014;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008014;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008014;Create a pagefile;Match;BUILTIN\Administrators
+W008014;Create a token object;Match;Empty
+W008014;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008014;Create permanent shared objects;Match;Empty
+W008014;Create symbolic links;N/A;BUILTIN\Administrators
+W008014;Debug programs;Match;BUILTIN\Administrators
+W008014;Deny access to this computer from the network;Different;BUILTIN\Guests
+W008014;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008014;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008014;Deny log on locally;N/A;BUILTIN\Guests
+W008014;Deny log on through Remote Desktop Services;Different;BUILTIN\Guests
+W008014;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008014;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008014;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008014;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008014;Increase a process working set;N/A;BUILTIN\Users
+W008014;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008014;Load and unload device drivers;Match;BUILTIN\Administrators
+W008014;Lock pages in memory;Match;Empty
+W008014;Log on as a batch job;N/A;FROXXEN\Task-User-Logon_As_A_Batch_Job-SCCM
+W008014;Log on as a service;N/A;FROXXEN\2PXEUser,NT SERVICE\ALL SERVICES,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008014;Manage auditing and security log;Match;BUILTIN\Administrators
+W008014;Modify firmware environment values;Match;BUILTIN\Administrators
+W008014;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008014;Profile single process;Match;BUILTIN\Administrators
+W008014;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008014;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008014;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008014;Restore files and directories;Match;BUILTIN\Administrators
+W008014;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008014;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008015;;N/A;BUILTIN\Administrators
+W008015;Access Credential Manager as a trusted caller;Match;Empty
+W008015;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008015;Act as part of the operating system;Match;Empty
+W008015;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IME_ADMIN,BUILTIN\Administrators,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008015;Allow log on locally;Match;BUILTIN\Administrators
+W008015;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008015;Back up files and directories;Match;BUILTIN\Administrators
+W008015;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008015;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008015;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008015;Create a pagefile;Match;BUILTIN\Administrators
+W008015;Create a token object;Match;Empty
+W008015;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008015;Create permanent shared objects;Match;Empty
+W008015;Create symbolic links;N/A;BUILTIN\Administrators
+W008015;Debug programs;Match;BUILTIN\Administrators
+W008015;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008015;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008015;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008015;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008015;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008015;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008015;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008015;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IME_USER,IME_ADMIN,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008015;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008015;Increase a process working set;N/A;BUILTIN\Users
+W008015;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008015;Load and unload device drivers;Match;BUILTIN\Administrators
+W008015;Lock pages in memory;Match;Empty
+W008015;Log on as a batch job;N/A;IME_USER,IME_ADMIN,BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users,BUILTIN\IIS_IUSRS
+W008015;Log on as a service;N/A;IME_ADMIN,NT SERVICE\ALL SERVICES,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008015;Manage auditing and security log;Match;BUILTIN\Administrators
+W008015;Modify firmware environment values;Match;BUILTIN\Administrators
+W008015;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008015;Profile single process;Match;BUILTIN\Administrators
+W008015;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008015;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008015;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008015;Restore files and directories;Match;BUILTIN\Administrators
+W008015;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008015;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008009;;N/A;BUILTIN\Administrators
+W008009;Access Credential Manager as a trusted caller;Match;Empty
+W008009;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008009;Act as part of the operating system;Match;Empty
+W008009;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008009;Allow log on locally;Match;BUILTIN\Administrators
+W008009;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008009;Back up files and directories;Match;BUILTIN\Administrators
+W008009;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008009;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008009;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008009;Create a pagefile;Match;BUILTIN\Administrators
+W008009;Create a token object;Match;Empty
+W008009;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008009;Create permanent shared objects;Match;Empty
+W008009;Create symbolic links;N/A;BUILTIN\Administrators
+W008009;Debug programs;Match;BUILTIN\Administrators
+W008009;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008009;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008009;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008009;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008009;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008009;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008009;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008009;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008009;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008009;Increase a process working set;N/A;BUILTIN\Users
+W008009;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008009;Load and unload device drivers;Match;BUILTIN\Administrators
+W008009;Lock pages in memory;Match;Empty
+W008009;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users,BUILTIN\IIS_IUSRS
+W008009;Log on as a service;N/A;NT SERVICE\ALL SERVICES,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008009;Manage auditing and security log;Match;BUILTIN\Administrators
+W008009;Modify firmware environment values;Match;BUILTIN\Administrators
+W008009;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008009;Profile single process;Match;BUILTIN\Administrators
+W008009;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008009;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008009;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,IIS APPPOOL\.NET v4.5,IIS APPPOOL\DefaultAppPool,IIS APPPOOL\.NET v4.5 Classic
+W008009;Restore files and directories;Match;BUILTIN\Administrators
+W008009;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008009;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008017;;N/A;BUILTIN\Administrators
+W008017;Access Credential Manager as a trusted caller;Match;Empty
+W008017;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008017;Act as part of the operating system;Match;Empty
+W008017;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators
+W008017;Allow log on locally;Match;BUILTIN\Administrators
+W008017;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008017;Back up files and directories;Match;BUILTIN\Administrators
+W008017;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008017;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008017;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008017;Create a pagefile;Match;BUILTIN\Administrators
+W008017;Create a token object;Match;Empty
+W008017;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008017;Create permanent shared objects;Match;Empty
+W008017;Create symbolic links;N/A;BUILTIN\Administrators
+W008017;Debug programs;Match;BUILTIN\Administrators
+W008017;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008017;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008017;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008017;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008017;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008017;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008017;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008017;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008017;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008017;Increase a process working set;N/A;BUILTIN\Users
+W008017;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008017;Load and unload device drivers;Match;BUILTIN\Administrators
+W008017;Lock pages in memory;Match;Empty
+W008017;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users
+W008017;Log on as a service;N/A;NT SERVICE\ALL SERVICES
+W008017;Manage auditing and security log;Match;BUILTIN\Administrators
+W008017;Modify firmware environment values;Match;BUILTIN\Administrators
+W008017;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008017;Profile single process;Match;BUILTIN\Administrators
+W008017;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008017;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008017;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008017;Restore files and directories;Match;BUILTIN\Administrators
+W008017;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008017;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008017;;N/A;BUILTIN\Administrators
+W008017;Access Credential Manager as a trusted caller;Match;Empty
+W008017;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008017;Act as part of the operating system;Match;Empty
+W008017;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators
+W008017;Allow log on locally;Match;BUILTIN\Administrators
+W008017;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008017;Back up files and directories;Match;BUILTIN\Administrators
+W008017;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008017;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008017;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008017;Create a pagefile;Match;BUILTIN\Administrators
+W008017;Create a token object;Match;Empty
+W008017;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008017;Create permanent shared objects;Match;Empty
+W008017;Create symbolic links;N/A;BUILTIN\Administrators
+W008017;Debug programs;Match;BUILTIN\Administrators
+W008017;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008017;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008017;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008017;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008017;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008017;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008017;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008017;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008017;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008017;Increase a process working set;N/A;BUILTIN\Users
+W008017;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008017;Load and unload device drivers;Match;BUILTIN\Administrators
+W008017;Lock pages in memory;Match;Empty
+W008017;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users
+W008017;Log on as a service;N/A;NT SERVICE\ALL SERVICES
+W008017;Manage auditing and security log;Match;BUILTIN\Administrators
+W008017;Modify firmware environment values;Match;BUILTIN\Administrators
+W008017;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008017;Profile single process;Match;BUILTIN\Administrators
+W008017;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008017;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008017;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008017;Restore files and directories;Match;BUILTIN\Administrators
+W008017;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008017;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008018;;N/A;BUILTIN\Administrators
+W008018;Access Credential Manager as a trusted caller;Match;Empty
+W008018;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008018;Act as part of the operating system;Match;Empty
+W008018;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators
+W008018;Allow log on locally;Match;BUILTIN\Administrators
+W008018;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008018;Back up files and directories;Match;BUILTIN\Administrators
+W008018;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008018;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008018;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008018;Create a pagefile;Match;BUILTIN\Administrators
+W008018;Create a token object;Match;Empty
+W008018;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008018;Create permanent shared objects;Match;Empty
+W008018;Create symbolic links;N/A;BUILTIN\Administrators
+W008018;Debug programs;Match;BUILTIN\Administrators
+W008018;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008018;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008018;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008018;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008018;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008018;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008018;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008018;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008018;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008018;Increase a process working set;N/A;BUILTIN\Users
+W008018;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008018;Load and unload device drivers;Match;BUILTIN\Administrators
+W008018;Lock pages in memory;Match;Empty
+W008018;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users
+W008018;Log on as a service;N/A;NT SERVICE\ALL SERVICES
+W008018;Manage auditing and security log;Match;BUILTIN\Administrators
+W008018;Modify firmware environment values;Match;BUILTIN\Administrators
+W008018;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008018;Profile single process;Match;BUILTIN\Administrators
+W008018;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008018;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008018;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008018;Restore files and directories;Match;BUILTIN\Administrators
+W008018;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008018;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008019;;N/A;BUILTIN\Administrators
+W008019;Access Credential Manager as a trusted caller;Match;Empty
+W008019;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008019;Act as part of the operating system;Match;Empty
+W008019;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators
+W008019;Allow log on locally;Match;BUILTIN\Administrators
+W008019;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008019;Back up files and directories;Match;BUILTIN\Administrators
+W008019;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008019;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008019;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008019;Create a pagefile;Match;BUILTIN\Administrators
+W008019;Create a token object;Match;Empty
+W008019;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008019;Create permanent shared objects;Match;Empty
+W008019;Create symbolic links;N/A;BUILTIN\Administrators
+W008019;Debug programs;Match;BUILTIN\Administrators
+W008019;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008019;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008019;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008019;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008019;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008019;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008019;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008019;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008019;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008019;Increase a process working set;N/A;BUILTIN\Users
+W008019;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008019;Load and unload device drivers;Match;BUILTIN\Administrators
+W008019;Lock pages in memory;Match;Empty
+W008019;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users
+W008019;Log on as a service;N/A;NT SERVICE\ALL SERVICES
+W008019;Manage auditing and security log;Match;BUILTIN\Administrators
+W008019;Modify firmware environment values;Match;BUILTIN\Administrators
+W008019;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008019;Profile single process;Match;BUILTIN\Administrators
+W008019;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008019;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008019;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008019;Restore files and directories;Match;BUILTIN\Administrators
+W008019;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008019;Take ownership of files or other objects;Match;BUILTIN\Administrators
+W008020;;N/A;BUILTIN\Administrators
+W008020;Access Credential Manager as a trusted caller;Match;Empty
+W008020;Access this computer from the network;Match;NT AUTHORITY\Authenticated Users,BUILTIN\Administrators
+W008020;Act as part of the operating system;Match;Empty
+W008020;Adjust memory quotas for a process;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators
+W008020;Allow log on locally;Match;BUILTIN\Administrators
+W008020;Allow log on through Remote Desktop Services;N/A;BUILTIN\Administrators,BUILTIN\Remote Desktop Users
+W008020;Back up files and directories;Match;BUILTIN\Administrators
+W008020;Bypass traverse checking;N/A;Everyone,NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,BUILTIN\Users,BUILTIN\Backup Operators
+W008020;Change the system time;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008020;Change the time zone;N/A;NT AUTHORITY\LOCAL SERVICE,BUILTIN\Administrators
+W008020;Create a pagefile;Match;BUILTIN\Administrators
+W008020;Create a token object;Match;Empty
+W008020;Create global objects;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008020;Create permanent shared objects;Match;Empty
+W008020;Create symbolic links;N/A;BUILTIN\Administrators
+W008020;Debug programs;Match;BUILTIN\Administrators
+W008020;Deny access to this computer from the network;Different;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008020;Deny log on as a batch job;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008020;Deny log on as a service;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008020;Deny log on locally;N/A;FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins,BUILTIN\Guests
+W008020;Deny log on through Remote Desktop Services;Different;NT AUTHORITY\Local account,FROXXEN\Task-Computer-DenyLogon-T1,FROXXEN\Task-Computer-DenyLogon-ServiceAccounts,FROXXEN\Domain Admins,FROXXEN\Schema Admins,FROXXEN\Enterprise Admins
+W008020;Enable computer and user accounts to be trusted for delegation;Match;Empty
+W008020;Force shutdown from a remote system;Match;BUILTIN\Administrators
+W008020;Generate security audits;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008020;Impersonate a client after authentication;Match;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE,BUILTIN\Administrators,NT AUTHORITY\SERVICE
+W008020;Increase a process working set;N/A;BUILTIN\Users
+W008020;Increase scheduling priority;N/A;BUILTIN\Administrators,Window Manager\Window Manager Group
+W008020;Load and unload device drivers;Match;BUILTIN\Administrators
+W008020;Lock pages in memory;Match;Empty
+W008020;Log on as a batch job;N/A;BUILTIN\Administrators,BUILTIN\Backup Operators,BUILTIN\Performance Log Users
+W008020;Log on as a service;N/A;NT SERVICE\ALL SERVICES
+W008020;Manage auditing and security log;Match;BUILTIN\Administrators
+W008020;Modify firmware environment values;Match;BUILTIN\Administrators
+W008020;Perform volume maintenance tasks;Match;BUILTIN\Administrators
+W008020;Profile single process;Match;BUILTIN\Administrators
+W008020;Profile system performance;N/A;BUILTIN\Administrators,NT SERVICE\WdiServiceHost
+W008020;Remove computer from docking station;N/A;BUILTIN\Administrators
+W008020;Replace a process level token;N/A;NT AUTHORITY\LOCAL SERVICE,NT AUTHORITY\NETWORK SERVICE
+W008020;Restore files and directories;Match;BUILTIN\Administrators
+W008020;Shut down the system;N/A;FROXXEN\Task-Server-Shutdown_System,BUILTIN\Administrators,BUILTIN\Backup Operators
+W008020;Take ownership of files or other objects;Match;BUILTIN\Administrators
