@@ -107,7 +107,6 @@
 
 if ( !$ADObjects ) {
     $ADObjects = @()
-    $MissingACLObjects = @()
     $TempADObjects = Get-ADComputer -Filter * -SearchBase $ScriptVariables.SearchBase -properties ntSecurityDescriptor | Select Name, distinguishedName, ntSecurityDescriptor
     foreach ( $ADObject in $TempADObjects ) {
         foreach ( $Identity in $ScriptVariables.IdentityReferences ) {
