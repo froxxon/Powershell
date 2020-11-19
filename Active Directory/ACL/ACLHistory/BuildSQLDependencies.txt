@@ -1,0 +1,229 @@
+-- Create tables
+
+CREATE TABLE Events
+(
+	[Timestamp] datetime NOT NULL,
+	[OpCorrelationID] nvarchar(64) NOT NULL PRIMARY KEY,
+	[Modifier] nvarchar(128) NOT NULL,
+	[ModifierSAM] nvarchar(128) NOT NULL,
+	[TargetObject] nvarchar(256) NOT NULL,
+	[TargetType] nvarchar(256) NOT NULL
+);
+
+CREATE TABLE Modifications
+(
+	[Timestamp] datetime NOT NULL,
+	[OpCorrelationID] nvarchar(64) NOT NULL,
+	[SDDLType] nvarchar(16) NOT NULL,
+	[Type] nvarchar(16) NULL,
+	[Principal] nvarchar(128) NULL,
+	[Access] nvarchar(256) NOT NULL,
+	[AppliesTo] nvarchar(128) NULL,
+	[Operation] nvarchar(16) NOT NULL,
+	[Checksum] nvarchar(48) NOT NULL PRIMARY KEY
+);
+
+-- Create stored procedures
+
+CREATE PROCEDURE AddEventRecord
+	@Timestamp datetime,
+	@OpCorrelationID nvarchar(64),
+	@Modifier nvarchar(128),
+	@ModifierSAM nvarchar(64),
+	@TargetObject nvarchar(256),
+	@TargetType nvarchar(128)
+AS
+BEGIN
+	INSERT INTO Events(
+	    [Timestamp],[OpCorrelationID],[Modifier],[ModifierSAM],[TargetObject],[TargetType]
+	)
+	VALUES (@Timestamp,@OpCorrelationID,@Modifier,@ModifierSAM,@TargetObject,@TargetType);
+END
+GO
+
+CREATE PROCEDURE AddModificationRecord
+	@Timestamp datetime,
+	@OpCorrelationID nvarchar(64),
+	@SDDLType nvarchar(16) = NULL,
+	@Type nvarchar(16) = NULL,
+	@Principal nvarchar(128),
+	@Access nvarchar(256),
+	@AppliesTo nvarchar(128) = NULL,
+	@Operation nvarchar(16),
+	@Checksum nvarchar(48)
+AS
+BEGIN
+	INSERT INTO Modifications(
+	    [Timestamp],[OpCorrelationID],[SDDLType],[Type],[Principal],[Access],[AppliesTo],[Operation],[Checksum]
+	)
+	VALUES (@Timestamp,@OpCorrelationID,@SDDLType,@Type,@Principal,@Access,@AppliesTo,@Operation,@Checksum)
+END
+GO
+
+CREATE PROCEDURE GetAllACLRecords
+AS
+BEGIN
+	SELECT 
+		Events.[Timestamp],
+		Events.[OpCorrelationID],
+		[Modifier],
+		[ModifierSAM],
+		[TargetObject],
+		[TargetType],
+		[SDDLType],
+		[Type],
+		[Principal],
+		[Access],
+		[AppliesTo],
+		[Operation]
+	FROM Events
+	RIGHT JOIN Modifications
+	ON Events.OpCorrelationID = Modifications.OpCorrelationID
+	ORDER BY Timestamp DESC
+END
+GO
+
+CREATE PROCEDURE GetTargetTypes
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [TargetType] FROM Events
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY TargetType
+END
+GO
+
+CREATE PROCEDURE GetSDDLTypes
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [SDDLType] FROM Modifications
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY SDDLType
+END
+GO
+
+CREATE PROCEDURE GetModifiers
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [Modifier] FROM Events
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY Modifier
+END
+GO
+
+CREATE PROCEDURE GetOperations
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [Operation] FROM Modifications
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY Operation
+END
+GO
+
+CREATE PROCEDURE GetTargetObjects
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [TargetObject] FROM Events
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY TargetObject
+END
+GO
+
+CREATE PROCEDURE GetPrincipals
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [Principal] FROM Modifications
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY Principal
+END
+GO
+
+CREATE PROCEDURE GetAccesses
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [Access] FROM Modifications
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY Access
+END
+GO
+
+CREATE PROCEDURE GetAppliesTos
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [AppliesTo] FROM Modifications
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY AppliesTo
+END
+GO
+
+CREATE PROCEDURE GetGrantedTypes
+	@EndDate datetime,
+	@StartDate datetime
+AS
+BEGIN
+	SELECT DISTINCT [Type] FROM Modifications
+	WHERE Timestamp BETWEEN @EndDate and @StartDate
+	ORDER BY Type
+END
+GO
+
+CREATE PROCEDURE GetStartDate
+AS
+BEGIN
+	SELECT TOP 1 [Timestamp] FROM Events ORDER BY Timestamp DESC
+END
+GO
+
+CREATE PROCEDURE GetEndDate
+AS
+BEGIN
+	SELECT TOP 1 [Timestamp] FROM Events ORDER BY Timestamp
+END
+GO
+
+-- Add permission for AD group to stored procedures
+
+-- Grant permissions to Read-group
+GRANT EXECUTE ON OBJECT::GetStartDate TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetEndDate TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetGrantedTypes TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetOperations TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetTargetObjects TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetPrincipals TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetAccesses TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetAppliesTos TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetAllACLRecords TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetTargetTypes TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetSDDLTypes TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+GRANT EXECUTE ON OBJECT::GetModifiers TO [FROXXEN\Task-SQL-ACLHistory-DBReader]
+
+-- Grant permissions to Write-group
+GRANT EXECUTE ON OBJECT::GetStartDate TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetEndDate TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetGrantedTypes TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetOperations TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetTargetObjects TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetPrincipals TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetAccesses TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetAppliesTos TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetAllACLRecords TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetTargetTypes TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetSDDLTypes TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::GetModifiers TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::AddEventRecord TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
+GRANT EXECUTE ON OBJECT::AddModificationRecord TO [FROXXEN\Task-SQL-ACLHistory-DBOwner]
