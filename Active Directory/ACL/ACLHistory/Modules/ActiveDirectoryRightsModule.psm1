@@ -109,7 +109,7 @@ function Get-ADRightsGUIDs {
 }
 
 # translate names of grouped attributes and inheritance types
-function Get-ACERights {
+function Get-ACERights{
     Param(
         [ValidateNotNullOrEmpty()]
         [Parameter(Mandatory=$true)]
@@ -125,7 +125,6 @@ function Get-ACERights {
             else { 
                 $objAccess      = $($SIDObject.AuditFlags.toString())
             }
-            $objPrinc           = $($SIDObject.IdentityReference.toString())
             $objFlags           = $($SIDObject.ObjectFlags.toString())
             $objType            = $($SIDObject.ObjectType.toString())
             $objIsInheried      = $($SIDObject.IsInherited.toString())
@@ -143,92 +142,124 @@ function Get-ACERights {
         #endregion
 
         #region Get attribute group translations
-        $objRightsStrings = @()
-        foreach ( $objRight in $objRights -split ', ' ) {
-        # https://docs.microsoft.com/en-us/dotnet/api/system.directoryservices.activedirectoryrights?view=dotnet-plat-ext-5.0
-            $objRightString = $null
-            Switch ($objRight) {
-                "Self" { $objRightString = "Validated Write" }
-                "GenericRead" { $objRightString = "Read Permissions, List Contents, Read All Properties, List" }
-                "CreateChild" { $objRightString = "Create All Child Objects"}
-                "DeleteChild" { $objRightString = "Delete All Child Objects" }
-                "DeleteTree" { $objRightString = "Delete Subtree" }
-                "GenericAll" { $objRightString = "Full Control" }
-                "ReadControl" { $objRightString = "Read Permissions" }
-                "ReadProperty" { 
-                    Switch ($objInheritanceType) {
-                        "None" { 
-                            Switch ($objFlags) { 
-                                "ObjectAceTypePresent" { $objRightString = "Read" }
-                    		    "ObjectAceTypePresent, InheritedObjectAceTypePresent" { $objRightString = "Read" }
-                                default { $objRightString = "Read All Properties" }
+            Switch ($objRights) {
+                "Self" {
+                    $objRights = ""
+                }
+                "GenericRead" {
+                    $objRights = "Read Permissions,List Contents,Read All Properties,List"
+                }
+                "CreateChild" {
+                    $objRights = "Create"	
+                }
+                "DeleteChild" {
+                    $objRights = "Delete"		
+                }
+                "GenericAll" {
+                    $objRights = "Full Control"		
+                }
+                "CreateChild, DeleteChild" {
+                    $objRights = "Create/Delete"		
+                }
+                "ReadProperty" {
+                Switch ($objInheritanceType) {
+                    "None" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                		    "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            default {
+                                $objRights = "Read All Properties"
                             }
                         }
-                        "Children" {
-                            Switch ($objFlags) { 
-                                "ObjectAceTypePresent" { $objRightString = "Read" }
-                    		    "ObjectAceTypePresent, InheritedObjectAceTypePresent" { $objRightString = "Read" }
-                                default { $objRightString = "Read All Properties" }
+                    }
+                    "Children" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                		    "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            default {
+                                $objRights = "Read All Properties"
                             }
                         }
-                        "Descendents" {
-                            Switch ($objFlags) { 
-                                "ObjectAceTypePresent" { $objRightString = "Read" }
-                                "ObjectAceTypePresent, InheritedObjectAceTypePresent" { $objRightString = "Read" }
-                                default { $objRightString = "Read All Properties" }
+                    }
+                    "Descendents" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            default {
+                                $objRights = "Read All Properties"
                             }
                         }
-                        default { $objRightString = "Read All Properties" }
+                    }
+                    default {
+                        $objRights = "Read All Properties"
                     }
                 }
-                "ExtendedRight" { 
-                    switch($objType) {
-                        "00000000-0000-0000-0000-000000000000" { $objRightString = "All Extended Rights" }
-                    }
+            }
+                "ReadProperty, WriteProperty" {
+                    $objRights = "Read All Properties;Write All Properties"
                 }
-                "WriteDacl" { $objRightString = "Modify Permissions" }
-                "WriteOwner" { $objRightString = "Modify Owner" }
                 "WriteProperty" {
-                    Switch ($objInheritanceType) {
-                        "None" {
-                            Switch ($objFlags) { 
-                                "ObjectAceTypePresent" { $objRightString = "Write"	}
-                                "ObjectAceTypePresent, InheritedObjectAceTypePresent" { $objRightString = "Write" }
-                                default { $objRightString = "Write All Properties" }
+                Switch ($objInheritanceType) {
+                    "None" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Write"
+                            }
+                            default {
+                                $objRights = "Write All Properties"	
                             }
                         }
-                        "Children" {
-                            Switch ($objFlags) { 
-                                "ObjectAceTypePresent" { $objRightString = "Write"	}
-                                "ObjectAceTypePresent, InheritedObjectAceTypePresent" { $objRightString = "Write" }
-                                default { $objRightString = "Write All Properties" }
+                    }
+                    "Children" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            default {
+                                $objRights = "Write All Properties"	
                             }
                         }
-                        "Descendents" {
-                            Switch ($objFlags) { 
-                                "ObjectAceTypePresent" { $objRightString = "Write"	}
-                                "ObjectAceTypePresent, InheritedObjectAceTypePresent" { $objRightString = "Write" }
-                                default { $objRightString = "Write All Properties" }
+                    }
+                    "Descendents" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            default {
+                                $objRights = "Write All Properties"	
                             }
                         }
-                        default { $objRightString = "Write All Properties" }
+                    }
+                    default {
+                        $objRights = "Write All Properties"
                     }
                 }
-            default {}
             }
-            if ( !$objRightString ) {
-                $objRightString = $objRight
-            }
-            #$objRightString
-            foreach ( $obj in $objRightString -split ', ' ) {
-                if ( $objRightsStrings -notcontains $obj ) {
-                    [array]$objRightsStrings += $obj
+                default {
                 }
             }
-        }
-        $objRights = $objRightsStrings -Join ', '
         #endregion
-
 
         #region Get identityReference if it is unknown
             $IdentityReference = $($SIDObject.IdentityReference.toString())
@@ -244,29 +275,29 @@ function Get-ACERights {
         #region Get Inheritance Type based on ObjectFlags
             Switch ($objInheritanceType) {
                 "All" {
-            	    Switch ($objFlags) { 
-            	    	"InheritedObjectAceTypePresent" {
-            	    	    $strApplyTo =  "This object and all descendant objects"
-                            $strPerm =  "$objRights $ObjInheritDisplayName"
-            	    	}    	
-            	    	"ObjectAceTypePresent" {
-            	    	    $strApplyTo =  "This object and all descendant objects"
-                            $strPerm =  "$objRights $ObjTypeDisplayName"
-            	    	} 
-            	    	"ObjectAceTypePresent, InheritedObjectAceTypePresent" {
-            	    	    $strApplyTo =  "$ObjInheritDisplayName"
-                            $strPerm =  "$objRights $ObjTypeDisplayName"
-            	    	} 	      	
-            	    	"None" {
-            	    	    $strApplyTo ="This object and all descendant objects"
-                            $strPerm = "$objRights"
-            	    	} 
-            	    	default {
-            	    	    $strApplyTo = "Error"
-                            $strPerm = "Error: Failed to display permissions 1K"
-            	    	} 	 
-            	    }
-                }
+            	Switch ($objFlags) { 
+            		"InheritedObjectAceTypePresent" {
+            		    $strApplyTo =  "This object and all descendant objects"
+                        $strPerm =  "$objRights $ObjInheritDisplayName"
+            		}    	
+            		"ObjectAceTypePresent" {
+            		    $strApplyTo =  "This object and all descendant objects"
+                        $strPerm =  "$objRights $ObjTypeDisplayName"
+            		} 
+            		"ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+            		    $strApplyTo =  "$ObjInheritDisplayName"
+                        $strPerm =  "$objRights $ObjTypeDisplayName"
+            		} 	      	
+            		"None" {
+            		    $strApplyTo ="This object and all descendant objects"
+                        $strPerm = "$objRights"
+            		} 
+            		default {
+            		    $strApplyTo = "Error"
+                        $strPerm = "Error: Failed to display permissions 1K"
+            		} 	 
+            	}
+            }
                 "Descendents" {
                 	Switch ($objFlags) { 
                 		"InheritedObjectAceTypePresent" {
@@ -282,8 +313,8 @@ function Get-ACERights {
                             $strPerm = "$objRights $ObjTypeDisplayName"
                 		} 
                 		"ObjectAceTypePresent, InheritedObjectAceTypePresent" {
-                		    $strApplyTo = "$ObjInheritDisplayName"
-                            $strPerm = "$objRights $ObjTypeDisplayName"
+                		    $strApplyTo =	"$ObjInheritDisplayName"
+                            $strPerm =	"$objRights $ObjTypeDisplayName"
                 		}
                 		default {
                 		    $strApplyTo = "Error"
@@ -347,7 +378,7 @@ function Get-ACERights {
                 		} 	
                 		"ObjectAceTypePresent" {
                 		    $strApplyTo = "All descendant objects"
-                            $strPerm = "$objRights $ObjTypeDisplayName"
+                            $strPerm = "$objRights $ObjTypeDisplayName "
                 		} 		      	
                 		default {
                 		    $strApplyTo = "Error"
@@ -378,16 +409,10 @@ function Get-ACERights {
             }
         #endregion
         
-        if ( $strPerm -eq 'Validated Write' -and $strPerm -ne 'Validated Write ' ) {
-            $strPerm = "All Validated Writes"
-        }
-        $strPerm = $strPerm -replace '  ',' ' -replace 'DNS Host Name Attributes ','' -replace 'Validated write Validated write','Validated Write'
-
         $objhashtableACE = [pscustomobject][ordered]@{
             IdentityReference = $IdentityReference
-            #Trustee           = $strNTAccount
+            Trustee           = $strNTAccount
             Access            = $objAccess
-            InheritanceType   = $objInheritanceType
             Inhereted         = $objIsInheried
             ApplyTo           = $strApplyTo
             Permission        = $strPerm
