@@ -126,7 +126,7 @@ if ( !$ModifiedACLS ) {
 if ( $ModifiedACLs ) {
     #region Main table
         $HTMLTableForEmail = "$Style`r`n<table id=`"tmain`">"
-        $HTMLTableForEmail += "<tr><td><h2>List of ACL modifications (last $Timeframe)</h2></td></tr>"
+        $HTMLTableForEmail += "<tr><td><h2>Summary of Access Control List (ACL) Modifications</h2></td></tr>"
         $HTMLTableForEmail += "<tr><td>Report created: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")</td></tr>"
         #region Summary table
             [int]$TotalModifications = $($ModifiedACLs | Group OpCorrelationID).Count
@@ -147,7 +147,7 @@ if ( $ModifiedACLs ) {
             $HTMLTableForEmail += "</table></td></tr>"
         #endregion
         #region Modifications table
-            $HTMLTableForEmail += "<tr><td align=`"center`"><h2>List of ACL modifications (last $Timeframe)</h2></td></tr>"
+            $HTMLTableForEmail += "<tr><td align=`"center`"><h2>List of ACL modifications</h2></td></tr>"
             $HTMLTableForEmail += "<tr><td><table id=`"t01`"><th width=`"200px`">Timestamp</th><th width=`"200px`">Modified by</th><th width=`"200px`">Target Object</th><th>Modifications</th></tr></td>"
             foreach ( $ACL in $ModifiedACLs | Group OpCorrelationId ) {
                 $Counter++
