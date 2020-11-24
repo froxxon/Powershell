@@ -1,6 +1,6 @@
-﻿$Global:DMARCLogsSQLValues = @{
-    "AMIdentitySQLServer" = "W008012.froxxen.com"
-    "AMIdentityDataBase" = "ACLHistory"
+$Global:DMARCLogsSQLValues = @{
+    "ACLSQLServer" = "W008012.froxxen.com"
+    "ACLDatabase" = "ACLHistory"
 }
 
 function Start-SQLCommand {
@@ -42,8 +42,8 @@ function Start-SQLCommand {
 #>
     [CmdletBinding()]
     param (
-        [parameter(Mandatory=$false)][string]$SQLServer = $DMARCLogsSQLValues.AMIdentitySQLServer,
-        [parameter(Mandatory=$false)][string]$Database = $DMARCLogsSQLValues.AMIdentityDataBase,
+        [parameter(Mandatory=$false)][string]$SQLServer = $DMARCLogsSQLValues.ACLSQLServer,
+        [parameter(Mandatory=$false)][string]$Database = $DMARCLogsSQLValues.ACLDatabase,
         [parameter(Mandatory=$true)][string]$SQLQuery
     )
 
