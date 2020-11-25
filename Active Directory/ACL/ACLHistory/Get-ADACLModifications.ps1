@@ -11,6 +11,8 @@
 ## Version 1.0.3 - Added samAccountName (by SubjectUserName) to 'Modified by' //Fredrik Bergman 2020-11-15
 ## Version 1.0.4 - Added functionality to write to database //Fredrik Bergman 2020-11-18
 ## Version 1.0.5 - Rebuilt script to handle HTML-report in separate script //Fredrik Bergman //2020-11-20
+## Version 1.0.6 - Added TargetDN to the Event database and updated scripts accordingly //Fredrik Bergman //2020-11-25
+## Version 1.0.7 - Added displaynames for GPO Permissions if objectType equal groupPolicyContainer //Fredrik Bergman //2020-11-25
 ##
 
 #region DECLARE SCRIPT DEPENDENCIES
@@ -19,8 +21,9 @@
         "ACLHistoryManagement"    = "C:\PowerShell\TaskScheduler\Get-ADACLModifications\Modules\ACLHistoryManagement.psm1"
         "ADRightsModulePath"      = "C:\Powershell\TaskScheduler\Get-ADACLModifications\Modules\ActiveDirectoryRightsModule.psm1"
         "ElasticSearchUri"        = "http://192.168.2.205:9200"
-        "ElasticSearchModulePath" = "C:\PowerShell\TaskScheduler\ElasticSearchModule\ElasticSearchModule.psm1"
-        "ExcludedSDDLs"           = @('Everyone: Deny DeleteTree, Delete This Object Only',
+        "ExcludedSDDLs"           = @(
+                                      'Everyone: Deny DeleteTree, Delete This Object Only',
+                                      'Everyone: Deny Delete Subtree, Delete This Object Only',
                                       'Everyone: Deny ExtendedRight Change Password This Object Only',
                                       'NT AUTHORITY\SELF: Deny ExtendedRight Change Password This Object Only',
                                       'NT AUTHORITY\SELF: Allow ExtendedRight Send As This object and all descendant objects',
@@ -32,7 +35,7 @@
     Import-Module $ScriptVariables.ACLHistoryManagement
     Import-Module $ScriptVariables.ADRightsModulePath
 
-    $Timeframe = '1m'
+    $Timeframe = '1h'
     $IndexThreshold = '1000'
     $DCAuditTag = "dcsecurity"
 
@@ -170,8 +173,21 @@ $DSLQuery = @"
                             foreach ( $result in $tempResultDACL ) {
                                 # skip excluded server names
                                 if ( $($CurrentFilteretedEvent.winlog.event_data.SubjectUserName) -notin $ScriptVariables.ExcludedServers ) {
-                                    # skip excluded permissions
                                     #write-output "$($result.IdentityReference): $($result.access) $($result.Permission) $($result.ApplyTo)" # debug
+                                    # if ObjectType is a groupPolicyContainer, then translate Permission accordingly
+                                    if ( $CurrentFilteretedEvent.winlog.event_data.ObjectClass -eq 'groupPolicyContainer' ) {
+                                        if ( $result.Permission -eq ('Create All Child Objects, Delete All Child Objects, Read All Properties, Write All Properties, Delete, GenericExecute, Modify Permissions, Modify Owner').Trim() ) {
+                                            $result.Permission = 'Edit Settings, delete, modify security (GPO)'
+                                        }
+                                        if ( $result.Permission -eq ('Create All Child Objects, Delete All Child Objects, Read All Properties, Write All Properties, GenericExecute').Trim() ) {
+                                            $result.Permission = 'Edit Settings (GPO)'
+                                        }
+                                        if ( $result.Permission -eq ('Read All Properties, GenericExecute').Trim() ) {
+                                            $result.Permission = 'Read (GPO)'
+                                        }
+                                    }
+                                    
+                                    # skip excluded permissions
                                     if ( "$($result.IdentityReference): $($result.access) $($result.Permission) $($result.ApplyTo)" -notin $ScriptVariables.ExcludedSDDLs ) {
                                         $Operation = $ComparedSDDLs[$($tempResultDACL.indexOf($result))].Operation
                                         if ( $ScriptVariables.WriteToSQL ) {
@@ -240,7 +256,7 @@ $DSLQuery = @"
 
                     if ( $ScriptVariables.WriteToSQL ) {
                         # The primary key in the table Events is OpCorrelationID, so duplicates wont exist
-                        Add-ACLEventRecord -Timestamp $Timestamp -OpCorrelationID $CurrentFilteretedEvent.winlog.event_data.OpCorrelationID -Modifier $ModifiedBy -ModifierSAM $CurrentFilteretedEvent.winlog.event_data.SubjectUserName -TargetObject $ObjectName -TargetType $CurrentFilteretedEvent.winlog.event_data.ObjectClass
+                        Add-ACLEventRecord -Timestamp $Timestamp -OpCorrelationID $CurrentFilteretedEvent.winlog.event_data.OpCorrelationID -Modifier $ModifiedBy -ModifierSAM $CurrentFilteretedEvent.winlog.event_data.SubjectUserName -TargetObject $ObjectName -TargetDN $CurrentFilteretedEvent.winlog.event_data.ObjectDN -TargetType $CurrentFilteretedEvent.winlog.event_data.ObjectClass
                     }
                 }
             }

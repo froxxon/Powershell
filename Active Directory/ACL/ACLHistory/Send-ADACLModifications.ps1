@@ -7,12 +7,14 @@
 #region DECLARE SCRIPT DEPENDENCIES
     $ScriptVariables = @{
         "ScriptFolder"            = "C:\PowerShell\TaskScheduler\Get-ADACLModifications"
+        "LastMinutes"             = 60
         "MailFrom"                = 'noreply@froxxen.com'
-	    "MailTo"                  = 'froxxen@froxxen.com'
+        "MailTo"                  = 'froxxen@froxxen.com'
         "MailSubject"             = 'Recent Active Directory ACL Modifications'
         "SMTPServer"              = 'mail.froxxen.com'
-        "AMACLHistoryManagement"  = "C:\PowerShell\TaskScheduler\Get-ADACLModifications\Modules\ACLHistoryManagement.psm1"
-        "ADRightsModulePath"      = "C:\Powershell\TaskScheduler\Get-ADACLModifications\Modules\ActiveDirectoryRightsModule.psm1"
+        "SSRSReport"              = 'https://reports.froxxen.com/reports/report/ACLHistory/ACLHistory'
+        "ACLHistoryManagement"    = "C:\PowerShell\TaskScheduler\Get-ADACLModifications\Modules\ACLHistoryManagement.psm1"
+        "ADRightsModulePath"      = "C:\PowerShell\TaskScheduler\ActiveDirectoryRightsModule\ActiveDirectoryRightsModule.psm1"
         "Colors"                  = @{
                                         "Added"   =  "#3f82b0"
                                         "Changed"  = "#a52869"
@@ -20,12 +22,12 @@
                                         "Error"    = "#a52869"
                                         "Removed"   = "#db3f28"
                                     }
-        "CriticalPermissions"     = @('FullControl','All Extended Rights','ExtendedRight ')
+        "CriticalPermissions"     = @('FullControl','Full Control','All Extended Rights','ExtendedRight ')
     }
 
-    Import-Module $ScriptVariables.AMACLHistoryManagement
+    Import-Module $ScriptVariables.ACLHistoryManagement
     Import-Module $ScriptVariables.ADRightsModulePath
-    $ToRecipients = $ScriptVariables.MailTo
+
 
 function Get-RowColor {
     param (
@@ -119,8 +121,8 @@ $Style = @"
 "@
 
 # Get all ACL-modifications since...
-if ( !$ModifiedACLS ) {
-    [array]$ModifiedACLs = Get-ACLHistoryLogs -EndDate $((get-date).AddMinutes(-5))
+if ( !$ModifiedACLs ) {
+    [array]$ModifiedACLs = Get-ACLHistoryLogs -EndDate $((get-date).AddMinutes(-$($ScriptVariables.LastMinutes)))
 }
 
 if ( $ModifiedACLs ) {
@@ -128,11 +130,14 @@ if ( $ModifiedACLs ) {
         $HTMLTableForEmail = "$Style`r`n<table id=`"tmain`">"
         $HTMLTableForEmail += "<tr><td><h2>Summary of Access Control List (ACL) Modifications</h2></td></tr>"
         $HTMLTableForEmail += "<tr><td>Report created: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")</td></tr>"
+        if ( $ScriptVariables.SSRSReport -ne '' ) {
+            $HTMLTableForEmail += "<tr><td><a href=`"$($ScriptVariables.SSRSReport)`">Link to SSRS report</a></td></tr>"
+        }
         #region Summary table
             [int]$TotalModifications = $($ModifiedACLs | Group OpCorrelationID).Count
-            [int]$TotalACEAdditions  = $($ModifiedACLs | Where Operation -eq 'Added' ).Count
-            [int]$TotalACERemovals   = $($ModifiedACLs | Where Operation -eq 'Removed' ).Count
-            [int]$TotalCriticals     = $($ModifiedACLs | where { $_.Access -match "$($ScriptVariables.CriticalPermissions -join '|')" -and $_.Operation -eq 'Added' }).count
+            [int]$TotalACEAdditions  = @($($ModifiedACLs | Where Operation -eq 'Added' )).Count
+            [int]$TotalACERemovals   = @($($ModifiedACLs | Where Operation -eq 'Removed' )).Count
+            [int]$TotalCriticals     = @($($ModifiedACLs | where { $_.Access -match "$($ScriptVariables.CriticalPermissions -join '|')" -and $_.Operation -eq 'Added' })).count
             $HTMLTableForEmail += "<tr><td><table align=`"center`" id=`"tsum`"><tr><td><b>Total Modifications:</b></td><td><b>Added ACEs:</b></td><td><b>Removed ACEs</b></td><td><b>Potentially Critical events</b></td></tr><tr><td><font size = `"6`">$($TotalModifications)</font></td><td><font size = `"6`" color=`"#3f82b0`">$TotalACEAdditions</font></td><td><font size=`"6`" color=`"#a50134`">$TotalACERemovals</font></td><td><font size=`"6`" color=`"$($ScriptVariables.Colors.Critical)`">$TotalCriticals</font></td></tr></table></td></tr>"
         #endregion
         #region Top Modifier table
@@ -170,7 +175,6 @@ if ( $ModifiedACLs ) {
             }
         #endregion
         $HTMLTableForEmail += "</td></tr></table></table>"
-        $HTMLTableForEmail | out-file C:\PowerShell\TaskScheduler\Get-ADACLModifications\LastStatusSent.html
     #endregion Main table
 
     #region SEND NOTIFICATION VIA EMAIL
@@ -180,7 +184,7 @@ if ( $ModifiedACLs ) {
             Body       = $HTMLTableForEmail
             IsBodyHtml = $true
         }
-        $mail.To.Add($ToRecipients)
+        $mail.To.Add($ScriptVariables.MailTo)
         $SMTPClient = New-Object -TypeName System.Net.Mail.SmtpClient( $ScriptVariables.SMTPServer )
         $SMTPClient.Send( $Mail )
     #endregion
