@@ -1,4 +1,4 @@
-$Global:DMARCLogsSQLValues = @{
+﻿$Global:ACLHistorySQLValues = @{
     "ACLSQLServer" = "W008012.froxxen.com"
     "ACLDatabase" = "ACLHistory"
 }
@@ -36,14 +36,13 @@ function Start-SQLCommand {
     $HRPersonelContent = Start-SQLCommand -SQLServer SQLSERVER1 -Database HRDatabase -SQLQuery $SQLQueryToExecute
 .NOTES
     Script name: Start-SQLCommand
-    Author:      Micke Sundqvist
-    Twitter:     @mickesunkan
+    Author:      maekee
     Github:      https://github.com/maekee/Powershell
 #>
     [CmdletBinding()]
     param (
-        [parameter(Mandatory=$false)][string]$SQLServer = $DMARCLogsSQLValues.ACLSQLServer,
-        [parameter(Mandatory=$false)][string]$Database = $DMARCLogsSQLValues.ACLDatabase,
+        [parameter(Mandatory=$false)][string]$SQLServer = $ACLHistorySQLValues.ACLSQLServer,
+        [parameter(Mandatory=$false)][string]$Database = $ACLHistorySQLValues.ACLDataBase,
         [parameter(Mandatory=$true)][string]$SQLQuery
     )
 
@@ -66,9 +65,11 @@ function Start-SQLCommand {
 
 function Get-ACLHistoryLogs {
     [CmdletBinding()]
-    param([switch]$OnlyReportNames)
-
-    $returnData = Start-SQLCommand -SQLQuery "EXEC dbo.GetAllACLRecords"
+    param (
+        [datetime]$EndDate = (Get-Date).AddDays(-1),
+        [datetime]$StartDate = $(Get-Date)
+    )
+    $returnData = Start-SQLCommand -SQLQuery "EXEC dbo.GetACLRecordsWithinDates @EndDate='$($EndDate)', @StartDate='$($StartDate)'"
     $returnData
 }
 
@@ -80,13 +81,14 @@ function Add-ACLEventRecord {
         [Parameter(Mandatory=$true)][string]$Modifier,
         [Parameter(Mandatory=$true)][string]$ModifierSAM,
 		[Parameter(Mandatory=$true)][string]$TargetObject,
+        [Parameter(Mandatory=$true)][string]$TargetDN,
         [Parameter(Mandatory=$true)][string]$TargetType
     )
 
     try{
 #Mandatory: [Timestamp],[OpCorrelationID],[Modifier],[TargetObject]
 $returnData = Start-SQLCommand -SQLQuery @"
-EXEC AddEventRecord '$Timestamp','$OpCorrelationID','$Modifier','$ModifierSAM','$TargetObject','$TargetType'
+EXEC AddEventRecord '$Timestamp','$OpCorrelationID','$Modifier','$ModifierSAM','$TargetObject','$TargetDN','$TargetType'
 "@
         Write-Verbose "Successfully added ACL-history Event record $($OpCorrelationID)"
     }
@@ -119,4 +121,17 @@ EXEC AddModificationRecord '$Timestamp','$OpCorrelationID','$SDDLType','$Type','
     catch{
         Write-Warning "Failed when adding ACL-history Modification record to database"
     }
+}
+
+function Get-StringHash { 
+    param (
+        [String]$String,
+        $HashName = "MD5"
+    )
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($String)
+    $algorithm = [System.Security.Cryptography.HashAlgorithm]::Create('MD5')
+    $StringBuilder = New-Object System.Text.StringBuilder 
+    $algorithm.ComputeHash($bytes) | 
+    ForEach-Object { $null = $StringBuilder.Append($_.ToString("x2")) } 
+    $StringBuilder.ToString() 
 }

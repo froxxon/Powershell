@@ -398,6 +398,320 @@ function Get-ACERights {
     $ArrayAllACE
 }
 
+# Obsolete, but kept for now.
+function Get-ACERightsOriginal{
+    Param(
+        [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory=$true)]
+        [array]$SID
+    )
+
+    $ArrayAllACE = New-Object System.Collections.ArrayList
+    foreach ( $SIDObject in $SID ) {
+        #region Distribute SIDObject attributes
+            if( $null -ne $SIDObject.AccessControlType ) {
+                $objAccess      = $($SIDObject.AccessControlType.toString())
+            }
+            else { 
+                $objAccess      = $($SIDObject.AuditFlags.toString())
+            }
+            $objFlags           = $($SIDObject.ObjectFlags.toString())
+            $objType            = $($SIDObject.ObjectType.toString())
+            $objIsInheried      = $($SIDObject.IsInherited.toString())
+            $objInheritedType   = $($SIDObject.InheritedObjectType.toString())
+            $objRights          = $($SIDObject.ActiveDirectoryRights.toString())
+            $objInheritanceType = $($SIDObject.InheritanceType.toString())
+            $ObjTypeDisplayName = $(($ADRightsGUIDs | Where GUID -eq $objType).DisplayName)
+            if ( !$ObjTypeDisplayName ) {
+                $ObjTypeDisplayName = $(($ADRightsGUIDs | Where GUID -eq $objType).Name)
+            }
+            $ObjInheritDisplayName = $(($ADRightsGUIDs | Where GUID -eq $objInheritedType).DisplayName)
+            if ( !$ObjInheritDisplayName ) {
+                $ObjInheritDisplayName = $(($ADRightsGUIDs | Where GUID -eq $objInheritedType).Name)
+            }
+        #endregion
+
+        #region Get attribute group translations
+            Switch ($objRights) {
+                "Self" {
+                    $objRights = ""
+                }
+                "GenericRead" {
+                    $objRights = "Read Permissions,List Contents,Read All Properties,List"
+                }
+                "CreateChild" {
+                    $objRights = "Create"	
+                }
+                "DeleteChild" {
+                    $objRights = "Delete"		
+                }
+                "GenericAll" {
+                    $objRights = "Full Control"		
+                }
+                "CreateChild, DeleteChild" {
+                    $objRights = "Create/Delete"		
+                }
+                "ReadProperty" {
+                Switch ($objInheritanceType) {
+                    "None" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                		    "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            default {
+                                $objRights = "Read All Properties"
+                            }
+                        }
+                    }
+                    "Children" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                		    "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            default {
+                                $objRights = "Read All Properties"
+                            }
+                        }
+                    }
+                    "Descendents" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Read"	
+                            }
+                            default {
+                                $objRights = "Read All Properties"
+                            }
+                        }
+                    }
+                    default {
+                        $objRights = "Read All Properties"
+                    }
+                }
+            }
+                "ReadProperty, WriteProperty" {
+                    $objRights = "Read All Properties;Write All Properties"
+                }
+                "WriteProperty" {
+                Switch ($objInheritanceType) {
+                    "None" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Write"
+                            }
+                            default {
+                                $objRights = "Write All Properties"	
+                            }
+                        }
+                    }
+                    "Children" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            default {
+                                $objRights = "Write All Properties"	
+                            }
+                        }
+                    }
+                    "Descendents" {
+                        Switch ($objFlags) { 
+                            "ObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                                $objRights = "Write"	
+                            }
+                            default {
+                                $objRights = "Write All Properties"	
+                            }
+                        }
+                    }
+                    default {
+                        $objRights = "Write All Properties"
+                    }
+                }
+            }
+                default {
+                }
+            }
+        #endregion
+
+        #region Get identityReference if it is unknown
+            $IdentityReference = $($SIDObject.IdentityReference.toString())
+            if ($IdentityReference.contains("S-1-")) {
+                $strNTAccount = "$($env:USERDOMAIN)\$(Get-ADSIDIdentity -SID $IdentityReference)"
+                $IdentityReference = $strNTAccount
+            }
+            else {
+                $strNTAccount = $IdentityReference
+            }
+        #endregion
+
+        #region Get Inheritance Type based on ObjectFlags
+            Switch ($objInheritanceType) {
+                "All" {
+            	Switch ($objFlags) { 
+            		"InheritedObjectAceTypePresent" {
+            		    $strApplyTo =  "This object and all descendant objects"
+                        $strPerm =  "$objRights $ObjInheritDisplayName"
+            		}    	
+            		"ObjectAceTypePresent" {
+            		    $strApplyTo =  "This object and all descendant objects"
+                        $strPerm =  "$objRights $ObjTypeDisplayName"
+            		} 
+            		"ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+            		    $strApplyTo =  "$ObjInheritDisplayName"
+                        $strPerm =  "$objRights $ObjTypeDisplayName"
+            		} 	      	
+            		"None" {
+            		    $strApplyTo ="This object and all descendant objects"
+                        $strPerm = "$objRights"
+            		} 
+            		default {
+            		    $strApplyTo = "Error"
+                        $strPerm = "Error: Failed to display permissions 1K"
+            		} 	 
+            	}
+            }
+                "Descendents" {
+                	Switch ($objFlags) { 
+                		"InheritedObjectAceTypePresent" {
+                		    $strApplyTo = "$ObjInheritDisplayName"
+                            $strPerm = "$objRights"
+                		}
+                		"None" {
+                		    $strApplyTo = "All descendant objects"
+                            $strPerm = "$objRights"
+                		} 	      	
+                		"ObjectAceTypePresent" {
+                		    $strApplyTo = "All descendant objects"
+                            $strPerm = "$objRights $ObjTypeDisplayName"
+                		} 
+                		"ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                		    $strApplyTo =	"$ObjInheritDisplayName"
+                            $strPerm =	"$objRights $ObjTypeDisplayName"
+                		}
+                		default {
+                		    $strApplyTo = "Error"
+                            $strPerm = "Error: Failed to display permissions 2K"
+                		} 	 
+                	} 		
+                }
+                "None" {
+                	Switch ($objFlags) { 
+                		"ObjectAceTypePresent" {
+                		    $strApplyTo = "This Object Only"
+                            $strPerm = "$objRights $ObjTypeDisplayName"
+                		} 
+                		"None" {
+                		    $strApplyTo = "This Object Only"
+                            $strPerm = "$objRights"
+                		} 
+                		default {
+                		    $strApplyTo = "Error"
+                            $strPerm = "Error: Failed to display permissions 4K"
+                		} 	 
+                	}
+                }
+                "SelfAndChildren" {
+                	Switch ($objFlags) { 
+                		"ObjectAceTypePresent" {
+                		    $strApplyTo = "This object and all descendant objects"
+                            $strPerm = "$objRights $ObjTypeDisplayName"
+                		}
+                		"InheritedObjectAceTypePresent" {
+                		    $strApplyTo = "All descendant objects"
+                            $strPerm = "$objRights $ObjInheritDisplayName"
+                		} 
+                        "ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                		    $strApplyTo =  "$ObjInheritDisplayName"
+                            $strPerm =  "$objRights $ObjTypeDisplayName"
+                		} 	      	
+                		"None" {
+                		    $strApplyTo = "This object and all descendant objects"
+                            $strPerm = "$objRights"
+                		}                                  	   
+                		default {
+                		    $strApplyTo = "Error"
+                            $strPerm = "Error: Failed to display permissions 5K"
+                		} 	 
+                	}   	
+                } 	
+                "Children" {
+                    Switch ($objFlags) { 
+                		"InheritedObjectAceTypePresent" {
+                		    $strApplyTo = "All descendant objects"
+                            $strPerm = "$objRights $ObjInheritDisplayName"
+                		} 
+                		"None" {
+                		    $strApplyTo = "All descendant objects"
+                            $strPerm = "$objRights"
+                		} 	      	
+                		"ObjectAceTypePresent, InheritedObjectAceTypePresent" {
+                		    $strApplyTo = "$ObjInheritDisplayName"
+                            $strPerm = "$ObjTypeDisplayName $objRights"
+                		} 	
+                		"ObjectAceTypePresent" {
+                		    $strApplyTo = "All descendant objects"
+                            $strPerm = "$objRights $ObjTypeDisplayName "
+                		} 		      	
+                		default {
+                		    $strApplyTo = "Error"
+                            $strPerm = "Error: Failed to display permissions 6K"
+                		}
+                	}
+                }
+                default {
+                	$strApplyTo = "Error"
+                    $strPerm = "Error: Failed to display permissions 7K"
+                } 	 
+            }
+
+            if ( $objInheritanceType -eq 'Descendents' -and $objFlags -eq 'InheritedObjectAceTypePresent' ) {
+                $strApplyTo = $(($ADRightsGUIDs | Where GUID -eq $objInheritedType).DisplayName)
+                if ( !$strApplyTo ) {
+                    $strApplyTo = $(($ADRightsGUIDs | Where GUID -eq $objInheritedType).Name)
+                    if ( !$strApplyTo ) {
+                        $strApplyTo = "Error"
+                    }
+                }
+                if ( $strApplyTo -ne 'Error' ) {
+                    $strApplyTo = "Descendent $($strApplyTo) objects"
+                }
+            }
+            elseif ( $objInheritanceType -match "(All|Descendents)" -and $objFlags -eq 'ObjectAceTypePresent, InheritedObjectAceTypePresent' ) {
+                $strApplyTo = "Descendent $($strApplyTo) objects"
+            }
+        #endregion
+        
+        $objhashtableACE = [pscustomobject][ordered]@{
+            IdentityReference = $IdentityReference
+            Trustee           = $strNTAccount
+            Access            = $objAccess
+            Inhereted         = $objIsInheried
+            ApplyTo           = $strApplyTo
+            Permission        = $strPerm
+        }
+        [void]$ArrayAllACE.Add($objhashtableACE)
+    }
+    $ArrayAllACE
+}
+
 # compare two SDDLs against each other
 Function Compare-SDDLValues {
     param(
