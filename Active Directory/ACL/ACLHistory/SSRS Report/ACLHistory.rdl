@@ -41,6 +41,10 @@
           <DataField>TargetObject</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="TargetDN">
+          <DataField>TargetDN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="SDDLType">
           <DataField>SDDLType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -376,13 +380,16 @@
                       <Width>2in</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>1in</Width>
+                      <Width>0.04167in</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>2in</Width>
+                      <Width>1.96875in</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>1in</Width>
+                      <Width>0.03125in</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>0.03125in</Width>
                     </TablixColumn>
                     <TablixColumn>
                       <Width>1in</Width>
@@ -566,6 +573,41 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox153</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                </Border>
+                                <BackgroundColor>#3f82b0</BackgroundColor>
+                                <PaddingLeft>5pt</PaddingLeft>
+                                <PaddingRight>5pt</PaddingRight>
+                                <PaddingTop>5pt</PaddingTop>
+                                <PaddingBottom>5pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Textbox1">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Target DN</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox1</rd:DefaultName>
                               <Style>
                                 <Border>
                                   <Color>LightGrey</Color>
@@ -955,7 +997,7 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>TargetObject</rd:DefaultName>
-                              <ToolTip>=Fields!TargetType.Value</ToolTip>
+                              <ToolTip>="Object Type: " &amp; Fields!TargetType.Value &amp; vbcrlf &amp; vbcrlf &amp; "Distinguished Name:" &amp; vbcrlf &amp; Fields!TargetDN.Value</ToolTip>
                               <Style>
                                 <Border>
                                   <Color>LightGrey</Color>
@@ -992,6 +1034,45 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>TargetType</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>None</Style>
+                                </Border>
+                                <BottomBorder>
+                                  <Style>Solid</Style>
+                                </BottomBorder>
+                                <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2, "White","#eaeff9")</BackgroundColor>
+                                <PaddingLeft>10pt</PaddingLeft>
+                                <PaddingRight>10pt</PaddingRight>
+                                <PaddingTop>10pt</PaddingTop>
+                                <PaddingBottom>10pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="TargetDN">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!TargetDN.Value</Value>
+                                      <Style>
+                                        <FontFamily>Tahoma</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>TargetDN</rd:DefaultName>
                               <Style>
                                 <Border>
                                   <Color>LightGrey</Color>
@@ -1187,10 +1268,10 @@
                                       <Style>
                                         <FontFamily>Tahoma</FontFamily>
                                         <Color>=Switch(
-	Fields!Access.Value like "*All Extended Rights*", "#b8812e",
-	Fields!Access.Value like "*ExtendedRight *", "#b8812e",
-	Fields!Access.Value like "*FullControl*", "#b8812e",
-	Fields!Access.Value like "*Full Control*", "#b8812e"
+	Fields!Access.Value like "*All Extended Rights*" and Fields!Operation.Value = "Added", "#b8812e",
+	Fields!Access.Value like "*ExtendedRight *" and Fields!Operation.Value = "Added", "#b8812e",
+	Fields!Access.Value like "*FullControl*" and Fields!Operation.Value = "Added", "#b8812e",
+	Fields!Access.Value like "*Full Control*" and Fields!Operation.Value = "Added", "#b8812e"
 )</Color>
                                       </Style>
                                     </TextRun>
@@ -1312,6 +1393,11 @@
                         <Hidden>true</Hidden>
                       </Visibility>
                     </TablixMember>
+                    <TablixMember>
+                      <Visibility>
+                        <Hidden>true</Hidden>
+                      </Visibility>
+                    </TablixMember>
                     <TablixMember />
                     <TablixMember />
                     <TablixMember />
@@ -1349,13 +1435,13 @@
                 <FixedRowHeaders>true</FixedRowHeaders>
                 <DataSetName>ACLHistoryDataSet</DataSetName>
                 <Height>0.44in</Height>
-                <Width>22.75in</Width>
+                <Width>20.82292in</Width>
                 <Style />
               </Tablix>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
             <Height>1in</Height>
-            <Width>22.75in</Width>
+            <Width>21.82292in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1366,7 +1452,7 @@
         <Height>1in</Height>
         <Style />
       </Body>
-      <Width>22.75in</Width>
+      <Width>21.82292in</Width>
       <Page>
         <PageHeader>
           <Height>1.66396cm</Height>
@@ -1395,7 +1481,7 @@
                     </Paragraph>
                   </Paragraphs>
                   <Height>0.9084cm</Height>
-                  <Width>57.785cm</Width>
+                  <Width>52.89021cm</Width>
                   <Style>
                     <Border>
                       <Style>None</Style>
@@ -1426,7 +1512,7 @@
                   <rd:DefaultName>Textbox2</rd:DefaultName>
                   <Top>0.9084cm</Top>
                   <Height>0.17667cm</Height>
-                  <Width>57.785cm</Width>
+                  <Width>52.89021cm</Width>
                   <ZIndex>1</ZIndex>
                   <Style>
                     <Border>
@@ -1471,7 +1557,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Height>0.63552in</Height>
-              <Width>22.75in</Width>
+              <Width>20.82292in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1498,10 +1584,9 @@
     <ReportParameter Name="StartDate">
       <DataType>DateTime</DataType>
       <DefaultValue>
-        <DataSetReference>
-          <DataSetName>GetStartDate</DataSetName>
-          <ValueField>Timestamp</ValueField>
-        </DataSetReference>
+        <Values>
+          <Value>=Now()</Value>
+        </Values>
       </DefaultValue>
       <Prompt>Start Date</Prompt>
       <UsedInQuery>True</UsedInQuery>
@@ -1515,42 +1600,6 @@
       </DefaultValue>
       <Prompt>End Date</Prompt>
       <UsedInQuery>True</UsedInQuery>
-    </ReportParameter>
-    <ReportParameter Name="Access">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <DataSetReference>
-          <DataSetName>GetAccesses</DataSetName>
-          <ValueField>Access</ValueField>
-        </DataSetReference>
-      </DefaultValue>
-      <Prompt>Access</Prompt>
-      <ValidValues>
-        <DataSetReference>
-          <DataSetName>GetAccesses</DataSetName>
-          <ValueField>Access</ValueField>
-          <LabelField>Access</LabelField>
-        </DataSetReference>
-      </ValidValues>
-      <MultiValue>true</MultiValue>
-    </ReportParameter>
-    <ReportParameter Name="AppliesTo">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <DataSetReference>
-          <DataSetName>GetAppliesTos</DataSetName>
-          <ValueField>AppliesTo</ValueField>
-        </DataSetReference>
-      </DefaultValue>
-      <Prompt>Applies To</Prompt>
-      <ValidValues>
-        <DataSetReference>
-          <DataSetName>GetAppliesTos</DataSetName>
-          <ValueField>AppliesTo</ValueField>
-          <LabelField>AppliesTo</LabelField>
-        </DataSetReference>
-      </ValidValues>
-      <MultiValue>true</MultiValue>
     </ReportParameter>
     <ReportParameter Name="Modifier">
       <DataType>String</DataType>
@@ -1588,20 +1637,20 @@
       </ValidValues>
       <MultiValue>true</MultiValue>
     </ReportParameter>
-    <ReportParameter Name="TargetType">
+    <ReportParameter Name="SDDLType">
       <DataType>String</DataType>
       <DefaultValue>
         <DataSetReference>
-          <DataSetName>GetTargetTypes</DataSetName>
-          <ValueField>TargetType</ValueField>
+          <DataSetName>GetSDDLTypes</DataSetName>
+          <ValueField>SDDLType</ValueField>
         </DataSetReference>
       </DefaultValue>
-      <Prompt>Object Type</Prompt>
+      <Prompt>SDDL Type</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>GetTargetTypes</DataSetName>
-          <ValueField>TargetType</ValueField>
-          <LabelField>TargetType</LabelField>
+          <DataSetName>GetSDDLTypes</DataSetName>
+          <ValueField>SDDLType</ValueField>
+          <LabelField>SDDLType</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
@@ -1642,24 +1691,6 @@
       </ValidValues>
       <MultiValue>true</MultiValue>
     </ReportParameter>
-    <ReportParameter Name="SDDLType">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <DataSetReference>
-          <DataSetName>GetSDDLTypes</DataSetName>
-          <ValueField>SDDLType</ValueField>
-        </DataSetReference>
-      </DefaultValue>
-      <Prompt>SDDL Type</Prompt>
-      <ValidValues>
-        <DataSetReference>
-          <DataSetName>GetSDDLTypes</DataSetName>
-          <ValueField>SDDLType</ValueField>
-          <LabelField>SDDLType</LabelField>
-        </DataSetReference>
-      </ValidValues>
-      <MultiValue>true</MultiValue>
-    </ReportParameter>
     <ReportParameter Name="Type">
       <DataType>String</DataType>
       <DefaultValue>
@@ -1678,6 +1709,72 @@
       </ValidValues>
       <MultiValue>true</MultiValue>
     </ReportParameter>
+    <ReportParameter Name="Access">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>GetAccesses</DataSetName>
+          <ValueField>Access</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Access</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>GetAccesses</DataSetName>
+          <ValueField>Access</ValueField>
+          <LabelField>Access</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+      <UsedInQuery>False</UsedInQuery>
+      <cl:ComponentMetadata>
+        <cl:HideUpdateNotifications>true</cl:HideUpdateNotifications>
+      </cl:ComponentMetadata>
+    </ReportParameter>
+    <ReportParameter Name="AppliesTo">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>GetAppliesTos</DataSetName>
+          <ValueField>AppliesTo</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Applies To</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>GetAppliesTos</DataSetName>
+          <ValueField>AppliesTo</ValueField>
+          <LabelField>AppliesTo</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+      <UsedInQuery>False</UsedInQuery>
+      <cl:ComponentMetadata>
+        <cl:HideUpdateNotifications>true</cl:HideUpdateNotifications>
+      </cl:ComponentMetadata>
+    </ReportParameter>
+    <ReportParameter Name="TargetType">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>GetTargetTypes</DataSetName>
+          <ValueField>TargetType</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Object Type</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>GetTargetTypes</DataSetName>
+          <ValueField>TargetType</ValueField>
+          <LabelField>TargetType</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+      <UsedInQuery>False</UsedInQuery>
+      <cl:ComponentMetadata>
+        <cl:HideUpdateNotifications>true</cl:HideUpdateNotifications>
+      </cl:ComponentMetadata>
+    </ReportParameter>
     <ReportParameter Name="ShowCorrID">
       <DataType>Boolean</DataType>
       <DefaultValue>
@@ -1686,27 +1783,12 @@
         </Values>
       </DefaultValue>
       <Prompt>Show Correlation ID</Prompt>
+      <UsedInQuery>False</UsedInQuery>
+      <cl:ComponentMetadata>
+        <cl:HideUpdateNotifications>true</cl:HideUpdateNotifications>
+      </cl:ComponentMetadata>
     </ReportParameter>
   </ReportParameters>
-  <Code>Public Function RemoveDuplicates(parameter As Parameter) As String()
-  
-Dim items As Object() = parameter.Value
-System.Array.Sort(items)
-Dim k As Integer = 0
-  
-For i As Integer = 0 To items.Length - 1
-If i &gt; 0 AndAlso items(i).Equals(items(i - 1)) Then
-Continue For
-End If
-  
-items(k) = items(i)
-k += 1
-Next
-Dim unique As [String]() = New [String](k - 1) {}
-System.Array.Copy(items, 0, unique, 0, k)
-  
-Return unique
-End Function</Code>
   <Language>en-US</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
