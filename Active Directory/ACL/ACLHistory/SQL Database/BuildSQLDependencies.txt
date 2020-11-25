@@ -7,6 +7,7 @@ CREATE TABLE Events
 	[Modifier] nvarchar(128) NOT NULL,
 	[ModifierSAM] nvarchar(128) NOT NULL,
 	[TargetObject] nvarchar(256) NOT NULL,
+	[TargetDN] nvarchar(256) NULL,
 	[TargetType] nvarchar(256) NOT NULL
 );
 
@@ -31,13 +32,14 @@ CREATE PROCEDURE AddEventRecord
 	@Modifier nvarchar(128),
 	@ModifierSAM nvarchar(64),
 	@TargetObject nvarchar(256),
+	@TargetDN nvarchar(256),
 	@TargetType nvarchar(128)
 AS
 BEGIN
 	INSERT INTO Events(
-	    [Timestamp],[OpCorrelationID],[Modifier],[ModifierSAM],[TargetObject],[TargetType]
+	    [Timestamp],[OpCorrelationID],[Modifier],[ModifierSAM],[TargetObject],[TargetDN],[TargetType]
 	)
-	VALUES (@Timestamp,@OpCorrelationID,@Modifier,@ModifierSAM,@TargetObject,@TargetType);
+	VALUES (@Timestamp,@OpCorrelationID,@Modifier,@ModifierSAM,@TargetObject,@TargetDN,@TargetType);
 END
 GO
 
@@ -69,6 +71,7 @@ BEGIN
 		[Modifier],
 		[ModifierSAM],
 		[TargetObject],
+		[TargetDN],
 		[TargetType],
 		[SDDLType],
 		[Type],
@@ -94,6 +97,7 @@ BEGIN
 		[Modifier],
 		[ModifierSAM],
 		[TargetObject],
+		[TargetDN],
 		[TargetType],
 		[SDDLType],
 		[Type],
