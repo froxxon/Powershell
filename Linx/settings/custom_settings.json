@@ -1,0 +1,12 @@
+﻿{
+    "Charset":  "UTF-8",
+    "CSVDelimiter":  ";",
+    "CSVHeader":  "ID;Name;URL;Description;Category;Role;Tags;Contact;Notes;Disabled",
+    "LogRows":  "100",
+    "LogoWidth":  "350em",
+    "Theme": "theme-Light_And_Red",
+    "ShowFooter": "True",
+    "AllowPersonalLinks": "True",
+    "AllowPersonalTheme": "True",
+    "Version":  "2.0"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "RequestType": "GET",
+    "RequestURL": "/",
+    "RequestCommand": "C:/RestPS/Linx/endPoints/Get-Links.ps1"
+  },
+  {
+    "RequestType": "GET",
+    "RequestURL": "/personal",
+    "RequestCommand": "C:/RestPS/Linx/endPoints/Get-LinksPersonal.ps1"
+  },
+  {
+    "RequestType": "GET",
+    "RequestURL": "/admin",
+    "RequestCommand": "C:/RestPS/Linx/endPoints/Get-LinksAdmin.ps1"
+  },
+  {
+    "RequestType": "POST",
+    "RequestURL": "/ManageLink",
+    "RequestCommand": "C:/RestPS/Linx/endPoints/ManageLink.ps1"
+  }
+]

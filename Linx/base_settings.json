@@ -1,0 +1,13 @@
+﻿{
+    "ServerURL":  "https://linx.froxxen.local",
+    "ShortURL":  "linx.froxxen.local",
+    "SSLThumbprint":  "ea4ffc635352d73f8167dc52c1e0d680f3aabc33",
+    "Port":  "443",
+    "Domain":  "FROXXEN",
+    "AdminGroup":  "Task-Linx-Admin",
+    "EditGroup":  "Task-Linx-Edit",
+    "OU_Admin":  "OU=AdminAccounts,OU=Tier 1,OU=Admin,DC=froxxen,DC=local",
+    "OU_Group":  "OU=Tasks,OU=Tier 0,OU=Admin,DC=froxxen,DC=local",
+    "OU_User":  "OU=StandardUsers,DC=froxxen,DC=local",
+    "Language":  "en-us"
+}

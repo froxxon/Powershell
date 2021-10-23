@@ -1,0 +1,324 @@
+﻿<style>
+  #cssheader {
+    font-size: 1.25em;
+    text-align: left;
+  }
+
+  .admlinkdisabled {
+    color: #db3f28;
+  }
+
+  .admlinkenabled {
+    color: #10c100;
+  }
+
+  .btn:disabled {
+    color: #cccccc;
+    cursor: unset;
+  }
+
+  .btn:hover:disabled {
+    border-width: 0;
+    color: #cccccc;
+  }
+
+  .btn:hover {
+    border-color: #ffffff;
+    border-style: solid solid solid solid;
+    border-width: 0.1em;
+  }
+
+  .btn {
+    background-color: transparent;
+    border: none;
+    color: #dddddd;
+    cursor: pointer;
+    padding: 1em 1em;
+    width: 10em;
+  }
+
+  .category {
+    background: linear-gradient(to top, #999999 0%, #0f0f0f 10%);
+    border-color: #1c1c1c;
+    border-style: none none solid none;
+    border-width: 0.1em;
+    color: #f1f1f1;
+    font-size: 1.25em;
+    padding: 0.5em;
+    text-align: left;
+    width: 100%;
+  }
+
+  .catheader {
+    color: #f1f1f1;
+  }
+
+  .centralized {
+    left: 50%;
+    position: fixed;
+    top: 45%;
+    transform: translate(-50%, -50%);
+  }
+
+  .description {
+    color: #f1f1f1;
+    cursor: pointer;
+    display: block;
+  }
+
+  .header .sign:after {
+    color: #f1f1f1;
+    content: <;
+    display: inline-block;
+    font-size: 0.65em;
+    vertical-align: middle;
+  }
+
+  .header.expand .sign:after {
+    content: >;
+  }
+
+  .hiddencolumn {
+    display: none;
+  }
+
+  .hover tr:hover td {
+    background-color: #373737;
+  }
+
+  .innertable {
+    border: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .intlink {
+    margin-left: 25px;
+  }
+
+  .logobjcreated {
+    color: #5186ff;
+  }
+
+  .logobjmodified {
+    color: #10c100;
+  }
+
+  .logobjremoved {
+    color: #db3f28;
+  }
+
+  .personal {
+    color: #5fa159;
+  }
+
+  .removelink:hover {
+    background-color: #db3f28;
+    color: #eeeeee;
+  }
+
+  .removelink {
+    background-color: transparent;
+    border: none;
+    color: #db3f28;
+    cursor: pointer;
+    padding: 1em 1em;
+    text-align: center;
+    text-decoration: none;
+    width: 3.5em;
+  }
+
+  .reset, .reset:hover {
+    border-color: #db3f28;
+    color: #db3f28;
+  }
+
+  .selcats option {
+    background: #373737;
+    color: #eeeeee;
+    text-align: center;
+  }
+
+  .selcats {
+    background-color: transparent;
+    background-size: .65em auto, 100%;
+    border: 0em solid #dddddd;
+    color: #dddddd;
+    display: inline-block;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align-last: center;
+    width: 100%;
+  }
+
+  .sellang {
+    background-color: #1c1c1c;
+    background-size: .65em auto, 100%;
+    color: #ffffff;
+    display: inline-block;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align-last: center;
+    width: 100%;
+  }
+
+  .seltheme option {
+    background: #373737;
+    color: #eeeeee;
+    text-align: right;
+  }
+
+  .seltheme {
+    background: transparent;
+    background-size: .65em auto, 100%;*/;
+    border: 0;
+    display: inline-block;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align-last: right;
+    vertical-align: bottom;
+    width: 100%;
+  }
+
+  .tooltip .tooltiptext {
+    background-color: transparent;
+    color: #f1f1f1;
+    margin-left: -275px;
+    margin-top: -68px;
+    opacity: 0;
+    padding: 10px 10px;
+    position: absolute;
+    text-align: right;
+    transition: opacity 1s;
+    width: 200px;
+    visibility: hidden;
+    z-index: 1;
+  }
+
+  .tooltip:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltip {
+    display: inline-block;
+    position: relative;
+  }
+
+  .tooltipempty {
+    color: #dddddd;
+  }
+
+  ::placeholder {
+    color: #777777;
+    opacity: 1;
+  }
+
+  a:hover {
+    color: #ffffff;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  a {
+    color: #dadada;
+    text-decoration: none;
+  }
+
+  body {
+    background: linear-gradient(to top, #000000 0%, #808080 70%);
+    background-attachment: fixed;
+    color: #ffffff;
+    font: normal 1em 'trebuchet MS', arial, helvetica;
+    text-align: center;
+    user-select: none;
+  }
+
+  header {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: 69em;
+  }
+
+  input:focus {
+    border-color: #ffffff;
+    border-width: 0.25em;
+    color: #ffffff;
+    outline: none;
+  }
+
+  input[type=text]:disabled, input[type=select]:disabled, input[type=url]:disabled {
+    background: transparent;
+    border: 0;
+  }
+
+  nav + div {
+    flex: 0 0 auto;
+  }
+
+  nav a {
+    margin-left: 25px;
+    text-transform: uppercase;
+  }
+
+  nav {
+    flex: 1;
+    margin-bottom: 10px;
+    margin-top: 15px;
+  }
+
+  p {
+    display: inline-block;
+    font-size: 0.85em;
+  }
+
+  pre {
+    display: inline-block;
+  }
+
+  select, input[type=text], input[type=select], input[type=url] {
+    background: #1c1c1c;
+    border: 0.1em solid #dddddd;
+    color: #eeeeee;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align: center;
+    width: 100%;
+  }
+
+  select:focus {
+    border-style: none none none none;
+    outline: none;
+  }
+
+  table td a {
+    cursor: pointer;
+    display: block;
+  }
+
+  table {
+    background: #0f0f0f;
+    border: 0.1em solid #5f5f5f;
+    border-radius: 1.75em 0em 1.75em 0em;
+    color: #eeeeee;
+    font: normal 1em 'trebuchet MS', arial, helvetica;
+    outline: none;
+    padding: 1em;
+    text-align: center;
+    width: 65em;
+  }
+
+  td {
+    padding: 0.75em;
+    vertical-align: text-top;
+  }
+
+  th {
+    background: linear-gradient(to top, #999999 0%, #0f0f0f 10%);
+    border-color: transparent;
+    border-style: none none solid none;
+    border-width: 0.1em;
+    color: #f1f1f1;
+    font-size: 1.25em;
+    padding: 0.5em;
+    width: 100%;
+  }
+</style>

@@ -1,0 +1,324 @@
+﻿<style>
+  #cssheader {
+    font-size: 1.25em;
+    text-align: left;
+  }
+
+  .admlinkdisabled {
+    color: #db3f28;
+  }
+
+  .admlinkenabled {
+    color: #19701c;
+  }
+
+  .btn:disabled {
+    color: #cccccc;
+    cursor: unset;
+  }
+
+  .btn:hover:disabled {
+    border-width: 0;
+    color: #cccccc;
+  }
+
+  .btn:hover {
+    border-color: #3f82b0;
+    border-style: solid solid solid solid;
+    border-width: 0.1em;
+  }
+
+  .btn {
+    background-color: transparent;
+    border: none;
+    color: #3f82b0;
+    cursor: pointer;
+    padding: 1em 1em;
+    width: 10em;
+  }
+
+  .category {
+    background: linear-gradient(to top, #e8e8e8 0%, #f5f5f5 10%);
+    border-color: #cccccc;
+    border-style: none none solid none;
+    border-width: 0.1em;
+    color: #777777;
+    font-size: 1.25em;
+    padding: 0.5em;
+    text-align: left;
+    width: 100%;
+  }
+
+  .catheader {
+    color: #777777;
+  }
+
+  .centralized {
+    left: 50%;
+    position: fixed;
+    top: 45%;
+    transform: translate(-50%, -50%);
+  }
+
+  .description {
+    color: #777777;
+    cursor: pointer;
+    display: block;
+  }
+
+  .header .sign:after {
+    color: #a4a4a4;
+    content: <;
+    display: inline-block;
+    font-size: 0.65em;
+    vertical-align: middle;
+  }
+
+  .header.expand .sign:after {
+    content: >;
+  }
+
+  .hiddencolumn {
+    display: none;
+  }
+
+  .hover tr:hover td {
+    background-color: #ececec;
+  }
+
+  .innertable {
+    border: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .intlink {
+    margin-left: 25px;
+  }
+
+  .logobjcreated {
+    color: #3f82b0;
+  }
+
+  .logobjmodified {
+    color: #19701c;
+  }
+
+  .logobjremoved {
+    color: #db3f28;
+  }
+
+  .personal {
+    color: #5FA159;
+  }
+
+  .removelink:hover {
+    background-color: #db3f28;
+    color: #eee;
+  }
+
+  .removelink {
+    background-color: transparent;
+    border: none;
+    color: #db3f28;
+    cursor: pointer;
+    padding: 1em 1em;
+    text-align: center;
+    text-decoration: none;
+    width: 3.5em;
+  }
+
+  .reset, .reset:hover {
+    border-color: #db3f28;
+    color: #db3f28;
+  }
+
+  .selcats option {
+    background: #f5f5f5;
+    color: #3f82b0;
+    text-align: center;
+  }
+
+  .selcats {
+    background-color: transparent;
+    background-size: .65em auto, 100%;
+    border: 0em solid #3f82b0;
+    color: #3f82b0;
+    display: inline-block;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align-last: center;
+    width: 100%;
+  }
+
+  .sellang {
+    background-color: #ffffff;
+    background-size: .65em auto, 100%;
+    color: #3f82b0;
+    display: inline-block;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align-last: center;
+    width: 100%;
+  }
+
+  .seltheme option {
+    background: #eeeeee;
+    color: #3f82b0;
+    text-align: right;
+  }
+
+  .seltheme {
+    background: transparent;
+    background-size: .65em auto, 100%;*/;
+    border: 0;
+    color: #3f82b0;
+    display: inline-block;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align-last: right;
+    vertical-align: bottom;
+    width: 100%;
+  }
+
+  .tooltip .tooltiptext {
+    background-color: transparent;
+    color: #777777;
+    margin-left: -275px;
+    margin-top: -68px;
+    opacity: 0;
+    padding: 10px 10px;
+    position: absolute;
+    text-align: right;
+    transition: opacity 1s;
+    width: 200px;
+    visibility: hidden;
+    z-index: 1;
+  }
+
+  .tooltip:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltip {
+    display: inline-block;
+    position: relative;
+  }
+
+  .tooltipempty {
+    color: #3f82b0;
+  }
+
+  ::placeholder {
+    color: #b8b8b8;
+    opacity: 1;
+  }
+
+  a:hover {
+    color: #777777;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  a {
+    color: #3f82b0;
+    text-decoration: none;
+  }
+
+  body {
+    background: linear-gradient(to top, #dde3e8 0%, #eeeeee 70%);
+    background-attachment: fixed;
+    color: #000000;
+    font: normal 1em 'trebuchet MS', arial, helvetica;
+    text-align: center;
+    user-select: none;
+  }
+
+  header {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: 69em;
+  }
+
+  input:focus {
+    border-color: #1FA3F4;
+    border-width: 0.2em;
+    color: #3f82b0;
+    outline: none;
+  }
+
+  input[type=text]:disabled, input[type=select]:disabled, input[type=url]:disabled {
+    background: transparent;
+    border: 0;
+  }
+
+  nav + div {
+    flex: 0 0 auto;
+  }
+
+  nav a {
+    margin-left: 25px;
+    text-transform: uppercase;
+  }
+
+  nav {
+    flex: 1;
+    margin-bottom: 10px;
+    margin-top: 15px;
+  }
+
+  p {
+    display: inline-block;
+    font-size: 0.85em;
+  }
+
+  pre {
+    display: inline-block;
+  }
+
+  select, input[type=text], input[type=select], input[type=url] {
+    background: #ffffff;
+    border: 0.1em solid #3f82b0;
+    color: #3f82b0;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    text-align: center;
+    width: 100%;
+  }
+
+  select:focus {
+    border-style: none none none none;
+    outline: none;
+  }
+
+  table td a {
+    cursor: pointer;
+    display: block;
+  }
+
+  table {
+    background: #f5f5f5;
+    border: 0.1em solid #b8b8b8;
+    border-radius: 1.75em 0em 1.75em 0em;
+    color: #777777;
+    font: normal 1em 'trebuchet MS', arial, helvetica;
+    outline: none;
+    padding: 1em;
+    text-align: center;
+    width: 65em;
+  }
+
+  td {
+    padding: 0.75em;
+    vertical-align: text-top;
+  }
+
+  th {
+    background: linear-gradient(to top, #e8e8e8 0%, #f5f5f5 10%);
+    border-color: #cccccc;
+    border-style: none none solid none;
+    border-width: 0.1em;
+    color: #777777;
+    font-size: 1.25em;
+    padding: 0.5em;
+  }
+</style>

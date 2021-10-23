@@ -1,0 +1,15 @@
+﻿ID;Name;URL;Description;Category;Role;Tags;Contact;Notes;Disabled
+00000001;Google.com;https://www.google.com ;Search for whatever you need;Search;;search;;;;
+00000002;Microsoft Support;https://support.microsoft.com;;MS Links;;microsoft support;;;;
+00000003;Youtube;https://www.youtube.com;;Videos;;video youtube;;;;
+00000004;LinkedIn;https://www.linkedin.com;Job networking;Jobs;;linkedin work networking;;;;
+00000006;Microsoft Teams Admin Portal;https://admin.teams.microsoft.com/;;MS Links;Role-T1-Infrastructure, Role-T1-Operations;;;;;
+00000007;Kibana;https://kibana.froxxen.com/login?next=%2F;;Elastic;Role-T1-Infrastructure, Role-T1-Operations;;;;;
+00000008;Power BI Reports;https://w008012.froxxen.com/Reports/browse/;;Reporting;;;;;;
+00000009;Azure Portal;https://portal.azure.com/;;MS Links;;;;;;
+00000010;SQL Server Reporting Server;http://w008007/Reports/browse/;Reports;Reporting;;;;;;
+00000011;Certificate Services;http://w008005.froxxen.com/certsrv;;Operational;Role-T1-Infrastructure;;;;;
+00000012;OrderPortal;https://groupmgmt:4085/;;Operational;;;;;;
+00000013;OrderPortal - Admin;https://groupmgmt:4095/;;Operational;Role-T1-Infrastructure;;;;;
+00000014;Aftonbladet;https://www.aftonbladet.se;;News;;;;;;
+00000015;test;https://test.ttest;test;test;;;;;;

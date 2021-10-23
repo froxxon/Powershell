@@ -1,0 +1,11 @@
+﻿{
+    "RgxCategory":  "[a-zA-ZåäöÅÄÖ0-9\\-\\\u0026\\s]*",
+    "RgxContact":  "[a-zA-ZåäöÅÄÖ\\-\\s]*",
+    "RgxNewCSSName":  "[a-z09_]*",
+    "RgxDescription":  "[^\u003c\u003e\\/]*",
+    "RgxName":  "[a-zA-ZåäöÅÄÖ0-9_\\.\\-\\\u0026\\s]*",
+    "RgxNotes":  "[^\u003c\u003e\\/]*",
+    "RgxRole":  "[a-zA-Z0-9\\-_\\,]*",
+    "RgxShortCategory":  "[åäö\\s\\\u0026]",
+    "RgxTags":  "[a-zA-ZåäöÅÄÖ0-9\\-\\s]*"
+}
